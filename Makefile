@@ -263,7 +263,6 @@ Makefile: Practice_Modeling.pro D:\Qt\6.8.3\msvc2022_64\mkspecs\win32-msvc\qmake
 		D:\Qt\6.8.3\msvc2022_64\mkspecs\features\qt_config.prf \
 		D:\Qt\6.8.3\msvc2022_64\mkspecs\win32-msvc\qmake.conf \
 		D:\Qt\6.8.3\msvc2022_64\mkspecs\features\spec_post.prf \
-		.qmake.stash \
 		D:\Qt\6.8.3\msvc2022_64\mkspecs\features\exclusive_builds.prf \
 		D:\Qt\6.8.3\msvc2022_64\mkspecs\common\msvc-version.conf \
 		D:\Qt\6.8.3\msvc2022_64\mkspecs\features\toolchain.prf \
@@ -297,6 +296,7 @@ Makefile: Practice_Modeling.pro D:\Qt\6.8.3\msvc2022_64\mkspecs\win32-msvc\qmake
 		D:\Qt\6.8.3\msvc2022_64\lib\Qt6Gui.prl \
 		D:\Qt\6.8.3\msvc2022_64\lib\Qt6Core.prl \
 		D:\Qt\6.8.3\msvc2022_64\lib\Qt6EntryPoint.prl \
+		.qmake.stash \
 		D:\Qt\6.8.3\msvc2022_64\mkspecs\features\build_pass.prf \
 		resource\resources.qrc \
 		D:\Qt\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgetsd.prl \
@@ -486,7 +486,6 @@ D:\Qt\6.8.3\msvc2022_64\mkspecs\features\qt_functions.prf:
 D:\Qt\6.8.3\msvc2022_64\mkspecs\features\qt_config.prf:
 D:\Qt\6.8.3\msvc2022_64\mkspecs\win32-msvc\qmake.conf:
 D:\Qt\6.8.3\msvc2022_64\mkspecs\features\spec_post.prf:
-.qmake.stash:
 D:\Qt\6.8.3\msvc2022_64\mkspecs\features\exclusive_builds.prf:
 D:\Qt\6.8.3\msvc2022_64\mkspecs\common\msvc-version.conf:
 D:\Qt\6.8.3\msvc2022_64\mkspecs\features\toolchain.prf:
@@ -520,6 +519,7 @@ D:\Qt\6.8.3\msvc2022_64\lib\Qt6Svg.prl:
 D:\Qt\6.8.3\msvc2022_64\lib\Qt6Gui.prl:
 D:\Qt\6.8.3\msvc2022_64\lib\Qt6Core.prl:
 D:\Qt\6.8.3\msvc2022_64\lib\Qt6EntryPoint.prl:
+.qmake.stash:
 D:\Qt\6.8.3\msvc2022_64\mkspecs\features\build_pass.prf:
 resource\resources.qrc:
 D:\Qt\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgetsd.prl:

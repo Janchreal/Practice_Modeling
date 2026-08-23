@@ -1,3 +1,39 @@
+# IDE
 .vs/
 *.ipch
 *.VC.db
+*.pro.user
+*.vcxproj.user
+*.qtvscr
+
+# qmake / build
+.qmake.stash
+Makefile
+Makefile.*
+build/
+debug/
+release/
+build_cursor_check/
+ui_*.h
+moc_*.cpp
+qrc_*.cpp
+
+# Compiled objects
+*.obj
+*.o
+*.exe
+*.dll
+*.lib
+*.exp
+*.pdb
+*.ilk
+
+# Logs & crash dumps
+*.log
+crashdumps/
+
+# Temp / dev helper files
+_check_*.py
+_*_extract.txt
+thesis_extracted.txt
+pick_debug.log

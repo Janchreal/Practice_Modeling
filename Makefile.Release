@@ -5792,6 +5792,7 @@ release\moc_widget.cpp: widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -7140,6 +7141,7 @@ release\addmodelcommand.obj: addmodelcommand.cpp addmodelcommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -8154,6 +8156,7 @@ release\booleancommand.obj: booleancommand.cpp booleancommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -8700,12 +8703,6 @@ release\booloperationdialog.obj: booloperationdialog.cpp booloperationdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QStringList \
 		ui_booloperationdialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QCheckBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcheckbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
@@ -8721,22 +8718,13 @@ release\booloperationdialog.obj: booloperationdialog.cpp booloperationdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h
 
 release\chamferdialog.obj: chamferdialog.cpp chamferdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialog \
@@ -8931,11 +8919,6 @@ release\chamferdialog.obj: chamferdialog.cpp chamferdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qlocale.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
 		ui_chamferdialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
@@ -8951,25 +8934,8 @@ release\chamferdialog.obj: chamferdialog.cpp chamferdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialogButtonBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdialogbuttonbox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h
 
 release\coneparamsdialog.obj: coneparamsdialog.cpp coneparamsdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialog \
@@ -9164,19 +9130,16 @@ release\coneparamsdialog.obj: coneparamsdialog.cpp coneparamsdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qlocale.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
 		ui_coneparamsdialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyleoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyle.h \
@@ -9185,38 +9148,25 @@ release\coneparamsdialog.obj: coneparamsdialog.cpp coneparamsdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialogButtonBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdialogbuttonbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLineEdit \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlineedit.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextcursor.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpen.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextoption.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h
 
 release\creategeometrycommand.obj: creategeometrycommand.cpp creategeometrycommand.h \
 		command.h \
@@ -9879,6 +9829,7 @@ release\creategeometrycommand.obj: creategeometrycommand.cpp creategeometrycomma
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -10424,20 +10375,16 @@ release\cuboidparamsdialog.obj: cuboidparamsdialog.cpp cuboidparamsdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qlocale.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
 		ui_cuboidparamsdialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QCheckBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcheckbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyleoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyle.h \
@@ -10453,30 +10400,21 @@ release\cuboidparamsdialog.obj: cuboidparamsdialog.cpp cuboidparamsdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLineEdit \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlineedit.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextcursor.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpen.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextoption.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h
 
 release\cylinderdialog.obj: cylinderdialog.cpp cylinderdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialog \
@@ -10671,19 +10609,16 @@ release\cylinderdialog.obj: cylinderdialog.cpp cylinderdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qlocale.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
 		ui_cylinderdialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyleoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyle.h \
@@ -10692,38 +10627,25 @@ release\cylinderdialog.obj: cylinderdialog.cpp cylinderdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialogButtonBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdialogbuttonbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLineEdit \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlineedit.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextcursor.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpen.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextoption.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h
 
 release\datum_plane.obj: datum_plane.cpp datum_plane.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialog \
@@ -10989,13 +10911,6 @@ release\datum_plane.obj: datum_plane.cpp datum_plane.h \
 		D:\OCCT7.7.0\Install\inc\gp_Vec.hxx \
 		D:\OCCT7.7.0\Install\inc\gp_Dir.hxx \
 		ui_datum_plane.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QCheckBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcheckbox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
@@ -11011,15 +10926,11 @@ release\datum_plane.obj: datum_plane.cpp datum_plane.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialogButtonBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdialogbuttonbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QCheckBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcheckbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
@@ -11916,6 +11827,7 @@ release\widget_datum.obj: widget_datum.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -12972,6 +12884,7 @@ release\deletemodelcommand.obj: deletemodelcommand.cpp deletemodelcommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -13517,22 +13430,18 @@ release\expressiondialog.obj: expressiondialog.cpp expressiondialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qlocale.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
 		ui_expressiondialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
+		widget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMainWindow \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmainwindow.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtabwidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDockWidget \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdockwidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QListWidget \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlistwidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlistview.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemview.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractscrollarea.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qitemselectionmodel.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
@@ -13544,33 +13453,7 @@ release\expressiondialog.obj: expressiondialog.cpp expressiondialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyle.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtabbar.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtabwidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLineEdit \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlineedit.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextcursor.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpen.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTableWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtablewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtableview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMainWindow \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmainwindow.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDockWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdockwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QListWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlistwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlistview.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QListWidgetItem \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTreeWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtreewidget.h \
@@ -13579,8 +13462,15 @@ release\expressiondialog.obj: expressiondialog.cpp expressiondialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTreeWidgetItem \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QCheckBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcheckbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QInputDialog \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qinputdialog.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlineedit.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextcursor.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextformat.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpen.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextoption.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QDateTime \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qdatetime.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qcalendar.h \
@@ -14008,6 +13898,7 @@ release\expressiondialog.obj: expressiondialog.cpp expressiondialog.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -14361,7 +14252,9 @@ release\expressiondialog.obj: expressiondialog.cpp expressiondialog.h \
 		sketchtoolinputdialog.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTableWidgetItem
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTableWidgetItem \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtablewidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtableview.h
 
 release\extrusioncommand.obj: extrusioncommand.cpp extrusioncommand.h \
 		command.h \
@@ -15024,6 +14917,7 @@ release\extrusioncommand.obj: extrusioncommand.cpp extrusioncommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -15655,20 +15549,18 @@ release\extrusiondialog.obj: extrusiondialog.cpp extrusiondialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qinputmethod.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qlocale.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
-		ui_ExtrusionDialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QCheckBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcheckbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyleoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyle.h \
@@ -15677,14 +15569,13 @@ release\extrusiondialog.obj: extrusiondialog.cpp extrusiondialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
@@ -15695,19 +15586,17 @@ release\extrusiondialog.obj: extrusiondialog.cpp extrusiondialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpen.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMessageBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmessagebox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdialogbuttonbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSignalBlocker
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSignalBlocker \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout
 
 release\featurerecipe_io.obj: featurerecipe_io.cpp featurerecipe_io.h \
 		featurerecipe.h \
@@ -16488,11 +16377,6 @@ release\filletdialog.obj: filletdialog.cpp filletdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
 		ui_filletdialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
@@ -16504,18 +16388,11 @@ release\filletdialog.obj: filletdialog.cpp filletdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtabwidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialogButtonBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdialogbuttonbox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h
 
 release\historylistitem.obj: historylistitem.cpp historylistitem.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
@@ -17382,6 +17259,7 @@ release\main.obj: main.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -18701,6 +18579,7 @@ release\regeneratemodelcommand.obj: regeneratemodelcommand.cpp regeneratemodelco
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -19248,20 +19127,18 @@ release\revolvedialog.obj: revolvedialog.cpp revolvedialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QString \
 		ui_revolvedialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QCheckBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcheckbox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyleoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyle.h \
@@ -19272,13 +19149,13 @@ release\revolvedialog.obj: revolvedialog.cpp revolvedialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialogButtonBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdialogbuttonbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
@@ -19289,16 +19166,14 @@ release\revolvedialog.obj: revolvedialog.cpp revolvedialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpen.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSignalBlocker
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSignalBlocker \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout
 
 release\sketch.obj: sketch.cpp sketch.h \
 		D:\OCCT7.7.0\Install\inc\TopoDS_Shape.hxx \
@@ -19821,45 +19696,9 @@ release\sketchcreatedialog.obj: sketchcreatedialog.cpp sketchcreatedialog.h \
 		D:\OCCT7.7.0\Install\inc\Precision.hxx \
 		D:\OCCT7.7.0\Install\inc\gp_Lin.hxx \
 		ui_sketchcreatedialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QCheckBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcheckbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyleoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qslider.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractslider.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyle.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtabbar.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtabwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialogButtonBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdialogbuttonbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h
 
 release\sketchtoolinputdialog.obj: sketchtoolinputdialog.cpp sketchtoolinputdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QCloseEvent \
@@ -20055,37 +19894,14 @@ release\sketchtoolinputdialog.obj: sketchtoolinputdialog.cpp sketchtoolinputdial
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qcursor.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qbitmap.h \
 		ui_sketchtoolinputdialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLineEdit \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlineedit.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextcursor.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpen.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStackedWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstackedwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QDoubleValidator \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h
 
 release\sketchmodedialogs.obj: sketchmodedialogs.cpp sketchmodedialogs.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialog \
@@ -21192,17 +21008,16 @@ release\sphereparamsdialog.obj: sphereparamsdialog.cpp sphereparamsdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qlocale.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
 		ui_sphereparamsdialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyleoption.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qvalidator.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qregularexpression.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractslider.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyle.h \
@@ -21211,38 +21026,25 @@ release\sphereparamsdialog.obj: sphereparamsdialog.cpp sphereparamsdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractSpinBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLineEdit \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlineedit.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextcursor.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpen.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextoption.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h
 
 release\sweepoperation.obj: sweepoperation.cpp sweepoperation.h \
 		D:\OCCT7.7.0\Install\inc\TopoDS_Shape.hxx \
@@ -22383,6 +22185,7 @@ release\updatemodelcommand.obj: updatemodelcommand.cpp updatemodelcommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -22929,11 +22732,6 @@ release\vectordialog.obj: vectordialog.cpp vectordialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qlocale.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qguiapplication_platform.h \
 		ui_vectordialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QAbstractButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
@@ -22949,21 +22747,12 @@ release\vectordialog.obj: vectordialog.cpp vectordialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qrubberband.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qframe.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDialogButtonBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qdialogbuttonbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLayoutItem \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
@@ -22971,6 +22760,10 @@ release\vectordialog.obj: vectordialog.cpp vectordialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qtextdocument.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qabstractbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QTimer \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qtimer.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qbasictimer.h \
@@ -22978,6 +22771,8 @@ release\vectordialog.obj: vectordialog.cpp vectordialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QFormLayout \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qformlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLayout
@@ -23641,6 +23436,7 @@ release\widget.obj: widget.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -23998,40 +23794,37 @@ release\widget.obj: widget.cpp widget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QHash \
 		widget_mirror_globals.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
+		nx_main_menu_builder.h \
+		cuboidparamsdialog.h \
+		cylinderdialog.h \
+		coneparamsdialog.h \
+		sphereparamsdialog.h \
+		sketchcreatedialog.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLayout \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QKeySequence \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QShortcut \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qshortcut.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSizePolicy \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QStringList \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\Qt \
+		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
@@ -24042,24 +23835,6 @@ release\widget.obj: widget.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
-		nx_main_menu_builder.h \
-		cuboidparamsdialog.h \
-		cylinderdialog.h \
-		coneparamsdialog.h \
-		sphereparamsdialog.h \
-		sketchcreatedialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QKeySequence \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QShortcut \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qshortcut.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSizePolicy \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QStringList \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\Qt \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\OCCT7.7.0\Install\inc\IntCurvesFace_ShapeIntersector.hxx \
 		D:\OCCT7.7.0\Install\inc\TColStd_SequenceOfInteger.hxx \
 		D:\OCCT7.7.0\Install\inc\TColStd_SequenceOfReal.hxx \
@@ -24747,6 +24522,7 @@ release\widget_ribbon.obj: widget_ribbon.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -25101,51 +24877,8 @@ release\widget_ribbon.obj: widget_ribbon.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		3rdparty\SARibbon\SARibbon.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QtGlobal \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QKeyEvent \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QWheelEvent \
@@ -25153,10 +24886,17 @@ release\widget_ribbon.obj: widget_ribbon.cpp widget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QFontMetricsF \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QHash \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QByteArray \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QFrame \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QDebug \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QAbstractListModel \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QMap \
@@ -25167,7 +24907,14 @@ release\widget_ribbon.obj: widget_ribbon.cpp widget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabBar \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QMargins \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidgetItem \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QListView \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStyledItemDelegate \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstyleditemdelegate.h \
@@ -25837,6 +25584,7 @@ release\widget_document.obj: widget_document.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -26191,50 +25939,6 @@ release\widget_document.obj: widget_document.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		featurerecipe_io.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QJsonObject \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qjsonobject.h \
@@ -26256,12 +25960,16 @@ release\widget_document.obj: widget_document.cpp widget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QFileDialog \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qfiledialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QFileInfo \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QJsonArray \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qjsonarray.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QJsonDocument \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qjsondocument.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSaveFile \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qsavefile.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSettings \
@@ -26271,6 +25979,11 @@ release\widget_document.obj: widget_document.cpp widget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QStringList \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindow.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkEventData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWindow.h
@@ -26934,6 +26647,7 @@ release\widget_vtk_view.obj: widget_vtk_view.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -27291,40 +27005,18 @@ release\widget_vtk_view.obj: widget_vtk_view.cpp widget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QHash \
 		widget_mirror_globals.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QItemSelectionModel \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSignalBlocker \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
@@ -27335,11 +27027,6 @@ release\widget_vtk_view.obj: widget_vtk_view.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QItemSelectionModel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSignalBlocker \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkArrowSource.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCamera.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRect.h \
@@ -27358,6 +27045,7 @@ release\widget_vtk_view.obj: widget_vtk_view.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderingUIModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkLight.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkLineSource.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkOpenGLState.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPlaneSource.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkProperty.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPropPicker.h \
@@ -28046,6 +27734,7 @@ release\widget_reference_csys.obj: widget_reference_csys.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -28399,6 +28088,19 @@ release\widget_reference_csys.obj: widget_reference_csys.cpp widget.h \
 		sketchtoolinputdialog.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
+		handle_geometry.h \
+		handle_spec.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkArrowSource.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkGlyph3D.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkTransform.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonTransformsModule.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkLinearTransform.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkHomogeneousTransform.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkAbstractTransform.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkMatrix4x4.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonMathModule.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkTransformPolyDataFilter.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkFiltersGeneralModule.h \
 		vectordialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
@@ -28418,22 +28120,17 @@ release\widget_reference_csys.obj: widget_reference_csys.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkArrowSource.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCellPicker.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPicker.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCamera.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkRect.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkVector.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkTuple.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkPlaneSource.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkProperty.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindow.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkEventData.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkWindow.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTransform.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonTransformsModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkLinearTransform.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkHomogeneousTransform.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkAbstractTransform.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkMatrix4x4.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonMathModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTransformPolyDataFilter.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkFiltersGeneralModule.h
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkWindow.h
 
 release\widget_sketch.obj: widget_sketch.cpp widget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMainWindow \
@@ -29094,6 +28791,7 @@ release\widget_sketch.obj: widget_sketch.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -29448,60 +29146,20 @@ release\widget_sketch.obj: widget_sketch.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		sketchcreatedialog.h \
 		sketchmodedialogs.h \
 		sketchconicdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QImage \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QPalette \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSignalBlocker \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QPixmap \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStyle \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\Qt \
 		D:\OCCT7.7.0\Install\inc\BRepBndLib.hxx \
 		D:\OCCT7.7.0\Install\inc\BRepBuilderAPI_MakeEdge.hxx \
@@ -30249,6 +29907,7 @@ release\widget_mouse_interactor.obj: widget_mouse_interactor.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -31271,6 +30930,7 @@ release\widget_vtk_click.obj: widget_vtk_click.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -31625,50 +31285,6 @@ release\widget_vtk_click.obj: widget_vtk_click.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		sketchcreatedialog.h \
 		sketchmodedialogs.h \
 		vectordialog.h \
@@ -31694,6 +31310,21 @@ release\widget_vtk_click.obj: widget_vtk_click.cpp widget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
+		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
+		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindow.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkEventData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWindow.h \
@@ -32364,6 +31995,7 @@ release\widget_extrusion_face.obj: widget_extrusion_face.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -33461,6 +33093,7 @@ release\widget_extrusion.obj: widget_extrusion.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -33815,40 +33448,19 @@ release\widget_extrusion.obj: widget_extrusion.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
+		addmodelcommand.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QMap \
+		feature_topology.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
@@ -33859,12 +33471,6 @@ release\widget_extrusion.obj: widget_extrusion.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
-		addmodelcommand.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QMap \
-		feature_topology.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\Qt \
 		D:\OCCT7.7.0\Install\inc\BRepTools.hxx \
 		D:\OCCT7.7.0\Install\inc\TopTools_FormatVersion.hxx \
@@ -34579,6 +34185,7 @@ release\widget_revolve.obj: widget_revolve.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -34933,40 +34540,19 @@ release\widget_revolve.obj: widget_revolve.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
+		addmodelcommand.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QMap \
+		feature_topology.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
@@ -34977,12 +34563,6 @@ release\widget_revolve.obj: widget_revolve.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
-		addmodelcommand.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QMap \
-		feature_topology.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\Qt \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkProperty.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindow.h \
@@ -35648,6 +35228,7 @@ release\widget_extrude_revolve_interactive.obj: widget_extrude_revolve_interacti
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -36804,6 +36385,7 @@ release\widget_vector_snap.obj: widget_vector_snap.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -37158,50 +36740,6 @@ release\widget_vector_snap.obj: widget_vector_snap.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		coneparamsdialog.h \
 		cuboidparamsdialog.h \
 		cylinderdialog.h \
@@ -37221,6 +36759,10 @@ release\widget_vector_snap.obj: widget_vector_snap.cpp widget.h \
 		sphereparamsdialog.h \
 		vectordialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QHash \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSignalBlocker \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QStringList \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
@@ -37998,6 +37540,7 @@ release\widget_feature_tree.obj: widget_feature_tree.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -38352,50 +37895,6 @@ release\widget_feature_tree.obj: widget_feature_tree.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		cuboidparamsdialog.h \
 		cylinderdialog.h \
 		coneparamsdialog.h \
@@ -38408,6 +37907,7 @@ release\widget_feature_tree.obj: widget_feature_tree.cpp widget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QMap \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QPoint \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindow.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkEventData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWindow.h
@@ -39071,6 +38571,7 @@ release\widget_boolean.obj: widget_boolean.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -39425,50 +38926,6 @@ release\widget_boolean.obj: widget_boolean.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		booloperationdialog.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QStringList \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSet \
@@ -40138,6 +39595,7 @@ release\feature_topology.obj: feature_topology.cpp feature_topology.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -41155,6 +40613,7 @@ release\widget_feature_regenerate.obj: widget_feature_regenerate.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -41509,40 +40968,17 @@ release\widget_feature_regenerate.obj: widget_feature_regenerate.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
+		feature_topology.h \
+		extrusioncommand.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSet \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
@@ -41553,12 +40989,6 @@ release\widget_feature_regenerate.obj: widget_feature_regenerate.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
-		feature_topology.h \
-		extrusioncommand.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSet \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\OCCT7.7.0\Install\inc\BRepBuilderAPI_MakeFace.hxx \
 		D:\OCCT7.7.0\Install\inc\BRepLib_MakeFace.hxx \
 		D:\OCCT7.7.0\Install\inc\BRepLib_FaceError.hxx \
@@ -42310,6 +41740,7 @@ release\widget_fillet_chamfer.obj: widget_fillet_chamfer.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -42664,54 +42095,15 @@ release\widget_fillet_chamfer.obj: widget_fillet_chamfer.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		feature_topology.h \
 		addmodelcommand.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QMap \
 		filletdialog.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
 		chamferdialog.h \
 		handle_geometry.h \
 		handle_spec.h \
@@ -43408,6 +42800,7 @@ release\widget_model_regenerate.obj: widget_model_regenerate.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -43762,40 +43155,15 @@ release\widget_model_regenerate.obj: widget_model_regenerate.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
+		expressiondialog.h \
+		regeneratemodelcommand.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSet \
+		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
@@ -43806,10 +43174,6 @@ release\widget_model_regenerate.obj: widget_model_regenerate.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
-		expressiondialog.h \
-		regeneratemodelcommand.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSet \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\OCCT7.7.0\Install\inc\BRepMesh_IncrementalMesh.hxx \
 		D:\OCCT7.7.0\Install\inc\BRepMesh_DiscretRoot.hxx \
 		D:\OCCT7.7.0\Install\inc\IMeshTools_Context.hxx \
@@ -44517,6 +43881,7 @@ release\widget_undo_restore.obj: widget_undo_restore.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -44871,50 +44236,6 @@ release\widget_undo_restore.obj: widget_undo_restore.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QtAlgorithms \
 		D:\OCCT7.7.0\Install\inc\BRepMesh_IncrementalMesh.hxx \
 		D:\OCCT7.7.0\Install\inc\BRepMesh_DiscretRoot.hxx \
@@ -45630,6 +44951,7 @@ release\widget_history_snapshot.obj: widget_history_snapshot.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -45984,50 +45306,6 @@ release\widget_history_snapshot.obj: widget_history_snapshot.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSet \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindow.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkEventData.h \
@@ -46939,6 +46217,7 @@ release\widget_mirror_globals.obj: widget_mirror_globals.cpp widget_mirror_globa
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkInteractionStyleModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkInteractorStyle.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkInteractorObserver.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -47742,6 +47021,7 @@ release\widget_mirror_window.obj: widget_mirror_window.cpp widget_mirror_window.
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkInteractionStyleModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkInteractorStyle.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkInteractorObserver.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -48099,35 +47379,6 @@ release\widget_mirror_window.obj: widget_mirror_window.cpp widget_mirror_window.
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QHash \
 		widget_mirror_types.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QAction \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QMenu \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qmenu.h \
@@ -48136,6 +47387,11 @@ release\widget_mirror_window.obj: widget_mirror_window.cpp widget_mirror_window.
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolBar \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbar.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\Qt \
 		D:\OCCT7.7.0\Install\inc\BRepMesh_IncrementalMesh.hxx \
 		D:\OCCT7.7.0\Install\inc\BRepMesh_DiscretRoot.hxx \
@@ -48866,6 +48122,7 @@ release\widget_events.obj: widget_events.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -49904,6 +49161,7 @@ release\widget_history_highlight.obj: widget_history_highlight.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -50258,50 +49516,6 @@ release\widget_history_highlight.obj: widget_history_highlight.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QtAlgorithms \
 		D:\OCCT7.7.0\Install\inc\TColStd_MapIteratorOfPackedMapOfInteger.hxx \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCellData.h \
@@ -50972,6 +50186,7 @@ release\widget_primitives.obj: widget_primitives.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -51326,54 +50541,14 @@ release\widget_primitives.obj: widget_primitives.cpp widget.h \
 		sketchpolygondialog.h \
 		sketchellipsedialog.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopenglext.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\qt_windows.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QScopedPointer \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKInteractor.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
 		cuboidparamsdialog.h \
 		cylinderdialog.h \
 		coneparamsdialog.h \
 		sphereparamsdialog.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkProperty.h \
@@ -52040,6 +51215,7 @@ release\widget_cuboid_interactive.obj: widget_cuboid_interactive.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -52408,35 +51584,20 @@ release\widget_cuboid_interactive.obj: widget_cuboid_interactive.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkTransformPolyDataFilter.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkFiltersGeneralModule.h \
 		ui_cuboidparamsdialog.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
 		D:\OCCT7.7.0\Install\inc\IntAna_IntConicQuad.hxx \
 		D:\OCCT7.7.0\Install\inc\IntAna_IntConicQuad.lxx \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QDoubleValidator \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLineEdit \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QSignalBlocker \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
@@ -53439,6 +52600,7 @@ release\patterncommand.obj: patterncommand.cpp patterncommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -54455,6 +53617,7 @@ release\widget_pattern.obj: widget_pattern.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -54810,40 +53973,19 @@ release\widget_pattern.obj: widget_pattern.cpp widget.h \
 		sketchellipsedialog.h \
 		patterncommand.h \
 		ui_widget.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtCore\QVariant \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QIcon \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QApplication \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qapplication.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QComboBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qcombobox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QDoubleSpinBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qspinbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGridLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QGroupBox \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qgroupbox.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QHeaderView \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qheaderview.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QLabel \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qlabel.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qpicture.h \
+		D:\OCCT7.7.0\Install\inc\BRepBndLib.hxx \
+		D:\OCCT7.7.0\Install\inc\BRepBuilderAPI_Transform.hxx \
+		D:\OCCT7.7.0\Install\inc\BRepBuilderAPI_ModifyShape.hxx \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QPushButton \
 		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qpushbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QSpacerItem \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QTabWidget \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QToolButton \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qtoolbutton.h \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QVBoxLayout \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
-		D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\QOpenGLWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qopenglwidget.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsglobal.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets\qtopenglwidgetsexports.h \
+		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QWidget \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\QSurfaceFormat \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qsurfaceformat.h \
 		D:\Qt\6.8.3\msvc2022_64\include\QtGui\qopengl.h \
@@ -54854,12 +53996,6 @@ release\widget_pattern.obj: widget_pattern.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\QVTKWin32Header.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkGUISupportQtModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkTDxConfigure.h \
-		D:\OCCT7.7.0\Install\inc\BRepBndLib.hxx \
-		D:\OCCT7.7.0\Install\inc\BRepBuilderAPI_Transform.hxx \
-		D:\OCCT7.7.0\Install\inc\BRepBuilderAPI_ModifyShape.hxx \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\QStatusBar \
-		D:\Qt\6.8.3\msvc2022_64\include\QtWidgets\qstatusbar.h \
-		D:\VTK9.4.2\install\include\vtk-9.4\QVTKOpenGLNativeWidget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkProperty.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindow.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkEventData.h \
@@ -55524,6 +54660,7 @@ release\widget_pattern_interactive.obj: widget_pattern_interactive.cpp widget.h 
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
@@ -56581,6 +55718,7 @@ release\widget_occ_shape.obj: widget_occ_shape.cpp widget.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkWeakPointerBase.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkRenderWindowInteractor.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommand.h \
+		D:\VTK9.4.2\install\include\vtk-9.4\vtkCallbackCommand.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPolyData.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkCommonDataModelModule.h \
 		D:\VTK9.4.2\install\include\vtk-9.4\vtkPointSet.h \
