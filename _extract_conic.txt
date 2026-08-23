@@ -1,0 +1,3 @@
+\n==== 2 D:\ProgramFiles\Practice_Modeling_47\sketchconicdialog.cpp ====\n#include <QCheckBox>
+#include <QCloseEvent>
+#include <QDoubleSpinBox>

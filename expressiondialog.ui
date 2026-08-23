@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ExpressionDialog</class>
+ <widget class="QDialog" name="ExpressionDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>554</width>
+    <height>521</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>表达式</string>
+  </property>
+  <widget class="QGroupBox" name="controlGroup">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>531</width>
+     <height>491</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>控件组</string>
+   </property>
+   <widget class="QTableWidget" name="controlGroupTable">
+    <property name="geometry">
+     <rect>
+      <x>7</x>
+      <y>18</y>
+      <width>511</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>名称</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>表达式</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>表达式值</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>具体内容</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QGroupBox" name="dimensionGroup">
+    <property name="geometry">
+     <rect>
+      <x>7</x>
+      <y>254</y>
+      <width>511</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>尺寸属性</string>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>表达式名称</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="expressionNameEdit"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>表达式值</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="expressionValueEdit"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>添加表达式</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="addExpressionBtn">
+       <property name="text">
+        <string>添加表达式</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>修改表达式</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QPushButton" name="modifyExpressionBtn">
+       <property name="text">
+        <string>修改表达式</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>460</y>
+      <width>235</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="applyBtn">
+       <property name="text">
+        <string>应用</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="okBtn">
+       <property name="text">
+        <string>确定</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelBtn">
+       <property name="text">
+        <string>取消</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

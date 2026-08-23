@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>cuboid.png</file>
+        <file>cylinder.png</file>
+        <file>cone.png</file>
+        <file>sphere.png</file>
+        <file>redo.png</file>
+        <file>undo.png</file>
+        <file>cone_color.png</file>
+        <file>cuboid_color.png</file>
+        <file>cylinder_color.png</file>
+        <file>sphere_color.png</file>
+        <file>Window.png</file>
+        <file>NewWindow.png</file>
+        <file>Open.png</file>
+        <file>Save.png</file>
+        <file>capture.png</file>
+        <file>capture_clear.png</file>
+        <file>capture_closed.png</file>
+        <file>capture_endpoint.png</file>
+        <file>capture_arc_center_point.png</file>
+        <file>capture_intersection_point.png</file>
+        <file>capture_midpoint.png</file>
+        <file>capture_quadrant_point.png</file>
+        <file>Contour.png</file>
+        <file>sketch_arc.png</file>
+        <file>sketch_circle.png</file>
+        <file>sketch_cuboid.png</file>
+        <file>sketch_line.png</file>
+        <file>sketch_point.png</file>
+        <file>exist_point.png</file>
+        <file>polar_point.png</file>
+        <file>control_point.png</file>
+        <file>defined_point.png</file>
+    </qresource>
+</RCC>

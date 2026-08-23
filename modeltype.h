@@ -1,0 +1,22 @@
+#ifndef MODELTYPE_H
+#define MODELTYPE_H
+
+enum ModelType {
+    CYLINDER,
+    CONE,
+    SPHERE,
+    CUBOID,
+    BOOLEAN_RESULT,
+    EXTRUSION,
+    REVOLUTION,
+    FILLET,
+    HOLLOW,
+    DATUM_PLANE,
+    WORK_CSYS,
+    REFERENCE_CSYS,
+    SKETCH,
+    PATTERN,
+    DATUM_AXIS
+};
+
+#endif // MODELTYPE_H

@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{239E37F6-9400-37DF-BE95-37DE8746B6DF}</ProjectGuid>
+    <RootNamespace>Practice_Modeling</RootNamespace>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.22621.0</WindowsTargetPlatformMinVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <PlatformToolset>v143</PlatformToolset>
+    <OutputDirectory>release\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>Application</ConfigurationType>
+    <IntermediateDirectory>release\</IntermediateDirectory>
+    <PrimaryOutput>Practice_Modeling</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <PlatformToolset>v143</PlatformToolset>
+    <OutputDirectory>debug\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>Application</ConfigurationType>
+    <IntermediateDirectory>debug\</IntermediateDirectory>
+    <PrimaryOutput>Practice_Modeling</PrimaryOutput>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(QtMsBuild)\qt_defaults.props" Condition="Exists('$(QtMsBuild)\qt_defaults.props')" />
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <QtInstall>6.8.3_msvc2022_64</QtInstall>
+    <QtModules>core;gui;widgets;opengl;openglwidgets</QtModules>
+  </PropertyGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <QtInstall>6.8.3_msvc2022_64</QtInstall>
+    <QtModules>core;gui;widgets;opengl;openglwidgets</QtModules>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') OR !Exists('$(QtMsBuild)\Qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Practice_Modeling</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Practice_Modeling</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;release;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -utf-8 -w34100 -w34189 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <DisableSpecificWarnings>4005;4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ObjectFileName>release\</ObjectFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <ProgramDataBaseFileName></ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>D:\VTK9.4.2\install\lib\vtk*.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKernel.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMath.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomBase.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBRep.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKPrim.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKShHealing.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKTopAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG2d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBO.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKFillet.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOffset.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKHLR.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMesh.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKService.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKV3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOpenGl.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtk.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtkDraw.lib;$(QTDIR)\lib\Qt6EntryPoint.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\OCCT7.7.0\Install\win64\vc14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkIncremental>false</LinkIncremental>
+      <OutputFile>$(OutDir)\Practice_Modeling.exe</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <QtMoc>
+      <CompilerFlavor>msvc</CompilerFlavor>
+      <Include>./$(Configuration)/moc_predefs.h</Include>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+      <DynamicSource>output</DynamicSource>
+      <QtMocDir>$(Configuration)</QtMocDir>
+      <QtMocFileName>moc_%(Filename).cpp</QtMocFileName>
+    </QtMoc>
+    <QtRcc>
+      <InitFuncName>resources</InitFuncName>
+      <Compression>default</Compression>
+      <NoZstd>true</NoZstd>
+      <ExecutionDescription>Rcc'ing %(Identity)...</ExecutionDescription>
+      <QtRccDir>$(Configuration)</QtRccDir>
+      <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
+    </QtRcc>
+    <QtUic>
+      <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
+      <QtUicDir>$(ProjectDir)</QtUicDir>
+      <QtUicFileName>ui_%(Filename).h</QtUicFileName>
+    </QtUic>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -utf-8 -w34100 -w34189 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4005;4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <ObjectFileName>debug\</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>D:\VTK9.4.2\install\lib\vtk*.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKernel.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMath.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomBase.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBRep.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKPrim.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKShHealing.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKTopAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG2d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBO.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKFillet.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOffset.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKHLR.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMesh.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKService.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKV3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOpenGl.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtk.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtkDraw.lib;$(QTDIR)\lib\Qt6EntryPointd.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\OCCT7.7.0\Install\win64\vc14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkIncremental>false</LinkIncremental>
+      <OutputFile>$(OutDir)\Practice_Modeling.exe</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <QtMoc>
+      <CompilerFlavor>msvc</CompilerFlavor>
+      <Include>./$(Configuration)/moc_predefs.h</Include>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+      <DynamicSource>output</DynamicSource>
+      <QtMocDir>$(Configuration)</QtMocDir>
+      <QtMocFileName>moc_%(Filename).cpp</QtMocFileName>
+    </QtMoc>
+    <QtRcc>
+      <InitFuncName>resources</InitFuncName>
+      <Compression>default</Compression>
+      <NoZstd>true</NoZstd>
+      <ExecutionDescription>Rcc'ing %(Identity)...</ExecutionDescription>
+      <QtRccDir>$(Configuration)</QtRccDir>
+      <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
+    </QtRcc>
+    <QtUic>
+      <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
+      <QtUicDir>$(ProjectDir)</QtUicDir>
+      <QtUicFileName>ui_%(Filename).h</QtUicFileName>
+    </QtUic>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="addmodelcommand.cpp" />
+    <ClCompile Include="booleancommand.cpp" />
+    <ClCompile Include="booloperationdialog.cpp" />
+    <ClCompile Include="chamferdialog.cpp" />
+    <ClCompile Include="coneparamsdialog.cpp" />
+    <ClCompile Include="creategeometrycommand.cpp" />
+    <ClCompile Include="cuboidparamsdialog.cpp" />
+    <ClCompile Include="cylinderdialog.cpp" />
+    <ClCompile Include="datum_plane.cpp" />
+    <ClCompile Include="deletemodelcommand.cpp" />
+    <ClCompile Include="expressiondialog.cpp" />
+    <ClCompile Include="extrusioncommand.cpp" />
+    <ClCompile Include="extrusiondialog.cpp" />
+    <ClCompile Include="filletdialog.cpp" />
+    <ClCompile Include="historylistitem.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="occvtkconverter.cpp" />
+    <ClCompile Include="revolvedialog.cpp" />
+    <ClCompile Include="sketch.cpp" />
+    <ClCompile Include="sketchcreatedialog.cpp" />
+    <ClCompile Include="sketchtoolinputdialog.cpp" />
+    <ClCompile Include="sphereparamsdialog.cpp" />
+    <ClCompile Include="sweepoperation.cpp" />
+    <ClCompile Include="sweeppath.cpp" />
+    <ClCompile Include="vectordialog.cpp" />
+    <ClCompile Include="updatemodelcommand.cpp" />
+    <ClCompile Include="widget.cpp" />
+    <ClCompile Include="widget_extrusion_face.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="axisdirection.h" />
+    <ClInclude Include="addmodelcommand.h" />
+    <ClInclude Include="booleancommand.h" />
+    <QtMoc Include="booloperationdialog.h" />
+    <QtMoc Include="chamferdialog.h" />
+    <ClInclude Include="command.h" />
+    <QtMoc Include="coneparamsdialog.h" />
+    <ClInclude Include="creategeometrycommand.h" />
+    <QtMoc Include="cuboidparamsdialog.h" />
+    <QtMoc Include="cylinderdialog.h" />
+    <QtMoc Include="datum_plane.h" />
+    <ClInclude Include="deletemodelcommand.h" />
+    <QtMoc Include="expressiondialog.h" />
+    <ClInclude Include="extrusioncommand.h" />
+    <QtMoc Include="extrusiondialog.h" />
+    <QtMoc Include="filletdialog.h" />
+    <QtMoc Include="historylistitem.h" />
+    <ClInclude Include="modeltype.h" />
+    <ClInclude Include="occvtkconverter.h" />
+    <QtMoc Include="revolvedialog.h" />
+    <ClInclude Include="sketch.h" />
+    <QtMoc Include="sketchcreatedialog.h" />
+    <QtMoc Include="sketchtoolinputdialog.h" />
+    <QtMoc Include="sphereparamsdialog.h" />
+    <ClInclude Include="sweepoperation.h" />
+    <ClInclude Include="sweeppath.h" />
+    <ClInclude Include="updatemodelcommand.h" />
+    <QtMoc Include="vectordialog.h" />
+    <QtMoc Include="widget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="debug\moc_predefs.h.cbt">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr /MD -wd4005 -Zi -MDd -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;$(IntDir)\moc_predefs.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generate moc_predefs.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)\moc_predefs.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="release\moc_predefs.h.cbt">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr /MD -wd4005 -O2 -MD -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;$(IntDir)\moc_predefs.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generate moc_predefs.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)\moc_predefs.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="booloperationdialog.ui" />
+    <QtUic Include="chamferdialog.ui" />
+    <QtUic Include="coneparamsdialog.ui" />
+    <QtUic Include="cuboidparamsdialog.ui" />
+    <QtUic Include="cylinderdialog.ui" />
+    <QtUic Include="datum_plane.ui" />
+    <QtUic Include="expressiondialog.ui" />
+    <QtUic Include="extrusiondialog.ui" />
+    <QtUic Include="filletdialog.ui" />
+    <QtUic Include="historylistitem.ui" />
+    <QtUic Include="revolvedialog.ui" />
+    <QtUic Include="sketchcreatedialog.ui" />
+    <QtUic Include="sketchtoolinputdialog.ui" />
+    <QtUic Include="sphereparamsdialog.ui" />
+    <QtUic Include="vectordialog.ui" />
+    <QtUic Include="widget.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\NewWindow.png" />
+    <None Include="resource\Open.png" />
+    <None Include="resource\Save.png" />
+    <None Include="resource\Window.png" />
+    <None Include="resource\capture.png" />
+    <None Include="resource\capture_arc_center_point.png" />
+    <None Include="resource\capture_clear.png" />
+    <None Include="resource\capture_closed.png" />
+    <None Include="resource\capture_endpoint.png" />
+    <None Include="resource\capture_intersection_point.png" />
+    <None Include="resource\capture_midpoint.png" />
+    <None Include="resource\capture_quadrant_point.png" />
+    <None Include="resource\cone.png" />
+    <None Include="resource\cone_color.png" />
+    <None Include="resource\cuboid.png" />
+    <None Include="resource\cuboid_color.png" />
+    <None Include="resource\cylinder.png" />
+    <None Include="resource\cylinder_color.png" />
+    <None Include="resource\redo.png" />
+    <QtRcc Include="resource\resources.qrc" />
+    <None Include="resource\sphere.png" />
+    <None Include="resource\sphere_color.png" />
+    <None Include="resource\undo.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(QtMsBuild)\qt.targets" Condition="Exists('$(QtMsBuild)\qt.targets')" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

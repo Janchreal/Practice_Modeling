@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="addmodelcommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="booleancommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="booloperationdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="chamferdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="coneparamsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="creategeometrycommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cuboidparamsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cylinderdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="datum_plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="deletemodelcommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="expressiondialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extrusioncommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extrusiondialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="filletdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="historylistitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="occvtkconverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="revolvedialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sketchcreatedialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sketchtoolinputdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sphereparamsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sweepoperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sweeppath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vectordialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="updatemodelcommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widget_extrusion_face.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="axisdirection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="addmodelcommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="booleancommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="booloperationdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="chamferdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="coneparamsdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="creategeometrycommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="cuboidparamsdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="cylinderdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="datum_plane.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="deletemodelcommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="expressiondialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="extrusioncommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="extrusiondialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="filletdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="historylistitem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="modeltype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="occvtkconverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="revolvedialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="sketch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="sketchcreatedialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="sketchtoolinputdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="sphereparamsdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="sweepoperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sweeppath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="updatemodelcommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="vectordialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="debug\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="release\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="booloperationdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="chamferdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="coneparamsdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="cuboidparamsdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="cylinderdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="datum_plane.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="expressiondialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="extrusiondialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="filletdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="historylistitem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="revolvedialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="sketchcreatedialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="sketchtoolinputdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="sphereparamsdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="vectordialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\NewWindow.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\Open.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\Save.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\Window.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\capture.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\capture_arc_center_point.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\capture_clear.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\capture_closed.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\capture_endpoint.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\capture_intersection_point.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\capture_midpoint.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\capture_quadrant_point.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\cone.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\cone_color.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\cuboid.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\cuboid_color.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\cylinder.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\cylinder_color.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\redo.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <QtRcc Include="resource\resources.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <None Include="resource\sphere.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\sphere_color.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resource\undo.png">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
