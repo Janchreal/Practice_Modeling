@@ -179,6 +179,7 @@ public:
 
     virtual void OnLeftButtonDown() override;
     virtual void OnLeftButtonUp() override;
+    virtual void OnLeftButtonDoubleClick() override;
     virtual void OnRightButtonDown() override;
     virtual void OnRightButtonUp() override;
     virtual void OnMiddleButtonDown() override;
@@ -268,6 +269,8 @@ public:
         VectorDialogPickDirection, // 矢量方向拾取（悬停自动识别并点击确认）
         VectorDialogPickStartPoint, // 矢量：起点拾取
         VectorDialogPickEndPoint,   // 矢量：终点拾取
+        VectorTwoPointInteractive,  // 两点矢量：起终点已确定，可拖拽/重选
+        VectorTwoPointHandleDrag,   // 两点矢量：手柄拖拽中
         WorkCsysPlacement, // 工作坐标系放置
         WorkCsysDrag,      // 工作坐标系拖拽
         SketchPlaneSelection,   // 草图：拾取参考平面
@@ -1029,8 +1032,26 @@ private:
     double vectorDialogCurvePosValue_ = 0.0;
 
     bool hasVectorStartPoint_ = false;
+    bool hasVectorEndPoint_ = false;
     gp_Pnt vectorStartPoint_;
     gp_Pnt vectorEndPoint_;
+
+    enum class VectorTwoPointHandlePart { None, StartSphere, EndSphere, DirectionArrow };
+    VectorTwoPointHandlePart vectorTwoPointHandleHover_ = VectorTwoPointHandlePart::None;
+    VectorTwoPointHandlePart vectorTwoPointHandleSelected_ = VectorTwoPointHandlePart::None;
+    VectorTwoPointHandlePart vectorTwoPointHandleDrag_ = VectorTwoPointHandlePart::None;
+    bool vectorTwoPointHandleDragging_ = false;
+    bool vectorTwoPointHandlesVisible_ = false;
+    bool vectorTwoPointAwaitingEndPick_ = false;
+    SelectionMode vectorTwoPointHandleSavedMode_ = None;
+    int vectorTwoPointHandleSelectDownX_ = -1;
+    int vectorTwoPointHandleSelectDownY_ = -1;
+    vtkSmartPointer<vtkActor> vectorTwoPointStartSphereActor_;
+    vtkSmartPointer<vtkActor> vectorTwoPointEndSphereActor_;
+    vtkSmartPointer<vtkActor> vectorTwoPointLineActor_;
+    QList<vtkSmartPointer<vtkActor>> vectorTwoPointSnapGhostActors_;
+    gp_Pnt snapHoverBestPoint_;
+    bool hasSnapHoverBestPoint_ = false;
 
     // 用于“高亮箭头预览”
     vtkSmartPointer<vtkActor> vectorDialogArrowActor_;
@@ -1066,6 +1087,26 @@ private:
     int vectorTwoPointStartSnapKind_ = 1;
     int vectorTwoPointEndSnapKind_ = 1;
     void applyTwoPointVectorSnapKind(int snapKind, bool clearExistingPoints);
+    void reapplyTwoPointSnapKindFilters(int snapKind);
+    bool isVectorTwoPointDialogActive() const;
+    void beginVectorTwoPointPickStart(bool refreshSnapKindsFromDialog = true);
+    void onVectorTwoPointStartPicked(const gp_Pnt& point);
+    void onVectorTwoPointEndPicked(const gp_Pnt& point);
+    void updateVectorTwoPointHandles(const gp_Pnt* previewEnd = nullptr, const gp_Pnt* previewStart = nullptr);
+    void clearVectorTwoPointHandles();
+    bool tryPickVectorTwoPointSnapAt(int x, int y);
+    void handleVectorTwoPointHandleMouseDown(int x, int y);
+    void handleVectorTwoPointHandleMouseMove(int x, int y);
+    void handleVectorTwoPointHandleMouseUp(int x, int y);
+    void handleVectorTwoPointArrowDoubleClick(int x, int y);
+    void reverseVectorTwoPointDirection();
+    gp_Pnt resolveVectorTwoPointDragPosition(int x, int y, int snapKind) const;
+    gp_Pnt resolveVectorTwoPointPreviewPosition(int x, int y, int snapKind);
+    void clearVectorTwoPointSnapGhosts();
+    void updateVectorTwoPointSnapPresentation(int x, int y, int snapKind, bool dragMode);
+    void disableSnapUiAfterVectorTwoPointComplete();
+    void applyVectorTwoPointFromEndpoints();
+    VectorTwoPointHandlePart pickVectorTwoPointHandlePart(int x, int y);
 
      // 捕捉点（Snap Point）相关
      struct SnapSettings {
@@ -1109,8 +1150,15 @@ private:
      /** 捕捉拾取时：模型改幽灵外观（类似拉伸），并禁止整模黄亮 */
      void updateSnapPickGhostPresentation();
      bool snapPickGhostOwned_ = false;
+     struct SnapHoverOptions {
+         bool suppressHoverBall = false;
+         bool suppressHoverText = false;
+         bool showCandidateGhosts = false;
+         /** >0 时在屏幕像素半径内扫描捕捉候选（用于两点矢量拖拽/拾取） */
+         double expandScreenPixelRadius = 0.0;
+     };
      void clearSnapSettings();
-     void updateSnapHover(int x, int y);
+     void updateSnapHover(int x, int y, SnapHoverOptions options = SnapHoverOptions{});
      void clearSnapHover();
      void pickSnapAt(int x, int y, SnapPickContext ctx = SnapPickContext::Normal);
      void appendActiveSketchSnapScreenCandidates(int x, int y, double maxScreenDist2,

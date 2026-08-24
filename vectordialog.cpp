@@ -108,6 +108,21 @@ void vectordialog::setVectorDirDisplay(double x, double y, double z)
                                       .arg(z, 0, 'f', 6));
 }
 
+void vectordialog::setReverseState(bool reversed)
+{
+    reverse_ = reversed;
+}
+
+int vectordialog::twoPointStartSnapKindForPick() const
+{
+    return twoPointStartSnapChosen_ ? twoPointStartSnapKind_ : -1;
+}
+
+int vectordialog::twoPointEndSnapKindForPick() const
+{
+    return twoPointEndSnapChosen_ ? twoPointEndSnapKind_ : -1;
+}
+
 void vectordialog::rebuildVectorDefineArea(int modeIndex)
 {
     // vectordialog.ui 可能是“layout 直接挂载”（vectorDefineLayout），也可能是“容器 widget + layout”（vectorDefineContainer）。

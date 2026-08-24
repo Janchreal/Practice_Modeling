@@ -28,6 +28,9 @@ public:
     void setCurveTotalLength(double totalLength);
     void setCurvePicked(bool picked);
     void setVectorDirDisplay(double x, double y, double z);
+    void setReverseState(bool reversed);
+    int twoPointStartSnapKindForPick() const;
+    int twoPointEndSnapKindForPick() const;
 
 signals:
     void vectorModeChanged(int modeIndex);

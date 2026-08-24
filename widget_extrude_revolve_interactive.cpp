@@ -1262,6 +1262,9 @@ void Widget::setFeatureGizmoActorsPickable(bool pickable)
     if (revolveHandleCenterActor_) revolveHandleCenterActor_->SetPickable(0);
     if (previewActor) previewActor->SetPickable(0);
     if (vectorDialogArrowActor_) vectorDialogArrowActor_->SetPickable(0);
+    if (vectorTwoPointStartSphereActor_) vectorTwoPointStartSphereActor_->SetPickable(pickable ? 1 : 0);
+    if (vectorTwoPointEndSphereActor_) vectorTwoPointEndSphereActor_->SetPickable(pickable ? 1 : 0);
+    if (vectorTwoPointLineActor_) vectorTwoPointLineActor_->SetPickable(0);
     if (vectorDialogHoverShapeActor_) vectorDialogHoverShapeActor_->SetPickable(0);
     if (vectorDialogHoverOutlineActor_) vectorDialogHoverOutlineActor_->SetPickable(0);
 }

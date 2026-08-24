@@ -21,9 +21,11 @@
 #include <QObject>
 #include <QGroupBox>
 #include <QPushButton>
+#include <QSet>
 #include <QSignalBlocker>
 #include <QStringList>
 #include <QStatusBar>
+#include <QTimer>
 #include <QtGlobal>
 
 #include <Standard_Failure.hxx>
@@ -472,6 +474,7 @@ void Widget::clearVectorDialogArrowPreview()
 {
     if (!renderer) return;
     clearVectorDialogHoverShape();
+    clearVectorTwoPointHandles();
     if (vectorDialogArrowActor_) {
         removeSceneActor(vectorDialogArrowActor_);
         vectorDialogArrowActor_ = nullptr;
@@ -482,6 +485,46 @@ void Widget::clearVectorDialogArrowPreview()
     if (vtkWidget && vtkWidget->renderWindow()) {
         vtkWidget->renderWindow()->Render();
     }
+}
+
+void Widget::reapplyTwoPointSnapKindFilters(int snapKind)
+{
+    snap_.nearest = false;
+    snap_.endpoint = false;
+    snap_.midpoint = false;
+    snap_.arcMidpoint = false;
+    snap_.intersection = false;
+    snap_.center = false;
+    snap_.quadrant = false;
+    snap_.onCurve = false;
+    snap_.onFace = false;
+
+    switch (snapKind) {
+    case -1:
+        snap_.enabled = false;
+        snap_.armed = false;
+        return;
+    case 1:
+        snap_.endpoint = true;
+        break;
+    case 2:
+        snap_.midpoint = true;
+        break;
+    case 5:
+        snap_.quadrant = true;
+        break;
+    case 6:
+        snap_.arcMidpoint = true;
+        break;
+    case 3:
+        snap_.intersection = true;
+        break;
+    default:
+        snap_.endpoint = true;
+        break;
+    }
+    snap_.enabled = true;
+    snap_.armed = true;
 }
 
 void Widget::applyTwoPointVectorSnapKind(int snapKind, bool clearExistingPoints)
@@ -576,13 +619,37 @@ void Widget::applyTwoPointVectorSnapKind(int snapKind, bool clearExistingPoints)
             ui->Capture_Closed->setChecked(false);
             ui->Capture_Insertsectionpoint->setChecked(snap_.intersection);
             ui->Capture_Endpoint->setChecked(snap_.endpoint);
-            ui->Capture_Midpoint->setChecked(snap_.midpoint || snap_.arcMidpoint); // UI 没有单独的“圆弧中点”开关
+            ui->Capture_Midpoint->setChecked(snap_.midpoint || snap_.arcMidpoint);
             ui->Capture_Arccenterpoint->setChecked(false);
             ui->Capture_Quadrantpoint->setChecked(snap_.quadrant);
+            if (ui->pushButton_71) {
+                QSignalBlocker b71(ui->pushButton_71);
+                ui->pushButton_71->setChecked(true);
+            }
+            if (ui->pushButton_70) {
+                QSignalBlocker b70(ui->pushButton_70);
+                ui->pushButton_70->setChecked(true);
+            }
         }
     }
     syncTabPointSnapToolbarsFromCaptureRow();
     mergeSnapFiltersFromToolbarAndCaptureUi();
+
+    if (snapKind == -1) {
+        snap_.enabled = false;
+        snap_.armed = false;
+        snap_.nearest = false;
+        snap_.endpoint = false;
+        snap_.midpoint = false;
+        snap_.arcMidpoint = false;
+        snap_.intersection = false;
+        snap_.center = false;
+        snap_.quadrant = false;
+        snap_.onCurve = false;
+        snap_.onFace = false;
+    } else {
+        reapplyTwoPointSnapKindFilters(snapKind);
+    }
 }
 
 bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
@@ -1180,8 +1247,15 @@ void Widget::openVectorDialog(int desiredModeIndex)
                 vectorDialog_->setCurveTotalLength(0.0);
             }
         } else if (modeIndex == 1) {
-            // 两点：等待起点/终点按钮信号
-            currentSelectionMode = None;
+            QTimer::singleShot(0, this, [this]() {
+                if (!vectorDialog_ || vectorDialogModeIndex_ != 1) return;
+                if (hasVectorEndPoint_) {
+                    currentSelectionMode = VectorTwoPointInteractive;
+                    updateVectorTwoPointHandles();
+                } else {
+                    beginVectorTwoPointPickStart();
+                }
+            });
         } else {
             currentSelectionMode = None;
         }
@@ -1204,23 +1278,15 @@ void Widget::openVectorDialog(int desiredModeIndex)
     connect(dlg, &vectordialog::twoPointStartRequestedWithSnap, this, [this](int startSnapKind, int endSnapKind) {
         vectorTwoPointStartSnapKind_ = startSnapKind;
         vectorTwoPointEndSnapKind_ = endSnapKind;
-
-        currentSelectionMode = VectorDialogPickStartPoint;
-        hasVectorStartPoint_ = false;
-        hasCustomVectorDir_ = false;
-
-        if (vectorDialogArrowActor_) vectorDialogArrowActor_->SetVisibility(false);
-
-        // 起点：清空旧捕捉结果，进入“捕捉起点”拾取
-        applyTwoPointVectorSnapKind(startSnapKind, true);
+        beginVectorTwoPointPickStart(false);
     });
 
     connect(dlg, &vectordialog::twoPointEndRequestedWithSnap, this, [this](int endSnapKind) {
         vectorTwoPointEndSnapKind_ = endSnapKind;
         if (!hasVectorStartPoint_) return;
 
+        vectorTwoPointAwaitingEndPick_ = false;
         currentSelectionMode = VectorDialogPickEndPoint;
-        // 终点：不清空已捕捉的起点（保持起点可视化）
         applyTwoPointVectorSnapKind(endSnapKind, false);
     });
 
@@ -1382,8 +1448,10 @@ void Widget::openVectorDialog(int desiredModeIndex)
             currentSelectionMode = None;
         }
         hasCustomVectorDir_ = false;
-        hasVectorDialogBaseDir_ = false;
+        hasVectorStartPoint_ = false;
+        hasVectorEndPoint_ = false;
         vectorDialogModeIndex_ = 0;
+        clearVectorTwoPointHandles();
         if (vectorDialogArrowActor_) vectorDialogArrowActor_->SetVisibility(false);
         snap_.enabled = false;
         setSnapArmed(false);
@@ -2057,7 +2125,8 @@ void Widget::updateSnapPickGhostPresentation()
         originSnapSelectionActive_
         || currentSelectionMode == PointSelection
         || currentSelectionMode == VectorDialogPickStartPoint
-        || currentSelectionMode == VectorDialogPickEndPoint;
+        || currentSelectionMode == VectorDialogPickEndPoint
+        || currentSelectionMode == VectorTwoPointHandleDrag;
 
     const bool wantSnapGhost = (snap_.armed || inPointPickUi) && !featureDialogBusy;
 
@@ -2286,9 +2355,20 @@ void Widget::clearSnapSettings()
     statusBar()->showMessage(tr("已清除所有捕捉点设置。"), 3000);
 }
 
+void Widget::clearVectorTwoPointSnapGhosts()
+{
+    if (!renderer) return;
+    for (const auto& a : vectorTwoPointSnapGhostActors_) {
+        if (a) removeSceneActor(a);
+    }
+    vectorTwoPointSnapGhostActors_.clear();
+}
+
 void Widget::clearSnapHover()
 {
     if (!renderer) return;
+    hasSnapHoverBestPoint_ = false;
+    clearVectorTwoPointSnapGhosts();
     if (snapHoverPointActor_) {
         removeSceneActor(snapHoverPointActor_);
         snapHoverPointActor_ = nullptr;
@@ -2694,13 +2774,14 @@ void Widget::refreshSnapHoverAfterSketchMouseMove(int x, int y)
         clearSnapHover();
 }
 
-void Widget::updateSnapHover(int x, int y)
+void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
 {
     if (!snap_.armed || !shapePicker || !renderer) return;
 
-    // 捕捉范围：开启“捕捉最近点”时扩大拾取容差
-    // 说明：IVtkTools_ShapePicker::SetTolerance 是世界单位容差，数值越大候选范围越大
-    const double snapTolerance = snap_.nearest ? 0.25 : 0.05;
+    // 捕捉范围：拖拽/扩大半径拾取时用更大容差
+    const double snapTolerance =
+        (options.expandScreenPixelRadius > 0.0) ? 0.18
+        : (snap_.nearest ? 0.25 : 0.05);
 
     // 拾取前准备：确保可见模型绑定 ShapeSource，且 ShapeDataSource 已更新
     // 否则在一些模型（例如长方体的棱）上悬停时可能取不到 EDGE 子形状
@@ -2925,6 +3006,110 @@ void Widget::updateSnapHover(int x, int y)
         }
     }
 
+    // 两点矢量拖拽/拾取：在屏幕像素半径内扫描候选，避免必须精确命中边/顶点
+    if (options.expandScreenPixelRadius > 0.0) {
+        const double maxD2 = options.expandScreenPixelRadius * options.expandScreenPixelRadius;
+        auto addIfNear = [&](const QString& t, const gp_Pnt& p, const TopoDS_Shape& ref = TopoDS_Shape(),
+                             const bool hasRef = false) {
+            const double d2 = snapScreenDist2(renderer, p, x, y);
+            if (d2 <= maxD2) {
+                candidates.append({t, p, d2, ref, hasRef});
+            }
+        };
+
+        int edgeCount = 0;
+        const int maxEdgesToScan = 800;
+        for (const auto& rec : historyList) {
+            if (!rec.actor || rec.actor->GetVisibility() == 0) continue;
+            if (rec.type == DATUM_PLANE || rec.type == DATUM_AXIS || rec.type == WORK_CSYS
+                || rec.type == REFERENCE_CSYS) {
+                continue;
+            }
+            if (rec.occShape.IsNull()) continue;
+
+            if (snap_.endpoint) {
+                for (TopExp_Explorer exV(rec.occShape, TopAbs_VERTEX); exV.More(); exV.Next()) {
+                    addIfNear(tr("端点"), BRep_Tool::Pnt(TopoDS::Vertex(exV.Current())));
+                }
+            }
+
+            if (snap_.midpoint || snap_.arcMidpoint || snap_.center || snap_.quadrant || snap_.intersection) {
+                QList<TopoDS_Edge> edges;
+                for (TopExp_Explorer exE(rec.occShape, TopAbs_EDGE); exE.More(); exE.Next()) {
+                    if (edgeCount++ > maxEdgesToScan) break;
+                    edges.append(TopoDS::Edge(exE.Current()));
+                }
+
+                for (const TopoDS_Edge& e : edges) {
+                    Standard_Real f = 0.0, l = 0.0;
+                    Handle(Geom_Curve) curve = BRep_Tool::Curve(e, f, l);
+                    if (curve.IsNull()) continue;
+
+                    if (snap_.midpoint) {
+                        addIfNear(tr("中点"), curve->Value((f + l) * 0.5), e, true);
+                    }
+                    if (snap_.arcMidpoint) {
+                        Handle(Geom_Curve) basis = curve;
+                        if (basis->IsKind(STANDARD_TYPE(Geom_TrimmedCurve))) {
+                            basis = Handle(Geom_TrimmedCurve)::DownCast(basis)->BasisCurve();
+                        }
+                        if (!Handle(Geom_Circle)::DownCast(basis).IsNull()) {
+                            addIfNear(tr("圆弧中点"), curve->Value((f + l) * 0.5), e, true);
+                        }
+                    }
+                    Handle(Geom_Curve) basis = curve;
+                    if (basis->IsKind(STANDARD_TYPE(Geom_TrimmedCurve))) {
+                        basis = Handle(Geom_TrimmedCurve)::DownCast(basis)->BasisCurve();
+                    }
+                    Handle(Geom_Circle) circ = Handle(Geom_Circle)::DownCast(basis);
+                    if (!circ.IsNull()) {
+                        const gp_Pnt c = circ->Location();
+                        if (snap_.center) addIfNear(tr("圆心"), c, e, true);
+                        if (snap_.quadrant) {
+                            const gp_Ax2 ax = circ->Position();
+                            const gp_Dir xd = ax.XDirection();
+                            const gp_Dir yd = ax.YDirection();
+                            const double r = circ->Radius();
+                            addIfNear(tr("象限点"),
+                                        gp_Pnt(c.X() + xd.X() * r, c.Y() + xd.Y() * r, c.Z() + xd.Z() * r), e, true);
+                            addIfNear(tr("象限点"),
+                                        gp_Pnt(c.X() - xd.X() * r, c.Y() - xd.Y() * r, c.Z() - xd.Z() * r), e, true);
+                            addIfNear(tr("象限点"),
+                                        gp_Pnt(c.X() + yd.X() * r, c.Y() + yd.Y() * r, c.Z() + yd.Z() * r), e, true);
+                            addIfNear(tr("象限点"),
+                                        gp_Pnt(c.X() - yd.X() * r, c.Y() - yd.Y() * r, c.Z() - yd.Z() * r), e, true);
+                        }
+                    }
+                }
+
+                if (snap_.intersection && edges.size() >= 2) {
+                    const double tol = 1e-3;
+                    for (int i = 0; i < edges.size(); ++i) {
+                        for (int j = i + 1; j < edges.size(); ++j) {
+                            Standard_Real f1 = 0.0, l1 = 0.0, f2 = 0.0, l2 = 0.0;
+                            Handle(Geom_Curve) c1 = BRep_Tool::Curve(edges[i], f1, l1);
+                            Handle(Geom_Curve) c2 = BRep_Tool::Curve(edges[j], f2, l2);
+                            if (c1.IsNull() || c2.IsNull()) continue;
+
+                            GeomAPI_ExtremaCurveCurve extrema(c1, c2);
+                            if (extrema.NbExtrema() < 1) continue;
+                            gp_Pnt p1, p2;
+                            try {
+                                extrema.NearestPoints(p1, p2);
+                            } catch (...) {
+                                continue;
+                            }
+                            if (p1.Distance(p2) <= tol) {
+                                const gp_Pnt pi((p1.X() + p2.X()) * 0.5, (p1.Y() + p2.Y()) * 0.5, (p1.Z() + p2.Z()) * 0.5);
+                                addIfNear(tr("交点"), pi);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     if (candidates.isEmpty()) {
         clearSnapHover();
         return;
@@ -2941,51 +3126,94 @@ void Widget::updateSnapHover(int x, int y)
                               .arg(best.p.Y(), 0, 'f', 2)
                               .arg(best.p.Z(), 0, 'f', 2);
 
-    // 清除旧悬停（点 + 关联形状）
+    // 清除旧悬停（点 + 关联形状）；best 点坐标在清除后再写入，避免 clearSnapHover 重置标志
     clearSnapHover();
 
-    // 1) 悬停点：琥珀高光小球
-    vtkSmartPointer<vtkSphereSource> sphere = vtkSmartPointer<vtkSphereSource>::New();
-    configureMarkerSphereSource(sphere, 0.06);
-    sphere->Update();
+    snapHoverBestPoint_ = best.p;
+    hasSnapHoverBestPoint_ = true;
 
-    vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-    mapper->SetInputConnection(sphere->GetOutputPort());
+    // 1) 悬停点：琥珀高光小球（两点矢量拾取/拖拽时改由手柄球或半透明候选球显示）
+    if (!options.suppressHoverBall) {
+        vtkSmartPointer<vtkSphereSource> sphere = vtkSmartPointer<vtkSphereSource>::New();
+        configureMarkerSphereSource(sphere, 0.06);
+        sphere->Update();
 
-    snapHoverPointActor_ = vtkSmartPointer<vtkActor>::New();
-    snapHoverPointActor_->SetMapper(mapper);
-    snapHoverPointActor_->SetPosition(best.p.X(), best.p.Y(), best.p.Z());
-    applyMarkerSphereMaterial(snapHoverPointActor_->GetProperty(), MarkerSphereStyle::HoverYellow);
-    {
-        const double s = overlayWorldScaleAt(best.p.X(), best.p.Y(), best.p.Z());
-        snapHoverPointActor_->SetScale(s, s, s);
+        vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+        mapper->SetInputConnection(sphere->GetOutputPort());
+
+        snapHoverPointActor_ = vtkSmartPointer<vtkActor>::New();
+        snapHoverPointActor_->SetMapper(mapper);
+        snapHoverPointActor_->SetPosition(best.p.X(), best.p.Y(), best.p.Z());
+        applyMarkerSphereMaterial(snapHoverPointActor_->GetProperty(), MarkerSphereStyle::HoverYellow);
+        {
+            const double s = overlayWorldScaleAt(best.p.X(), best.p.Y(), best.p.Z());
+            snapHoverPointActor_->SetScale(s, s, s);
+        }
+        addReferenceActor(snapHoverPointActor_);
     }
-    addReferenceActor(snapHoverPointActor_);
 
     // 2) 悬停文字
-    vtkSmartPointer<vtkVectorText> textSource = vtkSmartPointer<vtkVectorText>::New();
-    textSource->SetText(label.toStdString().c_str());
-    vtkSmartPointer<vtkPolyDataMapper> textMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-    textMapper->SetInputConnection(textSource->GetOutputPort());
+    if (!options.suppressHoverText) {
+        vtkSmartPointer<vtkVectorText> textSource = vtkSmartPointer<vtkVectorText>::New();
+        textSource->SetText(label.toStdString().c_str());
+        vtkSmartPointer<vtkPolyDataMapper> textMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+        textMapper->SetInputConnection(textSource->GetOutputPort());
 
-    snapHoverTextActor_ = vtkSmartPointer<vtkFollower>::New();
-    snapHoverTextActor_->SetMapper(textMapper);
-    snapHoverTextActor_->SetCamera(renderer->GetActiveCamera());
-    {
-        const double s = overlayWorldScaleAt(best.p.X(), best.p.Y(), best.p.Z());
-        snapHoverTextActor_->SetPosition(best.p.X() + 0.1 * s, best.p.Y() + 0.1 * s, best.p.Z() + 0.1 * s);
-        snapHoverTextActor_->SetScale(0.05 * s);
+        snapHoverTextActor_ = vtkSmartPointer<vtkFollower>::New();
+        snapHoverTextActor_->SetMapper(textMapper);
+        snapHoverTextActor_->SetCamera(renderer->GetActiveCamera());
+        {
+            const double s = overlayWorldScaleAt(best.p.X(), best.p.Y(), best.p.Z());
+            snapHoverTextActor_->SetPosition(best.p.X() + 0.1 * s, best.p.Y() + 0.1 * s, best.p.Z() + 0.1 * s);
+            snapHoverTextActor_->SetScale(0.05 * s);
+        }
+        snapHoverTextActor_->GetProperty()->SetColor(0.92, 0.72, 0.08);
+        snapHoverTextActor_->GetProperty()->SetAmbient(0.55);
+        snapHoverTextActor_->GetProperty()->SetDiffuse(0.45);
+        addReferenceActor(snapHoverTextActor_);
     }
-    snapHoverTextActor_->GetProperty()->SetColor(0.92, 0.72, 0.08);
-    snapHoverTextActor_->GetProperty()->SetAmbient(0.55);
-    snapHoverTextActor_->GetProperty()->SetDiffuse(0.45);
-    addReferenceActor(snapHoverTextActor_);
 
     // 3) 悬停关联形状高亮（中点/端点/圆心/象限点：高亮那条边/曲线）
     if (best.hasRef && !best.refShape.IsNull()) {
         snapHoverShapeActor_ = buildSnapShapeHighlightActor(best.refShape, 0.0, 0.9, 1.0, 0.8, 4.0);
         if (snapHoverShapeActor_) {
             addAppearanceActor(snapHoverShapeActor_);
+        }
+    }
+
+    // 4) 拖拽：在高亮边上显示全部可吸附候选点（半透明球）
+    if (options.showCandidateGhosts && best.hasRef && !best.refShape.IsNull()) {
+        QSet<QString> drawnKeys;
+        for (const Candidate& c : candidates) {
+            if (!c.hasRef || c.refShape.IsNull() || !c.refShape.IsSame(best.refShape)) continue;
+
+            const QString key = QString("%1,%2,%3")
+                                    .arg(c.p.X(), 0, 'f', 4)
+                                    .arg(c.p.Y(), 0, 'f', 4)
+                                    .arg(c.p.Z(), 0, 'f', 4);
+            if (drawnKeys.contains(key)) continue;
+            drawnKeys.insert(key);
+
+            vtkSmartPointer<vtkSphereSource> gSphere = vtkSmartPointer<vtkSphereSource>::New();
+            configureMarkerSphereSource(gSphere, 0.055);
+            gSphere->Update();
+
+            vtkSmartPointer<vtkPolyDataMapper> gMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+            gMapper->SetInputConnection(gSphere->GetOutputPort());
+
+            vtkSmartPointer<vtkActor> ghost = vtkSmartPointer<vtkActor>::New();
+            ghost->SetMapper(gMapper);
+            ghost->SetPosition(c.p.X(), c.p.Y(), c.p.Z());
+            ghost->SetPickable(0);
+            applyMarkerSphereMaterial(ghost->GetProperty(), MarkerSphereStyle::HoverYellow);
+            const bool isBest = c.p.Distance(best.p) < Precision::Confusion();
+            ghost->GetProperty()->SetOpacity(isBest ? 0.72 : 0.38);
+            {
+                const double s = overlayWorldScaleAt(c.p.X(), c.p.Y(), c.p.Z());
+                ghost->SetScale(s, s, s);
+            }
+            addReferenceActor(ghost);
+            vectorTwoPointSnapGhostActors_.append(ghost);
         }
     }
 

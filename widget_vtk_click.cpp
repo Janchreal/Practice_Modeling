@@ -968,149 +968,31 @@ void Widget::handleVtkMouseClick(int x, int y)
     }
 
     if (currentSelectionMode == VectorDialogPickStartPoint) {
-        // snapKind=-1：任意点模式（允许点击面/曲面上的任意位置）
         if (vectorTwoPointStartSnapKind_ == -1) {
             gp_Pnt p;
             if (!tryPickPointOnModelForVector(x, y, p)) return;
-
-            vectorStartPoint_ = p;
-            hasVectorStartPoint_ = true;
-
-            showSelectedPoint(p, tr("矢量起点\n(%1, %2, %3)").arg(p.X(), 0, 'f', 2).arg(p.Y(), 0, 'f', 2).arg(p.Z(), 0, 'f', 2));
-            if (vectorDialogArrowActor_) vectorDialogArrowActor_->SetVisibility(false);
-            hasVectorDialogArrowOrigin_ = true;
-            vectorDialogArrowOrigin_ = p;
-
-            // 起点完成后：进入终点拾取（终点 snapKind 可能是 -1 任意点）
-            currentSelectionMode = VectorDialogPickEndPoint;
-            applyTwoPointVectorSnapKind(vectorTwoPointEndSnapKind_, false);
+            onVectorTwoPointStartPicked(p);
             return;
         }
 
         if (!snap_.armed) return;
-
-        // 复用现有 snap 捕捉逻辑（端点/中点/象限点/圆弧中点/交点等）
-        pickSnapAt(x, y);
-        if (!hasSnapSelectedPoint_) return;
-
-        gp_Pnt p = snapSelectedPoint_;
-        vectorStartPoint_ = p;
-        hasVectorStartPoint_ = true;
-
-        // 起点先显示；箭头方向需要终点才能确定，先隐藏箭头
-        showSelectedPoint(p, tr("矢量起点\n(%1, %2, %3)").arg(p.X(), 0, 'f', 2).arg(p.Y(), 0, 'f', 2).arg(p.Z(), 0, 'f', 2));
-        if (vectorDialogArrowActor_) vectorDialogArrowActor_->SetVisibility(false);
-        hasVectorDialogArrowOrigin_ = true;
-        vectorDialogArrowOrigin_ = p;
-
-        // 切换到终点拾取：更新 snap 类型，但保留起点的“常驻捕捉点”
-        currentSelectionMode = VectorDialogPickEndPoint;
-        applyTwoPointVectorSnapKind(vectorTwoPointEndSnapKind_, false);
+        if (!tryPickVectorTwoPointSnapAt(x, y)) return;
+        onVectorTwoPointStartPicked(snapSelectedPoint_);
         return;
     }
 
     if (currentSelectionMode == VectorDialogPickEndPoint) {
         if (!hasVectorStartPoint_) return;
-        // snapKind=-1：任意点模式（允许点击面/曲面上的任意位置）
         if (vectorTwoPointEndSnapKind_ == -1) {
             gp_Pnt p;
             if (!tryPickPointOnModelForVector(x, y, p)) return;
-
-            vectorEndPoint_ = p;
-
-            gp_Vec v(vectorStartPoint_, vectorEndPoint_);
-            if (v.Magnitude() > Precision::Confusion()) {
-                gp_Dir dir(v);
-                setCustomVectorDirFromDialog(dir);
-                hasVectorDialogArrowOrigin_ = true;
-                vectorDialogArrowOrigin_ = vectorStartPoint_;
-            }
-
-            currentSelectionMode = None;
-            if (hasCustomVectorDir_ && hasVectorDialogArrowOrigin_) {
-                updateVectorDialogArrow(customVectorDir_, vectorDialogArrowOrigin_);
-            }
-
-            // 结束捕捉：关闭 snap + 清理起点/终点标记（常驻捕捉点 + 选中高亮）
-            snap_.enabled = false;
-            setSnapArmed(false);
-            clearSnapPersistentPoints();
-            clearSnapSelected();
-            clearSnapHover();
-            clearSelectedPoint();
-            clearPointSelectionHover();
-            if (ui) {
-                ui->Use_Capture->setChecked(false);
-                ui->Capture_Closed->setChecked(false);
-                ui->Capture_Endpoint->setChecked(false);
-                ui->Capture_Midpoint->setChecked(false);
-                ui->Capture_Insertsectionpoint->setChecked(false);
-                ui->Capture_Arccenterpoint->setChecked(false);
-                ui->Capture_Quadrantpoint->setChecked(false);
-                clearTabPointSnapToolbarButtons();
-                if (ui->pushButton_71) {
-                    QSignalBlocker b71(ui->pushButton_71);
-                    ui->pushButton_71->setChecked(false);
-                }
-                if (ui->pushButton_70) {
-                    QSignalBlocker b70(ui->pushButton_70);
-                    ui->pushButton_70->setChecked(false);
-                }
-            }
-            mergeSnapFiltersFromToolbarAndCaptureUi();
+            onVectorTwoPointEndPicked(p);
             return;
         }
 
         if (!snap_.armed) return;
-        pickSnapAt(x, y);
-        if (!hasSnapSelectedPoint_) return;
-
-        gp_Pnt p = snapSelectedPoint_;
-        vectorEndPoint_ = p;
-
-        gp_Vec v(vectorStartPoint_, vectorEndPoint_);
-        if (v.Magnitude() > Precision::Confusion()) {
-            gp_Dir dir(v);
-            // 终点完成后确定方向（自动考虑 vectordialog 的反转按钮）
-            setCustomVectorDirFromDialog(dir);
-
-            // 箭头起点用起点更符合“起点->终点”的直观
-            hasVectorDialogArrowOrigin_ = true;
-            vectorDialogArrowOrigin_ = vectorStartPoint_;
-        }
-
-        currentSelectionMode = None;
-        if (hasCustomVectorDir_ && hasVectorDialogArrowOrigin_) {
-            updateVectorDialogArrow(customVectorDir_, vectorDialogArrowOrigin_);
-        }
-
-        // 结束捕捉：关闭 snap + 清理起点/终点标记（常驻捕捉点 + 选中高亮）
-        snap_.enabled = false;
-        setSnapArmed(false);
-        clearSnapPersistentPoints();
-        clearSnapSelected();
-        clearSnapHover();
-        clearSelectedPoint();
-        clearPointSelectionHover();
-        if (ui) {
-            ui->Use_Capture->setChecked(false);
-            ui->Capture_Closed->setChecked(false);
-            ui->Capture_Endpoint->setChecked(false);
-            ui->Capture_Midpoint->setChecked(false);
-            ui->Capture_Insertsectionpoint->setChecked(false);
-            ui->Capture_Arccenterpoint->setChecked(false);
-            ui->Capture_Quadrantpoint->setChecked(false);
-            clearTabPointSnapToolbarButtons();
-            if (ui->pushButton_71) {
-                QSignalBlocker b71(ui->pushButton_71);
-                ui->pushButton_71->setChecked(false);
-            }
-            if (ui->pushButton_70) {
-                QSignalBlocker b70(ui->pushButton_70);
-                ui->pushButton_70->setChecked(false);
-            }
-        }
-        mergeSnapFiltersFromToolbarAndCaptureUi();
+        if (!tryPickVectorTwoPointSnapAt(x, y)) return;
+        onVectorTwoPointEndPicked(snapSelectedPoint_);
         return;
     }
 

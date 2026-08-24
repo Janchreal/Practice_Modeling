@@ -62,6 +62,7 @@ SOURCES += \
     widget_revolve.cpp \
     widget_extrude_revolve_interactive.cpp \
     widget_vector_snap.cpp \
+    widget_vector_two_point_handles.cpp \
     widget_feature_tree.cpp \
     widget_boolean.cpp \
     feature_topology.cpp \

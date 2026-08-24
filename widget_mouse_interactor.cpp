@@ -207,6 +207,15 @@ void MouseInteractorStyle::OnLeftButtonDown()
             return;
         }
     }
+    if (widget && widget->isVectorTwoPointDialogActive()) {
+        const Widget::SelectionMode mode = widget->getCurrentSelectionMode();
+        if (mode == Widget::VectorTwoPointInteractive || mode == Widget::VectorTwoPointHandleDrag) {
+            widget->handleVectorTwoPointHandleMouseDown(x, y);
+            if (widget->getCurrentSelectionMode() == Widget::VectorTwoPointHandleDrag) {
+                return;
+            }
+        }
+    }
 
     if (isExtrusionSelection || isVectorDialogSelection || isSketchEditSelection) {
         // 拉伸/矢量拾取模式：左键只用于“点击确认”，不再承担旋转/平移
@@ -310,6 +319,14 @@ void MouseInteractorStyle::OnLeftButtonUp()
         return;
     }
 
+    if (mode == Widget::VectorTwoPointHandleDrag) {
+        int x = this->Interactor->GetEventPosition()[0];
+        int y = this->Interactor->GetEventPosition()[1];
+        widget->handleVectorTwoPointHandleMouseUp(x, y);
+        mouseMoved = false;
+        return;
+    }
+
     if (isExtrusionSelection || isVectorDialogSelection || isSketchEditSelection) {
         // 在拉伸/矢量拾取模式下，如果鼠标没有移动（说明是点击而不是拖拽），处理选择逻辑
         if (!mouseMoved) {
@@ -324,6 +341,19 @@ void MouseInteractorStyle::OnLeftButtonUp()
 
     // 重置标志
     mouseMoved = false;
+}
+
+void MouseInteractorStyle::OnLeftButtonDoubleClick()
+{
+    if (preEventHook_) preEventHook_();
+    if (!widget || !this->Interactor) {
+        vtkInteractorStyleTrackballCamera::OnLeftButtonDoubleClick();
+        return;
+    }
+
+    const int x = this->Interactor->GetEventPosition()[0];
+    const int y = this->Interactor->GetEventPosition()[1];
+    widget->handleVectorTwoPointArrowDoubleClick(x, y);
 }
 
 void MouseInteractorStyle::OnRightButtonDown()

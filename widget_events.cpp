@@ -137,6 +137,10 @@ void Widget::handleVtkMouseMove(int x, int y)
         handleFilletRadiusHandleMouseMove(x, y);
         if (currentSelectionMode == FilletRadiusHandleDrag) return;
     }
+    if (currentSelectionMode == VectorTwoPointHandleDrag || currentSelectionMode == VectorTwoPointInteractive) {
+        handleVectorTwoPointHandleMouseMove(x, y);
+        if (currentSelectionMode == VectorTwoPointHandleDrag) return;
+    }
 
     // 草图绘制：实时预览
     if (currentSelectionMode == SketchDrawLine || currentSelectionMode == SketchDrawArc
@@ -336,18 +340,39 @@ void Widget::handleVtkMouseMove(int x, int y)
         }
     } else if (currentSelectionMode == VectorDialogPickStartPoint
                || currentSelectionMode == VectorDialogPickEndPoint) {
-        // 两点定矢量：恢复点悬浮高亮（勿被 isVectorAxisPickContext 提前 return 吞掉）
         updateReferenceCsysAxisHover(x, y);
         const int kind = (currentSelectionMode == VectorDialogPickStartPoint)
                              ? vectorTwoPointStartSnapKind_
                              : vectorTwoPointEndSnapKind_;
         if (kind == -1) {
-            updatePointSelectionHover(x, y);
-        } else if (snap_.armed) {
-            updateSnapHover(x, y);
-        } else {
             clearSnapHover();
             clearPointSelectionHover();
+            if (currentSelectionMode == VectorDialogPickEndPoint && hasVectorStartPoint_) {
+                gp_Pnt preview;
+                if (tryPickPointOnModelForVector(x, y, preview)) {
+                    updateVectorTwoPointHandles(&preview);
+                } else {
+                    updateVectorTwoPointHandles();
+                }
+            } else {
+                updateVectorTwoPointHandles();
+            }
+        } else if (snap_.armed) {
+            updateVectorTwoPointSnapPresentation(x, y, kind, false);
+            if (hasSnapHoverBestPoint_) {
+                if (currentSelectionMode == VectorDialogPickEndPoint && hasVectorStartPoint_) {
+                    updateVectorTwoPointHandles(&snapHoverBestPoint_, nullptr);
+                } else if (currentSelectionMode == VectorDialogPickStartPoint) {
+                    updateVectorTwoPointHandles(nullptr, &snapHoverBestPoint_);
+                } else {
+                    updateVectorTwoPointHandles();
+                }
+            } else {
+                updateVectorTwoPointHandles();
+            }
+        } else {
+            clearSnapHover();
+            updateVectorTwoPointHandles();
         }
     } else if (isVectorAxisPickContext()) {
         updateReferenceCsysAxisHover(x, y);

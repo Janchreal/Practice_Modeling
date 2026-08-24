@@ -294,7 +294,9 @@ bool Widget::isVectorAxisPickContext() const
     }
     // 两点定矢量期间禁止坐标系轴抢点击，否则易误选到原点/轴向
     if (currentSelectionMode == VectorDialogPickStartPoint
-        || currentSelectionMode == VectorDialogPickEndPoint) {
+        || currentSelectionMode == VectorDialogPickEndPoint
+        || currentSelectionMode == VectorTwoPointInteractive
+        || currentSelectionMode == VectorTwoPointHandleDrag) {
         return false;
     }
     // 矢量对话框打开期间均可点选基准坐标系轴向
