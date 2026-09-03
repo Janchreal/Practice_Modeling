@@ -15,145 +15,21 @@ DEFINES += SA_RIBBON_BAR_NO_EXPORT
 DEFINES += SARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0
 
 SOURCES += \
-    addmodelcommand.cpp \
-    booleancommand.cpp \
-    booloperationdialog.cpp \
-    chamferdialog.cpp \
-    coneparamsdialog.cpp \
-    creategeometrycommand.cpp \
-    cuboidparamsdialog.cpp \
-    cylinderdialog.cpp \
-    datum_plane.cpp \
-    datum_axis.cpp \
-    widget_datum.cpp \
-    deletemodelcommand.cpp \
-    expressiondialog.cpp \
-    extrusioncommand.cpp \
-    extrusiondialog.cpp \
-    featurerecipe_io.cpp \
-    filletdialog.cpp \
-    historylistitem.cpp \
-    main.cpp \
-    occvtkconverter.cpp \
-    regeneratemodelcommand.cpp \
-    revolvedialog.cpp \
-    sketch.cpp \
-    sketchcreatedialog.cpp \
-    sketchtoolinputdialog.cpp \
-    sketchmodedialogs.cpp \
-    sketchconicdialog.cpp \
-    sketchpolygondialog.cpp \
-    sketchellipsedialog.cpp \
-    sphereparamsdialog.cpp \
-    sweepoperation.cpp \
-    sweeppath.cpp \
-    updatemodelcommand.cpp \
-    vectordialog.cpp \
-    widget.cpp \
-    widget_ribbon.cpp \
-    widget_document.cpp \
-    widget_vtk_view.cpp \
-    widget_reference_csys.cpp \
-    widget_sketch.cpp \
-    widget_mouse_interactor.cpp \
-    widget_vtk_click.cpp \
-    widget_extrusion_face.cpp \
-    widget_extrusion.cpp \
-    widget_revolve.cpp \
-    widget_extrude_revolve_interactive.cpp \
-    widget_vector_snap.cpp \
-    widget_vector_two_point_handles.cpp \
-    widget_feature_tree.cpp \
-    widget_boolean.cpp \
-    feature_topology.cpp \
-    widget_feature_regenerate.cpp \
-    widget_fillet_chamfer.cpp \
-    widget_model_regenerate.cpp \
-    widget_undo_restore.cpp \
-    widget_history_snapshot.cpp \
-    widget_mirror_globals.cpp \
-    widget_mirror_window.cpp \
-    widget_events.cpp \
-    widget_history_highlight.cpp \
-    widget_primitives.cpp \
-    widget_cuboid_interactive.cpp \
-    patternfeaturedialog.cpp \
-    patterncommand.cpp \
-    widget_pattern.cpp \
-    widget_pattern_interactive.cpp \
-    widget_occ_shape.cpp \
-    nx_main_menu_builder.cpp \
-    handle_spec.cpp \
-    handle_geometry.cpp \
-    3rdparty/SARibbon/SARibbon.cpp
+    $$files($$PWD/controller/*.cpp) \
+    $$files($$PWD/core/*.cpp) \
+    $$files($$PWD/model/*.cpp) \
+    $$files($$PWD/view/*.cpp) \
+    $$files($$PWD/3rdparty/SARibbon/*.cpp)
 
 HEADERS += \
-    widget_mirror_types.h \
-    widget_mirror_globals.h \
-    widget_mirror_window.h \
-    3rdparty/SARibbon/SARibbon.h \
-    addmodelcommand.h \
-    axisdirection.h \
-    booleancommand.h \
-    booloperationdialog.h \
-    chamferdialog.h \
-    command.h \
-    coneparamsdialog.h \
-    creategeometrycommand.h \
-    cuboidparamsdialog.h \
-    patternfeaturedialog.h \
-    patterncommand.h \
-    regeneratemodelcommand.h \
-    cylinderdialog.h \
-    datum_plane.h \
-    datum_axis.h \
-    deletemodelcommand.h \
-    expressiondialog.h \
-    extrusioncommand.h \
-    extrusiondialog.h \
-    featurerecipe.h \
-    featurerecipe_io.h \
-    feature_topology.h \
-    filletdialog.h \
-    historylistitem.h \
-    modeltype.h \
-    modelhistorysnapshot.h \
-    occvtkconverter.h \
-    revolvedialog.h \
-    sketch.h \
-    sketchcreatedialog.h \
-    sketchtoolinputdialog.h \
-    sketchmodedialogs.h \
-    sketchconicdialog.h \
-    sketchpolygondialog.h \
-    sketchellipsedialog.h \
-    sphereparamsdialog.h \
-    sweepoperation.h \
-    sweeppath.h \
-    updatemodelcommand.h \
-    vectordialog.h \
-    widget.h \
-    handle_spec.h \
-    handle_geometry.h \
-    nx_main_menu_builder.h
+    $$files($$PWD/controller/*.h) \
+    $$files($$PWD/core/*.h) \
+    $$files($$PWD/model/*.h) \
+    $$files($$PWD/view/*.h) \
+    $$files($$PWD/3rdparty/SARibbon/*.h)
 
 FORMS += \
-    booloperationdialog.ui \
-    chamferdialog.ui \
-    coneparamsdialog.ui \
-    cuboidparamsdialog.ui \
-    cylinderdialog.ui \
-    datum_plane.ui \
-    expressiondialog.ui \
-    extrusiondialog.ui \
-    filletdialog.ui \
-    historylistitem.ui \
-    revolvedialog.ui \
-    sketchcreatedialog.ui \
-    sketchtoolinputdialog.ui \
-    sphereparamsdialog.ui \
-    vectordialog.ui \
-    widget.ui
+    $$files($$PWD/view/*.ui)
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -162,13 +38,19 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 QMAKE_PROJECT_DEPTH = 0
 
+# 分层源码目录
+INCLUDEPATH += $$PWD/model
+INCLUDEPATH += $$PWD/controller
+INCLUDEPATH += $$PWD/view
+INCLUDEPATH += $$PWD/core
+
 # SARibbon 静态嵌入
 INCLUDEPATH += $$PWD/3rdparty/SARibbon
 
 win32{
     VTK_DIR = D:/VTK9.4.2/install
     INCLUDEPATH += $${VTK_DIR}/include/vtk-9.4
-    LIBS += $${VTK_DIR}/lib/vtk*.lib
+    LIBS += $$files($${VTK_DIR}/lib/vtk*.lib)
 
 # OpenCASCADE 配置
     OCC_DIR = D:/OCCT7.7.0/Install

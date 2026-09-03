@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Release|x64">
@@ -21,31 +21,31 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <PlatformToolset>v143</PlatformToolset>
-    <OutputDirectory>release\</OutputDirectory>
+    <OutputDirectory>vsbuild\Release\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
-    <IntermediateDirectory>release\</IntermediateDirectory>
+    <IntermediateDirectory>vsbuild\Release\</IntermediateDirectory>
     <PrimaryOutput>Practice_Modeling</PrimaryOutput>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <PlatformToolset>v143</PlatformToolset>
-    <OutputDirectory>debug\</OutputDirectory>
+    <OutputDirectory>vsbuild\Debug\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
-    <IntermediateDirectory>debug\</IntermediateDirectory>
+    <IntermediateDirectory>vsbuild\Debug\</IntermediateDirectory>
     <PrimaryOutput>Practice_Modeling</PrimaryOutput>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <Import Project="$(QtMsBuild)\qt_defaults.props" Condition="Exists('$(QtMsBuild)\qt_defaults.props')" />
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QtInstall>6.8.3_msvc2022_64</QtInstall>
-    <QtModules>core;gui;widgets;opengl;openglwidgets</QtModules>
+    <QtModules>core;gui;widgets;opengl;openglwidgets;svg</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>6.8.3_msvc2022_64</QtInstall>
-    <QtModules>core;gui;widgets;opengl;openglwidgets</QtModules>
+    <QtModules>core;gui;widgets;opengl;openglwidgets;svg</QtModules>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') OR !Exists('$(QtMsBuild)\Qt.props')">
     <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
@@ -61,28 +61,29 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">vsbuild\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">vsbuild\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Practice_Modeling</TargetName>
+    <LocalDebuggerEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PATH=$(QTDIR)\bin;D:\VTK9.4.2\install\bin;D:\OCCT7.7.0\Install\win64\vc14\bin;$(PATH)</LocalDebuggerEnvironment>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">vsbuild\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">vsbuild\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Practice_Modeling</TargetName>
+    <LocalDebuggerEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PATH=$(QTDIR)\bin;D:\VTK9.4.2\install\bin;D:\OCCT7.7.0\Install\win64\vc14\bin;$(PATH)</LocalDebuggerEnvironment>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;release;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;model;controller;view;core;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;release;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -utf-8 -w34100 -w34189 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
-      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <AssemblerListingLocation>vsbuild\Release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
       <DebugInformationFormat>None</DebugInformationFormat>
       <DisableSpecificWarnings>4005;4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <ObjectFileName>release\</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
@@ -117,7 +118,7 @@
     </ResourceCompile>
     <QtMoc>
       <CompilerFlavor>msvc</CompilerFlavor>
-      <Include>./$(Configuration)/moc_predefs.h</Include>
+      <Include>./vsbuild/$(Configuration)/moc_predefs.h</Include>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
       <DynamicSource>output</DynamicSource>
       <QtMocDir>$(Configuration)</QtMocDir>
@@ -133,21 +134,20 @@
     </QtRcc>
     <QtUic>
       <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
-      <QtUicDir>$(ProjectDir)</QtUicDir>
+      <QtUicDir>$(ProjectDir)view</QtUicDir>
       <QtUicFileName>ui_%(Filename).h</QtUicFileName>
     </QtUic>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;model;controller;view;core;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -utf-8 -w34100 -w34189 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
-      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <AssemblerListingLocation>vsbuild\Debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4005;4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <ObjectFileName>debug\</ObjectFileName>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
@@ -181,7 +181,7 @@
     </ResourceCompile>
     <QtMoc>
       <CompilerFlavor>msvc</CompilerFlavor>
-      <Include>./$(Configuration)/moc_predefs.h</Include>
+      <Include>./vsbuild/$(Configuration)/moc_predefs.h</Include>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
       <DynamicSource>output</DynamicSource>
       <QtMocDir>$(Configuration)</QtMocDir>
@@ -197,80 +197,167 @@
     </QtRcc>
     <QtUic>
       <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
-      <QtUicDir>$(ProjectDir)</QtUicDir>
+      <QtUicDir>$(ProjectDir)view</QtUicDir>
       <QtUicFileName>ui_%(Filename).h</QtUicFileName>
     </QtUic>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="addmodelcommand.cpp" />
-    <ClCompile Include="booleancommand.cpp" />
-    <ClCompile Include="booloperationdialog.cpp" />
-    <ClCompile Include="chamferdialog.cpp" />
-    <ClCompile Include="coneparamsdialog.cpp" />
-    <ClCompile Include="creategeometrycommand.cpp" />
-    <ClCompile Include="cuboidparamsdialog.cpp" />
-    <ClCompile Include="cylinderdialog.cpp" />
-    <ClCompile Include="datum_plane.cpp" />
-    <ClCompile Include="deletemodelcommand.cpp" />
-    <ClCompile Include="expressiondialog.cpp" />
-    <ClCompile Include="extrusioncommand.cpp" />
-    <ClCompile Include="extrusiondialog.cpp" />
-    <ClCompile Include="filletdialog.cpp" />
-    <ClCompile Include="historylistitem.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="occvtkconverter.cpp" />
-    <ClCompile Include="revolvedialog.cpp" />
-    <ClCompile Include="sketch.cpp" />
-    <ClCompile Include="sketchcreatedialog.cpp" />
-    <ClCompile Include="sketchtoolinputdialog.cpp" />
-    <ClCompile Include="sphereparamsdialog.cpp" />
-    <ClCompile Include="sweepoperation.cpp" />
-    <ClCompile Include="sweeppath.cpp" />
-    <ClCompile Include="vectordialog.cpp" />
-    <ClCompile Include="updatemodelcommand.cpp" />
-    <ClCompile Include="widget.cpp" />
-    <ClCompile Include="widget_extrusion_face.cpp" />
+    <ClCompile Include="controller\addmodelcommand.cpp" />
+    <ClCompile Include="controller\booleancommand.cpp" />
+    <ClCompile Include="controller\command.cpp" />
+    <ClCompile Include="view\bool_operation_dialog.cpp" />
+    <ClCompile Include="view\chamfer_dialog.cpp" />
+    <ClCompile Include="view\cone_params_dialog.cpp" />
+    <ClCompile Include="controller\creategeometrycommand.cpp" />
+    <ClCompile Include="view\cuboid_params_dialog.cpp" />
+    <ClCompile Include="view\cylinder_dialog.cpp" />
+    <ClCompile Include="controller\commandmanager.cpp" />
+    <ClCompile Include="view\datum_plane_dialog.cpp" />
+    <ClCompile Include="controller\deletemodelcommand.cpp" />
+    <ClCompile Include="view\expression_dialog.cpp" />
+    <ClCompile Include="controller\extrusioncommand.cpp" />
+    <ClCompile Include="view\extrusion_dialog.cpp" />
+    <ClCompile Include="view\fillet_dialog.cpp" />
+    <ClCompile Include="view\history_list_item.cpp" />
+    <ClCompile Include="view\main.cpp" />
+    <ClCompile Include="model\modeldocument.cpp" />
+    <ClCompile Include="core\occvtkconverter.cpp" />
+    <ClCompile Include="core\boolean_ops.cpp" />
+    <ClCompile Include="core\extrusion_geometry.cpp" />
+    <ClCompile Include="core\feature_modification_geometry.cpp" />
+    <ClCompile Include="core\selection_geometry.cpp" />
+    <ClCompile Include="core\primitive_geometry.cpp" />
+    <ClCompile Include="core\extrusion_recipe.cpp" />
+    <ClCompile Include="core\pattern_geometry.cpp" />
+    <ClCompile Include="core\revolve_geometry.cpp" />
+    <ClCompile Include="core\sketch_geometry.cpp" />
+    <ClCompile Include="view\revolve_dialog.cpp" />
+    <ClCompile Include="model\sketch.cpp" />
+    <ClCompile Include="view\sketch_create_dialog.cpp" />
+    <ClCompile Include="view\sketch_tool_input_dialog.cpp" />
+    <ClCompile Include="view\sphere_params_dialog.cpp" />
+    <ClCompile Include="view\vector_dialog.cpp" />
+    <ClCompile Include="controller\updatemodelcommand.cpp" />
+    <ClCompile Include="controller\sketcheditcommand.cpp" />
+    <ClCompile Include="controller\patterncommand.cpp" />
+    <ClCompile Include="controller\regeneratemodelcommand.cpp" />
+    <ClCompile Include="view\main_window.cpp" />
+    <ClCompile Include="view\main_window_extrusion_face_selection.cpp" />
+    <ClCompile Include="view\datum_axis.cpp" />
+    <ClCompile Include="view\main_menu_builder.cpp" />
+    <ClCompile Include="view\main_window_boolean.cpp" />
+    <ClCompile Include="view\main_window_cuboid_interaction.cpp" />
+    <ClCompile Include="view\main_window_datum.cpp" />
+    <ClCompile Include="view\main_window_document.cpp" />
+    <ClCompile Include="view\main_window_events.cpp" />
+    <ClCompile Include="view\main_window_extrude_revolve_interaction.cpp" />
+    <ClCompile Include="view\main_window_extrusion.cpp" />
+    <ClCompile Include="view\main_window_feature_regeneration.cpp" />
+    <ClCompile Include="view\main_window_feature_tree.cpp" />
+    <ClCompile Include="view\main_window_fillet_chamfer.cpp" />
+    <ClCompile Include="view\main_window_history_highlight.cpp" />
+    <ClCompile Include="view\main_window_history_snapshot.cpp" />
+    <ClCompile Include="view\main_window_mirror_view.cpp" />
+    <ClCompile Include="view\main_window_model_regeneration.cpp" />
+    <ClCompile Include="view\main_window_mouse_interactor.cpp" />
+    <ClCompile Include="view\main_window_occ_shape.cpp" />
+    <ClCompile Include="view\main_window_pattern.cpp" />
+    <ClCompile Include="view\main_window_pattern_interaction.cpp" />
+    <ClCompile Include="view\main_window_primitives.cpp" />
+    <ClCompile Include="view\main_window_reference_csys.cpp" />
+    <ClCompile Include="view\main_window_revolve.cpp" />
+    <ClCompile Include="view\main_window_ribbon.cpp" />
+    <ClCompile Include="view\main_window_sketch.cpp" />
+    <ClCompile Include="view\main_window_undo_restore.cpp" />
+    <ClCompile Include="view\main_window_vector_handles.cpp" />
+    <ClCompile Include="view\main_window_vector_snap.cpp" />
+    <ClCompile Include="view\main_window_vtk_click.cpp" />
+    <ClCompile Include="view\main_window_vtk_view.cpp" />
+    <ClCompile Include="view\mirror_view_state.cpp" />
+    <ClCompile Include="view\pattern_feature_dialog.cpp" />
+    <ClCompile Include="view\sketch_conic_dialog.cpp" />
+    <ClCompile Include="view\sketch_ellipse_dialog.cpp" />
+    <ClCompile Include="view\sketch_mode_dialogs.cpp" />
+    <ClCompile Include="view\sketch_polygon_dialog.cpp" />
+    <ClCompile Include="core\feature_topology.cpp" />
+    <ClCompile Include="core\handle_geometry.cpp" />
+    <ClCompile Include="core\handle_spec.cpp" />
+    <ClCompile Include="model\featurerecipe_io.cpp" />
+    <ClCompile Include="3rdparty\SARibbon\SARibbon.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="axisdirection.h" />
-    <ClInclude Include="addmodelcommand.h" />
-    <ClInclude Include="booleancommand.h" />
-    <QtMoc Include="booloperationdialog.h" />
-    <QtMoc Include="chamferdialog.h" />
-    <ClInclude Include="command.h" />
-    <QtMoc Include="coneparamsdialog.h" />
-    <ClInclude Include="creategeometrycommand.h" />
-    <QtMoc Include="cuboidparamsdialog.h" />
-    <QtMoc Include="cylinderdialog.h" />
-    <QtMoc Include="datum_plane.h" />
-    <ClInclude Include="deletemodelcommand.h" />
-    <QtMoc Include="expressiondialog.h" />
-    <ClInclude Include="extrusioncommand.h" />
-    <QtMoc Include="extrusiondialog.h" />
-    <QtMoc Include="filletdialog.h" />
-    <QtMoc Include="historylistitem.h" />
-    <ClInclude Include="modeltype.h" />
-    <ClInclude Include="occvtkconverter.h" />
-    <QtMoc Include="revolvedialog.h" />
-    <ClInclude Include="sketch.h" />
-    <QtMoc Include="sketchcreatedialog.h" />
-    <QtMoc Include="sketchtoolinputdialog.h" />
-    <QtMoc Include="sphereparamsdialog.h" />
-    <ClInclude Include="sweepoperation.h" />
-    <ClInclude Include="sweeppath.h" />
-    <ClInclude Include="updatemodelcommand.h" />
-    <QtMoc Include="vectordialog.h" />
-    <QtMoc Include="widget.h" />
+    <ClInclude Include="model\axisdirection.h" />
+    <ClInclude Include="model\featurerecipe.h" />
+    <ClInclude Include="model\featurerecipe_io.h" />
+    <ClInclude Include="model\modelhistorysnapshot.h" />
+    <ClInclude Include="model\modelinghistory.h" />
+    <ClInclude Include="controller\addmodelcommand.h" />
+    <ClInclude Include="controller\booleancommand.h" />
+    <QtMoc Include="view\bool_operation_dialog.h" />
+    <QtMoc Include="view\chamfer_dialog.h" />
+    <ClInclude Include="controller\command.h" />
+    <ClInclude Include="controller\commandmanager.h" />
+    <ClInclude Include="controller\commandcontext.h" />
+    <QtMoc Include="view\cone_params_dialog.h" />
+    <ClInclude Include="controller\creategeometrycommand.h" />
+    <QtMoc Include="view\cuboid_params_dialog.h" />
+    <QtMoc Include="view\cylinder_dialog.h" />
+    <QtMoc Include="view\datum_plane_dialog.h" />
+    <ClInclude Include="controller\deletemodelcommand.h" />
+    <QtMoc Include="view\expression_dialog.h" />
+    <ClInclude Include="controller\extrusioncommand.h" />
+    <QtMoc Include="view\extrusion_dialog.h" />
+    <QtMoc Include="view\fillet_dialog.h" />
+    <QtMoc Include="view\history_list_item.h" />
+    <ClInclude Include="model\modeldocument.h" />
+    <ClInclude Include="model\modeltype.h" />
+    <ClInclude Include="core\occvtkconverter.h" />
+    <ClInclude Include="core\boolean_ops.h" />
+    <ClInclude Include="core\extrusion_geometry.h" />
+    <ClInclude Include="core\feature_modification_geometry.h" />
+    <ClInclude Include="core\feature_topology.h" />
+    <ClInclude Include="core\handle_geometry.h" />
+    <ClInclude Include="core\handle_spec.h" />
+    <ClInclude Include="core\selection_geometry.h" />
+    <ClInclude Include="core\primitive_geometry.h" />
+    <ClInclude Include="core\extrusion_recipe.h" />
+    <ClInclude Include="core\pattern_geometry.h" />
+    <ClInclude Include="core\revolve_geometry.h" />
+    <ClInclude Include="core\sketch_geometry.h" />
+    <ClInclude Include="core\patternfeaturetypes.h" />
+    <ClInclude Include="core\platformmath.h" />
+    <QtMoc Include="view\revolve_dialog.h" />
+    <ClInclude Include="model\sketch.h" />
+    <QtMoc Include="view\sketch_create_dialog.h" />
+    <QtMoc Include="view\sketch_tool_input_dialog.h" />
+    <QtMoc Include="view\sphere_params_dialog.h" />
+    <ClInclude Include="controller\updatemodelcommand.h" />
+    <ClInclude Include="controller\sketcheditcommand.h" />
+    <ClInclude Include="controller\patterncommand.h" />
+    <ClInclude Include="controller\regeneratemodelcommand.h" />
+    <QtMoc Include="view\vector_dialog.h" />
+    <QtMoc Include="view\main_window.h" />
+    <QtMoc Include="view\datum_axis.h" />
+    <ClInclude Include="view\main_menu_builder.h" />
+    <ClInclude Include="view\mirror_view_state.h" />
+    <ClInclude Include="view\mirror_view_types.h" />
+    <ClInclude Include="view\mirror_view_window.h" />
+    <QtMoc Include="3rdparty\SARibbon\SARibbon.h" />
+    <QtMoc Include="view\pattern_feature_dialog.h" />
+    <QtMoc Include="view\sketch_conic_dialog.h" />
+    <QtMoc Include="view\sketch_ellipse_dialog.h" />
+    <QtMoc Include="view\sketch_mode_dialogs.h" />
+    <QtMoc Include="view\sketch_polygon_dialog.h" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="debug\moc_predefs.h.cbt">
+    <CustomBuild Include="vsbuild\Debug\moc_predefs.h.cbt">
       <FileType>Document</FileType>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr /MD -wd4005 -Zi -MDd -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;$(IntDir)\moc_predefs.h</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generate moc_predefs.h</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)\moc_predefs.h;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="release\moc_predefs.h.cbt">
+    <CustomBuild Include="vsbuild\Release\moc_predefs.h.cbt">
       <FileType>Document</FileType>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr /MD -wd4005 -O2 -MD -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;$(IntDir)\moc_predefs.h</Command>
@@ -279,22 +366,22 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="booloperationdialog.ui" />
-    <QtUic Include="chamferdialog.ui" />
-    <QtUic Include="coneparamsdialog.ui" />
-    <QtUic Include="cuboidparamsdialog.ui" />
-    <QtUic Include="cylinderdialog.ui" />
-    <QtUic Include="datum_plane.ui" />
-    <QtUic Include="expressiondialog.ui" />
-    <QtUic Include="extrusiondialog.ui" />
-    <QtUic Include="filletdialog.ui" />
-    <QtUic Include="historylistitem.ui" />
-    <QtUic Include="revolvedialog.ui" />
-    <QtUic Include="sketchcreatedialog.ui" />
-    <QtUic Include="sketchtoolinputdialog.ui" />
-    <QtUic Include="sphereparamsdialog.ui" />
-    <QtUic Include="vectordialog.ui" />
-    <QtUic Include="widget.ui" />
+    <QtUic Include="view\bool_operation_dialog.ui" />
+    <QtUic Include="view\chamfer_dialog.ui" />
+    <QtUic Include="view\cone_params_dialog.ui" />
+    <QtUic Include="view\cuboid_params_dialog.ui" />
+    <QtUic Include="view\cylinder_dialog.ui" />
+    <QtUic Include="view\datum_plane_dialog.ui" />
+    <QtUic Include="view\expression_dialog.ui" />
+    <QtUic Include="view\extrusion_dialog.ui" />
+    <QtUic Include="view\fillet_dialog.ui" />
+    <QtUic Include="view\history_list_item.ui" />
+    <QtUic Include="view\revolve_dialog.ui" />
+    <QtUic Include="view\sketch_create_dialog.ui" />
+    <QtUic Include="view\sketch_tool_input_dialog.ui" />
+    <QtUic Include="view\sphere_params_dialog.ui" />
+    <QtUic Include="view\vector_dialog.ui" />
+    <QtUic Include="view\main_window.ui" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\NewWindow.png" />
