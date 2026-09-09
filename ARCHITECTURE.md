@@ -84,3 +84,61 @@ Primitive-specific rebuild code should go through `application/history/modeling_
 `ModelingCommandPort` is an application port, but `Widget` still implements it. This is intentionally transitional. New commands must receive the port as `context` and must not use a concrete `Widget` type.
 
 `ModelDocument` owns records only. JSON and BREP serialization lives in `infrastructure/serialization`.
+
+## Main-Window State Boundaries
+
+`Widget` is still the Qt orchestration shell, but its long-lived state is split
+into small compatibility boundaries so feature code does not need to add more
+fields to the window class:
+
+- `interaction/selection/selection_window_state.h` owns selection modes,
+  selected history indices, sub-shape highlights, and transient hover state.
+- `viewport/main_view/viewport_window_state.h` owns the main VTK widget,
+  renderer, picker, interactor, and render pipeline instance.
+- `viewport/main_view/view_navigation_window_state.h` owns standard-view
+  camera transition state.
+- `presentation/main_window/coordinate_window_state.h` owns the view triad,
+  work coordinate system, and reference coordinate system actors.
+- `presentation/main_window/dialog_window_state.h` owns dialog pointers and
+  datum preview actors, all initialized to null.
+- `presentation/main_window/document_window_state.h` owns file-session flags,
+  recent files, auto-recovery timer, and recent-file controls.
+- `presentation/main_window/model_document_window_state.h` owns the model
+  document, runtime geometry/render stores, command manager, and history
+  regeneration guard.
+- `rendering/model/model_rendering_window_state.h` owns the OCC-to-VTK
+  conversion adapter used while creating model presentations.
+- `presentation/main_window/ribbon_window_state.h` owns Ribbon widget
+  references and sketch-environment mode state.
+- `presentation/main_window/feature_interaction_window_state.h` owns the
+  transient extrusion, revolve, fillet, chamfer, and feature-preview state.
+- `presentation/main_window/pattern_window_state.h` owns pattern-dialog and
+  pattern-preview state.
+- `presentation/main_window/primitive_interaction_window_state.h` owns the
+  interactive cuboid construction state and dimension overlays.
+- `presentation/main_window/sketch_window_state.h` owns sketch mode, sketch
+  editing, preview, and sketch-dialog state.
+- `presentation/main_window/vector_snap_window_state.h` owns point snapping,
+  vector picking, and vector-handle state.
+
+These classes deliberately contain state only. Their methods remain on
+`Widget` while the existing Qt signal/slot surface is migrated. New behavior
+should be implemented in the corresponding geometry, application, interaction,
+rendering, viewport, or feature controller module and exposed through a narrow
+adapter rather than growing `Widget` with another unrelated responsibility.
+
+## Migration Status
+
+The directory migration, primitive base hierarchy, render-layer split, runtime
+state extraction, and Visual Studio/qmake project synchronization are complete.
+The requested structural refactor is therefore complete: primitive creation,
+modification, rendering, tools, coordinates, dialogs, boolean operations, and
+viewport/window code each have an explicit module boundary.
+
+There is one explicitly tracked follow-up layer, not unfinished directory
+work. `Widget` still implements `ModelingCommandPort`, and some
+viewport/interaction implementation units still include `main_window.h` to
+preserve the current signal/slot and input behavior. Removing that coupling is
+a separate interface migration that should be done feature by feature with
+interaction tests. It is technical debt for the next iteration, not a blocker
+for this refactor's architecture target.

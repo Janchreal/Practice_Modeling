@@ -4,12 +4,16 @@
 #include "geometry/placement/axis_placement.h"
 #include "common/modeltype.h"
 #include "primitive_build_request.h"
+#include "primitive.h"
 
 #include <TopoDS_Shape.hxx>
 
 namespace PrimitiveGeometry {
 
 bool isPrimitiveType(ModelType type);
+
+/** Creates the concrete primitive builder for a model type. */
+PrimitivePtr createPrimitive(ModelType type);
 
 TopoDS_Shape buildPrimitiveShape(const PrimitiveBuildRequest& request);
 

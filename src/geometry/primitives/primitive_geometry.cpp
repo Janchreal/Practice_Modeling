@@ -1,18 +1,7 @@
 #include "primitive_geometry.h"
+#include "primitive_shapes.h"
 
-#include <BRepPrimAPI_MakeBox.hxx>
-#include <BRepPrimAPI_MakeCone.hxx>
-#include <BRepPrimAPI_MakeCylinder.hxx>
-#include <BRepPrimAPI_MakeSphere.hxx>
-
-namespace {
-
-TopoDS_Shape buildSphereAt(double radius, const gp_Pnt& center)
-{
-    return BRepPrimAPI_MakeSphere(center, radius).Shape();
-}
-
-} // namespace
+#include <memory>
 
 namespace PrimitiveGeometry {
 
@@ -29,50 +18,54 @@ bool isPrimitiveType(ModelType type)
     }
 }
 
+PrimitivePtr createPrimitive(ModelType type)
+{
+    switch (type) {
+    case CUBOID:
+        return std::make_unique<CuboidPrimitive>();
+    case CYLINDER:
+        return std::make_unique<CylinderPrimitive>();
+    case CONE:
+        return std::make_unique<ConePrimitive>();
+    case SPHERE:
+        return std::make_unique<SpherePrimitive>();
+    default:
+        return nullptr;
+    }
+}
+
 TopoDS_Shape buildPrimitiveShape(const PrimitiveBuildRequest& request)
 {
-    switch (request.type) {
-    case CUBOID:
-        return buildCuboidShape(request.param1, request.param2, request.param3, request.placement);
-    case CYLINDER:
-        return buildCylinderShape(request.param1, request.param2, request.placement);
-    case CONE:
-        return buildConeShape(request.param1, request.param2, request.param3, request.placement);
-    case SPHERE:
-        return buildSphereShape(request.param1, request.placement);
-    default:
-        return TopoDS_Shape();
-    }
+    const PrimitivePtr primitive = createPrimitive(request.type);
+    return primitive ? primitive->build(request) : TopoDS_Shape();
 }
 
 TopoDS_Shape buildCuboidShape(double length, double width, double height,
                               const GeometryPlacement::AxisPlacement& placement)
 {
-    const gp_Ax2 axisSystem = GeometryPlacement::makeAxisSystem(placement);
-    return BRepPrimAPI_MakeBox(axisSystem, length, width, height).Shape();
+    return CuboidPrimitive().build(
+        PrimitiveBuildRequest(CUBOID, length, width, height, placement));
 }
 
 TopoDS_Shape buildCylinderShape(double radius, double height,
                                 const GeometryPlacement::AxisPlacement& placement)
 {
-    const gp_Ax2 axisSystem = GeometryPlacement::makeAxisSystem(placement);
-    return BRepPrimAPI_MakeCylinder(axisSystem, radius, height).Shape();
+    return CylinderPrimitive().build(
+        PrimitiveBuildRequest(CYLINDER, radius, height, 0.0, placement));
 }
 
 TopoDS_Shape buildConeShape(double radius1, double radius2, double height,
                             const GeometryPlacement::AxisPlacement& placement)
 {
-    const gp_Ax2 axisSystem = GeometryPlacement::makeAxisSystem(placement);
-    return BRepPrimAPI_MakeCone(axisSystem, radius1, radius2, height).Shape();
+    return ConePrimitive().build(
+        PrimitiveBuildRequest(CONE, radius1, radius2, height, placement));
 }
 
 TopoDS_Shape buildSphereShape(double radius,
                               const GeometryPlacement::AxisPlacement& placement)
 {
-    if (placement.hasOrigin) {
-        return buildSphereAt(radius, placement.origin);
-    }
-    return BRepPrimAPI_MakeSphere(radius).Shape();
+    return SpherePrimitive().build(
+        PrimitiveBuildRequest(SPHERE, radius, 0.0, 0.0, placement));
 }
 
 } // namespace PrimitiveGeometry

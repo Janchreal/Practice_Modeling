@@ -217,8 +217,11 @@
     <ClCompile Include="src\app\main.cpp">
       <Filter>presentation</Filter>
     </ClCompile>
-    <ClCompile Include="src\domain\model\modeldocument.cpp">
-      <Filter>domain</Filter>
+    <ClCompile Include="src\application\history\model_document.cpp">
+      <Filter>application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\primitives\primitive_shapes.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
     <ClCompile Include="src\rendering\adapters\occvtkconverter.cpp">
       <Filter>geometry</Filter>
@@ -474,11 +477,11 @@
     <ClInclude Include="src\rendering\model\shape_presentation_factory.h">
       <Filter>rendering\model</Filter>
     </ClInclude>
-    <ClInclude Include="src\domain\model\modelhistorysnapshot.h">
-      <Filter>domain</Filter>
+    <ClInclude Include="src\application\history\model_history_snapshot.h">
+      <Filter>application</Filter>
     </ClInclude>
-    <ClInclude Include="src\domain\model\modelinghistory.h">
-      <Filter>domain</Filter>
+    <ClInclude Include="src\application\history\modeling_history_record.h">
+      <Filter>application</Filter>
     </ClInclude>
     <ClInclude Include="src\application\commands\addmodelcommand.h">
       <Filter>application</Filter>
@@ -543,8 +546,8 @@
     <QtMoc Include="src\presentation\dialogs\history\history_list_item.h">
       <Filter>presentation\dialogs\history</Filter>
     </QtMoc>
-    <ClInclude Include="src\domain\model\modeldocument.h">
-      <Filter>domain</Filter>
+    <ClInclude Include="src\application\history\model_document.h">
+      <Filter>application</Filter>
     </ClInclude>
     <ClInclude Include="src\common\modeltype.h">
       <Filter>common</Filter>
@@ -580,6 +583,12 @@
       <Filter>geometry</Filter>
     </ClInclude>
     <ClInclude Include="src\geometry\primitives\primitive_geometry.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\primitives\primitive.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\primitives\primitive_shapes.h">
       <Filter>geometry</Filter>
     </ClInclude>
     <ClInclude Include="src\geometry\extrusion\extrusion_recipe.h">
@@ -638,6 +647,48 @@
     </QtMoc>
     <ClInclude Include="src\presentation\main_window\main_menu_builder.h">
       <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\coordinate_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\dialog_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\document_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\model_document_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\feature_interaction_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\pattern_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\primitive_interaction_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\ribbon_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\sketch_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\vector_snap_window_state.h">
+      <Filter>presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interaction\selection\selection_window_state.h">
+      <Filter>interaction\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\model\model_rendering_window_state.h">
+      <Filter>rendering\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\viewport\main_view\viewport_window_state.h">
+      <Filter>viewport\main_view</Filter>
+    </ClInclude>
+    <ClInclude Include="src\viewport\main_view\view_navigation_window_state.h">
+      <Filter>viewport\main_view</Filter>
     </ClInclude>
     <ClInclude Include="src\viewport\mirror\mirror_view_state.h">
       <Filter>viewport\mirror</Filter>

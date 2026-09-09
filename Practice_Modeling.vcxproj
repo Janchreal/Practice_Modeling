@@ -76,7 +76,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;src;src\app;src\application;src\application\command;src\application\commands;src\application\history;src\application\ports;src\domain;src\domain\model;src\domain\features;src\domain\sketch;src\geometry;src\geometry\math;src\geometry\primitives;src\geometry\boolean;src\geometry\extrusion;src\geometry\revolution;src\geometry\pattern;src\geometry\modification;src\geometry\placement;src\geometry\topology;src\geometry\sketch;src\geometry\runtime;src\interaction;src\interaction\coordinates;src\interaction\handles;src\interaction\tools;src\interaction\selection;src\rendering;src\rendering\adapters;src\rendering\pipeline;src\rendering\model;src\rendering\handles;src\viewport;src\viewport\coordinates;src\viewport\main_view;src\viewport\mirror;src\presentation;src\presentation\dialogs;src\presentation\dialogs\boolean;src\presentation\dialogs\common;src\presentation\dialogs\coordinates;src\presentation\dialogs\extrude_revolve;src\presentation\dialogs\history;src\presentation\dialogs\modification;src\presentation\dialogs\pattern;src\presentation\dialogs\primitives;src\presentation\dialogs\sketch;src\presentation\dialogs\tools;src\presentation\features;src\presentation\features\primitives;src\presentation\features\extrude_revolve;src\presentation\features\modification;src\presentation\features\boolean;src\presentation\features\pattern;src\presentation\main_window;src\infrastructure;src\infrastructure\serialization;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;release;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;src;src\app;src\application;src\application\command;src\application\commands;src\application\history;src\application\ports;src\domain;src\domain\features;src\domain\sketch;src\geometry;src\geometry\math;src\geometry\primitives;src\geometry\boolean;src\geometry\extrusion;src\geometry\revolution;src\geometry\pattern;src\geometry\modification;src\geometry\placement;src\geometry\topology;src\geometry\sketch;src\geometry\runtime;src\interaction;src\interaction\coordinates;src\interaction\handles;src\interaction\tools;src\interaction\selection;src\rendering;src\rendering\adapters;src\rendering\pipeline;src\rendering\model;src\rendering\handles;src\viewport;src\viewport\coordinates;src\viewport\main_view;src\viewport\mirror;src\presentation;src\presentation\dialogs;src\presentation\dialogs\boolean;src\presentation\dialogs\common;src\presentation\dialogs\coordinates;src\presentation\dialogs\extrude_revolve;src\presentation\dialogs\history;src\presentation\dialogs\modification;src\presentation\dialogs\pattern;src\presentation\dialogs\primitives;src\presentation\dialogs\sketch;src\presentation\dialogs\tools;src\presentation\features;src\presentation\features\primitives;src\presentation\features\extrude_revolve;src\presentation\features\modification;src\presentation\features\boolean;src\presentation\features\pattern;src\presentation\main_window;src\infrastructure;src\infrastructure\serialization;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;release;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -utf-8 -w34100 -w34189 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>vsbuild\Release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -140,7 +140,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;src;src\app;src\application;src\application\command;src\application\commands;src\application\history;src\application\ports;src\domain;src\domain\model;src\domain\features;src\domain\sketch;src\geometry;src\geometry\math;src\geometry\primitives;src\geometry\boolean;src\geometry\extrusion;src\geometry\revolution;src\geometry\pattern;src\geometry\modification;src\geometry\placement;src\geometry\topology;src\geometry\sketch;src\geometry\runtime;src\interaction;src\interaction\coordinates;src\interaction\handles;src\interaction\tools;src\interaction\selection;src\rendering;src\rendering\adapters;src\rendering\pipeline;src\rendering\model;src\rendering\handles;src\viewport;src\viewport\coordinates;src\viewport\main_view;src\viewport\mirror;src\presentation;src\presentation\dialogs;src\presentation\dialogs\boolean;src\presentation\dialogs\common;src\presentation\dialogs\coordinates;src\presentation\dialogs\extrude_revolve;src\presentation\dialogs\history;src\presentation\dialogs\modification;src\presentation\dialogs\pattern;src\presentation\dialogs\primitives;src\presentation\dialogs\sketch;src\presentation\dialogs\tools;src\presentation\features;src\presentation\features\primitives;src\presentation\features\extrude_revolve;src\presentation\features\modification;src\presentation\features\boolean;src\presentation\features\pattern;src\presentation\main_window;src\infrastructure;src\infrastructure\serialization;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;src;src\app;src\application;src\application\command;src\application\commands;src\application\history;src\application\ports;src\domain;src\domain\features;src\domain\sketch;src\geometry;src\geometry\math;src\geometry\primitives;src\geometry\boolean;src\geometry\extrusion;src\geometry\revolution;src\geometry\pattern;src\geometry\modification;src\geometry\placement;src\geometry\topology;src\geometry\sketch;src\geometry\runtime;src\interaction;src\interaction\coordinates;src\interaction\handles;src\interaction\tools;src\interaction\selection;src\rendering;src\rendering\adapters;src\rendering\pipeline;src\rendering\model;src\rendering\handles;src\viewport;src\viewport\coordinates;src\viewport\main_view;src\viewport\mirror;src\presentation;src\presentation\dialogs;src\presentation\dialogs\boolean;src\presentation\dialogs\common;src\presentation\dialogs\coordinates;src\presentation\dialogs\extrude_revolve;src\presentation\dialogs\history;src\presentation\dialogs\modification;src\presentation\dialogs\pattern;src\presentation\dialogs\primitives;src\presentation\dialogs\sketch;src\presentation\dialogs\tools;src\presentation\features;src\presentation\features\primitives;src\presentation\features\extrude_revolve;src\presentation\features\modification;src\presentation\features\boolean;src\presentation\features\pattern;src\presentation\main_window;src\infrastructure;src\infrastructure\serialization;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -utf-8 -w34100 -w34189 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>vsbuild\Debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -220,7 +220,8 @@
     <ClCompile Include="src\presentation\dialogs\modification\fillet_dialog.cpp" />
     <ClCompile Include="src\presentation\dialogs\history\history_list_item.cpp" />
     <ClCompile Include="src\app\main.cpp" />
-    <ClCompile Include="src\domain\model\modeldocument.cpp" />
+    <ClCompile Include="src\application\history\model_document.cpp" />
+    <ClCompile Include="src\geometry\primitives\primitive_shapes.cpp" />
     <ClCompile Include="src\rendering\adapters\occvtkconverter.cpp" />
     <ClCompile Include="src\geometry\boolean\boolean_ops.cpp" />
     <ClCompile Include="src\geometry\extrusion\extrusion_geometry.cpp" />
@@ -307,8 +308,8 @@
     <ClInclude Include="src\rendering\model\model_render_state.h" />
     <ClInclude Include="src\rendering\model\model_render_store.h" />
     <ClInclude Include="src\rendering\model\shape_presentation_factory.h" />
-    <ClInclude Include="src\domain\model\modelhistorysnapshot.h" />
-    <ClInclude Include="src\domain\model\modelinghistory.h" />
+    <ClInclude Include="src\application\history\model_history_snapshot.h" />
+    <ClInclude Include="src\application\history\modeling_history_record.h" />
     <ClInclude Include="src\application\commands\addmodelcommand.h" />
     <ClInclude Include="src\application\commands\booleancommand.h" />
     <QtMoc Include="src\presentation\dialogs\boolean\bool_operation_dialog.h" />
@@ -330,7 +331,7 @@
     <QtMoc Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.h" />
     <QtMoc Include="src\presentation\dialogs\modification\fillet_dialog.h" />
     <QtMoc Include="src\presentation\dialogs\history\history_list_item.h" />
-    <ClInclude Include="src\domain\model\modeldocument.h" />
+    <ClInclude Include="src\application\history\model_document.h" />
     <ClInclude Include="src\common\modeltype.h" />
     <ClInclude Include="src\rendering\adapters\occvtkconverter.h" />
     <ClInclude Include="src\geometry\boolean\boolean_ops.h" />
@@ -343,6 +344,8 @@
     <ClInclude Include="src\interaction\selection\selection_geometry.h" />
     <ClInclude Include="src\geometry\primitives\primitive_build_request.h" />
     <ClInclude Include="src\geometry\primitives\primitive_geometry.h" />
+    <ClInclude Include="src\geometry\primitives\primitive.h" />
+    <ClInclude Include="src\geometry\primitives\primitive_shapes.h" />
     <ClInclude Include="src\geometry\extrusion\extrusion_recipe.h" />
     <ClInclude Include="src\geometry\pattern\pattern_geometry.h" />
     <ClInclude Include="src\geometry\revolution\revolve_geometry.h" />
@@ -362,6 +365,20 @@
     <QtMoc Include="src\presentation\main_window\main_window.h" />
     <QtMoc Include="src\presentation\dialogs\coordinates\datum_axis.h" />
     <ClInclude Include="src\presentation\main_window\main_menu_builder.h" />
+    <ClInclude Include="src\presentation\main_window\coordinate_window_state.h" />
+    <ClInclude Include="src\presentation\main_window\dialog_window_state.h" />
+    <ClInclude Include="src\presentation\main_window\document_window_state.h" />
+    <ClInclude Include="src\presentation\main_window\model_document_window_state.h" />
+    <ClInclude Include="src\presentation\main_window\primitive_interaction_window_state.h" />
+    <ClInclude Include="src\presentation\main_window\feature_interaction_window_state.h" />
+    <ClInclude Include="src\presentation\main_window\pattern_window_state.h" />
+    <ClInclude Include="src\presentation\main_window\ribbon_window_state.h" />
+    <ClInclude Include="src\presentation\main_window\sketch_window_state.h" />
+    <ClInclude Include="src\presentation\main_window\vector_snap_window_state.h" />
+    <ClInclude Include="src\interaction\selection\selection_window_state.h" />
+    <ClInclude Include="src\rendering\model\model_rendering_window_state.h" />
+    <ClInclude Include="src\viewport\main_view\viewport_window_state.h" />
+    <ClInclude Include="src\viewport\main_view\view_navigation_window_state.h" />
     <ClInclude Include="src\viewport\mirror\mirror_view_state.h" />
     <ClInclude Include="src\viewport\mirror\mirror_view_types.h" />
     <ClInclude Include="src\viewport\mirror\mirror_view_window.h" />

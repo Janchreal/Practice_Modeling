@@ -68,34 +68,12 @@ static void applyCompactDockToolChrome(QWidget* dockContents, QTabWidget* tabWid
 }
 
 // 初始化静态成员
-int Widget::shapeIDCounter = 0;
+int ModelDocumentWindowState::shapeIDCounter = 0;
 
 Widget::Widget(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Widget)
-    , historyList(modelDocument_.histories())
-    , currentSelectedIndex(-1)
-    , currentSelectionMode(None)
-    , selectedTargetIndex(-1)
-    , boolDialog(nullptr)
-    , extrusionDialog(nullptr)
-    , previewActor(nullptr)
-    , currentPickedModelIndex(-1)
-    , cuboidDialog(nullptr)
-    , cylinderDialog(nullptr)
-    , coneDialog(nullptr)
-    , sphereDialog(nullptr)
-    , tempOriginX(0.0)
-    , tempOriginY(0.0)
-    , tempOriginZ(0.0)
-    , hasTempOrigin(false)
 {
-    // 初始化世界坐标
-    lastWorldPoint[0] = 0.0;
-    lastWorldPoint[1] = 0.0;
-    lastWorldPoint[2] = 0.0;
-    lastWorldPoint[3] = 1.0;
-
     ui->setupUi(this);
 
     setupNxMainApplicationMenuButton(ui->toolButton_nxMainMenu_modeling);
