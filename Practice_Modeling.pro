@@ -15,21 +15,15 @@ DEFINES += SA_RIBBON_BAR_NO_EXPORT
 DEFINES += SARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0
 
 SOURCES += \
-    $$files($$PWD/controller/*.cpp) \
-    $$files($$PWD/core/*.cpp) \
-    $$files($$PWD/model/*.cpp) \
-    $$files($$PWD/view/*.cpp) \
+    $$files($$PWD/src/*.cpp, true) \
     $$files($$PWD/3rdparty/SARibbon/*.cpp)
 
 HEADERS += \
-    $$files($$PWD/controller/*.h) \
-    $$files($$PWD/core/*.h) \
-    $$files($$PWD/model/*.h) \
-    $$files($$PWD/view/*.h) \
+    $$files($$PWD/src/*.h, true) \
     $$files($$PWD/3rdparty/SARibbon/*.h)
 
 FORMS += \
-    $$files($$PWD/view/*.ui)
+    $$files($$PWD/src/*.ui, true)
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -38,11 +32,67 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 QMAKE_PROJECT_DEPTH = 0
 
-# 分层源码目录
-INCLUDEPATH += $$PWD/model
-INCLUDEPATH += $$PWD/controller
-INCLUDEPATH += $$PWD/view
-INCLUDEPATH += $$PWD/core
+# 分层源码目录。保留各模块目录在 include path 中，兼容现有的短文件名 include，
+# 后续可逐步迁移为 src/<module>/... 的显式 include。
+INCLUDEPATH += \
+    $$PWD/src \
+    $$PWD/src/app \
+    $$PWD/src/application \
+    $$PWD/src/application/command \
+    $$PWD/src/application/commands \
+    $$PWD/src/application/history \
+    $$PWD/src/application/ports \
+    $$PWD/src/common \
+    $$PWD/src/domain \
+    $$PWD/src/domain/features \
+    $$PWD/src/domain/sketch \
+    $$PWD/src/geometry \
+    $$PWD/src/geometry/math \
+    $$PWD/src/geometry/primitives \
+    $$PWD/src/geometry/boolean \
+    $$PWD/src/geometry/extrusion \
+    $$PWD/src/geometry/revolution \
+    $$PWD/src/geometry/pattern \
+    $$PWD/src/geometry/modification \
+    $$PWD/src/geometry/placement \
+    $$PWD/src/geometry/topology \
+    $$PWD/src/geometry/sketch \
+    $$PWD/src/geometry/runtime \
+    $$PWD/src/interaction \
+    $$PWD/src/interaction/coordinates \
+    $$PWD/src/interaction/handles \
+    $$PWD/src/interaction/tools \
+    $$PWD/src/interaction/selection \
+    $$PWD/src/rendering \
+    $$PWD/src/rendering/adapters \
+    $$PWD/src/rendering/pipeline \
+    $$PWD/src/rendering/model \
+    $$PWD/src/rendering/handles \
+    $$PWD/src/viewport \
+    $$PWD/src/viewport/coordinates \
+    $$PWD/src/viewport/main_view \
+    $$PWD/src/viewport/mirror \
+    $$PWD/src/presentation \
+    $$PWD/src/presentation/dialogs \
+    $$PWD/src/presentation/dialogs/boolean \
+    $$PWD/src/presentation/dialogs/common \
+    $$PWD/src/presentation/dialogs/coordinates \
+    $$PWD/src/presentation/dialogs/extrude_revolve \
+    $$PWD/src/presentation/dialogs/history \
+    $$PWD/src/presentation/dialogs/modification \
+    $$PWD/src/presentation/dialogs/pattern \
+    $$PWD/src/presentation/dialogs/primitives \
+    $$PWD/src/presentation/dialogs/sketch \
+    $$PWD/src/presentation/dialogs/tools \
+    $$PWD/src/presentation/features \
+    $$PWD/src/presentation/features/primitives \
+    $$PWD/src/presentation/features/extrude_revolve \
+    $$PWD/src/presentation/features/modification \
+    $$PWD/src/presentation/features/boolean \
+    $$PWD/src/presentation/features/pattern \
+    $$PWD/src/presentation/main_window \
+    $$PWD/src/infrastructure \
+    $$PWD/src/infrastructure/serialization
 
 # SARibbon 静态嵌入
 INCLUDEPATH += $$PWD/3rdparty/SARibbon
