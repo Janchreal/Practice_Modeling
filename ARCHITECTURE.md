@@ -93,6 +93,9 @@ fields to the window class:
 
 - `interaction/selection/selection_window_state.h` owns selection modes,
   selected history indices, sub-shape highlights, and transient hover state.
+- `interaction/selection/shape_picker_binding_service.h` owns the generic
+  picker-to-renderer rebinding operation. The window supplies only the active
+  context preparation and data-source refresh callbacks.
 - `viewport/main_view/viewport_window_state.h` owns the main VTK widget,
   renderer, picker, interactor, and render pipeline instance.
 - `viewport/main_view/view_navigation_window_state.h` owns standard-view

@@ -1,11 +1,12 @@
 #ifndef MOUSE_INTERACTOR_H
 #define MOUSE_INTERACTOR_H
 
+#include "viewport/main_view/mouse_interaction_context.h"
+
 #include <functional>
+#include <utility>
 
 #include <vtkInteractorStyleTrackballCamera.h>
-
-class Widget;
 
 class MouseInteractorStyle : public vtkInteractorStyleTrackballCamera
 {
@@ -13,9 +14,9 @@ public:
     static MouseInteractorStyle* New();
     vtkTypeMacro(MouseInteractorStyle, vtkInteractorStyleTrackballCamera);
 
-    void SetWidget(Widget* widget)
+    void SetInteractionContext(MouseInteractionContext context)
     {
-        this->widget = widget;
+        interactionContext_ = std::move(context);
     }
 
     void SetPreEventHook(const std::function<void()>& hook)
@@ -37,7 +38,7 @@ public:
 private:
     void rotateCameraAroundWorldCenter(int prevX, int prevY, int x, int y);
 
-    Widget* widget = nullptr;
+    MouseInteractionContext interactionContext_;
     std::function<void()> preEventHook_;
 
     enum class NavState {

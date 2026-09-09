@@ -5,6 +5,7 @@
 #include "presentation/dialogs/tools/vector_dialog.h"
 
 #include <cmath>
+#include <utility>
 
 #include <QSignalBlocker>
 #include <QStatusBar>
@@ -116,6 +117,9 @@ void Widget::beginVectorTwoPointPickStart(bool refreshSnapKindsFromDialog)
 
     currentSelectionMode = VectorDialogPickStartPoint;
     if (vectorDialogArrowActor_) vectorDialogArrowActor_->SetVisibility(false);
+    if (vectorDialog_) {
+        vectorDialog_->setTwoPointPointState(false, false, true, false);
+    }
 
     applyTwoPointVectorSnapKind(vectorTwoPointStartSnapKind_, true);
     if (vtkWidget && vtkWidget->renderWindow()) {
@@ -137,12 +141,18 @@ void Widget::onVectorTwoPointStartPicked(const gp_Pnt& point)
 
     if (vectorTwoPointAwaitingEndPick_) {
         currentSelectionMode = VectorDialogPickEndPoint;
+        if (vectorDialog_) {
+            vectorDialog_->setTwoPointPointState(true, false, false, true);
+        }
         applyTwoPointVectorSnapKind(vectorTwoPointEndSnapKind_, false);
     } else {
         if (hasVectorEndPoint_) {
             applyVectorTwoPointFromEndpoints();
         }
         currentSelectionMode = VectorTwoPointInteractive;
+        if (vectorDialog_) {
+            vectorDialog_->setTwoPointPointState(true, hasVectorEndPoint_);
+        }
         disableSnapUiAfterVectorTwoPointComplete();
         updateVectorTwoPointHandles();
     }
@@ -153,7 +163,12 @@ void Widget::applyVectorTwoPointFromEndpoints()
     if (!hasVectorStartPoint_ || !hasVectorEndPoint_) return;
 
     gp_Vec v(vectorStartPoint_, vectorEndPoint_);
-    if (v.Magnitude() <= Precision::Confusion()) return;
+    if (v.Magnitude() <= Precision::Confusion()) {
+        // 不保留上一次方向，避免两点重合后继续沿用陈旧 gp_Dir。
+        hasCustomVectorDir_ = false;
+        hasVectorDialogBaseDir_ = false;
+        return;
+    }
 
     gp_Dir dir(v);
     setCustomVectorDirFromDialog(dir);
@@ -174,6 +189,9 @@ void Widget::onVectorTwoPointEndPicked(const gp_Pnt& point)
 
     vectorTwoPointHandleHover_ = VectorTwoPointHandlePart::None;
     currentSelectionMode = VectorTwoPointInteractive;
+    if (vectorDialog_) {
+        vectorDialog_->setTwoPointPointState(true, true);
+    }
     disableSnapUiAfterVectorTwoPointComplete();
     updateVectorTwoPointHandles();
 }
@@ -220,9 +238,13 @@ void Widget::disableSnapUiAfterVectorTwoPointComplete()
 
 void Widget::updateVectorTwoPointSnapPresentation(int x, int y, int snapKind, bool dragMode)
 {
-    if (snapKind == -1) {
+    if (snapKind == -1 || snapKind == 1 || snapKind == 2) {
+        updateVectorPointSnapPreview(x, y, snapKind, dragMode);
+        return;
+    }
+
+    if (!snap_.armed) {
         clearSnapHover();
-        hasSnapHoverBestPoint_ = false;
         return;
     }
 
@@ -238,6 +260,18 @@ void Widget::updateVectorTwoPointSnapPresentation(int x, int y, int snapKind, bo
 
 bool Widget::tryPickVectorTwoPointSnapAt(int x, int y)
 {
+    const int snapKind = currentSelectionMode == VectorDialogPickStartPoint
+        ? vectorTwoPointStartSnapKind_
+        : vectorTwoPointEndSnapKind_;
+    if (snapKind == -1 || snapKind == 1 || snapKind == 2) {
+        updateVectorTwoPointSnapPresentation(x, y, snapKind, false);
+        if (!hasSnapHoverBestPoint_) return false;
+        snapSelectedPoint_ = snapHoverBestPoint_;
+        hasSnapSelectedPoint_ = true;
+        clearSnapHover();
+        return true;
+    }
+
     if (!snap_.armed) return false;
 
     pickSnapAt(x, y);
@@ -262,14 +296,6 @@ gp_Pnt Widget::resolveVectorTwoPointPreviewPosition(int x, int y, int snapKind)
         hit.SetZ(0.0);
     }
 
-    if (snapKind == -1) {
-        gp_Pnt modelP;
-        if (tryPickPointOnModelForVector(x, y, modelP)) {
-            return modelP;
-        }
-        return hit;
-    }
-
     updateVectorTwoPointSnapPresentation(x, y, snapKind, false);
     if (hasSnapHoverBestPoint_) {
         return snapHoverBestPoint_;
@@ -290,14 +316,6 @@ gp_Pnt Widget::resolveVectorTwoPointDragPosition(int x, int y, int snapKind) con
         hit.SetZ(0.0);
     }
 
-    if (snapKind == -1) {
-        gp_Pnt modelP;
-        if (const_cast<Widget*>(this)->tryPickPointOnModelForVector(x, y, modelP)) {
-            return modelP;
-        }
-        return hit;
-    }
-
     const_cast<Widget*>(this)->updateVectorTwoPointSnapPresentation(x, y, snapKind, true);
     if (hasSnapHoverBestPoint_) {
         return snapHoverBestPoint_;
@@ -313,17 +331,13 @@ void Widget::reverseVectorTwoPointDirection()
 {
     if (!hasVectorStartPoint_ || !hasVectorEndPoint_) return;
 
-    vectorDialogReverse_ = !vectorDialogReverse_;
+    std::swap(vectorStartPoint_, vectorEndPoint_);
+    hasVectorDialogArrowOrigin_ = true;
+    vectorDialogArrowOrigin_ = vectorStartPoint_;
+    applyVectorTwoPointFromEndpoints();
     if (vectorDialog_) {
+        vectorDialog_->setTwoPointPointState(true, true);
         vectorDialog_->setReverseState(vectorDialogReverse_);
-    }
-
-    if (hasVectorDialogBaseDir_) {
-        gp_Dir base = vectorDialogBaseDir_;
-        setCustomVectorDirFromDialog(base);
-        if (vectorDialog_) {
-            vectorDialog_->setVectorDirDisplay(customVectorDir_.X(), customVectorDir_.Y(), customVectorDir_.Z());
-        }
     }
     updateVectorTwoPointHandles();
 }
@@ -645,6 +659,10 @@ void Widget::handleVectorTwoPointHandleMouseUp(int x, int y)
         if (!wasDragging && releasedPart == VectorTwoPointHandlePart::StartSphere) {
             vectorTwoPointAwaitingEndPick_ = false;
             currentSelectionMode = VectorDialogPickStartPoint;
+            if (vectorDialog_) {
+                vectorDialog_->setTwoPointPointState(
+                    true, hasVectorEndPoint_, true, false);
+            }
             applyTwoPointVectorSnapKind(vectorTwoPointStartSnapKind_, false);
         } else if (!wasDragging && releasedPart == VectorTwoPointHandlePart::EndSphere) {
             vectorTwoPointAwaitingEndPick_ = false;
@@ -652,6 +670,10 @@ void Widget::handleVectorTwoPointHandleMouseUp(int x, int y)
                 currentSelectionMode = vectorTwoPointHandleSavedMode_;
             } else {
                 currentSelectionMode = VectorDialogPickEndPoint;
+                if (vectorDialog_) {
+                    vectorDialog_->setTwoPointPointState(
+                        true, true, false, true);
+                }
                 applyTwoPointVectorSnapKind(vectorTwoPointEndSnapKind_, false);
             }
         } else {
@@ -665,12 +687,26 @@ void Widget::handleVectorTwoPointHandleMouseUp(int x, int y)
 
 void Widget::handleVectorTwoPointArrowDoubleClick(int x, int y)
 {
-    if (!isVectorTwoPointDialogActive() || !hasVectorEndPoint_) return;
+    if (!vectorDialog_) return;
 
     const VectorTwoPointHandlePart part = pickVectorTwoPointHandlePart(x, y);
     if (part != VectorTwoPointHandlePart::DirectionArrow) return;
 
-    reverseVectorTwoPointDirection();
+    if (isVectorTwoPointDialogActive() && hasVectorStartPoint_ && hasVectorEndPoint_) {
+        reverseVectorTwoPointDirection();
+    } else if (hasVectorDialogBaseDir_ || hasCustomVectorDir_) {
+        const gp_Dir base = hasVectorDialogBaseDir_
+            ? vectorDialogBaseDir_
+            : customVectorDir_;
+        vectorDialogReverse_ = !vectorDialogReverse_;
+        vectorDialog_->setReverseState(vectorDialogReverse_);
+        setCustomVectorDirFromDialog(base);
+        if (hasVectorDialogArrowOrigin_) {
+            updateVectorDialogArrow(customVectorDir_, vectorDialogArrowOrigin_);
+        }
+    } else {
+        return;
+    }
     if (statusBar()) {
         statusBar()->showMessage(tr("已反转矢量方向"), 1500);
     }

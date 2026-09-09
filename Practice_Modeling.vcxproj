@@ -13,79 +13,61 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{239E37F6-9400-37DF-BE95-37DE8746B6DF}</ProjectGuid>
     <RootNamespace>Practice_Modeling</RootNamespace>
-    <Keyword>QtVS_v304</Keyword>
-    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.22621.0</WindowsTargetPlatformMinVersion>
-    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;" Label="Configuration">
     <PlatformToolset>v143</PlatformToolset>
-    <OutputDirectory>vsbuild\Release\</OutputDirectory>
+    <OutputDirectory>release\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
-    <IntermediateDirectory>vsbuild\Release\</IntermediateDirectory>
+    <IntermediateDirectory>release\</IntermediateDirectory>
     <PrimaryOutput>Practice_Modeling</PrimaryOutput>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;" Label="Configuration">
     <PlatformToolset>v143</PlatformToolset>
-    <OutputDirectory>vsbuild\Debug\</OutputDirectory>
+    <OutputDirectory>debug\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
-    <IntermediateDirectory>vsbuild\Debug\</IntermediateDirectory>
+    <IntermediateDirectory>debug\</IntermediateDirectory>
     <PrimaryOutput>Practice_Modeling</PrimaryOutput>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(QtMsBuild)\qt_defaults.props" Condition="Exists('$(QtMsBuild)\qt_defaults.props')" />
-  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <QtInstall>6.8.3_msvc2022_64</QtInstall>
-    <QtModules>core;gui;widgets;opengl;openglwidgets;svg</QtModules>
-  </PropertyGroup>
-  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QtInstall>6.8.3_msvc2022_64</QtInstall>
-    <QtModules>core;gui;widgets;opengl;openglwidgets;svg</QtModules>
-  </PropertyGroup>
-  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') OR !Exists('$(QtMsBuild)\Qt.props')">
-    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
-  </Target>
   <ImportGroup Label="ExtensionSettings" />
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
-    <Import Project="$(QtMsBuild)\Qt.props" />
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
-    <Import Project="$(QtMsBuild)\Qt.props" />
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">vsbuild\Release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">vsbuild\Release\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Practice_Modeling</TargetName>
-    <LocalDebuggerEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PATH=$(QTDIR)\bin;D:\VTK9.4.2\install\bin;D:\OCCT7.7.0\Install\win64\vc14\bin;$(PATH)</LocalDebuggerEnvironment>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">vsbuild\Debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">vsbuild\Debug\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Practice_Modeling</TargetName>
-    <LocalDebuggerEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PATH=$(QTDIR)\bin;D:\VTK9.4.2\install\bin;D:\OCCT7.7.0\Install\win64\vc14\bin;$(PATH)</LocalDebuggerEnvironment>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">Practice_Modeling</TargetName>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">false</LinkIncremental>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">Practice_Modeling</TargetName>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">false</LinkIncremental>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">
     <ClCompile>
-      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;src;src\app;src\application;src\application\command;src\application\commands;src\application\history;src\application\ports;src\domain;src\domain\features;src\domain\sketch;src\geometry;src\geometry\math;src\geometry\primitives;src\geometry\boolean;src\geometry\extrusion;src\geometry\revolution;src\geometry\pattern;src\geometry\modification;src\geometry\placement;src\geometry\topology;src\geometry\sketch;src\geometry\runtime;src\interaction;src\interaction\coordinates;src\interaction\handles;src\interaction\tools;src\interaction\selection;src\rendering;src\rendering\adapters;src\rendering\pipeline;src\rendering\model;src\rendering\handles;src\viewport;src\viewport\coordinates;src\viewport\main_view;src\viewport\mirror;src\presentation;src\presentation\dialogs;src\presentation\dialogs\boolean;src\presentation\dialogs\common;src\presentation\dialogs\coordinates;src\presentation\dialogs\extrude_revolve;src\presentation\dialogs\history;src\presentation\dialogs\modification;src\presentation\dialogs\pattern;src\presentation\dialogs\primitives;src\presentation\dialogs\sketch;src\presentation\dialogs\tools;src\presentation\features;src\presentation\features\primitives;src\presentation\features\extrude_revolve;src\presentation\features\modification;src\presentation\features\boolean;src\presentation\features\pattern;src\presentation\main_window;src\infrastructure;src\infrastructure\serialization;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;release;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;src;src\app;src\application;src\application\command;src\application\commands;src\application\history;src\application\ports;src\common;src\domain;src\domain\features;src\domain\sketch;src\geometry;src\geometry\math;src\geometry\primitives;src\geometry\boolean;src\geometry\extrusion;src\geometry\revolution;src\geometry\pattern;src\geometry\modification;src\geometry\placement;src\geometry\topology;src\geometry\sketch;src\geometry\runtime;src\interaction;src\interaction\coordinates;src\interaction\handles;src\interaction\tools;src\interaction\selection;src\rendering;src\rendering\adapters;src\rendering\pipeline;src\rendering\model;src\rendering\handles;src\viewport;src\viewport\coordinates;src\viewport\main_view;src\viewport\mirror;src\presentation;src\presentation\dialogs;src\presentation\dialogs\boolean;src\presentation\dialogs\common;src\presentation\dialogs\coordinates;src\presentation\dialogs\extrude_revolve;src\presentation\dialogs\history;src\presentation\dialogs\modification;src\presentation\dialogs\pattern;src\presentation\dialogs\primitives;src\presentation\dialogs\sketch;src\presentation\dialogs\tools;src\presentation\features;src\presentation\features\primitives;src\presentation\features\extrude_revolve;src\presentation\features\modification;src\presentation\features\boolean;src\presentation\features\pattern;src\presentation\main_window;src\infrastructure;src\infrastructure\serialization;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;D:\Qt\6.8.3\msvc2022_64\include;D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets;D:\Qt\6.8.3\msvc2022_64\include\QtOpenGL;D:\Qt\6.8.3\msvc2022_64\include\QtWidgets;D:\Qt\6.8.3\msvc2022_64\include\QtSvg;D:\Qt\6.8.3\msvc2022_64\include\QtGui;D:\Qt\6.8.3\msvc2022_64\include\QtCore;release;.;/include;D:\Qt\6.8.3\msvc2022_64\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -utf-8 -w34100 -w34189 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
-      <AssemblerListingLocation>vsbuild\Release\</AssemblerListingLocation>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
       <DebugInformationFormat>None</DebugInformationFormat>
       <DisableSpecificWarnings>4005;4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ObjectFileName>release\</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;SA_RIBBON_BAR_NO_EXPORT;SARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;NDEBUG;QT_NO_DEBUG;QT_OPENGLWIDGETS_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_SVG_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName></ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -93,12 +75,11 @@
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>D:\VTK9.4.2\install\lib\vtk*.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKernel.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMath.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomBase.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBRep.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKPrim.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKShHealing.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKTopAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG2d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBO.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKFillet.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOffset.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKHLR.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMesh.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKService.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKV3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOpenGl.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtk.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtkDraw.lib;$(QTDIR)\lib\Qt6EntryPoint.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>D:\VTK9.4.2\install\lib\vtkcgns-9.4.lib;D:\VTK9.4.2\install\lib\vtkChartsCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonColor-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonComputationalGeometry-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonDataModel-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonExecutionModel-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonMath-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonMisc-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonSystem-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonTransforms-9.4.lib;D:\VTK9.4.2\install\lib\vtkDICOMParser-9.4.lib;D:\VTK9.4.2\install\lib\vtkDomainsChemistry-9.4.lib;D:\VTK9.4.2\install\lib\vtkDomainsChemistryOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkdoubleconversion-9.4.lib;D:\VTK9.4.2\install\lib\vtkexodusII-9.4.lib;D:\VTK9.4.2\install\lib\vtkexpat-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersAMR-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersCellGrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersExtraction-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersFlowPaths-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersGeneral-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersGeneric-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersGeometry-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersGeometryPreview-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersHybrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersHyperTree-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersImaging-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersModeling-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersParallel-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersParallelImaging-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersPoints-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersProgrammable-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersReduction-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersSelection-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersSMP-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersSources-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersStatistics-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersTemporal-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersTensor-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersTexture-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersTopology-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersVerdict-9.4.lib;D:\VTK9.4.2\install\lib\vtkfmt-9.4.lib;D:\VTK9.4.2\install\lib\vtkfreetype-9.4.lib;D:\VTK9.4.2\install\lib\vtkGeovisCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkgl2ps-9.4.lib;D:\VTK9.4.2\install\lib\vtkglad-9.4.lib;D:\VTK9.4.2\install\lib\vtkGUISupportQt-9.4.lib;D:\VTK9.4.2\install\lib\vtkGUISupportQtQuick-9.4.lib;D:\VTK9.4.2\install\lib\vtkGUISupportQtSQL-9.4.lib;D:\VTK9.4.2\install\lib\vtkhdf5-9.4.lib;D:\VTK9.4.2\install\lib\vtkhdf5_hl-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingColor-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingFourier-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingGeneral-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingHybrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingMath-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingMorphological-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingSources-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingStatistics-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingStencil-9.4.lib;D:\VTK9.4.2\install\lib\vtkInfovisCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkInfovisLayout-9.4.lib;D:\VTK9.4.2\install\lib\vtkInteractionImage-9.4.lib;D:\VTK9.4.2\install\lib\vtkInteractionStyle-9.4.lib;D:\VTK9.4.2\install\lib\vtkInteractionWidgets-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOAMR-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOAsynchronous-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCellGrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCesium3DTiles-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCGNSReader-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOChemistry-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCityGML-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCONVERGECFD-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOEngys-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOEnSight-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOERF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOExodus-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOExport-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOExportGL2PS-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOExportPDF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOFDS-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOFLUENTCFF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOGeometry-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOHDF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOImage-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOImport-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOInfovis-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOIOSS-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOLegacy-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOLSDyna-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOMINC-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOMotionFX-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOMovie-9.4.lib;D:\VTK9.4.2\install\lib\vtkIONetCDF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOOggTheora-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOParallel-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOParallelXML-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOPLY-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOSegY-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOSQL-9.4.lib;D:\VTK9.4.2\install\lib\vtkioss-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOTecplotTable-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOVeraOut-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOVideo-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOXML-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOXMLParser-9.4.lib;D:\VTK9.4.2\install\lib\vtkjpeg-9.4.lib;D:\VTK9.4.2\install\lib\vtkjsoncpp-9.4.lib;D:\VTK9.4.2\install\lib\vtkkissfft-9.4.lib;D:\VTK9.4.2\install\lib\vtklibharu-9.4.lib;D:\VTK9.4.2\install\lib\vtklibproj-9.4.lib;D:\VTK9.4.2\install\lib\vtklibxml2-9.4.lib;D:\VTK9.4.2\install\lib\vtkloguru-9.4.lib;D:\VTK9.4.2\install\lib\vtklz4-9.4.lib;D:\VTK9.4.2\install\lib\vtklzma-9.4.lib;D:\VTK9.4.2\install\lib\vtkmetaio-9.4.lib;D:\VTK9.4.2\install\lib\vtknetcdf-9.4.lib;D:\VTK9.4.2\install\lib\vtkogg-9.4.lib;D:\VTK9.4.2\install\lib\vtkParallelCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkParallelDIY-9.4.lib;D:\VTK9.4.2\install\lib\vtkpng-9.4.lib;D:\VTK9.4.2\install\lib\vtkpugixml-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingAnnotation-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingCellGrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingContext2D-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingContextOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingFreeType-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingGL2PSOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingHyperTreeGrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingImage-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingLabel-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingLICOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingLOD-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingQt-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingSceneGraph-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingUI-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingVolume-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingVolumeOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingVtkJS-9.4.lib;D:\VTK9.4.2\install\lib\vtksqlite-9.4.lib;D:\VTK9.4.2\install\lib\vtksys-9.4.lib;D:\VTK9.4.2\install\lib\vtkTestingCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkTestingRendering-9.4.lib;D:\VTK9.4.2\install\lib\vtktheora-9.4.lib;D:\VTK9.4.2\install\lib\vtktiff-9.4.lib;D:\VTK9.4.2\install\lib\vtktoken-9.4.lib;D:\VTK9.4.2\install\lib\vtkverdict-9.4.lib;D:\VTK9.4.2\install\lib\vtkViewsContext2D-9.4.lib;D:\VTK9.4.2\install\lib\vtkViewsCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkViewsInfovis-9.4.lib;D:\VTK9.4.2\install\lib\vtkViewsQt-9.4.lib;D:\VTK9.4.2\install\lib\vtkWrappingTools-9.4.lib;D:\VTK9.4.2\install\lib\vtkzlib-9.4.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKernel.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMath.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomBase.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBRep.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKPrim.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKShHealing.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKTopAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG2d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBO.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKFillet.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOffset.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKHLR.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMesh.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKService.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKV3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOpenGl.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtk.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtkDraw.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgets.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6OpenGL.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6Widgets.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6Svg.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6Gui.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6Core.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6EntryPoint.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:\OCCT7.7.0\Install\win64\vc14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -114,54 +95,33 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;SA_RIBBON_BAR_NO_EXPORT;SARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;NDEBUG;QT_NO_DEBUG;QT_OPENGLWIDGETS_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_SVG_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
-    <QtMoc>
-      <CompilerFlavor>msvc</CompilerFlavor>
-      <Include>./vsbuild/$(Configuration)/moc_predefs.h</Include>
-      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <DynamicSource>output</DynamicSource>
-      <QtMocDir>$(Configuration)</QtMocDir>
-      <QtMocFileName>moc_%(Filename).cpp</QtMocFileName>
-    </QtMoc>
-    <QtRcc>
-      <InitFuncName>resources</InitFuncName>
-      <Compression>default</Compression>
-      <NoZstd>true</NoZstd>
-      <ExecutionDescription>Rcc'ing %(Identity)...</ExecutionDescription>
-      <QtRccDir>$(Configuration)</QtRccDir>
-      <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
-    </QtRcc>
-    <QtUic>
-      <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
-      <QtUicDir>$(ProjectDir)src\presentation\dialogs</QtUicDir>
-      <QtUicFileName>ui_%(Filename).h</QtUicFileName>
-    </QtUic>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">
     <ClCompile>
-      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;src;src\app;src\application;src\application\command;src\application\commands;src\application\history;src\application\ports;src\domain;src\domain\features;src\domain\sketch;src\geometry;src\geometry\math;src\geometry\primitives;src\geometry\boolean;src\geometry\extrusion;src\geometry\revolution;src\geometry\pattern;src\geometry\modification;src\geometry\placement;src\geometry\topology;src\geometry\sketch;src\geometry\runtime;src\interaction;src\interaction\coordinates;src\interaction\handles;src\interaction\tools;src\interaction\selection;src\rendering;src\rendering\adapters;src\rendering\pipeline;src\rendering\model;src\rendering\handles;src\viewport;src\viewport\coordinates;src\viewport\main_view;src\viewport\mirror;src\presentation;src\presentation\dialogs;src\presentation\dialogs\boolean;src\presentation\dialogs\common;src\presentation\dialogs\coordinates;src\presentation\dialogs\extrude_revolve;src\presentation\dialogs\history;src\presentation\dialogs\modification;src\presentation\dialogs\pattern;src\presentation\dialogs\primitives;src\presentation\dialogs\sketch;src\presentation\dialogs\tools;src\presentation\features;src\presentation\features\primitives;src\presentation\features\extrude_revolve;src\presentation\features\modification;src\presentation\features\boolean;src\presentation\features\pattern;src\presentation\main_window;src\infrastructure;src\infrastructure\serialization;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;src;src\app;src\application;src\application\command;src\application\commands;src\application\history;src\application\ports;src\common;src\domain;src\domain\features;src\domain\sketch;src\geometry;src\geometry\math;src\geometry\primitives;src\geometry\boolean;src\geometry\extrusion;src\geometry\revolution;src\geometry\pattern;src\geometry\modification;src\geometry\placement;src\geometry\topology;src\geometry\sketch;src\geometry\runtime;src\interaction;src\interaction\coordinates;src\interaction\handles;src\interaction\tools;src\interaction\selection;src\rendering;src\rendering\adapters;src\rendering\pipeline;src\rendering\model;src\rendering\handles;src\viewport;src\viewport\coordinates;src\viewport\main_view;src\viewport\mirror;src\presentation;src\presentation\dialogs;src\presentation\dialogs\boolean;src\presentation\dialogs\common;src\presentation\dialogs\coordinates;src\presentation\dialogs\extrude_revolve;src\presentation\dialogs\history;src\presentation\dialogs\modification;src\presentation\dialogs\pattern;src\presentation\dialogs\primitives;src\presentation\dialogs\sketch;src\presentation\dialogs\tools;src\presentation\features;src\presentation\features\primitives;src\presentation\features\extrude_revolve;src\presentation\features\modification;src\presentation\features\boolean;src\presentation\features\pattern;src\presentation\main_window;src\infrastructure;src\infrastructure\serialization;3rdparty\SARibbon;D:\VTK9.4.2\install\include\vtk-9.4;D:\OCCT7.7.0\Install\inc;D:\Qt\6.8.3\msvc2022_64\include;D:\Qt\6.8.3\msvc2022_64\include\QtOpenGLWidgets;D:\Qt\6.8.3\msvc2022_64\include\QtOpenGL;D:\Qt\6.8.3\msvc2022_64\include\QtWidgets;D:\Qt\6.8.3\msvc2022_64\include\QtSvg;D:\Qt\6.8.3\msvc2022_64\include\QtGui;D:\Qt\6.8.3\msvc2022_64\include\QtCore;debug;.;/include;D:\Qt\6.8.3\msvc2022_64\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -utf-8 -w34100 -w34189 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
-      <AssemblerListingLocation>vsbuild\Debug\</AssemblerListingLocation>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4005;4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ObjectFileName>debug\</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;SA_RIBBON_BAR_NO_EXPORT;SARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;QT_OPENGLWIDGETS_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_SVG_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>D:\VTK9.4.2\install\lib\vtk*.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKernel.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMath.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomBase.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBRep.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKPrim.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKShHealing.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKTopAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG2d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBO.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKFillet.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOffset.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKHLR.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMesh.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKService.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKV3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOpenGl.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtk.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtkDraw.lib;$(QTDIR)\lib\Qt6EntryPointd.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>D:\VTK9.4.2\install\lib\vtkcgns-9.4.lib;D:\VTK9.4.2\install\lib\vtkChartsCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonColor-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonComputationalGeometry-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonDataModel-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonExecutionModel-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonMath-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonMisc-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonSystem-9.4.lib;D:\VTK9.4.2\install\lib\vtkCommonTransforms-9.4.lib;D:\VTK9.4.2\install\lib\vtkDICOMParser-9.4.lib;D:\VTK9.4.2\install\lib\vtkDomainsChemistry-9.4.lib;D:\VTK9.4.2\install\lib\vtkDomainsChemistryOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkdoubleconversion-9.4.lib;D:\VTK9.4.2\install\lib\vtkexodusII-9.4.lib;D:\VTK9.4.2\install\lib\vtkexpat-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersAMR-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersCellGrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersExtraction-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersFlowPaths-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersGeneral-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersGeneric-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersGeometry-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersGeometryPreview-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersHybrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersHyperTree-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersImaging-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersModeling-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersParallel-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersParallelImaging-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersPoints-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersProgrammable-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersReduction-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersSelection-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersSMP-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersSources-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersStatistics-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersTemporal-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersTensor-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersTexture-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersTopology-9.4.lib;D:\VTK9.4.2\install\lib\vtkFiltersVerdict-9.4.lib;D:\VTK9.4.2\install\lib\vtkfmt-9.4.lib;D:\VTK9.4.2\install\lib\vtkfreetype-9.4.lib;D:\VTK9.4.2\install\lib\vtkGeovisCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkgl2ps-9.4.lib;D:\VTK9.4.2\install\lib\vtkglad-9.4.lib;D:\VTK9.4.2\install\lib\vtkGUISupportQt-9.4.lib;D:\VTK9.4.2\install\lib\vtkGUISupportQtQuick-9.4.lib;D:\VTK9.4.2\install\lib\vtkGUISupportQtSQL-9.4.lib;D:\VTK9.4.2\install\lib\vtkhdf5-9.4.lib;D:\VTK9.4.2\install\lib\vtkhdf5_hl-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingColor-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingFourier-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingGeneral-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingHybrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingMath-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingMorphological-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingSources-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingStatistics-9.4.lib;D:\VTK9.4.2\install\lib\vtkImagingStencil-9.4.lib;D:\VTK9.4.2\install\lib\vtkInfovisCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkInfovisLayout-9.4.lib;D:\VTK9.4.2\install\lib\vtkInteractionImage-9.4.lib;D:\VTK9.4.2\install\lib\vtkInteractionStyle-9.4.lib;D:\VTK9.4.2\install\lib\vtkInteractionWidgets-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOAMR-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOAsynchronous-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCellGrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCesium3DTiles-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCGNSReader-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOChemistry-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCityGML-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCONVERGECFD-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOEngys-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOEnSight-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOERF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOExodus-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOExport-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOExportGL2PS-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOExportPDF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOFDS-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOFLUENTCFF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOGeometry-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOHDF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOImage-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOImport-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOInfovis-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOIOSS-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOLegacy-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOLSDyna-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOMINC-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOMotionFX-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOMovie-9.4.lib;D:\VTK9.4.2\install\lib\vtkIONetCDF-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOOggTheora-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOParallel-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOParallelXML-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOPLY-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOSegY-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOSQL-9.4.lib;D:\VTK9.4.2\install\lib\vtkioss-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOTecplotTable-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOVeraOut-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOVideo-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOXML-9.4.lib;D:\VTK9.4.2\install\lib\vtkIOXMLParser-9.4.lib;D:\VTK9.4.2\install\lib\vtkjpeg-9.4.lib;D:\VTK9.4.2\install\lib\vtkjsoncpp-9.4.lib;D:\VTK9.4.2\install\lib\vtkkissfft-9.4.lib;D:\VTK9.4.2\install\lib\vtklibharu-9.4.lib;D:\VTK9.4.2\install\lib\vtklibproj-9.4.lib;D:\VTK9.4.2\install\lib\vtklibxml2-9.4.lib;D:\VTK9.4.2\install\lib\vtkloguru-9.4.lib;D:\VTK9.4.2\install\lib\vtklz4-9.4.lib;D:\VTK9.4.2\install\lib\vtklzma-9.4.lib;D:\VTK9.4.2\install\lib\vtkmetaio-9.4.lib;D:\VTK9.4.2\install\lib\vtknetcdf-9.4.lib;D:\VTK9.4.2\install\lib\vtkogg-9.4.lib;D:\VTK9.4.2\install\lib\vtkParallelCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkParallelDIY-9.4.lib;D:\VTK9.4.2\install\lib\vtkpng-9.4.lib;D:\VTK9.4.2\install\lib\vtkpugixml-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingAnnotation-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingCellGrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingContext2D-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingContextOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingFreeType-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingGL2PSOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingHyperTreeGrid-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingImage-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingLabel-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingLICOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingLOD-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingQt-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingSceneGraph-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingUI-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingVolume-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingVolumeOpenGL2-9.4.lib;D:\VTK9.4.2\install\lib\vtkRenderingVtkJS-9.4.lib;D:\VTK9.4.2\install\lib\vtksqlite-9.4.lib;D:\VTK9.4.2\install\lib\vtksys-9.4.lib;D:\VTK9.4.2\install\lib\vtkTestingCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkTestingRendering-9.4.lib;D:\VTK9.4.2\install\lib\vtktheora-9.4.lib;D:\VTK9.4.2\install\lib\vtktiff-9.4.lib;D:\VTK9.4.2\install\lib\vtktoken-9.4.lib;D:\VTK9.4.2\install\lib\vtkverdict-9.4.lib;D:\VTK9.4.2\install\lib\vtkViewsContext2D-9.4.lib;D:\VTK9.4.2\install\lib\vtkViewsCore-9.4.lib;D:\VTK9.4.2\install\lib\vtkViewsInfovis-9.4.lib;D:\VTK9.4.2\install\lib\vtkViewsQt-9.4.lib;D:\VTK9.4.2\install\lib\vtkWrappingTools-9.4.lib;D:\VTK9.4.2\install\lib\vtkzlib-9.4.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKernel.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMath.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomBase.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBRep.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKPrim.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKShHealing.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKTopAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKGeomAlgo.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG2d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKG3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKBO.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKFillet.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOffset.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKHLR.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKMesh.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKService.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKV3d.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKOpenGl.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtk.lib;D:\OCCT7.7.0\Install\win64\vc14\lib\TKIVtkDraw.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6OpenGLWidgetsd.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6OpenGLd.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6Widgetsd.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6Svgd.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6Guid.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6Cored.lib;D:\Qt\6.8.3\msvc2022_64\lib\Qt6EntryPointd.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:\OCCT7.7.0\Install\win64\vc14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -177,253 +137,804 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;SA_RIBBON_BAR_NO_EXPORT;SARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0;OCC_VERSION_MAJOR=7;OCC_VERSION_MINOR=7;_USE_MATH_DEFINES;QT_OPENGLWIDGETS_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_SVG_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
-    <QtMoc>
-      <CompilerFlavor>msvc</CompilerFlavor>
-      <Include>./vsbuild/$(Configuration)/moc_predefs.h</Include>
-      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <DynamicSource>output</DynamicSource>
-      <QtMocDir>$(Configuration)</QtMocDir>
-      <QtMocFileName>moc_%(Filename).cpp</QtMocFileName>
-    </QtMoc>
-    <QtRcc>
-      <InitFuncName>resources</InitFuncName>
-      <Compression>default</Compression>
-      <NoZstd>true</NoZstd>
-      <ExecutionDescription>Rcc'ing %(Identity)...</ExecutionDescription>
-      <QtRccDir>$(Configuration)</QtRccDir>
-      <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
-    </QtRcc>
-    <QtUic>
-      <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
-      <QtUicDir>$(ProjectDir)src\presentation\dialogs</QtUicDir>
-      <QtUicFileName>ui_%(Filename).h</QtUicFileName>
-    </QtUic>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="3rdparty\SARibbon\SARibbon.cpp" />
     <ClCompile Include="src\application\commands\addmodelcommand.cpp" />
-    <ClCompile Include="src\application\commands\booleancommand.cpp" />
-    <ClCompile Include="src\application\command\command.cpp" />
+    <ClCompile Include="src\geometry\placement\axis_placement.cpp" />
     <ClCompile Include="src\presentation\dialogs\boolean\bool_operation_dialog.cpp" />
+    <ClCompile Include="src\presentation\features\boolean\boolean_feature_controller.cpp" />
+    <ClCompile Include="src\geometry\boolean\boolean_ops.cpp" />
+    <ClCompile Include="src\application\commands\booleancommand.cpp" />
     <ClCompile Include="src\presentation\dialogs\modification\chamfer_dialog.cpp" />
+    <ClCompile Include="src\application\command\command.cpp" />
+    <ClCompile Include="src\application\history\commandmanager.cpp" />
     <ClCompile Include="src\presentation\dialogs\primitives\cone_params_dialog.cpp" />
     <ClCompile Include="src\application\commands\creategeometrycommand.cpp" />
+    <ClCompile Include="src\presentation\features\primitives\cuboid_interaction.cpp" />
     <ClCompile Include="src\presentation\dialogs\primitives\cuboid_params_dialog.cpp" />
     <ClCompile Include="src\presentation\dialogs\primitives\cylinder_dialog.cpp" />
-    <ClCompile Include="src\application\history\commandmanager.cpp" />
+    <ClCompile Include="src\presentation\dialogs\coordinates\datum_axis.cpp" />
     <ClCompile Include="src\presentation\dialogs\coordinates\datum_plane_dialog.cpp" />
+    <ClCompile Include="src\interaction\coordinates\datum_tools.cpp" />
     <ClCompile Include="src\application\commands\deletemodelcommand.cpp" />
     <ClCompile Include="src\presentation\dialogs\common\expression_dialog.cpp" />
-    <ClCompile Include="src\application\commands\extrusioncommand.cpp" />
+    <ClCompile Include="src\presentation\features\extrude_revolve\extrude_revolve_interaction.cpp" />
     <ClCompile Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.cpp" />
-    <ClCompile Include="src\presentation\dialogs\modification\fillet_dialog.cpp" />
-    <ClCompile Include="src\presentation\dialogs\history\history_list_item.cpp" />
-    <ClCompile Include="src\app\main.cpp" />
-    <ClCompile Include="src\application\history\model_document.cpp" />
-    <ClCompile Include="src\geometry\primitives\primitive_shapes.cpp" />
-    <ClCompile Include="src\rendering\adapters\occvtkconverter.cpp" />
-    <ClCompile Include="src\geometry\boolean\boolean_ops.cpp" />
-    <ClCompile Include="src\geometry\extrusion\extrusion_geometry.cpp" />
-    <ClCompile Include="src\geometry\modification\feature_modification_geometry.cpp" />
-    <ClCompile Include="src\geometry\placement\axis_placement.cpp" />
-    <ClCompile Include="src\interaction\selection\selection_geometry.cpp" />
-    <ClCompile Include="src\interaction\selection\shape_picker_bindings.cpp" />
-    <ClCompile Include="src\geometry\primitives\primitive_geometry.cpp" />
-    <ClCompile Include="src\geometry\extrusion\extrusion_recipe.cpp" />
-    <ClCompile Include="src\geometry\pattern\pattern_geometry.cpp" />
-    <ClCompile Include="src\geometry\revolution\revolve_geometry.cpp" />
-    <ClCompile Include="src\geometry\sketch\sketch_geometry.cpp" />
-    <ClCompile Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.cpp" />
-    <ClCompile Include="src\domain\sketch\sketch.cpp" />
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_create_dialog.cpp" />
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.cpp" />
-    <ClCompile Include="src\presentation\dialogs\primitives\sphere_params_dialog.cpp" />
-    <ClCompile Include="src\presentation\dialogs\tools\vector_dialog.cpp" />
-    <ClCompile Include="src\application\commands\updatemodelcommand.cpp" />
-    <ClCompile Include="src\application\commands\sketcheditcommand.cpp" />
-    <ClCompile Include="src\application\commands\patterncommand.cpp" />
-    <ClCompile Include="src\application\commands\regeneratemodelcommand.cpp" />
-    <ClCompile Include="src\presentation\main_window\main_window.cpp" />
     <ClCompile Include="src\presentation\features\extrude_revolve\extrusion_face_selection.cpp" />
-    <ClCompile Include="src\presentation\dialogs\coordinates\datum_axis.cpp" />
+    <ClCompile Include="src\presentation\features\extrude_revolve\extrusion_feature_controller.cpp" />
+    <ClCompile Include="src\geometry\extrusion\extrusion_geometry.cpp" />
+    <ClCompile Include="src\geometry\extrusion\extrusion_recipe.cpp" />
+    <ClCompile Include="src\application\commands\extrusioncommand.cpp" />
+    <ClCompile Include="src\geometry\modification\feature_modification_geometry.cpp" />
+    <ClCompile Include="src\infrastructure\serialization\feature_serializer.cpp" />
+    <ClCompile Include="src\geometry\topology\feature_topology.cpp" />
+    <ClCompile Include="src\presentation\features\modification\fillet_chamfer_controller.cpp" />
+    <ClCompile Include="src\presentation\dialogs\modification\fillet_dialog.cpp" />
+    <ClCompile Include="src\rendering\handles\handle_geometry.cpp" />
+    <ClCompile Include="src\interaction\handles\handle_spec.cpp" />
+    <ClCompile Include="src\presentation\dialogs\history\history_list_item.cpp" />
+    <ClCompile Include="src\rendering\model\intersection_edge_pipeline.cpp" />
+    <ClCompile Include="src\geometry\intersection\intersection_ops.cpp" />
+    <ClCompile Include="src\rendering\model\intersection_render_store.cpp" />
+    <ClCompile Include="src\app\main.cpp" />
     <ClCompile Include="src\presentation\main_window\main_menu_builder.cpp" />
-    <ClCompile Include="src\presentation\features\boolean\boolean_feature_controller.cpp" />
-    <ClCompile Include="src\presentation\features\primitives\cuboid_interaction.cpp" />
-    <ClCompile Include="src\interaction\coordinates\datum_tools.cpp" />
+    <ClCompile Include="src\viewport\main_view\main_viewport.cpp" />
+    <ClCompile Include="src\viewport\main_view\main_viewport_click.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_context.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_coordinates.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_document.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_events.cpp" />
-    <ClCompile Include="src\presentation\features\extrude_revolve\extrude_revolve_interaction.cpp" />
-    <ClCompile Include="src\presentation\features\extrude_revolve\extrusion_feature_controller.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_feature_regeneration.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_feature_tree.cpp" />
-    <ClCompile Include="src\presentation\features\modification\fillet_chamfer_controller.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_history_highlight.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_history_snapshot.cpp" />
-    <ClCompile Include="src\application\history\modeling_history_index_remap.cpp" />
-    <ClCompile Include="src\viewport\mirror\mirror_view_controller.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_intersections.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_model_regeneration.cpp" />
-    <ClCompile Include="src\viewport\main_view\mouse_interactor.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_occ_shape.cpp" />
-    <ClCompile Include="src\presentation\features\pattern\pattern_controller.cpp" />
-    <ClCompile Include="src\presentation\features\pattern\pattern_interaction.cpp" />
-    <ClCompile Include="src\presentation\features\primitives\primitive_creation.cpp" />
-    <ClCompile Include="src\interaction\coordinates\reference_csys_tools.cpp" />
-    <ClCompile Include="src\presentation\features\extrude_revolve\revolve_feature_controller.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_ribbon.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_runtime_state.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_shape_picker.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_sketch.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_conic.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_creation.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_dialogs.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_edit.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_history.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_polygon_ellipse.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_preview.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_tabs.cpp" />
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_tools.cpp" />
     <ClCompile Include="src\presentation\main_window\main_window_undo_restore.cpp" />
+    <ClCompile Include="src\viewport\mirror\mirror_view_controller.cpp" />
+    <ClCompile Include="src\viewport\mirror\mirror_view_state.cpp" />
+    <ClCompile Include="src\rendering\model\model_display_style.cpp" />
+    <ClCompile Include="src\application\history\model_document.cpp" />
+    <ClCompile Include="src\infrastructure\serialization\model_document_serializer.cpp" />
+    <ClCompile Include="src\geometry\runtime\model_geometry_store.cpp" />
+    <ClCompile Include="src\rendering\model\model_render_store.cpp" />
+    <ClCompile Include="src\rendering\pipeline\model_shape_pipeline.cpp" />
+    <ClCompile Include="src\application\history\modeling_history_index_remap.cpp" />
+    <ClCompile Include="src\viewport\main_view\mouse_interactor.cpp" />
+    <ClCompile Include="src\rendering\adapters\occvtkconverter.cpp" />
+    <ClCompile Include="src\presentation\features\pattern\pattern_controller.cpp" />
+    <ClCompile Include="src\presentation\dialogs\pattern\pattern_feature_dialog.cpp" />
+    <ClCompile Include="src\geometry\pattern\pattern_geometry.cpp" />
+    <ClCompile Include="src\presentation\features\pattern\pattern_interaction.cpp" />
+    <ClCompile Include="src\application\commands\patterncommand.cpp" />
+    <ClCompile Include="src\presentation\features\primitives\primitive_creation.cpp" />
+    <ClCompile Include="src\geometry\primitives\primitive_geometry.cpp" />
+    <ClCompile Include="src\geometry\primitives\primitive_shapes.cpp" />
+    <ClCompile Include="src\interaction\coordinates\reference_csys_tools.cpp" />
+    <ClCompile Include="src\application\commands\regeneratemodelcommand.cpp" />
+    <ClCompile Include="src\rendering\pipeline\render_pipeline.cpp" />
+    <ClCompile Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.cpp" />
+    <ClCompile Include="src\presentation\features\extrude_revolve\revolve_feature_controller.cpp" />
+    <ClCompile Include="src\geometry\revolution\revolve_geometry.cpp" />
+    <ClCompile Include="src\interaction\selection\selection_geometry.cpp" />
+    <ClCompile Include="src\interaction\selection\shape_picker_bindings.cpp" />
+    <ClCompile Include="src\rendering\model\shape_presentation_factory.cpp" />
+    <ClCompile Include="src\domain\sketch\sketch.cpp" />
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_conic_dialog.cpp" />
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_create_dialog.cpp" />
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_ellipse_dialog.cpp" />
+    <ClCompile Include="src\geometry\sketch\sketch_geometry.cpp" />
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_mode_dialogs.cpp" />
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_polygon_dialog.cpp" />
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.cpp" />
+    <ClCompile Include="src\application\commands\sketcheditcommand.cpp" />
+    <ClCompile Include="src\presentation\dialogs\primitives\sphere_params_dialog.cpp" />
+    <ClCompile Include="src\application\commands\updatemodelcommand.cpp" />
+    <ClCompile Include="src\presentation\dialogs\tools\vector_dialog.cpp" />
     <ClCompile Include="src\interaction\tools\vector_handles.cpp" />
     <ClCompile Include="src\interaction\tools\vector_snap.cpp" />
     <ClCompile Include="src\viewport\coordinates\viewport_coordinates.cpp" />
-    <ClCompile Include="src\viewport\main_view\main_viewport_click.cpp" />
-    <ClCompile Include="src\viewport\main_view\main_viewport.cpp" />
-    <ClCompile Include="src\viewport\mirror\mirror_view_state.cpp" />
-    <ClCompile Include="src\presentation\dialogs\pattern\pattern_feature_dialog.cpp" />
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_conic_dialog.cpp" />
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_ellipse_dialog.cpp" />
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_mode_dialogs.cpp" />
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_polygon_dialog.cpp" />
-    <ClCompile Include="src\geometry\topology\feature_topology.cpp" />
-    <ClCompile Include="src\rendering\handles\handle_geometry.cpp" />
-    <ClCompile Include="src\interaction\handles\handle_spec.cpp" />
-    <ClCompile Include="src\infrastructure\serialization\feature_serializer.cpp" />
-    <ClCompile Include="src\infrastructure\serialization\model_document_serializer.cpp" />
-    <ClCompile Include="src\rendering\pipeline\render_pipeline.cpp" />
-    <ClCompile Include="src\geometry\runtime\model_geometry_store.cpp" />
-    <ClCompile Include="src\rendering\model\model_render_store.cpp" />
-    <ClCompile Include="src\rendering\model\shape_presentation_factory.cpp" />
-    <ClCompile Include="src\presentation\main_window\main_window_runtime_state.cpp" />
-    <ClCompile Include="3rdparty\SARibbon\SARibbon.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\common\axisdirection.h" />
-    <ClInclude Include="src\domain\features\featurerecipe.h" />
-    <ClInclude Include="src\infrastructure\serialization\feature_serializer.h" />
-    <ClInclude Include="src\infrastructure\serialization\model_document_serializer.h" />
-    <ClInclude Include="src\rendering\pipeline\render_pipeline.h" />
-    <ClInclude Include="src\viewport\main_view\mouse_interactor.h" />
-    <ClInclude Include="src\geometry\runtime\model_geometry_state.h" />
-    <ClInclude Include="src\geometry\runtime\model_geometry_store.h" />
-    <ClInclude Include="src\rendering\model\model_render_state.h" />
-    <ClInclude Include="src\rendering\model\model_render_store.h" />
-    <ClInclude Include="src\rendering\model\shape_presentation_factory.h" />
-    <ClInclude Include="src\application\history\model_history_snapshot.h" />
-    <ClInclude Include="src\application\history\modeling_history_record.h" />
+    <CustomBuild Include="3rdparty\SARibbon\SARibbon.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">3rdparty\SARibbon\SARibbon.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt 3rdparty\SARibbon\SARibbon.h -o release\moc_SARibbon.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC 3rdparty/SARibbon/SARibbon.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_SARibbon.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">3rdparty\SARibbon\SARibbon.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt 3rdparty\SARibbon\SARibbon.h -o debug\moc_SARibbon.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC 3rdparty/SARibbon/SARibbon.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_SARibbon.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="src\application\commands\addmodelcommand.h" />
+    <ClInclude Include="src\geometry\placement\axis_placement.h" />
+    <ClInclude Include="src\common\axisdirection.h" />
+    <CustomBuild Include="src\presentation\dialogs\boolean\bool_operation_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\boolean\bool_operation_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\boolean\bool_operation_dialog.h -o release\moc_bool_operation_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/boolean/bool_operation_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_bool_operation_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\boolean\bool_operation_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\boolean\bool_operation_dialog.h -o debug\moc_bool_operation_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/boolean/bool_operation_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_bool_operation_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\geometry\boolean\boolean_ops.h" />
     <ClInclude Include="src\application\commands\booleancommand.h" />
-    <QtMoc Include="src\presentation\dialogs\boolean\bool_operation_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\modification\chamfer_dialog.h" />
+    <CustomBuild Include="src\presentation\dialogs\modification\chamfer_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\modification\chamfer_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\modification\chamfer_dialog.h -o release\moc_chamfer_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/modification/chamfer_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_chamfer_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\modification\chamfer_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\modification\chamfer_dialog.h -o debug\moc_chamfer_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/modification/chamfer_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_chamfer_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="src\application\command\command.h" />
     <ClInclude Include="src\application\history\commandmanager.h" />
-    <ClInclude Include="src\application\history\modeling_history_index_remap.h" />
-    <ClInclude Include="src\application\history\modeling_history_primitives.h" />
-    <ClInclude Include="src\application\history\modeling_history_placement.h" />
-    <ClInclude Include="src\application\ports\modeling_command_port.h" />
-    <QtMoc Include="src\presentation\dialogs\primitives\cone_params_dialog.h" />
-    <ClInclude Include="src\application\commands\creategeometrycommand.h" />
-    <QtMoc Include="src\presentation\dialogs\primitives\cuboid_params_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\primitives\cylinder_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\coordinates\datum_plane_dialog.h" />
-    <ClInclude Include="src\application\commands\deletemodelcommand.h" />
-    <QtMoc Include="src\presentation\dialogs\common\expression_dialog.h" />
-    <ClInclude Include="src\application\commands\extrusioncommand.h" />
-    <QtMoc Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\modification\fillet_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\history\history_list_item.h" />
-    <ClInclude Include="src\application\history\model_document.h" />
-    <ClInclude Include="src\common\modeltype.h" />
-    <ClInclude Include="src\rendering\adapters\occvtkconverter.h" />
-    <ClInclude Include="src\geometry\boolean\boolean_ops.h" />
-    <ClInclude Include="src\geometry\extrusion\extrusion_geometry.h" />
-    <ClInclude Include="src\geometry\modification\feature_modification_geometry.h" />
-    <ClInclude Include="src\geometry\placement\axis_placement.h" />
-    <ClInclude Include="src\geometry\topology\feature_topology.h" />
-    <ClInclude Include="src\rendering\handles\handle_geometry.h" />
-    <ClInclude Include="src\interaction\handles\handle_spec.h" />
-    <ClInclude Include="src\interaction\selection\selection_geometry.h" />
-    <ClInclude Include="src\geometry\primitives\primitive_build_request.h" />
-    <ClInclude Include="src\geometry\primitives\primitive_geometry.h" />
-    <ClInclude Include="src\geometry\primitives\primitive.h" />
-    <ClInclude Include="src\geometry\primitives\primitive_shapes.h" />
-    <ClInclude Include="src\geometry\extrusion\extrusion_recipe.h" />
-    <ClInclude Include="src\geometry\pattern\pattern_geometry.h" />
-    <ClInclude Include="src\geometry\revolution\revolve_geometry.h" />
-    <ClInclude Include="src\geometry\sketch\sketch_geometry.h" />
-    <ClInclude Include="src\domain\features\patternfeaturetypes.h" />
-    <ClInclude Include="src\geometry\math\platformmath.h" />
-    <QtMoc Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.h" />
-    <ClInclude Include="src\domain\sketch\sketch.h" />
-    <QtMoc Include="src\presentation\dialogs\sketch\sketch_create_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\primitives\sphere_params_dialog.h" />
-    <ClInclude Include="src\application\commands\updatemodelcommand.h" />
-    <ClInclude Include="src\application\commands\sketcheditcommand.h" />
-    <ClInclude Include="src\application\commands\patterncommand.h" />
-    <ClInclude Include="src\application\commands\regeneratemodelcommand.h" />
-    <QtMoc Include="src\presentation\dialogs\tools\vector_dialog.h" />
-    <QtMoc Include="src\presentation\main_window\main_window.h" />
-    <QtMoc Include="src\presentation\dialogs\coordinates\datum_axis.h" />
-    <ClInclude Include="src\presentation\main_window\main_menu_builder.h" />
+    <CustomBuild Include="src\presentation\dialogs\primitives\cone_params_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\primitives\cone_params_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\primitives\cone_params_dialog.h -o release\moc_cone_params_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/primitives/cone_params_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_cone_params_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\primitives\cone_params_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\primitives\cone_params_dialog.h -o debug\moc_cone_params_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/primitives/cone_params_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_cone_params_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="src\presentation\main_window\coordinate_window_state.h" />
+    <ClInclude Include="src\application\commands\creategeometrycommand.h" />
+    <CustomBuild Include="src\presentation\dialogs\primitives\cuboid_params_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\primitives\cuboid_params_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\primitives\cuboid_params_dialog.h -o release\moc_cuboid_params_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/primitives/cuboid_params_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_cuboid_params_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\primitives\cuboid_params_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\primitives\cuboid_params_dialog.h -o debug\moc_cuboid_params_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/primitives/cuboid_params_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_cuboid_params_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cylinder_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\primitives\cylinder_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\primitives\cylinder_dialog.h -o release\moc_cylinder_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/primitives/cylinder_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_cylinder_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\primitives\cylinder_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\primitives\cylinder_dialog.h -o debug\moc_cylinder_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/primitives/cylinder_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_cylinder_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\coordinates\datum_axis.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\coordinates\datum_axis.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\coordinates\datum_axis.h -o release\moc_datum_axis.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/coordinates/datum_axis.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_datum_axis.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\coordinates\datum_axis.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\coordinates\datum_axis.h -o debug\moc_datum_axis.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/coordinates/datum_axis.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_datum_axis.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\coordinates\datum_plane_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\coordinates\datum_plane_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\coordinates\datum_plane_dialog.h -o release\moc_datum_plane_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/coordinates/datum_plane_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_datum_plane_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\coordinates\datum_plane_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\coordinates\datum_plane_dialog.h -o debug\moc_datum_plane_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/coordinates/datum_plane_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_datum_plane_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\application\commands\deletemodelcommand.h" />
     <ClInclude Include="src\presentation\main_window\dialog_window_state.h" />
     <ClInclude Include="src\presentation\main_window\document_window_state.h" />
-    <ClInclude Include="src\presentation\main_window\model_document_window_state.h" />
-    <ClInclude Include="src\presentation\main_window\primitive_interaction_window_state.h" />
+    <CustomBuild Include="src\presentation\dialogs\common\expression_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\common\expression_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\common\expression_dialog.h -o release\moc_expression_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/common/expression_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_expression_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\common\expression_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\common\expression_dialog.h -o debug\moc_expression_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/common/expression_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_expression_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\extrude_revolve\extrusion_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\extrude_revolve\extrusion_dialog.h -o release\moc_extrusion_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/extrude_revolve/extrusion_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_extrusion_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\extrude_revolve\extrusion_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\extrude_revolve\extrusion_dialog.h -o debug\moc_extrusion_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/extrude_revolve/extrusion_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_extrusion_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\geometry\extrusion\extrusion_geometry.h" />
+    <ClInclude Include="src\geometry\extrusion\extrusion_recipe.h" />
+    <ClInclude Include="src\application\commands\extrusioncommand.h" />
     <ClInclude Include="src\presentation\main_window\feature_interaction_window_state.h" />
-    <ClInclude Include="src\presentation\main_window\pattern_window_state.h" />
-    <ClInclude Include="src\presentation\main_window\ribbon_window_state.h" />
-    <ClInclude Include="src\presentation\main_window\sketch_window_state.h" />
-    <ClInclude Include="src\presentation\main_window\vector_snap_window_state.h" />
-    <ClInclude Include="src\interaction\selection\selection_window_state.h" />
-    <ClInclude Include="src\rendering\model\model_rendering_window_state.h" />
-    <ClInclude Include="src\viewport\main_view\viewport_window_state.h" />
-    <ClInclude Include="src\viewport\main_view\view_navigation_window_state.h" />
+    <ClInclude Include="src\geometry\modification\feature_modification_geometry.h" />
+    <ClInclude Include="src\infrastructure\serialization\feature_serializer.h" />
+    <ClInclude Include="src\geometry\topology\feature_topology.h" />
+    <ClInclude Include="src\domain\features\featurerecipe.h" />
+    <CustomBuild Include="src\presentation\dialogs\modification\fillet_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\modification\fillet_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\modification\fillet_dialog.h -o release\moc_fillet_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/modification/fillet_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_fillet_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\modification\fillet_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\modification\fillet_dialog.h -o debug\moc_fillet_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/modification/fillet_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_fillet_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\rendering\handles\handle_geometry.h" />
+    <ClInclude Include="src\interaction\handles\handle_spec.h" />
+    <CustomBuild Include="src\presentation\dialogs\history\history_list_item.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\history\history_list_item.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\history\history_list_item.h -o release\moc_history_list_item.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/history/history_list_item.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_history_list_item.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\history\history_list_item.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\history\history_list_item.h -o debug\moc_history_list_item.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/history/history_list_item.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_history_list_item.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\rendering\model\intersection_edge_pipeline.h" />
+    <ClInclude Include="src\geometry\intersection\intersection_ops.h" />
+    <ClInclude Include="src\rendering\model\intersection_render_store.h" />
+    <ClInclude Include="src\presentation\main_window\main_menu_builder.h" />
+    <CustomBuild Include="src\presentation\main_window\main_window.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\main_window\main_window.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\main_window\main_window.h -o release\moc_main_window.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/main_window/main_window.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_main_window.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\main_window\main_window.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\main_window\main_window.h -o debug\moc_main_window.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/main_window/main_window.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_main_window.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="src\viewport\mirror\mirror_view_state.h" />
     <ClInclude Include="src\viewport\mirror\mirror_view_types.h" />
     <ClInclude Include="src\viewport\mirror\mirror_view_window.h" />
-    <QtMoc Include="3rdparty\SARibbon\SARibbon.h" />
-    <QtMoc Include="src\presentation\dialogs\pattern\pattern_feature_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\sketch\sketch_conic_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\sketch\sketch_ellipse_dialog.h" />
-    <QtMoc Include="src\presentation\dialogs\sketch\sketch_mode_dialogs.h" />
-    <QtMoc Include="src\presentation\dialogs\sketch\sketch_polygon_dialog.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="vsbuild\Debug\moc_predefs.h.cbt">
-      <FileType>Document</FileType>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr /MD -wd4005 -Zi -MDd -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;$(IntDir)\moc_predefs.h</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generate moc_predefs.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)\moc_predefs.h;%(Outputs)</Outputs>
+    <ClInclude Include="src\rendering\model\model_display_style.h" />
+    <ClInclude Include="src\application\history\model_document.h" />
+    <ClInclude Include="src\infrastructure\serialization\model_document_serializer.h" />
+    <ClInclude Include="src\presentation\main_window\model_document_window_state.h" />
+    <ClInclude Include="src\geometry\runtime\model_geometry_state.h" />
+    <ClInclude Include="src\geometry\runtime\model_geometry_store.h" />
+    <ClInclude Include="src\application\history\model_history_snapshot.h" />
+    <ClInclude Include="src\rendering\model\model_render_state.h" />
+    <ClInclude Include="src\rendering\model\model_render_store.h" />
+    <ClInclude Include="src\rendering\model\model_rendering_window_state.h" />
+    <ClInclude Include="src\rendering\pipeline\model_shape_pipeline.h" />
+    <ClInclude Include="src\application\ports\modeling_command_port.h" />
+    <ClInclude Include="src\application\history\modeling_history_index_remap.h" />
+    <ClInclude Include="src\application\history\modeling_history_placement.h" />
+    <ClInclude Include="src\application\history\modeling_history_primitives.h" />
+    <ClInclude Include="src\application\history\modeling_history_record.h" />
+    <ClInclude Include="src\common\modeltype.h" />
+    <ClInclude Include="src\viewport\main_view\mouse_interaction_context.h" />
+    <ClInclude Include="src\viewport\main_view\mouse_interactor.h" />
+    <ClInclude Include="src\rendering\adapters\occvtkconverter.h" />
+    <CustomBuild Include="src\presentation\dialogs\pattern\pattern_feature_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\pattern\pattern_feature_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\pattern\pattern_feature_dialog.h -o release\moc_pattern_feature_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/pattern/pattern_feature_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_pattern_feature_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\pattern\pattern_feature_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\pattern\pattern_feature_dialog.h -o debug\moc_pattern_feature_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/pattern/pattern_feature_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_pattern_feature_dialog.cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="vsbuild\Release\moc_predefs.h.cbt">
+    <ClInclude Include="src\geometry\pattern\pattern_geometry.h" />
+    <ClInclude Include="src\presentation\main_window\pattern_window_state.h" />
+    <ClInclude Include="src\application\commands\patterncommand.h" />
+    <ClInclude Include="src\domain\features\patternfeaturetypes.h" />
+    <ClInclude Include="src\geometry\math\platformmath.h" />
+    <ClInclude Include="src\geometry\primitives\primitive.h" />
+    <ClInclude Include="src\geometry\primitives\primitive_build_request.h" />
+    <ClInclude Include="src\geometry\primitives\primitive_geometry.h" />
+    <ClInclude Include="src\presentation\main_window\primitive_interaction_window_state.h" />
+    <ClInclude Include="src\geometry\primitives\primitive_shapes.h" />
+    <ClInclude Include="src\application\commands\regeneratemodelcommand.h" />
+    <ClInclude Include="src\rendering\pipeline\render_pipeline.h" />
+    <CustomBuild Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\extrude_revolve\revolve_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\extrude_revolve\revolve_dialog.h -o release\moc_revolve_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/extrude_revolve/revolve_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_revolve_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\extrude_revolve\revolve_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\extrude_revolve\revolve_dialog.h -o debug\moc_revolve_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/extrude_revolve/revolve_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_revolve_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\geometry\revolution\revolve_geometry.h" />
+    <ClInclude Include="src\presentation\main_window\ribbon_window_state.h" />
+    <ClInclude Include="src\interaction\selection\selection_geometry.h" />
+    <ClInclude Include="src\interaction\selection\selection_window_state.h" />
+    <ClInclude Include="src\interaction\selection\shape_picker_binding_service.h" />
+    <ClInclude Include="src\rendering\model\shape_presentation_factory.h" />
+    <ClInclude Include="src\domain\sketch\sketch.h" />
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_conic_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\sketch\sketch_conic_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\sketch\sketch_conic_dialog.h -o release\moc_sketch_conic_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_conic_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_sketch_conic_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\sketch\sketch_conic_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\sketch\sketch_conic_dialog.h -o debug\moc_sketch_conic_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_conic_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_sketch_conic_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_create_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\sketch\sketch_create_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\sketch\sketch_create_dialog.h -o release\moc_sketch_create_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_create_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_sketch_create_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\sketch\sketch_create_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\sketch\sketch_create_dialog.h -o debug\moc_sketch_create_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_create_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_sketch_create_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_ellipse_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\sketch\sketch_ellipse_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\sketch\sketch_ellipse_dialog.h -o release\moc_sketch_ellipse_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_ellipse_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_sketch_ellipse_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\sketch\sketch_ellipse_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\sketch\sketch_ellipse_dialog.h -o debug\moc_sketch_ellipse_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_ellipse_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_sketch_ellipse_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\geometry\sketch\sketch_geometry.h" />
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_mode_dialogs.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\sketch\sketch_mode_dialogs.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\sketch\sketch_mode_dialogs.h -o release\moc_sketch_mode_dialogs.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_mode_dialogs.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_sketch_mode_dialogs.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\sketch\sketch_mode_dialogs.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\sketch\sketch_mode_dialogs.h -o debug\moc_sketch_mode_dialogs.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_mode_dialogs.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_sketch_mode_dialogs.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_polygon_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\sketch\sketch_polygon_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\sketch\sketch_polygon_dialog.h -o release\moc_sketch_polygon_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_polygon_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_sketch_polygon_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\sketch\sketch_polygon_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\sketch\sketch_polygon_dialog.h -o debug\moc_sketch_polygon_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_polygon_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_sketch_polygon_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\sketch\sketch_tool_input_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\sketch\sketch_tool_input_dialog.h -o release\moc_sketch_tool_input_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_tool_input_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_sketch_tool_input_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\sketch\sketch_tool_input_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\sketch\sketch_tool_input_dialog.h -o debug\moc_sketch_tool_input_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/sketch/sketch_tool_input_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_sketch_tool_input_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\presentation\main_window\sketch_window_state.h" />
+    <ClInclude Include="src\application\commands\sketcheditcommand.h" />
+    <CustomBuild Include="src\presentation\dialogs\primitives\sphere_params_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\primitives\sphere_params_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\primitives\sphere_params_dialog.h -o release\moc_sphere_params_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/primitives/sphere_params_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_sphere_params_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\primitives\sphere_params_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\primitives\sphere_params_dialog.h -o debug\moc_sphere_params_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/primitives/sphere_params_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_sphere_params_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\geometry\topology\sub_shape_reference.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_bool_operation_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_chamfer_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_cone_params_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_cuboid_params_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_cylinder_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_datum_plane_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_expression_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_extrusion_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_fillet_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_history_list_item.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_main_window.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_revolve_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_sketch_create_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_sketch_tool_input_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_sphere_params_dialog.h" />
+    <ClInclude Include="src\presentation\dialogs\ui_vector_dialog.h" />
+    <ClInclude Include="src\application\commands\updatemodelcommand.h" />
+    <CustomBuild Include="src\presentation\dialogs\tools\vector_dialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\tools\vector_dialog.h;release\mocinclude.opt;release\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DNDEBUG -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/release/moc_predefs.h @release/mocinclude.opt src\presentation\dialogs\tools\vector_dialog.h -o release\moc_vector_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">MOC src/presentation/dialogs/tools/vector_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_vector_dialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\tools\vector_dialog.h;debug\mocinclude.opt;debug\moc_predefs.h;D:\Qt\6.8.3\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\moc.exe  -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DSA_RIBBON_BAR_NO_EXPORT -DSARIBBON_USE_3RDPARTY_FRAMELESSHELPER=0 -DOCC_VERSION_MAJOR=7 -DOCC_VERSION_MINOR=7 -D_USE_MATH_DEFINES -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB --compiler-flavor=msvc --include D:/ProgramFiles/Practice_Modeling_47/debug/moc_predefs.h @debug/mocinclude.opt src\presentation\dialogs\tools\vector_dialog.h -o debug\moc_vector_dialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">MOC src/presentation/dialogs/tools/vector_dialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_vector_dialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="src\presentation\main_window\vector_snap_window_state.h" />
+    <ClInclude Include="src\viewport\main_view\view_navigation_window_state.h" />
+    <ClInclude Include="src\viewport\main_view\viewport_window_state.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="debug\moc_SARibbon.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_SARibbon.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_bool_operation_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_bool_operation_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_chamfer_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_chamfer_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_cone_params_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_cone_params_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_cuboid_params_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_cuboid_params_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_cylinder_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_cylinder_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_datum_axis.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_datum_axis.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_datum_plane_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_datum_plane_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_expression_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_expression_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_extrusion_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_extrusion_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_fillet_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_fillet_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_history_list_item.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_history_list_item.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_main_window.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_main_window.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_pattern_feature_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_pattern_feature_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <CustomBuild Include="debug\moc_predefs.h.cbt">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr /MD -wd4005 -O2 -MD -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;$(IntDir)\moc_predefs.h</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generate moc_predefs.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)\moc_predefs.h;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">cl -BxD:\Qt\6.8.3\msvc2022_64\bin\qmake.exe -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr /MD -wd4005 -Zi -MDd -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E D:\Qt\6.8.3\msvc2022_64\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;debug\moc_predefs.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">Generate moc_predefs.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\moc_predefs.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="release\moc_predefs.h.cbt">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">cl -BxD:\Qt\6.8.3\msvc2022_64\bin\qmake.exe -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr /MD -wd4005 -O2 -MD -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E D:\Qt\6.8.3\msvc2022_64\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;release\moc_predefs.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">Generate moc_predefs.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\moc_predefs.h;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </CustomBuild>
+    <ClCompile Include="debug\moc_revolve_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_revolve_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_conic_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_conic_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_create_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_create_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_ellipse_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_ellipse_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_mode_dialogs.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_mode_dialogs.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_polygon_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_polygon_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_tool_input_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_tool_input_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sphere_params_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_sphere_params_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_vector_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_vector_dialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\qrc_resources.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\qrc_resources.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClInclude Include="ui_bool_operation_dialog.h" />
+    <ClInclude Include="ui_chamfer_dialog.h" />
+    <ClInclude Include="ui_cone_params_dialog.h" />
+    <ClInclude Include="ui_cuboid_params_dialog.h" />
+    <ClInclude Include="ui_cylinder_dialog.h" />
+    <ClInclude Include="ui_datum_plane_dialog.h" />
+    <ClInclude Include="ui_expression_dialog.h" />
+    <ClInclude Include="ui_extrusion_dialog.h" />
+    <ClInclude Include="ui_fillet_dialog.h" />
+    <ClInclude Include="ui_history_list_item.h" />
+    <ClInclude Include="ui_main_window.h" />
+    <ClInclude Include="ui_revolve_dialog.h" />
+    <ClInclude Include="ui_sketch_create_dialog.h" />
+    <ClInclude Include="ui_sketch_tool_input_dialog.h" />
+    <ClInclude Include="ui_sphere_params_dialog.h" />
+    <ClInclude Include="ui_vector_dialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\presentation\dialogs\boolean\bool_operation_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\boolean\bool_operation_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\boolean\bool_operation_dialog.ui -o ui_bool_operation_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/boolean/bool_operation_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_bool_operation_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\boolean\bool_operation_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\boolean\bool_operation_dialog.ui -o ui_bool_operation_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/boolean/bool_operation_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_bool_operation_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\modification\chamfer_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\modification\chamfer_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\modification\chamfer_dialog.ui -o ui_chamfer_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/modification/chamfer_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_chamfer_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\modification\chamfer_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\modification\chamfer_dialog.ui -o ui_chamfer_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/modification/chamfer_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_chamfer_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cone_params_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\primitives\cone_params_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\primitives\cone_params_dialog.ui -o ui_cone_params_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/primitives/cone_params_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_cone_params_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\primitives\cone_params_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\primitives\cone_params_dialog.ui -o ui_cone_params_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/primitives/cone_params_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_cone_params_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cuboid_params_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\primitives\cuboid_params_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\primitives\cuboid_params_dialog.ui -o ui_cuboid_params_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/primitives/cuboid_params_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_cuboid_params_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\primitives\cuboid_params_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\primitives\cuboid_params_dialog.ui -o ui_cuboid_params_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/primitives/cuboid_params_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_cuboid_params_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cylinder_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\primitives\cylinder_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\primitives\cylinder_dialog.ui -o ui_cylinder_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/primitives/cylinder_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_cylinder_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\primitives\cylinder_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\primitives\cylinder_dialog.ui -o ui_cylinder_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/primitives/cylinder_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_cylinder_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\coordinates\datum_plane_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\coordinates\datum_plane_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\coordinates\datum_plane_dialog.ui -o ui_datum_plane_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/coordinates/datum_plane_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_datum_plane_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\coordinates\datum_plane_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\coordinates\datum_plane_dialog.ui -o ui_datum_plane_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/coordinates/datum_plane_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_datum_plane_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\common\expression_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\common\expression_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\common\expression_dialog.ui -o ui_expression_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/common/expression_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_expression_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\common\expression_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\common\expression_dialog.ui -o ui_expression_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/common/expression_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_expression_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\extrude_revolve\extrusion_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\extrude_revolve\extrusion_dialog.ui -o ui_extrusion_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/extrude_revolve/extrusion_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_extrusion_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\extrude_revolve\extrusion_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\extrude_revolve\extrusion_dialog.ui -o ui_extrusion_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/extrude_revolve/extrusion_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_extrusion_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\modification\fillet_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\modification\fillet_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\modification\fillet_dialog.ui -o ui_fillet_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/modification/fillet_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_fillet_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\modification\fillet_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\modification\fillet_dialog.ui -o ui_fillet_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/modification/fillet_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_fillet_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\history\history_list_item.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\history\history_list_item.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\history\history_list_item.ui -o ui_history_list_item.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/history/history_list_item.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_history_list_item.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\history\history_list_item.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\history\history_list_item.ui -o ui_history_list_item.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/history/history_list_item.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_history_list_item.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\main_window\main_window.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\main_window\main_window.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\main_window\main_window.ui -o ui_main_window.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/main_window/main_window.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_main_window.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\main_window\main_window.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;D:\VTK9.4.2\install\include\vtk-9.4\qvtkopenglnativewidget.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\main_window\main_window.ui -o ui_main_window.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/main_window/main_window.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_main_window.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\extrude_revolve\revolve_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\extrude_revolve\revolve_dialog.ui -o ui_revolve_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/extrude_revolve/revolve_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_revolve_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\extrude_revolve\revolve_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\extrude_revolve\revolve_dialog.ui -o ui_revolve_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/extrude_revolve/revolve_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_revolve_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_create_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\sketch\sketch_create_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\sketch\sketch_create_dialog.ui -o ui_sketch_create_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/sketch/sketch_create_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_sketch_create_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\sketch\sketch_create_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\sketch\sketch_create_dialog.ui -o ui_sketch_create_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/sketch/sketch_create_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_sketch_create_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\sketch\sketch_tool_input_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\sketch\sketch_tool_input_dialog.ui -o ui_sketch_tool_input_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/sketch/sketch_tool_input_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_sketch_tool_input_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\sketch\sketch_tool_input_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\sketch\sketch_tool_input_dialog.ui -o ui_sketch_tool_input_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/sketch/sketch_tool_input_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_sketch_tool_input_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\sphere_params_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\primitives\sphere_params_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\primitives\sphere_params_dialog.ui -o ui_sphere_params_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/primitives/sphere_params_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_sphere_params_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\primitives\sphere_params_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\primitives\sphere_params_dialog.ui -o ui_sphere_params_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/primitives/sphere_params_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_sphere_params_dialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\tools\vector_dialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">src\presentation\dialogs\tools\vector_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\tools\vector_dialog.ui -o ui_vector_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">UIC src/presentation/dialogs/tools/vector_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui_vector_dialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">src\presentation\dialogs\tools\vector_dialog.ui;D:\Qt\6.8.3\msvc2022_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\uic.exe src\presentation\dialogs\tools\vector_dialog.ui -o ui_vector_dialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">UIC src/presentation/dialogs/tools/vector_dialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">ui_vector_dialog.h;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="src\presentation\dialogs\boolean\bool_operation_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\modification\chamfer_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\primitives\cone_params_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\primitives\cuboid_params_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\primitives\cylinder_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\coordinates\datum_plane_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\common\expression_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\modification\fillet_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\history\history_list_item.ui" />
-    <QtUic Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\sketch\sketch_create_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\primitives\sphere_params_dialog.ui" />
-    <QtUic Include="src\presentation\dialogs\tools\vector_dialog.ui" />
-    <QtUic Include="src\presentation\main_window\main_window.ui" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="resource\Contour.png" />
     <None Include="resource\NewWindow.png" />
     <None Include="resource\Open.png" />
     <None Include="resource\Save.png" />
@@ -438,17 +949,43 @@
     <None Include="resource\capture_quadrant_point.png" />
     <None Include="resource\cone.png" />
     <None Include="resource\cone_color.png" />
+    <None Include="resource\control_point.png" />
     <None Include="resource\cuboid.png" />
     <None Include="resource\cuboid_color.png" />
     <None Include="resource\cylinder.png" />
     <None Include="resource\cylinder_color.png" />
+    <None Include="resource\defined_point.png" />
+    <None Include="resource\exist_point.png" />
+    <None Include="resource\polar_point.png" />
     <None Include="resource\redo.png" />
-    <QtRcc Include="resource\resources.qrc" />
+    <CustomBuild Include="resource\resources.qrc">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">resource\resources.qrc;D:\Qt\6.8.3\msvc2022_64\bin\rcc.exe;resource\redo.png;resource\sketch_cuboid.png;resource\capture_intersection_point.png;resource\sphere_color.png;resource\exist_point.png;resource\capture_midpoint.png;resource\sketch_line.png;resource\control_point.png;resource\capture_endpoint.png;resource\sketch_circle.png;resource\cuboid_color.png;resource\NewWindow.png;resource\Open.png;resource\capture.png;resource\defined_point.png;resource\cylinder.png;resource\capture_arc_center_point.png;resource\cuboid.png;resource\capture_closed.png;resource\Save.png;resource\capture_clear.png;resource\polar_point.png;resource\undo.png;resource\sphere.png;resource\sketch_arc.png;resource\cylinder_color.png;resource\Contour.png;resource\Window.png;resource\cone_color.png;resource\capture_quadrant_point.png;resource\cone.png;resource\sketch_point.png;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\rcc.exe -name resources --no-zstd resource\resources.qrc -o release\qrc_resources.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">RCC resource/resources.qrc</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">release\qrc_resources.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">resource\resources.qrc;D:\Qt\6.8.3\msvc2022_64\bin\rcc.exe;resource\redo.png;resource\sketch_cuboid.png;resource\capture_intersection_point.png;resource\sphere_color.png;resource\exist_point.png;resource\capture_midpoint.png;resource\sketch_line.png;resource\control_point.png;resource\capture_endpoint.png;resource\sketch_circle.png;resource\cuboid_color.png;resource\NewWindow.png;resource\Open.png;resource\capture.png;resource\defined_point.png;resource\cylinder.png;resource\capture_arc_center_point.png;resource\cuboid.png;resource\capture_closed.png;resource\Save.png;resource\capture_clear.png;resource\polar_point.png;resource\undo.png;resource\sphere.png;resource\sketch_arc.png;resource\cylinder_color.png;resource\Contour.png;resource\Window.png;resource\cone_color.png;resource\capture_quadrant_point.png;resource\cone.png;resource\sketch_point.png;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">D:\Qt\6.8.3\msvc2022_64\bin\rcc.exe -name resources --no-zstd resource\resources.qrc -o debug\qrc_resources.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">RCC resource/resources.qrc</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">debug\qrc_resources.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <None Include="resource\sketch_arc.png" />
+    <None Include="resource\sketch_circle.png" />
+    <None Include="resource\sketch_cuboid.png" />
+    <None Include="resource\sketch_line.png" />
+    <None Include="resource\sketch_point.png" />
     <None Include="resource\sphere.png" />
     <None Include="resource\sphere_color.png" />
     <None Include="resource\undo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\Contour.png" />
+    <None Include="resource\sketch_arc.png" />
+    <None Include="resource\sketch_circle.png" />
+    <None Include="resource\sketch_cuboid.png" />
+    <None Include="resource\sketch_line.png" />
+    <None Include="resource\sketch_point.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(QtMsBuild)\qt.targets" Condition="Exists('$(QtMsBuild)\qt.targets')" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

@@ -4,6 +4,7 @@
 #include "application/history/commandmanager.h"
 #include "application/history/model_document.h"
 #include "geometry/runtime/model_geometry_store.h"
+#include "rendering/model/intersection_render_store.h"
 #include "rendering/model/model_render_store.h"
 
 #include <QList>
@@ -14,6 +15,7 @@ protected:
     ModelDocument modelDocument_;
     ModelGeometryStore geometryStore_;
     ModelRenderStore renderStore_;
+    IntersectionRenderStore intersectionRenderStore_;
     QList<ModelingHistory>& historyList;
     CommandManager commandManager_;
     int cascadeUpdateGuard_ = 0;

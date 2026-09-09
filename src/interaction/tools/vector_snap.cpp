@@ -33,6 +33,7 @@
 #include <Standard_Failure.hxx>
 #include <Standard_Real.hxx>
 
+#include <BRepAdaptor_Curve.hxx>
 #include <BRepAdaptor_Surface.hxx>
 #include <BRepMesh_IncrementalMesh.hxx>
 #include <BRep_Tool.hxx>
@@ -71,6 +72,7 @@
 #include <vtkActorCollection.h>
 #include <vtkArrowSource.h>
 #include <vtkCamera.h>
+#include <vtkCubeSource.h>
 #include <vtkFeatureEdges.h>
 #include <vtkFollower.h>
 #include <vtkGenericOpenGLRenderWindow.h>
@@ -212,7 +214,8 @@ void Widget::ensureVectorDialogArrowActor()
             mapper->Modified();
         }
         HandleGeom::applyStateStyle(vectorDialogArrowActor_->GetProperty(), style);
-        vectorDialogArrowActor_->SetPickable(false);
+        vectorDialogArrowActor_->SetPickable(
+            vectorDialogArrowActor_->GetVisibility() != 0);
         return;
     }
 
@@ -263,6 +266,7 @@ void Widget::updateVectorDialogArrow(const gp_Dir& dir, const gp_Pnt& origin)
     HandleGeom::applyStateStyle(vectorDialogArrowActor_->GetProperty(), style);
 
     vectorDialogArrowActor_->SetVisibility(true);
+    vectorDialogArrowActor_->SetPickable(true);
     if (vtkWidget->renderWindow()) {
         vtkWidget->renderWindow()->Render();
     }
@@ -1257,6 +1261,10 @@ void Widget::openVectorDialog(int desiredModeIndex)
 
         vectorTwoPointAwaitingEndPick_ = false;
         currentSelectionMode = VectorDialogPickEndPoint;
+        if (vectorDialog_) {
+            vectorDialog_->setTwoPointPointState(
+                true, hasVectorEndPoint_, false, true);
+        }
         applyTwoPointVectorSnapKind(endSnapKind, false);
     });
 
@@ -2321,6 +2329,7 @@ void Widget::clearSnapSettings()
 
 void Widget::clearVectorTwoPointSnapGhosts()
 {
+    vectorSnapPreviewCandidates_.clear();
     if (!renderer) return;
     for (const auto& a : vectorTwoPointSnapGhostActors_) {
         if (a) removeSceneActor(a);
@@ -2330,8 +2339,9 @@ void Widget::clearVectorTwoPointSnapGhosts()
 
 void Widget::clearSnapHover()
 {
-    if (!renderer) return;
     hasSnapHoverBestPoint_ = false;
+    vectorSnapPreviewCandidates_.clear();
+    if (!renderer) return;
     clearVectorTwoPointSnapGhosts();
     if (snapHoverPointActor_) {
         removeSceneActor(snapHoverPointActor_);
@@ -2478,6 +2488,247 @@ static double snapScreenDist2(vtkRenderer* renderer, const gp_Pnt& p, int sx, in
     const double dx = d[0] - static_cast<double>(sx);
     const double dy = d[1] - static_cast<double>(sy);
     return dx * dx + dy * dy;
+}
+
+static double screenSegmentDist2(double px, double py,
+                                 double ax, double ay,
+                                 double bx, double by)
+{
+    const double vx = bx - ax;
+    const double vy = by - ay;
+    const double wx = px - ax;
+    const double wy = py - ay;
+    const double length2 = vx * vx + vy * vy;
+    if (length2 <= 1.0e-12) {
+        return wx * wx + wy * wy;
+    }
+    const double t = std::clamp((wx * vx + wy * vy) / length2, 0.0, 1.0);
+    const double dx = px - (ax + t * vx);
+    const double dy = py - (ay + t * vy);
+    return dx * dx + dy * dy;
+}
+
+static double edgeScreenDist2(vtkRenderer* renderer,
+                              const QList<gp_Pnt>& points,
+                              int sx, int sy)
+{
+    if (!renderer || points.isEmpty()) return 1.0e100;
+    if (points.size() == 1) {
+        return snapScreenDist2(renderer, points.first(), sx, sy);
+    }
+
+    double best = 1.0e100;
+    for (int i = 1; i < points.size(); ++i) {
+        renderer->SetWorldPoint(points[i - 1].X(), points[i - 1].Y(), points[i - 1].Z(), 1.0);
+        renderer->WorldToDisplay();
+        double a[3];
+        renderer->GetDisplayPoint(a);
+        renderer->SetWorldPoint(points[i].X(), points[i].Y(), points[i].Z(), 1.0);
+        renderer->WorldToDisplay();
+        double b[3];
+        renderer->GetDisplayPoint(b);
+        best = std::min(best, screenSegmentDist2(
+            static_cast<double>(sx), static_cast<double>(sy),
+            a[0], a[1], b[0], b[1]));
+    }
+    return best;
+}
+
+void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragMode)
+{
+    Q_UNUSED(dragMode);
+
+    vectorSnapPreviewCandidates_.clear();
+    hasSnapHoverBestPoint_ = false;
+    if (!renderer || (snapKind != -1 && snapKind != 1 && snapKind != 2)) {
+        clearSnapHover();
+        return;
+    }
+
+    // Clear the previous candidate actors without changing the global snap filters.
+    clearSnapHover();
+
+    constexpr double kVectorSnapPreviewRadiusPx = 35.0;
+    constexpr double kVectorSnapTolerancePx = 12.0;
+    const double previewRadius2 =
+        kVectorSnapPreviewRadiusPx * kVectorSnapPreviewRadiusPx;
+    const double snapTolerance2 =
+        kVectorSnapTolerancePx * kVectorSnapTolerancePx;
+
+    QList<gp_Pnt> bestEdgePoints;
+    TopoDS_Edge bestEdge;
+    int bestModelIndex = -1;
+    double bestEdgeDistance2 = 1.0e100;
+
+    for (int modelIndex = 0; modelIndex < historyList.size(); ++modelIndex) {
+        const ModelingHistory& record = historyList[modelIndex];
+        if (record.type == DATUM_PLANE || record.type == DATUM_AXIS
+            || record.type == WORK_CSYS || record.type == REFERENCE_CSYS) {
+            continue;
+        }
+        if (!renderStateFor(record).actor
+            || renderStateFor(record).actor->GetVisibility() == 0) {
+            continue;
+        }
+
+        const TopoDS_Shape modelShape = geometryStateFor(record).occShape;
+        if (modelShape.IsNull()) continue;
+
+        for (TopExp_Explorer explorer(modelShape, TopAbs_EDGE);
+             explorer.More();
+             explorer.Next()) {
+            const TopoDS_Shape currentShape = explorer.Current();
+            if (currentShape.IsNull() || currentShape.ShapeType() != TopAbs_EDGE) {
+                continue;
+            }
+
+            try {
+                const TopoDS_Edge edge = TopoDS::Edge(currentShape);
+                BRepAdaptor_Curve curve(edge);
+                const Standard_Real first = curve.FirstParameter();
+                const Standard_Real last = curve.LastParameter();
+                if (!std::isfinite(first) || !std::isfinite(last)
+                    || std::abs(last - first) <= 1.0e-12) {
+                    continue;
+                }
+
+                const QList<gp_Pnt> samples = SketchGeometry::sampleEdgePoints(
+                    edge, SketchGeometry::preferredEdgeSampleCount(edge, 2, 32, 16));
+                if (samples.size() < 2) continue;
+
+                const double edgeDistance2 =
+                    edgeScreenDist2(renderer, samples, x, y);
+                if (edgeDistance2 >= bestEdgeDistance2 - 1.0e-6) {
+                    continue;
+                }
+                bestEdgeDistance2 = edgeDistance2;
+                bestEdgePoints = samples;
+                bestEdge = edge;
+                bestModelIndex = modelIndex;
+            } catch (...) {
+                // Ignore invalid/degenerate edges and continue scanning the model.
+            }
+        }
+    }
+
+    if (bestModelIndex < 0 || bestEdgePoints.size() < 2
+        || bestEdgeDistance2 > previewRadius2) {
+        return;
+    }
+
+    // Use the actual trimmed curve parameters so circles/arcs/BSplines are not
+    // approximated by a bounding-box midpoint.
+    if (bestEdge.IsNull()) return;
+
+    try {
+        BRepAdaptor_Curve curve(bestEdge);
+        const Standard_Real first = curve.FirstParameter();
+        const Standard_Real last = curve.LastParameter();
+        if (!std::isfinite(first) || !std::isfinite(last)
+            || std::abs(last - first) <= 1.0e-12) {
+            return;
+        }
+
+        const gp_Pnt endpoint1 = curve.Value(first);
+        const gp_Pnt midpoint = curve.Value((first + last) * 0.5);
+        const gp_Pnt endpoint2 = curve.Value(last);
+
+        auto appendCandidate = [&](const gp_Pnt& point, int type) {
+            const double distance2 = snapScreenDist2(renderer, point, x, y);
+            if (distance2 > previewRadius2) return;
+            VectorSnapPreviewCandidate candidate;
+            candidate.point = point;
+            candidate.screenDistanceSquared = distance2;
+            candidate.type = type;
+            candidate.modelIndex = bestModelIndex;
+            vectorSnapPreviewCandidates_.append(candidate);
+        };
+
+        if (snapKind == -1 || snapKind == 1) {
+            appendCandidate(endpoint1, 1);
+            appendCandidate(endpoint2, 1);
+        }
+        if (snapKind == -1 || snapKind == 2) {
+            appendCandidate(midpoint, 2);
+        }
+    } catch (...) {
+        return;
+    }
+
+    if (vectorSnapPreviewCandidates_.isEmpty()) return;
+
+    int bestCandidateIndex = 0;
+    for (int i = 1; i < vectorSnapPreviewCandidates_.size(); ++i) {
+        if (vectorSnapPreviewCandidates_[i].screenDistanceSquared
+            < vectorSnapPreviewCandidates_[bestCandidateIndex].screenDistanceSquared - 1.0e-6) {
+            bestCandidateIndex = i;
+        }
+    }
+    const VectorSnapPreviewCandidate& bestCandidate =
+        vectorSnapPreviewCandidates_[bestCandidateIndex];
+    snapHoverBestPoint_ = bestCandidate.point;
+    hasSnapHoverBestPoint_ =
+        bestCandidate.screenDistanceSquared <= snapTolerance2;
+
+    QSet<QString> drawnPoints;
+    for (int i = 0; i < vectorSnapPreviewCandidates_.size(); ++i) {
+        const VectorSnapPreviewCandidate& candidate = vectorSnapPreviewCandidates_[i];
+        const QString key = QStringLiteral("%1,%2,%3")
+            .arg(candidate.point.X(), 0, 'f', 6)
+            .arg(candidate.point.Y(), 0, 'f', 6)
+            .arg(candidate.point.Z(), 0, 'f', 6);
+        if (drawnPoints.contains(key)) continue;
+        drawnPoints.insert(key);
+
+        const bool isBest = i == bestCandidateIndex && hasSnapHoverBestPoint_;
+        vtkSmartPointer<vtkActor> marker;
+        if (candidate.type == 2) {
+            vtkSmartPointer<vtkCubeSource> cube =
+                vtkSmartPointer<vtkCubeSource>::New();
+            cube->SetXLength(0.12);
+            cube->SetYLength(0.12);
+            cube->SetZLength(0.12);
+            cube->Update();
+            vtkSmartPointer<vtkPolyDataMapper> mapper =
+                vtkSmartPointer<vtkPolyDataMapper>::New();
+            mapper->SetInputConnection(cube->GetOutputPort());
+            marker = vtkSmartPointer<vtkActor>::New();
+            marker->SetMapper(mapper);
+            marker->GetProperty()->SetColor(
+                isBest ? 0.10 : 0.20,
+                isBest ? 1.00 : 0.78,
+                isBest ? 0.35 : 1.00);
+        } else {
+            vtkSmartPointer<vtkSphereSource> sphere =
+                vtkSmartPointer<vtkSphereSource>::New();
+            configureMarkerSphereSource(sphere, 0.055);
+            sphere->Update();
+            vtkSmartPointer<vtkPolyDataMapper> mapper =
+                vtkSmartPointer<vtkPolyDataMapper>::New();
+            mapper->SetInputConnection(sphere->GetOutputPort());
+            marker = vtkSmartPointer<vtkActor>::New();
+            marker->SetMapper(mapper);
+            applyMarkerSphereMaterial(
+                marker->GetProperty(), MarkerSphereStyle::HoverYellow);
+            if (isBest) {
+                marker->GetProperty()->SetColor(0.10, 1.00, 0.35);
+            }
+        }
+
+        marker->SetPosition(
+            candidate.point.X(), candidate.point.Y(), candidate.point.Z());
+        marker->GetProperty()->SetOpacity(isBest ? 0.95 : 0.55);
+        marker->SetPickable(false);
+        const double scale = overlayWorldScaleAt(
+            candidate.point.X(), candidate.point.Y(), candidate.point.Z());
+        marker->SetScale(scale, scale, scale);
+        addReferenceActor(marker);
+        vectorTwoPointSnapGhostActors_.append(marker);
+    }
+
+    if (vtkWidget && vtkWidget->renderWindow()) {
+        vtkWidget->renderWindow()->Render();
+    }
 }
 
 /** 由屏幕坐标构造拾取射线（Display→World near/far） */

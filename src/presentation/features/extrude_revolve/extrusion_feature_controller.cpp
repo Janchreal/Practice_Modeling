@@ -6,6 +6,7 @@
 #include "geometry/topology/feature_topology.h"
 #include "geometry/extrusion/extrusion_recipe.h"
 #include "geometry/extrusion/extrusion_geometry.h"
+#include "geometry/sketch/sketch_geometry.h"
 #include "rendering/model/model_display_style.h"
 
 #include <QMessageBox>
@@ -16,6 +17,7 @@
 #include <Qt>
 
 #include <cmath>
+#include <string>
 
 #include <Standard_Failure.hxx>
 
@@ -24,6 +26,7 @@
 #include <TopoDS.hxx>
 #include <TopoDS_Compound.hxx>
 #include <gp_Dir.hxx>
+#include <gp_Pln.hxx>
 
 #include <vtkActor.h>
 #include <vtkPolyDataMapper.h>
@@ -31,6 +34,51 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkSmartPointer.h>
+
+namespace {
+
+bool resolveModelExtrusionProfileForCommit(const Widget* widget,
+                                           int modelIndex,
+                                           bool solid,
+                                           TopoDS_Shape& outProfile,
+                                           QString* errorMessage = nullptr)
+{
+    outProfile = TopoDS_Shape();
+    if (!widget || modelIndex < 0 || modelIndex >= widget->getHistoryList().size()) {
+        if (errorMessage) *errorMessage = QObject::tr("拉伸对象不存在。");
+        return false;
+    }
+
+    const ModelingHistory& record = widget->getHistoryList()[modelIndex];
+    const TopoDS_Shape source = const_cast<Widget*>(widget)->getShapeFromHistory(modelIndex);
+    if (source.IsNull()) {
+        if (errorMessage) *errorMessage = QObject::tr("拉伸对象没有有效几何。");
+        return false;
+    }
+
+    if (record.type == SKETCH && solid) {
+        const gp_Pln plane(record.recipe.sketch.planeOrigin,
+                           record.recipe.sketch.planeNormal);
+        std::string error;
+        if (!SketchGeometry::buildPlanarProfile(
+                source, plane, outProfile, &error)) {
+            if (errorMessage) *errorMessage = QString::fromStdString(error);
+            return false;
+        }
+        return true;
+    }
+
+    outProfile = solid
+        ? ExtrusionGeometry::prepareSolidExtrusionProfile(source)
+        : source;
+    if (outProfile.IsNull()) {
+        if (errorMessage) *errorMessage = QObject::tr("无法生成拉伸 Profile。");
+        return false;
+    }
+    return true;
+}
+
+} // namespace
 
 // 拉伸按钮点击事件
 void Widget::on_extrude_clicked()
@@ -494,17 +542,17 @@ void Widget::performExtrusion(ExtrusionDialog* dialog)
         } else {
             // 使用模型选择进行拉伸（兼容旧版本）
             for (int index : extrusionSelectedIndices) {
-                TopoDS_Shape originalShape = getShapeFromHistory(index);
-                if (originalShape.IsNull()) {
+                TopoDS_Shape shapeToExtrude;
+                QString profileError;
+                if (!resolveModelExtrusionProfileForCommit(
+                        this, index, !makeSheetBody, shapeToExtrude, &profileError)) {
                     QMessageBox::warning(this, "错误",
-                                         QString("无法获取模型\"%1\"的形状数据！").arg(historyList[index].name));
+                                         QString("无法拉伸模型\"%1\"：%2")
+                                             .arg(historyList[index].name)
+                                             .arg(profileError.isEmpty()
+                                                      ? tr("Profile 无效。")
+                                                      : profileError));
                     continue;
-                }
-
-                // 实体模式下：若是草图线框/边，优先构面后再拉伸，避免固定生成片体
-                TopoDS_Shape shapeToExtrude = originalShape;
-                if (!makeSheetBody) {
-                    shapeToExtrude = ExtrusionGeometry::prepareSolidExtrusionProfile(originalShape);
                 }
 
                 // 执行拉伸（与面选择一致：先起始偏移再扫掠）

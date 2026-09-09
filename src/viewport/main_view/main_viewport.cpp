@@ -247,7 +247,7 @@ void Widget::setupVTK()
 
     // 设置自定义交互器（统一用 m_interactorStyle，避免多实例导致滚轮缩放不同步）
     m_interactorStyle = vtkSmartPointer<MouseInteractorStyle>::New();
-    m_interactorStyle->SetWidget(this);
+    m_interactorStyle->SetInteractionContext(createMouseInteractionContext());
     m_interactorStyle->SetPreEventHook([this]() { activateMainRenderContext(); });
     vtkWidget->renderWindow()->GetInteractor()->SetInteractorStyle(m_interactorStyle);
 
@@ -263,6 +263,81 @@ void Widget::setupVTK()
     // 初始渲染
     vtkWidget->renderWindow()->Render();
 
+}
+
+MouseInteractionContext Widget::createMouseInteractionContext()
+{
+    MouseInteractionContext mouseContext;
+    mouseContext.renderer = [this]() { return renderer.GetPointer(); };
+    mouseContext.selectionMode = [this]() { return currentSelectionMode; };
+    mouseContext.isInSelectionMode = [this]() { return isInSelectionMode(); };
+    mouseContext.hasExtrusionHandleContext = [this]() { return extrusionDialog != nullptr; };
+    mouseContext.hasRevolveHandleContext = [this]() { return revolveDialog != nullptr; };
+    mouseContext.hasChamferHandleContext = [this]() {
+        return chamferDialog != nullptr && chamferAsymHandleSide1Actor_ != nullptr;
+    };
+    mouseContext.hasFilletHandleContext = [this]() {
+        return filletDialog != nullptr && filletRadiusHandleSide1Actor_ != nullptr;
+    };
+    mouseContext.isVectorTwoPointDialogActive = [this]() {
+        return isVectorTwoPointDialogActive();
+    };
+    mouseContext.isCuboidInteractivePointSelectionActive = [this]() {
+        return cuboidDialog != nullptr && cuboidInteractiveActive_;
+    };
+    mouseContext.isCuboidDragActive = [this]() { return cuboidDragActive_; };
+    mouseContext.snapArmed = [this]() { return snap_.armed; };
+
+    mouseContext.syncCenterAxisCamera = [this]() { syncCenterAxisCamera(); };
+    mouseContext.stopViewTransitionAnimation = [this]() { stopViewTransitionAnimation(); };
+    mouseContext.refreshCameraClippingRange = [this]() { refreshCameraClippingRange(); };
+    mouseContext.refreshOverlayScreenScale = [this]() { refreshOverlayScreenScale(); };
+    mouseContext.updateCenterTriadHover = [this](int x, int y) { updateCenterTriadHover(x, y); };
+    mouseContext.clearModelHoverHighlight = [this]() { clearModelHoverHighlight(); };
+    mouseContext.handleVtkMouseClick = [this](int x, int y) { handleVtkMouseClick(x, y); };
+    mouseContext.handleVtkMouseMove = [this](int x, int y) { handleVtkMouseMove(x, y); };
+    mouseContext.handleExtrusionHandleMouseDown =
+        [this](int x, int y) { handleExtrusionHandleMouseDown(x, y); };
+    mouseContext.handleExtrusionHandleMouseUp =
+        [this](int x, int y) { handleExtrusionHandleMouseUp(x, y); };
+    mouseContext.handleRevolveHandleMouseDown =
+        [this](int x, int y) { handleRevolveHandleMouseDown(x, y); };
+    mouseContext.handleRevolveHandleMouseUp =
+        [this](int x, int y) { handleRevolveHandleMouseUp(x, y); };
+    mouseContext.handleChamferAsymHandleMouseDown =
+        [this](int x, int y) { handleChamferAsymHandleMouseDown(x, y); };
+    mouseContext.handleChamferAsymHandleMouseUp =
+        [this](int x, int y) { handleChamferAsymHandleMouseUp(x, y); };
+    mouseContext.handleFilletRadiusHandleMouseDown =
+        [this](int x, int y) { handleFilletRadiusHandleMouseDown(x, y); };
+    mouseContext.handleFilletRadiusHandleMouseUp =
+        [this](int x, int y) { handleFilletRadiusHandleMouseUp(x, y); };
+    mouseContext.handleVectorTwoPointHandleMouseDown =
+        [this](int x, int y) { handleVectorTwoPointHandleMouseDown(x, y); };
+    mouseContext.handleVectorTwoPointHandleMouseUp =
+        [this](int x, int y) { handleVectorTwoPointHandleMouseUp(x, y); };
+    mouseContext.handleSketchConicDragMouseUp =
+        [this](int x, int y) { handleSketchConicDragMouseUp(x, y); };
+    mouseContext.handleSketchEllipseAdjustMouseUp =
+        [this](int x, int y) { handleSketchEllipseAdjustMouseUp(x, y); };
+    mouseContext.handleCuboidInteractiveMouseDown =
+        [this](int x, int y) { handleCuboidInteractiveMouseDown(x, y); };
+    mouseContext.handleCuboidInteractiveMouseUp =
+        [this](int x, int y) { handleCuboidInteractiveMouseUp(x, y); };
+    mouseContext.handlePatternPitchMouseDown =
+        [this](int x, int y) { handlePatternPitchMouseDown(x, y); };
+    mouseContext.handlePatternPitchMouseUp =
+        [this](int x, int y) { handlePatternPitchMouseUp(x, y); };
+    mouseContext.beginSketchBrushStroke = [this]() { beginSketchBrushStroke(); };
+    mouseContext.endSketchBrushStroke = [this]() { endSketchBrushStroke(); };
+    mouseContext.handleVectorTwoPointArrowDoubleClick =
+        [this](int x, int y) { handleVectorTwoPointArrowDoubleClick(x, y); };
+    mouseContext.pickModelAtPosition = [this](int x, int y) { return pickModelAtPosition(x, y); };
+    mouseContext.showContextMenu =
+        [this](int x, int y, int modelIndex, const QPoint& globalPos) {
+            showContextMenu(x, y, modelIndex, globalPos);
+        };
+    return mouseContext;
 }
 
 void Widget::configureReferenceOverlayAlwaysOnTop()

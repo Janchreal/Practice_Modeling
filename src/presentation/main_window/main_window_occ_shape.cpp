@@ -53,11 +53,15 @@ void Widget::ensureModelBoundaryOutline(int index)
         featureEdges->ManifoldEdgesOff();
         featureEdges->NonManifoldEdgesOff();
         featureEdges->PassLinesOff();
-        featureEdges->SetFeatureAngle(30.0);
+        // A finer display mesh is used below; keep only genuine sharp edges,
+        // rather than exposing tessellation facets as outline teeth.
+        featureEdges->SetFeatureAngle(45.0);
 
         vtkSmartPointer<vtkDataSetMapper> edgeMapper = vtkSmartPointer<vtkDataSetMapper>::New();
         edgeMapper->SetInputConnection(featureEdges->GetOutputPort());
         edgeMapper->ScalarVisibilityOff();
+        edgeMapper->SetResolveCoincidentTopologyToPolygonOffset();
+        edgeMapper->SetRelativeCoincidentTopologyLineOffsetParameters(-1.0, -1.0);
 
         renderStateFor(rec).outlineActor = vtkSmartPointer<vtkActor>::New();
         renderStateFor(rec).outlineActor->SetMapper(edgeMapper);
@@ -154,6 +158,31 @@ void Widget::rebindHistoryShapeSource(ModelingHistory& history)
             history.color);
         renderStateFor(history).actor->SetVisibility(1);
     }
+
+    if (renderStateFor(history).profilePickActor
+        && renderStateFor(history).profilePickShapeDataSource
+        && history.type == SKETCH) {
+        IVtkTools_ShapeObject::SetShapeSource(
+            renderStateFor(history).profilePickShapeDataSource,
+            renderStateFor(history).profilePickActor);
+        const bool profilePickable =
+            extrusionDialog
+            && (currentSelectionMode == ExtrusionSelection
+                || currentSelectionMode == EdgeSelection
+                || currentSelectionMode == FaceSelection);
+        renderStateFor(history).profilePickActor->SetPickable(profilePickable);
+        renderStateFor(history).profilePickActor->SetVisibility(
+            renderStateFor(history).actor->GetVisibility());
+        if (shapePicker) {
+            const bool visible = renderStateFor(history).actor->GetVisibility() != 0;
+            shapePicker->SetSelectionMode(
+                renderStateFor(history).profilePickActor, SM_Face,
+                visible && profilePickable);
+            shapePicker->SetSelectionMode(
+                renderStateFor(history).profilePickActor, SM_Edge,
+                visible && profilePickable);
+        }
+    }
 }
 
 // 通用的显示函数
@@ -192,8 +221,8 @@ void Widget::displayOccShape(const TopoDS_Shape& shape, const QString& name,
     ShapePresentationOptions presentationOptions;
     presentationOptions.color = color;
     presentationOptions.shapeId = shapeIDCounter;
-    presentationOptions.meshDeflection = (type == BOOLEAN_RESULT) ? 0.03 : 0.05;
-    presentationOptions.meshAngle = 0.05;
+    presentationOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
+    presentationOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
     ModelRenderState renderState =
         ShapePresentationFactory::createSolidModelState(shape, presentationOptions);
     if (!renderState.actor || !renderState.shapeDataSource) {
@@ -223,6 +252,7 @@ void Widget::displayOccShape(const TopoDS_Shape& shape, const QString& name,
     geometryStateFor(storedRecord).occShape = shape;
     renderStateFor(storedRecord) = renderState;
     ensureModelBoundaryOutline(index);
+    updateIntersectionsForRecord(index);
     markDocumentModified(true);
 
     renderer->ResetCamera();

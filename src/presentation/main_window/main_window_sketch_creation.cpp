@@ -96,6 +96,11 @@ void Widget::setActiveSketchGeometriesForCommand(const QList<TopoDS_Shape>& geom
     activeSketch_.setGeometries(geometries);
     ensureSketchHistoryRecord();
     updateSketchHistoryShape();
+    if (activeSketchHistoryIndex_ >= 0
+        && activeSketchHistoryIndex_ < historyList.size()) {
+        // 草图编辑是其下游特征的根变更，沿用现有配方/历史级联重建。
+        updateDependentFeatures(activeSketchHistoryIndex_);
+    }
     markDocumentModified(true);
 }
 

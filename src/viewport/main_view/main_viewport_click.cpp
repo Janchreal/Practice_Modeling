@@ -954,31 +954,25 @@ void Widget::handleVtkMouseClick(int x, int y)
     }
 
     if (currentSelectionMode == VectorDialogPickStartPoint) {
-        if (vectorTwoPointStartSnapKind_ == -1) {
-            gp_Pnt p;
-            if (!tryPickPointOnModelForVector(x, y, p)) return;
-            onVectorTwoPointStartPicked(p);
+        if (tryPickVectorTwoPointSnapAt(x, y)) {
+            onVectorTwoPointStartPicked(snapSelectedPoint_);
             return;
         }
-
-        if (!snap_.armed) return;
-        if (!tryPickVectorTwoPointSnapAt(x, y)) return;
-        onVectorTwoPointStartPicked(snapSelectedPoint_);
+        gp_Pnt p;
+        if (!tryPickPointOnModelForVector(x, y, p)) return;
+        onVectorTwoPointStartPicked(p);
         return;
     }
 
     if (currentSelectionMode == VectorDialogPickEndPoint) {
         if (!hasVectorStartPoint_) return;
-        if (vectorTwoPointEndSnapKind_ == -1) {
-            gp_Pnt p;
-            if (!tryPickPointOnModelForVector(x, y, p)) return;
-            onVectorTwoPointEndPicked(p);
+        if (tryPickVectorTwoPointSnapAt(x, y)) {
+            onVectorTwoPointEndPicked(snapSelectedPoint_);
             return;
         }
-
-        if (!snap_.armed) return;
-        if (!tryPickVectorTwoPointSnapAt(x, y)) return;
-        onVectorTwoPointEndPicked(snapSelectedPoint_);
+        gp_Pnt p;
+        if (!tryPickPointOnModelForVector(x, y, p)) return;
+        onVectorTwoPointEndPicked(p);
         return;
     }
 

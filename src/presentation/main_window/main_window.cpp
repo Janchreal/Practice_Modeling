@@ -160,7 +160,6 @@ Widget::Widget(QWidget *parent)
         m_interactorStyle = vtkSmartPointer<MouseInteractorStyle>::New();
         m_interactorStyle->SetPreEventHook([this]() { activateMainRenderContext(); });
     }
-    m_interactorStyle->SetWidget(this);
     // 初始更新按钮状态
     updateUndoRedoButtons();
     // 添加快捷键

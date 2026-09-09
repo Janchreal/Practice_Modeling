@@ -1,23 +1,24 @@
-#include "main_window.h"
+#include "shape_picker_binding_service.h"
 
-void Widget::refreshShapePickerBindingsForCurrentContext(double tolerance, bool updateDataSources)
+#include <IVtkTools_ShapePicker.hxx>
+#include <vtkRenderer.h>
+
+void ShapePickerBindingService::refresh(const ShapePickerBindingContext& context,
+                                        double tolerance,
+                                        bool updateDataSources)
 {
-    if (!shapePicker || !renderer) {
+    if (!context.picker || !context.renderer) {
         return;
     }
 
-    shapePicker->SetRenderer(renderer);
-    shapePicker->SetTolerance(tolerance);
-    prepareShapePickerBindingsForCurrentContext();
+    context.picker->SetRenderer(context.renderer);
+    context.picker->SetTolerance(tolerance);
 
-    if (!updateDataSources) {
-        return;
+    if (context.prepareBindings) {
+        context.prepareBindings();
     }
 
-    for (int i = 0; i < historyList.size(); ++i) {
-        if (renderStateFor(historyList[i]).shapeDataSource) {
-            renderStateFor(historyList[i]).shapeDataSource->Modified();
-            renderStateFor(historyList[i]).shapeDataSource->Update();
-        }
+    if (updateDataSources && context.updateDataSources) {
+        context.updateDataSources();
     }
 }

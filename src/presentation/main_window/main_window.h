@@ -152,7 +152,6 @@ class Widget : public QMainWindow,
                private VectorSnapWindowState
 {
     Q_OBJECT
-    friend class MouseInteractorStyle; // 添加友元声明
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
@@ -425,6 +424,7 @@ private:
     double overlayWorldScale() const;
     double overlayWorldScaleAt(double x, double y, double z) const;
     void refreshOverlayScreenScale();
+    MouseInteractionContext createMouseInteractionContext();
     /** 与 applyInitialSceneView 初始视距一致；亦会在首次布局时按实际距离校正 */
     gp_Dir getExtrusionDirection(ExtrusionDialog* dialog) const;  // 根据对话框与当前三重轴得到拉伸方向
     gp_Ax1 getRevolutionAxis(revolvedialog* dialog) const;        // 根据对话框与当前选点/轴得到旋转轴
@@ -701,6 +701,7 @@ private:
     gp_Pnt resolveVectorTwoPointPreviewPosition(int x, int y, int snapKind);
     void clearVectorTwoPointSnapGhosts();
     void updateVectorTwoPointSnapPresentation(int x, int y, int snapKind, bool dragMode);
+    void updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragMode);
     void disableSnapUiAfterVectorTwoPointComplete();
     void applyVectorTwoPointFromEndpoints();
     VectorTwoPointHandlePart pickVectorTwoPointHandlePart(int x, int y);
@@ -802,6 +803,10 @@ private:
      void regenerateModel(int index, bool triggerCascade = true);
      void updateModelShape(int index, const TopoDS_Shape& newShape, bool triggerCascade = true);  // 更新模型形状
      void updateModelShapeWithTypeInternal(int index, const TopoDS_Shape& newShape, ModelType newType, bool triggerCascade = true);
+     void updateIntersectionsForRecord(int index);
+     void updateIntersectionForPair(int firstIndex, int secondIndex);
+     void removeIntersectionsForRecord(quint64 recordId);
+     void clearIntersectionRenderStates();
      //修改模型历史列表括号后面的内容
     void updateModelName(int index);
      void regenerateBooleanResult(int booleanResultIndex);

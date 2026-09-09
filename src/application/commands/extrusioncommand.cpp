@@ -3,8 +3,10 @@
 #include "application/ports/modeling_command_port.h"
 #include "geometry/topology/feature_topology.h"
 #include "geometry/extrusion/extrusion_geometry.h"
+#include "geometry/sketch/sketch_geometry.h"
 #include "geometry/boolean/boolean_ops.h"
 #include <BRep_Builder.hxx>
+#include <gp_Pln.hxx>
 #include <gp_Vec.hxx>
 #include <Precision.hxx>
 #include <cmath>
@@ -13,6 +15,74 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
+namespace {
+
+TopoDS_Shape resolveExtrusionProfile(ModelingCommandPort* context,
+                                     int profileIndex,
+                                     bool solid,
+                                     std::string* errorMessage = nullptr)
+{
+    if (!context) {
+        if (errorMessage) *errorMessage = "Extrusion context is invalid";
+        return TopoDS_Shape();
+    }
+
+    const QList<ModelingHistory>& histories = context->getHistoryList();
+    if (profileIndex < 0 || profileIndex >= histories.size()) {
+        if (errorMessage) *errorMessage = "Extrusion profile does not exist";
+        return TopoDS_Shape();
+    }
+
+    const ModelingHistory& record = histories[profileIndex];
+    const TopoDS_Shape source = context->getShapeFromHistory(profileIndex);
+    if (source.IsNull()) {
+        if (errorMessage) *errorMessage = "Extrusion profile has no shape";
+        return TopoDS_Shape();
+    }
+
+    if (record.type == SKETCH) {
+        if (!solid) {
+            return source;
+        }
+
+        gp_Pln plane(record.recipe.sketch.planeOrigin,
+                     record.recipe.sketch.planeNormal);
+        TopoDS_Shape profile;
+        if (!SketchGeometry::buildPlanarProfile(
+                source, plane, profile, errorMessage)) {
+            return TopoDS_Shape();
+        }
+        return profile;
+    }
+
+    if (!solid) {
+        return source;
+    }
+    return ExtrusionGeometry::prepareSolidExtrusionProfile(source);
+}
+
+TopoDS_Shape resolveProfileReference(ModelingCommandPort* context,
+                                      const SubShapeRef& profileRef,
+                                      const ExtrusionRecipeData& recipe)
+{
+    if (!context) {
+        return TopoDS_Shape();
+    }
+
+    const QList<ModelingHistory>& histories = context->getHistoryList();
+    if (profileRef.parentIndex >= 0 && profileRef.parentIndex < histories.size()
+        && histories[profileRef.parentIndex].type == SKETCH) {
+        std::string error;
+        return resolveExtrusionProfile(
+            context, profileRef.parentIndex, !recipe.makeSheetBody, &error);
+    }
+
+    return resolveSubShapeRef(
+        context->getShapeFromHistory(profileRef.parentIndex), profileRef);
+}
+
+} // namespace
 
 FeatureRecipe ExtrusionCommand::buildProfileExtrusionRecipe(int profileIndex, const ExtrusionParameters& params)
 {
@@ -45,8 +115,7 @@ bool ExtrusionCommand::extrudeFromRecipe(ModelingCommandPort* context, const Ext
 
             if (!recipe.profiles.isEmpty()) {
                 const SubShapeRef& profileRef = recipe.profiles.first();
-                const TopoDS_Shape profile = resolveSubShapeRef(
-                    context->getShapeFromHistory(profileRef.parentIndex), profileRef);
+                const TopoDS_Shape profile = resolveProfileReference(context, profileRef, recipe);
                 gp_Dir direction = recipe.direction;
                 if (recipe.reversed) {
                     direction.Reverse();
@@ -64,8 +133,7 @@ bool ExtrusionCommand::extrudeFromRecipe(ModelingCommandPort* context, const Ext
             }
         } else if (!recipe.profiles.isEmpty()) {
             const SubShapeRef& profileRef = recipe.profiles.first();
-            const TopoDS_Shape profile = resolveSubShapeRef(
-                context->getShapeFromHistory(profileRef.parentIndex), profileRef);
+            const TopoDS_Shape profile = resolveProfileReference(context, profileRef, recipe);
             gp_Dir direction = recipe.direction;
             if (recipe.reversed) {
                 direction.Reverse();
@@ -107,15 +175,68 @@ bool ExtrusionCommand::extrudeFromRecipe(ModelingCommandPort* context, const Ext
             }
 
         } else if (!recipe.profileModelIndices.isEmpty()) {
-            ExtrusionParameters params;
-            params.dir = recipe.direction;
-            params.lengthFwd = recipe.lengthFwd;
-            params.lengthRev = recipe.lengthRev;
-            params.solid = recipe.solid;
-            params.taperAngleFwd = recipe.taperAngleFwd;
-            params.taperAngleRev = recipe.taperAngleRev;
-            const TopoDS_Shape source = context->getShapeFromHistory(recipe.profileModelIndices.first());
-            extrudeShape(resultShape, source, params);
+            const bool makeSheetBody = recipe.makeSheetBody;
+            const bool solid = recipe.solid && !makeSheetBody;
+            std::string error;
+            const TopoDS_Shape source = resolveExtrusionProfile(
+                context,
+                recipe.profileModelIndices.first(),
+                solid,
+                &error);
+            if (source.IsNull()) {
+                return false;
+            }
+
+            gp_Dir direction = recipe.direction;
+            if (recipe.reversed) {
+                direction.Reverse();
+            }
+
+            // Older profileModelIndices recipes store forward/reverse lengths,
+            // while dialog-created recipes store one length plus a start offset.
+            double length = recipe.lengthFwd;
+            double startOffset = recipe.startOffset;
+            if (std::abs(startOffset) <= Precision::Confusion()
+                && std::abs(recipe.lengthRev) > Precision::Confusion()) {
+                length = recipe.lengthFwd + recipe.lengthRev;
+                startOffset = -recipe.lengthRev;
+            }
+            if (recipe.symmetric && std::abs(recipe.lengthRev) <= Precision::Confusion()) {
+                length = recipe.lengthFwd;
+                startOffset = -length * 0.5;
+            }
+            if (std::abs(length) <= Precision::Confusion()) {
+                return false;
+            }
+
+            if (std::abs(recipe.taperAngleFwd) >= Precision::Angular()
+                || std::abs(recipe.taperAngleRev) >= Precision::Angular()) {
+                ExtrusionParameters params;
+                params.dir = direction;
+                params.lengthFwd = recipe.lengthFwd;
+                params.lengthRev = recipe.lengthRev;
+                params.solid = solid;
+                params.taperAngleFwd = recipe.taperAngleFwd;
+                params.taperAngleRev = recipe.taperAngleRev;
+                extrudeShape(resultShape, source, params);
+            } else {
+                resultShape = ExtrusionGeometry::extrudeResolvedProfile(
+                    source, direction, length, startOffset, makeSheetBody);
+            }
+            if (resultShape.IsNull()) {
+                return false;
+            }
+
+            if (recipe.boolOpType >= 0) {
+                TopoDS_Shape booleaned;
+                if (!context->applyDialogBooleanToShape(
+                        recipe.boolOpType, recipe.boolTargetIndex,
+                        resultShape, booleaned)
+                    || booleaned.IsNull()) {
+                    return false;
+                }
+                resultShape = booleaned;
+            }
         } else {
             return false;
         }
@@ -314,7 +435,9 @@ void ExtrusionCommand::performExtrusion()
         ExtrusionParameters params = computeFinalParameters();
         
         for (int profileIndex : profileIndices) {
-            TopoDS_Shape profileShape = context_->getShapeFromHistory(profileIndex);
+            std::string error;
+            TopoDS_Shape profileShape = resolveExtrusionProfile(
+                context_, profileIndex, params.solid, &error);
             if (profileShape.IsNull()) {
                 continue;
             }

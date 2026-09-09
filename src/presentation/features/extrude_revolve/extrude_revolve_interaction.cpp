@@ -6,12 +6,14 @@
 #include "rendering/model/model_display_style.h"
 #include "presentation/dialogs/extrude_revolve/revolve_dialog.h"
 #include "geometry/extrusion/extrusion_geometry.h"
+#include "geometry/sketch/sketch_geometry.h"
 #include "geometry/revolution/revolve_geometry.h"
 #include "rendering/pipeline/model_shape_pipeline.h"
 #include "interaction/selection/selection_geometry.h"
 
 #include <algorithm>
 #include <cmath>
+#include <string>
 
 #include <QColor>
 #include <QSet>
@@ -160,6 +162,49 @@ bool rayPlaneHit(vtkRenderer* renderer, int x, int y, const gp_Pnt& planeOrigin,
     return true;
 }
 
+bool resolveModelExtrusionProfile(Widget* widget,
+                                  int modelIndex,
+                                  bool solid,
+                                  TopoDS_Shape& outProfile,
+                                  QString* errorMessage = nullptr)
+{
+    outProfile = TopoDS_Shape();
+    if (!widget || modelIndex < 0 || modelIndex >= widget->getHistoryList().size()) {
+        if (errorMessage) *errorMessage = QObject::tr("拉伸对象不存在。");
+        return false;
+    }
+
+    const ModelingHistory& record = widget->getHistoryList()[modelIndex];
+    const TopoDS_Shape source = widget->getShapeFromHistory(modelIndex);
+    if (source.IsNull()) {
+        if (errorMessage) *errorMessage = QObject::tr("拉伸对象没有有效几何。");
+        return false;
+    }
+
+    if (record.type == SKETCH && solid) {
+        const gp_Pln plane(record.recipe.sketch.planeOrigin,
+                           record.recipe.sketch.planeNormal);
+        std::string error;
+        if (!SketchGeometry::buildPlanarProfile(
+                source, plane, outProfile, &error)) {
+            if (errorMessage) {
+                *errorMessage = QString::fromStdString(error);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    outProfile = solid
+        ? ExtrusionGeometry::prepareSolidExtrusionProfile(source)
+        : source;
+    if (outProfile.IsNull()) {
+        if (errorMessage) *errorMessage = QObject::tr("无法生成拉伸 Profile。");
+        return false;
+    }
+    return true;
+}
+
 } // namespace
 
 bool Widget::inferDirectionFromExtrusionSelection(gp_Dir& outDir, gp_Pnt* outOrigin) const
@@ -300,7 +345,9 @@ bool Widget::applyDialogBooleanToShape(int boolMode, int boolTargetIndex,
 bool Widget::buildExtrusionPreviewShape(ExtrusionDialog* dialog, TopoDS_Shape& outShape,
                                         bool softBooleanFallback) const
 {
-    if (!dialog || extrusionSelectedFaces.isEmpty()) return false;
+    if (!dialog || (extrusionSelectedFaces.isEmpty() && extrusionSelectedIndices.isEmpty())) {
+        return false;
+    }
 
     const double startD = dialog->getStartDistance();
     const double endD = dialog->getEndDistance();
@@ -314,6 +361,16 @@ bool Widget::buildExtrusionPreviewShape(ExtrusionDialog* dialog, TopoDS_Shape& o
             profiles.append(sel.getWire());
         } else if (sel.shapeType == TopAbs_EDGE) {
             edges.append(sel.getEdge());
+        }
+    }
+    if (extrusionSelectedFaces.isEmpty()) {
+        for (const int index : extrusionSelectedIndices) {
+            TopoDS_Shape profile;
+            if (resolveModelExtrusionProfile(
+                    const_cast<Widget*>(this), index,
+                    !dialog->isSheetBodyType(), profile, nullptr)) {
+                profiles.append(profile);
+            }
         }
     }
     if (!edges.isEmpty()) {

@@ -9,6 +9,8 @@
 #include <QDateTime>
 #include <QMessageBox>
 #include <QString>
+#include <QStringList>
+#include <QStatusBar>
 
 #include <Standard_Failure.hxx>
 
@@ -77,6 +79,10 @@ void Widget::removeModel(int index)
     if (renderStateFor(record).highlightActor) {
         removeSceneActor(renderStateFor(record).highlightActor);
     }
+    if (renderStateFor(record).profilePickActor) {
+        removeSceneActor(renderStateFor(record).profilePickActor);
+    }
+    removeIntersectionsForRecord(record.id);
 
     // 只删除一个模型
     removeRuntimeStateFor(record);
@@ -90,6 +96,14 @@ void Widget::removeModel(int index)
 void Widget::showModel(int index)
 {
     if (index < 0 || index >= historyList.size()) return;
+    if (historyList[index].featureRegenerateFailed
+        && geometryStateFor(historyList[index]).occShape.IsNull()) {
+        if (statusBar()) {
+            statusBar()->showMessage(
+                tr("该特征的依赖已失效，无法恢复显示。"), 3000);
+        }
+        return;
+    }
 
     if (renderStateFor(historyList[index]).actor) {
         renderStateFor(historyList[index]).actor->SetVisibility(true);
@@ -97,6 +111,30 @@ void Widget::showModel(int index)
     if (renderStateFor(historyList[index]).outlineActor) {
         renderStateFor(historyList[index]).outlineActor->SetVisibility(true);
     }
+    if (renderStateFor(historyList[index]).profilePickActor
+        && historyList[index].type == SKETCH) {
+        const bool profilePickable =
+            extrusionDialog
+            && (currentSelectionMode == ExtrusionSelection
+                || currentSelectionMode == EdgeSelection
+                || currentSelectionMode == FaceSelection);
+        renderStateFor(historyList[index]).profilePickActor->SetVisibility(true);
+        renderStateFor(historyList[index]).profilePickActor->SetPickable(profilePickable);
+        IVtkTools_ShapeObject::SetShapeSource(
+            profilePickable
+                ? renderStateFor(historyList[index]).profilePickShapeDataSource
+                : nullptr,
+            renderStateFor(historyList[index]).profilePickActor);
+        if (shapePicker) {
+            shapePicker->SetSelectionMode(
+                renderStateFor(historyList[index]).profilePickActor,
+                SM_Face, profilePickable);
+            shapePicker->SetSelectionMode(
+                renderStateFor(historyList[index]).profilePickActor,
+                SM_Edge, profilePickable);
+        }
+    }
+    updateIntersectionsForRecord(index);
 
     updateHistoryListVisibility();
     vtkWidget->renderWindow()->Render();
@@ -180,6 +218,17 @@ void Widget::removeModelByIndex(int index)
     if (index < 0 || index >= historyList.size()) return;
 
     const ModelingHistory record = historyList[index];
+    const QList<int> dependentIndices = collectDependentFeatureIndices(index);
+    QList<quint64> invalidatedRecordIds;
+    for (const int dependentIndex : dependentIndices) {
+        if (dependentIndex < 0 || dependentIndex >= historyList.size()
+            || dependentIndex == index) {
+            continue;
+        }
+        if (historyList[dependentIndex].id != 0) {
+            invalidatedRecordIds.append(historyList[dependentIndex].id);
+        }
+    }
 
     const bool isWorkCsys = (record.type == WORK_CSYS);
     const bool isWorkCsysActor = (isWorkCsys && workCsysActor.GetPointer() != nullptr
@@ -198,6 +247,10 @@ void Widget::removeModelByIndex(int index)
     if (renderStateFor(record).highlightActor) {
         removeSceneActor(renderStateFor(record).highlightActor);
     }
+    if (renderStateFor(record).profilePickActor) {
+        removeSceneActor(renderStateFor(record).profilePickActor);
+    }
+    removeIntersectionsForRecord(record.id);
 
     if (isWorkCsys || isWorkCsysActor) {
         if (workCsysAxisXActor_) removeSceneActor(workCsysAxisXActor_);
@@ -214,6 +267,35 @@ void Widget::removeModelByIndex(int index)
     removeRuntimeStateFor(record);
     modelDocument_.removeAt(index);
     remapHistoryIndicesAfterRemoval(index);
+
+    QStringList invalidatedNames;
+    for (int i = 0; i < historyList.size(); ++i) {
+        ModelingHistory& dependent = historyList[i];
+        if (!invalidatedRecordIds.contains(dependent.id)) {
+            continue;
+        }
+
+        dependent.featureRegenerateFailed = true;
+        geometryStateFor(dependent).occShape = TopoDS_Shape();
+        if (renderStateFor(dependent).actor) {
+            renderStateFor(dependent).actor->SetVisibility(false);
+            renderStateFor(dependent).actor->SetPickable(false);
+        }
+        if (renderStateFor(dependent).outlineActor) {
+            renderStateFor(dependent).outlineActor->SetVisibility(false);
+        }
+        if (renderStateFor(dependent).highlightActor) {
+            renderStateFor(dependent).highlightActor->SetVisibility(false);
+        }
+        if (renderStateFor(dependent).profilePickActor) {
+            removeSceneActor(renderStateFor(dependent).profilePickActor);
+            renderStateFor(dependent).profilePickActor = nullptr;
+            renderStateFor(dependent).profilePickShapeWrapper = nullptr;
+            renderStateFor(dependent).profilePickShapeDataSource = nullptr;
+        }
+        invalidatedNames.append(dependent.name);
+        updateIntersectionsForRecord(i);
+    }
 
     // 若删除的是工作坐标系，清空对应状态
     if (isWorkCsys || isWorkCsysActor) {
@@ -240,6 +322,12 @@ void Widget::removeModelByIndex(int index)
 
     updateHistoryList();
     updateFeatureTree();  // 更新特征树
+    if (!invalidatedNames.isEmpty() && statusBar()) {
+        statusBar()->showMessage(
+            tr("删除源模型后，下游特征已失效：%1")
+                .arg(invalidatedNames.join(QStringLiteral("、"))),
+            5000);
+    }
     vtkWidget->renderWindow()->Render();
     markDocumentModified(true);
 
@@ -284,8 +372,8 @@ void Widget::restoreModel(int index, const QString& name, ModelType type, const 
         ShapePresentationOptions presentationOptions;
         presentationOptions.color = color;
         presentationOptions.shapeId = shapeIDCounter;
-        presentationOptions.meshDeflection = (type == BOOLEAN_RESULT) ? 0.03 : 0.05;
-        presentationOptions.meshAngle = 0.3;
+        presentationOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
+        presentationOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
         ModelRenderState renderState =
             ShapePresentationFactory::createSolidModelState(occShape, presentationOptions);
         if (!renderState.actor || !renderState.shapeDataSource) {
@@ -321,6 +409,7 @@ void Widget::restoreModel(int index, const QString& name, ModelType type, const 
         geometryStateFor(storedRecord).occShape = occShape;
         renderStateFor(storedRecord) = renderState;
         ensureModelBoundaryOutline(insertedIndex);
+        updateIntersectionsForRecord(insertedIndex);
 
         updateHistoryList();
         updateFeatureTree();  // 更新特征树

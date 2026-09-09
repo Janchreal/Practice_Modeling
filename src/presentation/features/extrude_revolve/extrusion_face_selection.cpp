@@ -3,8 +3,10 @@
 #include "presentation/dialogs/extrude_revolve/extrusion_dialog.h"
 #include "rendering/model/model_display_style.h"
 #include "rendering/pipeline/model_shape_pipeline.h"
+#include "geometry/sketch/sketch_geometry.h"
 #include <QSet>
 #include <QScopeGuard>
+#include <QStatusBar>
 #include <QTimer>
 #include <QVTKOpenGLNativeWidget.h>
 #include <vtkRenderWindowInteractor.h>
@@ -34,8 +36,10 @@
 #include <vtkFeatureEdges.h>
 #include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
 #include <TopoDS.hxx>
+#include <gp_Pln.hxx>
 #include <Standard_Failure.hxx>
 #include <BRepMesh_IncrementalMesh.hxx>
+#include <string>
 #include "selection_geometry.h"
 
 // 处理拉伸界面的面悬停
@@ -55,7 +59,25 @@ void Widget::handleExtrusionFaceHover(int x, int y)
         IVtk_IdType subShapeId = -1;
         int modelIndex = -1;
         bool found = false;
-
+        Handle(IVtkOCC_Shape) pickedShapeWrapper;
+        const auto findHistoryForShapeId = [this](
+            IVtk_IdType shapeId,
+            Handle(IVtkOCC_Shape)& outWrapper) -> int {
+            outWrapper = nullptr;
+            for (int i = 0; i < historyList.size(); ++i) {
+                const ModelRenderState& state = renderStateFor(historyList[i]);
+                if (!state.shapeWrapper.IsNull() && state.shapeWrapper->GetId() == shapeId) {
+                    outWrapper = state.shapeWrapper;
+                    return i;
+                }
+                if (!state.profilePickShapeWrapper.IsNull()
+                    && state.profilePickShapeWrapper->GetId() == shapeId) {
+                    outWrapper = state.profilePickShapeWrapper;
+                    return i;
+                }
+            }
+            return -1;
+        };
         // 根据选择模式决定拾取面还是边
         if (currentSelectionMode == FaceSelection) {
             // 面选择模式：只拾取面
@@ -65,13 +87,8 @@ void Widget::handleExtrusionFaceHover(int x, int y)
             IVtk_ShapeIdList ids = picker->GetPickedShapesIds();
             if (!ids.IsEmpty()) {
                 IVtk_IdType shapeId = ids.First();
-                for (int i = 0; i < historyList.size(); ++i) {
-                    if (!renderStateFor(historyList[i]).shapeWrapper.IsNull() && renderStateFor(historyList[i]).shapeWrapper->GetId() == shapeId) {
-                        modelIndex = i;
-                        found = true;
-                        break;
-                    }
-                }
+                modelIndex = findHistoryForShapeId(shapeId, pickedShapeWrapper);
+                found = modelIndex >= 0;
                 if (found) {
                     subShapeId = picker->GetPickedSubShapesIds(shapeId).IsEmpty() ? -1 : picker->GetPickedSubShapesIds(shapeId).First();
                 }
@@ -84,13 +101,8 @@ void Widget::handleExtrusionFaceHover(int x, int y)
             IVtk_ShapeIdList ids = picker->GetPickedShapesIds();
             if (!ids.IsEmpty()) {
                 IVtk_IdType shapeId = ids.First();
-                for (int i = 0; i < historyList.size(); ++i) {
-                    if (!renderStateFor(historyList[i]).shapeWrapper.IsNull() && renderStateFor(historyList[i]).shapeWrapper->GetId() == shapeId) {
-                        modelIndex = i;
-                        found = true;
-                        break;
-                    }
-                }
+                modelIndex = findHistoryForShapeId(shapeId, pickedShapeWrapper);
+                found = modelIndex >= 0;
                 if (found) {
                     subShapeId = picker->GetPickedSubShapesIds(shapeId).IsEmpty() ? -1 : picker->GetPickedSubShapesIds(shapeId).First();
                 }
@@ -103,13 +115,8 @@ void Widget::handleExtrusionFaceHover(int x, int y)
             IVtk_ShapeIdList ids = picker->GetPickedShapesIds();
             if (!ids.IsEmpty()) {
                 IVtk_IdType shapeId = ids.First();
-                for (int i = 0; i < historyList.size(); ++i) {
-                    if (!renderStateFor(historyList[i]).shapeWrapper.IsNull() && renderStateFor(historyList[i]).shapeWrapper->GetId() == shapeId) {
-                        modelIndex = i;
-                        found = true;
-                        break;
-                    }
-                }
+                modelIndex = findHistoryForShapeId(shapeId, pickedShapeWrapper);
+                found = modelIndex >= 0;
                 if (found) {
                     subShapeId = picker->GetPickedSubShapesIds(shapeId).IsEmpty() ? -1 : picker->GetPickedSubShapesIds(shapeId).First();
                 }
@@ -122,13 +129,8 @@ void Widget::handleExtrusionFaceHover(int x, int y)
                 ids = picker->GetPickedShapesIds();
                 if (!ids.IsEmpty()) {
                     IVtk_IdType shapeId = ids.First();
-                    for (int i = 0; i < historyList.size(); ++i) {
-                        if (!renderStateFor(historyList[i]).shapeWrapper.IsNull() && renderStateFor(historyList[i]).shapeWrapper->GetId() == shapeId) {
-                            modelIndex = i;
-                            found = true;
-                            break;
-                        }
-                    }
+                    modelIndex = findHistoryForShapeId(shapeId, pickedShapeWrapper);
+                    found = modelIndex >= 0;
                     if (found) {
                         subShapeId = picker->GetPickedSubShapesIds(shapeId).IsEmpty() ? -1 : picker->GetPickedSubShapesIds(shapeId).First();
                     }
@@ -153,11 +155,11 @@ void Widget::handleExtrusionFaceHover(int x, int y)
                 
                 // 获取悬停形状的信息并验证形状类型
                 try {
-                    if (!renderStateFor(record).shapeWrapper.IsNull()) {
+                    if (!pickedShapeWrapper.IsNull()) {
                         TopoDS_Shape hoveredShape;
                         if (subShapeId != -1) {
                             try {
-                                hoveredShape = renderStateFor(record).shapeWrapper->GetSubShape(subShapeId);
+                                hoveredShape = pickedShapeWrapper->GetSubShape(subShapeId);
                             } catch (Standard_Failure&) {
                                 hoveredShape = TopoDS_Shape();
                             } catch (...) {
@@ -172,7 +174,16 @@ void Widget::handleExtrusionFaceHover(int x, int y)
                         if (!hoveredShape.IsNull()) {
                             // 验证拾取到的形状类型是否符合选择模式
                             bool isValid = false;
-                            if (currentSelectionMode == FaceSelection) {
+                            const bool isSketchProfilePick =
+                                record.type == SKETCH
+                                && !renderStateFor(record).profilePickShapeWrapper.IsNull()
+                                && pickedShapeWrapper->GetId()
+                                    == renderStateFor(record).profilePickShapeWrapper->GetId();
+                            if (isSketchProfilePick) {
+                                isValid = hoveredShape.ShapeType() == TopAbs_FACE
+                                    || hoveredShape.ShapeType() == TopAbs_EDGE
+                                    || hoveredShape.ShapeType() == TopAbs_WIRE;
+                            } else if (currentSelectionMode == FaceSelection) {
                                 // 面选择模式：只接受面
                                 isValid = (hoveredShape.ShapeType() == TopAbs_FACE);
                             } else if (currentSelectionMode == EdgeSelection) {
@@ -258,6 +269,25 @@ void Widget::handleExtrusionFaceClick(int x, int y)
         IVtk_IdType subShapeId = -1;
         int modelIndex = -1;
         bool found = false;
+        Handle(IVtkOCC_Shape) pickedShapeWrapper;
+        const auto findHistoryForShapeId = [this](
+            IVtk_IdType shapeId,
+            Handle(IVtkOCC_Shape)& outWrapper) -> int {
+            outWrapper = nullptr;
+            for (int i = 0; i < historyList.size(); ++i) {
+                const ModelRenderState& state = renderStateFor(historyList[i]);
+                if (!state.shapeWrapper.IsNull() && state.shapeWrapper->GetId() == shapeId) {
+                    outWrapper = state.shapeWrapper;
+                    return i;
+                }
+                if (!state.profilePickShapeWrapper.IsNull()
+                    && state.profilePickShapeWrapper->GetId() == shapeId) {
+                    outWrapper = state.profilePickShapeWrapper;
+                    return i;
+                }
+            }
+            return -1;
+        };
 
         // 根据选择模式决定拾取面还是边
         if (currentSelectionMode == FaceSelection) {
@@ -268,13 +298,8 @@ void Widget::handleExtrusionFaceClick(int x, int y)
             IVtk_ShapeIdList ids = picker->GetPickedShapesIds();
             if (!ids.IsEmpty()) {
                 IVtk_IdType shapeId = ids.First();
-                for (int i = 0; i < historyList.size(); ++i) {
-                    if (!renderStateFor(historyList[i]).shapeWrapper.IsNull() && renderStateFor(historyList[i]).shapeWrapper->GetId() == shapeId) {
-                        modelIndex = i;
-                        found = true;
-                        break;
-                    }
-                }
+                modelIndex = findHistoryForShapeId(shapeId, pickedShapeWrapper);
+                found = modelIndex >= 0;
                 if (found) {
                     subShapeId = picker->GetPickedSubShapesIds(shapeId).IsEmpty() ? -1 : picker->GetPickedSubShapesIds(shapeId).First();
                 }
@@ -287,23 +312,19 @@ void Widget::handleExtrusionFaceClick(int x, int y)
             IVtk_ShapeIdList ids = picker->GetPickedShapesIds();
             if (!ids.IsEmpty()) {
                 IVtk_IdType shapeId = ids.First();
-                for (int i = 0; i < historyList.size(); ++i) {
-                    if (!renderStateFor(historyList[i]).shapeWrapper.IsNull() && renderStateFor(historyList[i]).shapeWrapper->GetId() == shapeId) {
-                        modelIndex = i;
-                        found = true;
-                        break;
-                    }
-                }
+                modelIndex = findHistoryForShapeId(shapeId, pickedShapeWrapper);
+                found = modelIndex >= 0;
                 if (found) {
                     subShapeId = picker->GetPickedSubShapesIds(shapeId).IsEmpty() ? -1 : picker->GetPickedSubShapesIds(shapeId).First();
                     
                     // 验证拾取到的确实是边，而不是面
                     if (subShapeId != -1) {
                         ModelingHistory& record = historyList[modelIndex];
-                        if (!renderStateFor(record).shapeWrapper.IsNull()) {
-                            TopoDS_Shape pickedShape = renderStateFor(record).shapeWrapper->GetSubShape(subShapeId);
+                        if (!pickedShapeWrapper.IsNull()) {
+                            TopoDS_Shape pickedShape = pickedShapeWrapper->GetSubShape(subShapeId);
                             if (!pickedShape.IsNull()) {
-                                if (pickedShape.ShapeType() != TopAbs_EDGE) {
+                                if (record.type != SKETCH
+                                    && pickedShape.ShapeType() != TopAbs_EDGE) {
                                     // 拾取到的不是边，清除结果
                                     found = false;
                                     subShapeId = -1;
@@ -323,13 +344,8 @@ void Widget::handleExtrusionFaceClick(int x, int y)
             IVtk_ShapeIdList ids = picker->GetPickedShapesIds();
             if (!ids.IsEmpty()) {
                 IVtk_IdType shapeId = ids.First();
-                for (int i = 0; i < historyList.size(); ++i) {
-                    if (!renderStateFor(historyList[i]).shapeWrapper.IsNull() && renderStateFor(historyList[i]).shapeWrapper->GetId() == shapeId) {
-                        modelIndex = i;
-                        found = true;
-                        break;
-                    }
-                }
+                modelIndex = findHistoryForShapeId(shapeId, pickedShapeWrapper);
+                found = modelIndex >= 0;
                 if (found) {
                     subShapeId = picker->GetPickedSubShapesIds(shapeId).IsEmpty() ? -1 : picker->GetPickedSubShapesIds(shapeId).First();
                 }
@@ -342,13 +358,8 @@ void Widget::handleExtrusionFaceClick(int x, int y)
                 ids = picker->GetPickedShapesIds();
                 if (!ids.IsEmpty()) {
                     IVtk_IdType shapeId = ids.First();
-                    for (int i = 0; i < historyList.size(); ++i) {
-                        if (!renderStateFor(historyList[i]).shapeWrapper.IsNull() && renderStateFor(historyList[i]).shapeWrapper->GetId() == shapeId) {
-                            modelIndex = i;
-                            found = true;
-                            break;
-                        }
-                    }
+                    modelIndex = findHistoryForShapeId(shapeId, pickedShapeWrapper);
+                    found = modelIndex >= 0;
                     if (found) {
                         subShapeId = picker->GetPickedSubShapesIds(shapeId).IsEmpty() ? -1 : picker->GetPickedSubShapesIds(shapeId).First();
                     }
@@ -369,13 +380,70 @@ void Widget::handleExtrusionFaceClick(int x, int y)
             // 执行拾取
                 try {
                     ModelingHistory& record = historyList[modelIndex];
-                    if (renderStateFor(record).shapeWrapper.IsNull()) return;
+                    if (pickedShapeWrapper.IsNull()) return;
 
                     TopoDS_Shape mainShape = geometryStateFor(record).occShape;
+
+                    // 面代理命中时按“Sketch/Profile”选择整个草图，保留历史依赖，
+                    // 不把透明代理上的 Face 当成一个脱离草图的临时面。
+                    const bool pickedSketchProfile =
+                        record.type == SKETCH
+                        && extrusionDialog
+                        && !renderStateFor(record).profilePickShapeWrapper.IsNull()
+                        && pickedShapeWrapper->GetId()
+                            == renderStateFor(record).profilePickShapeWrapper->GetId();
+                    bool validSketchProfile = pickedSketchProfile;
+                    if (!validSketchProfile
+                        && record.type == SKETCH
+                        && extrusionDialog
+                        && !extrusionDialog->isSheetBodyType()) {
+                        const gp_Pln sketchPlane(record.recipe.sketch.planeOrigin,
+                                                 record.recipe.sketch.planeNormal);
+                        TopoDS_Shape checkedProfile;
+                        std::string profileError;
+                        validSketchProfile = SketchGeometry::buildPlanarProfile(
+                            mainShape, sketchPlane, checkedProfile, &profileError);
+                        if (!validSketchProfile && statusBar()) {
+                            statusBar()->showMessage(
+                                tr("无法拉伸草图：%1")
+                                    .arg(QString::fromStdString(profileError)),
+                                3500);
+                        }
+                        if (!validSketchProfile) {
+                            return;
+                        }
+                    }
+                    if (validSketchProfile) {
+                        if (extrusionSelectedIndices.contains(modelIndex)) {
+                            extrusionSelectedIndices.removeOne(modelIndex);
+                        } else {
+                            extrusionSelectedIndices.append(modelIndex);
+                        }
+                        extrusionSelectedFaces.clear();
+                        updateExtrusionSelectionHighlight();
+                        if (extrusionDialog) {
+                            extrusionDialog->setSelectedGeometryCount(
+                                extrusionSelectedIndices.size());
+                        }
+                        const int epoch = extrudeRevolveSelectionEpoch_;
+                        QTimer::singleShot(0, this, [this, epoch]() {
+                            if (epoch != extrudeRevolveSelectionEpoch_) return;
+                            if (!extrusionDialog) return;
+                            try {
+                                applyAutoVectorFromSelection();
+                                updateExtrusionHandles();
+                                refreshExtrusionLivePreview();
+                            } catch (Standard_Failure&) {
+                            } catch (...) {
+                            }
+                        });
+                        return;
+                    }
+
                     TopoDS_Shape selectedSubShape;
                     if (subShapeId != -1) {
                         try {
-                            selectedSubShape = renderStateFor(record).shapeWrapper->GetSubShape(subShapeId);
+                            selectedSubShape = pickedShapeWrapper->GetSubShape(subShapeId);
                         } catch (Standard_Failure&) {
                             return;
                         } catch (...) {

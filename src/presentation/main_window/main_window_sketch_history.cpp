@@ -1,14 +1,18 @@
 #include "main_window.h"
 #include "rendering/model/model_display_style.h"
+#include "rendering/model/shape_presentation_factory.h"
 #include "geometry/sketch/sketch_geometry.h"
+#include "rendering/pipeline/model_shape_pipeline.h"
 
 #include <BRep_Builder.hxx>
 #include <BRepBuilderAPI_MakeEdge.hxx>
 #include <BRepMesh_IncrementalMesh.hxx>
+#include <BRepTools.hxx>
 
 #include <TopAbs_ShapeEnum.hxx>
 
 #include <vtkCellArray.h>
+#include <vtkDataSetMapper.h>
 #include <vtkPoints.h>
 #include <vtkPolyLine.h>
 #include <vtkProperty.h>
@@ -95,7 +99,8 @@ void Widget::ensureSketchHistoryRecord()
     ModelingHistory& storedRecord = historyList[index];
     renderStateFor(storedRecord).actor = actor;
     renderStateFor(storedRecord).polyData = polyDataCopy;
-    geometryStateFor(storedRecord).occShape = e;
+    // 只有实际绘制出来的草图几何才是 Profile 来源；哨兵边只服务于线框显示/拾取。
+    geometryStateFor(storedRecord).occShape = TopoDS_Shape();
     renderStateFor(storedRecord).shapeWrapper = shapeWrapper;
     renderStateFor(storedRecord).shapeDataSource = shapeDataSource;
     renderStateFor(storedRecord).highlightFilter = highlightFilter;
@@ -123,8 +128,32 @@ void Widget::updateSketchHistoryShape()
     if (activeSketchHistoryIndex_ < 0 || activeSketchHistoryIndex_ >= historyList.size()) return;
     if (!hasActiveSketch_) return;
 
+    ModelingHistory& history = historyList[activeSketchHistoryIndex_];
     const QList<TopoDS_Shape> geometries = activeSketch_.getGeometries();
-    if (geometries.isEmpty()) return;
+    if (geometries.isEmpty()) {
+        geometryStateFor(history).occShape = TopoDS_Shape();
+        renderStateFor(history).polyData = vtkSmartPointer<vtkPolyData>::New();
+        if (renderStateFor(history).actor) {
+            vtkSmartPointer<vtkPolyDataMapper> emptyMapper =
+                vtkSmartPointer<vtkPolyDataMapper>::New();
+            emptyMapper->SetInputData(renderStateFor(history).polyData);
+            emptyMapper->ScalarVisibilityOff();
+            renderStateFor(history).actor->SetMapper(emptyMapper);
+            renderStateFor(history).actor->SetVisibility(false);
+            renderStateFor(history).actor->SetPickable(false);
+        }
+        if (renderStateFor(history).highlightActor) {
+            renderStateFor(history).highlightActor->SetVisibility(false);
+        }
+        if (renderStateFor(history).profilePickActor) {
+            removeSceneActor(renderStateFor(history).profilePickActor);
+            renderStateFor(history).profilePickActor = nullptr;
+        }
+        renderStateFor(history).profilePickShapeWrapper = nullptr;
+        renderStateFor(history).profilePickShapeDataSource = nullptr;
+        rebuildSketchCommittedOverlay();
+        return;
+    }
 
     // 复用现有 VIS 管线，但对曲线：保留 lines，使用线框显示
     TopoDS_Compound newShape;
@@ -137,12 +166,23 @@ void Widget::updateSketchHistoryShape()
     }
     if (newShape.IsNull()) return;
 
-    ModelingHistory& history = historyList[activeSketchHistoryIndex_];
+    if (renderStateFor(history).profilePickActor) {
+        removeSceneActor(renderStateFor(history).profilePickActor);
+        renderStateFor(history).profilePickActor = nullptr;
+    }
+    renderStateFor(history).profilePickShapeWrapper = nullptr;
+    renderStateFor(history).profilePickShapeDataSource = nullptr;
+
     geometryStateFor(history).occShape = newShape;
     history.type = SKETCH;
 
-    BRepMesh_IncrementalMesh mesh(newShape, 0.05, Standard_False, 0.3, Standard_True);
-    mesh.Perform();
+    BRepTools::Clean(newShape);
+    BRepMesh_IncrementalMesh(
+        newShape,
+        ShapePresentationOptions::kDefaultMeshDeflection,
+        Standard_False,
+        ShapePresentationOptions::kDefaultMeshAngle,
+        Standard_True);
 
     ++shapeIDCounter;
     Handle(IVtkOCC_Shape) shapeWrapper = new IVtkOCC_Shape(newShape);
@@ -218,5 +258,46 @@ void Widget::updateSketchHistoryShape()
     renderStateFor(history).polyData = polyDataCopy;
     renderStateFor(history).shapeWrapper = shapeWrapper;
     renderStateFor(history).shapeDataSource = shapeDataSource;
+
+    // 封闭草图保留一个不可见的面代理。它只用于面/轮廓点击，不改变草图的线框外观。
+    TopoDS_Shape profileShape;
+    if (renderer
+        && SketchGeometry::buildPlanarProfile(
+               newShape, activeSketchPlane_, profileShape, nullptr)
+        && !profileShape.IsNull()) {
+        ++shapeIDCounter;
+        Handle(IVtkOCC_Shape) profileWrapper = new IVtkOCC_Shape(profileShape);
+        profileWrapper->SetId(shapeIDCounter);
+        vtkSmartPointer<IVtkTools_ShapeDataSource> profileSource =
+            ModelShapePipeline::createShapeDataSource(profileWrapper);
+        if (profileSource) {
+            profileSource->Modified();
+            profileSource->Update();
+
+            vtkSmartPointer<vtkDataSetMapper> profileMapper =
+                vtkSmartPointer<vtkDataSetMapper>::New();
+            profileMapper->SetInputConnection(profileSource->GetOutputPort());
+            profileMapper->ScalarVisibilityOff();
+
+            vtkSmartPointer<vtkActor> profileActor =
+                vtkSmartPointer<vtkActor>::New();
+            profileActor->SetMapper(profileMapper);
+            profileActor->SetPickable(true);
+            profileActor->SetVisibility(true);
+            profileActor->GetProperty()->SetRepresentationToSurface();
+            profileActor->GetProperty()->SetOpacity(0.0);
+            profileActor->GetProperty()->SetLighting(false);
+            profileActor->GetProperty()->EdgeVisibilityOff();
+            IVtkTools_ShapeObject::SetShapeSource(profileSource, profileActor);
+            // SetShapeSource 只负责 VIS 拾取关联，最后固定回面代理的 mapper。
+            profileActor->SetMapper(profileMapper);
+
+            renderer->AddActor(profileActor);
+            renderStateFor(history).profilePickActor = profileActor;
+            renderStateFor(history).profilePickShapeWrapper = profileWrapper;
+            renderStateFor(history).profilePickShapeDataSource = profileSource;
+        }
+    }
+
     rebuildSketchCommittedOverlay();
 }

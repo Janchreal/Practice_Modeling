@@ -386,11 +386,13 @@ void Widget::handleClearHistory()
         if (renderStateFor(historyList[i]).actor) removeSceneActor(renderStateFor(historyList[i]).actor);
         if (renderStateFor(historyList[i]).outlineActor) removeSceneActor(renderStateFor(historyList[i]).outlineActor);
         if (renderStateFor(historyList[i]).highlightActor) removeSceneActor(renderStateFor(historyList[i]).highlightActor);
+        if (renderStateFor(historyList[i]).profilePickActor) removeSceneActor(renderStateFor(historyList[i]).profilePickActor);
     }
 
     // 记录清空前的记录数量用于日志
     int recordsCount = historyList.size();
 
+    clearIntersectionRenderStates();
     modelDocument_.clear();
     geometryStore_.clear();
     renderStore_.clear();

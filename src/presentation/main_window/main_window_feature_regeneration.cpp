@@ -150,8 +150,8 @@ bool Widget::applyShapeToHistory(int index, const TopoDS_Shape& newShape, const 
         ShapePresentationOptions renderOptions;
         renderOptions.color = record.color;
         renderOptions.shapeId = shapeIDCounter;
-        renderOptions.meshDeflection = (record.type == BOOLEAN_RESULT) ? 0.03 : 0.05;
-        renderOptions.meshAngle = 0.3;
+        renderOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
+        renderOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
         ShapePresentationFactory::refreshSolidModelState(renderState, newShape, renderOptions);
         if (!renderState.actor || !renderState.shapeDataSource) {
             record.featureRegenerateFailed = true;
@@ -163,9 +163,19 @@ bool Widget::applyShapeToHistory(int index, const TopoDS_Shape& newShape, const 
         if (!hadHighlightActor) {
             addAppearanceActor(renderState.highlightActor);
         }
+
+        // refreshSolidModelState replaces the shaded pipeline. Rebuild the
+        // outline too; otherwise it keeps the previous mesh and can protrude
+        // beyond the newly regenerated cone/sphere boundary.
+        if (renderState.outlineActor && renderer) {
+            renderer->RemoveActor(renderState.outlineActor);
+            renderState.outlineActor = nullptr;
+        }
+        ensureModelBoundaryOutline(index);
         record.featureRegenerateFailed = false;
 
         refreshShapePickerBindingsForCurrentContext();
+        updateIntersectionsForRecord(index);
         return true;
     } catch (Standard_Failure&) {
         record.featureRegenerateFailed = true;

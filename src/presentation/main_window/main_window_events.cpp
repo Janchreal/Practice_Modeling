@@ -344,35 +344,32 @@ void Widget::handleVtkMouseMove(int x, int y)
         const int kind = (currentSelectionMode == VectorDialogPickStartPoint)
                              ? vectorTwoPointStartSnapKind_
                              : vectorTwoPointEndSnapKind_;
-        if (kind == -1) {
-            clearSnapHover();
-            clearPointSelectionHover();
+        clearPointSelectionHover();
+        updateVectorTwoPointSnapPresentation(x, y, kind, false);
+        if (hasSnapHoverBestPoint_) {
             if (currentSelectionMode == VectorDialogPickEndPoint && hasVectorStartPoint_) {
-                gp_Pnt preview;
-                if (tryPickPointOnModelForVector(x, y, preview)) {
-                    updateVectorTwoPointHandles(&preview);
-                } else {
-                    updateVectorTwoPointHandles();
-                }
-            } else {
-                updateVectorTwoPointHandles();
-            }
-        } else if (snap_.armed) {
-            updateVectorTwoPointSnapPresentation(x, y, kind, false);
-            if (hasSnapHoverBestPoint_) {
-                if (currentSelectionMode == VectorDialogPickEndPoint && hasVectorStartPoint_) {
-                    updateVectorTwoPointHandles(&snapHoverBestPoint_, nullptr);
-                } else if (currentSelectionMode == VectorDialogPickStartPoint) {
-                    updateVectorTwoPointHandles(nullptr, &snapHoverBestPoint_);
-                } else {
-                    updateVectorTwoPointHandles();
-                }
+                updateVectorTwoPointHandles(&snapHoverBestPoint_, nullptr);
+            } else if (currentSelectionMode == VectorDialogPickStartPoint) {
+                updateVectorTwoPointHandles(nullptr, &snapHoverBestPoint_);
             } else {
                 updateVectorTwoPointHandles();
             }
         } else {
-            clearSnapHover();
-            updateVectorTwoPointHandles();
+            gp_Pnt preview;
+            if ((currentSelectionMode == VectorDialogPickStartPoint
+                 || hasVectorStartPoint_)
+                && tryPickPointOnModelForVector(x, y, preview)) {
+                if (currentSelectionMode == VectorDialogPickEndPoint
+                    && hasVectorStartPoint_) {
+                    updateVectorTwoPointHandles(&preview, nullptr);
+                } else if (currentSelectionMode == VectorDialogPickStartPoint) {
+                    updateVectorTwoPointHandles(nullptr, &preview);
+                } else {
+                    updateVectorTwoPointHandles();
+                }
+            } else {
+                updateVectorTwoPointHandles();
+            }
         }
     } else if (isVectorAxisPickContext()) {
         updateReferenceCsysAxisHover(x, y);

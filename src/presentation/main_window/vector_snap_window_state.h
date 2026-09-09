@@ -60,6 +60,14 @@ protected:
     vtkSmartPointer<vtkActor> vectorTwoPointEndSphereActor_;
     vtkSmartPointer<vtkActor> vectorTwoPointLineActor_;
     QList<vtkSmartPointer<vtkActor>> vectorTwoPointSnapGhostActors_;
+    struct VectorSnapPreviewCandidate {
+        gp_Pnt point;
+        double screenDistanceSquared = 0.0;
+        int type = 0; // 1=endpoint, 2=midpoint
+        int modelIndex = -1;
+        IVtk_IdType subShapeId = static_cast<IVtk_IdType>(-1);
+    };
+    QList<VectorSnapPreviewCandidate> vectorSnapPreviewCandidates_;
     gp_Pnt snapHoverBestPoint_;
     bool hasSnapHoverBestPoint_ = false;
 

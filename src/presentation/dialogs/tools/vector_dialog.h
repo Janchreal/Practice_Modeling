@@ -29,6 +29,9 @@ public:
     void setCurvePicked(bool picked);
     void setVectorDirDisplay(double x, double y, double z);
     void setReverseState(bool reversed);
+    void setTwoPointPointState(bool hasStart, bool hasEnd,
+                               bool selectingStart = false,
+                               bool selectingEnd = false);
     int twoPointStartSnapKindForPick() const;
     int twoPointEndSnapKindForPick() const;
 

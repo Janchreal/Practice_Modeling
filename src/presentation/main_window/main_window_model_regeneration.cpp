@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QSet>
 #include <QString>
+#include <QStatusBar>
 #include <QVTKOpenGLNativeWidget.h>
 
 #include <algorithm>
@@ -131,7 +132,8 @@ void Widget::regenerateModel(int index, bool triggerCascade)
         ShapePresentationOptions renderOptions;
         renderOptions.color = history.color;
         renderOptions.shapeId = shapeIDCounter;
-        renderOptions.meshAngle = 0.3;
+        renderOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
+        renderOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
         ShapePresentationFactory::refreshSolidModelState(renderState, newShape, renderOptions);
         if (!renderState.actor || !renderState.shapeDataSource) {
             QMessageBox::warning(this, "错误", "模型显示数据更新失败！");
@@ -158,6 +160,7 @@ void Widget::regenerateModel(int index, bool triggerCascade)
         updateHistoryList();
 
         refreshShapePickerBindingsForCurrentContext();
+        updateIntersectionsForRecord(index);
 
         // 更新所有依赖于该模型的下游特征
         if (triggerCascade) {
@@ -191,7 +194,8 @@ void Widget::updateModelShape(int index, const TopoDS_Shape& newShape, bool trig
         ShapePresentationOptions renderOptions;
         renderOptions.color = history.color;
         renderOptions.shapeId = shapeIDCounter;
-        renderOptions.meshAngle = 0.3;
+        renderOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
+        renderOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
         renderOptions.deepCopyPolyData = true;
         ShapePresentationFactory::refreshSolidModelState(renderState, newShape, renderOptions);
         if (!renderState.actor || !renderState.shapeDataSource) {
@@ -224,6 +228,7 @@ void Widget::updateModelShape(int index, const TopoDS_Shape& newShape, bool trig
         updateHistoryList();
 
         refreshShapePickerBindingsForCurrentContext();
+        updateIntersectionsForRecord(index);
 
         // 更新所有依赖于该模型的下游特征
         if (triggerCascade) {
@@ -237,6 +242,16 @@ void Widget::updateModelShape(int index, const TopoDS_Shape& newShape, bool trig
 void Widget::setModelVisibility(int index, bool visible)
 {
     if (index < 0 || index >= historyList.size()) return;
+
+    // 依赖源已删除且没有可重建几何时，禁止通过特征树重新显示陈旧的旧 actor。
+    if (visible && historyList[index].featureRegenerateFailed
+        && geometryStateFor(historyList[index]).occShape.IsNull()) {
+        visible = false;
+        if (statusBar()) {
+            statusBar()->showMessage(
+                tr("该特征的依赖已失效，无法显示旧几何。"), 3000);
+        }
+    }
 
     if (historyList[index].type == WORK_CSYS) {
         setWorkCsysVisible(visible);
@@ -277,6 +292,26 @@ void Widget::setModelVisibility(int index, bool visible)
             vtkWidget->renderWindow()->Render();
         }
     }
+    if (renderStateFor(historyList[index]).profilePickActor) {
+        const bool profilePickable =
+            extrusionDialog
+            && (currentSelectionMode == ExtrusionSelection
+                || currentSelectionMode == EdgeSelection
+                || currentSelectionMode == FaceSelection);
+        const bool profileVisible = visible && historyList[index].type == SKETCH;
+        renderStateFor(historyList[index]).profilePickActor->SetVisibility(profileVisible ? 1 : 0);
+        renderStateFor(historyList[index]).profilePickActor->SetPickable(
+            profileVisible && profilePickable);
+        if (profileVisible && profilePickable) {
+            IVtkTools_ShapeObject::SetShapeSource(
+                renderStateFor(historyList[index]).profilePickShapeDataSource,
+                renderStateFor(historyList[index]).profilePickActor);
+        } else {
+            IVtkTools_ShapeObject::SetShapeSource(
+                nullptr, renderStateFor(historyList[index]).profilePickActor);
+        }
+    }
+    updateIntersectionsForRecord(index);
     syncMirrorWindows();
 }
 
@@ -300,6 +335,13 @@ void Widget::updateModelShapeWithTypeInternal(int index, const TopoDS_Shape& new
 
     ModelingHistory& history = historyList[index];
 
+    if (renderStateFor(history).profilePickActor) {
+        removeSceneActor(renderStateFor(history).profilePickActor);
+        renderStateFor(history).profilePickActor = nullptr;
+        renderStateFor(history).profilePickShapeWrapper = nullptr;
+        renderStateFor(history).profilePickShapeDataSource = nullptr;
+    }
+
     geometryStateFor(history).occShape = newShape;
     history.type = newType;
 
@@ -310,7 +352,8 @@ void Widget::updateModelShapeWithTypeInternal(int index, const TopoDS_Shape& new
     ShapePresentationOptions renderOptions;
     renderOptions.color = history.color;
     renderOptions.shapeId = shapeIDCounter;
-    renderOptions.meshAngle = 0.3;
+    renderOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
+    renderOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
     renderOptions.deepCopyPolyData = true;
     ShapePresentationFactory::refreshSolidModelState(renderState, newShape, renderOptions);
     if (!renderState.actor || !renderState.shapeDataSource) {
@@ -340,6 +383,7 @@ void Widget::updateModelShapeWithTypeInternal(int index, const TopoDS_Shape& new
     updateHistoryList();
 
     refreshShapePickerBindingsForCurrentContext();
+    updateIntersectionsForRecord(index);
 
     if (triggerCascade) {
         updateDependentFeatures(index);

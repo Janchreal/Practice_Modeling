@@ -180,7 +180,7 @@ void Widget::createNewWindow()
     mirrorPicker->SetRenderer(mirrorWindow->renderer);
 
     vtkSmartPointer<MouseInteractorStyle> mirrorStyle = vtkSmartPointer<MouseInteractorStyle>::New();
-    mirrorStyle->SetWidget(this);
+    mirrorStyle->SetInteractionContext(createMouseInteractionContext());
     mirrorStyle->SetPreEventHook([this, mirrorWindow]() { activateMirrorRenderContext(mirrorWindow); });
     mirrorWindow->vtkWidget->renderWindow()->GetInteractor()->SetInteractorStyle(mirrorStyle);
 
@@ -484,9 +484,15 @@ void Widget::prepareShapePickerBindingsForCurrentContext()
 
     auto unbindMainActors = [this]() {
         for (int i = 0; i < historyList.size(); ++i) {
-            if (!renderStateFor(historyList[i]).actor) continue;
-            renderStateFor(historyList[i]).actor->SetPickable(0);
-            IVtkTools_ShapeObject::SetShapeSource(nullptr, renderStateFor(historyList[i]).actor);
+            ModelRenderState& state = renderStateFor(historyList[i]);
+            if (state.actor) {
+                state.actor->SetPickable(0);
+                IVtkTools_ShapeObject::SetShapeSource(nullptr, state.actor);
+            }
+            if (state.profilePickActor) {
+                state.profilePickActor->SetPickable(0);
+                IVtkTools_ShapeObject::SetShapeSource(nullptr, state.profilePickActor);
+            }
         }
     };
 
@@ -556,6 +562,26 @@ void Widget::prepareShapePickerBindingsForCurrentContext()
             } else {
                 IVtkTools_ShapeObject::SetShapeSource(nullptr, renderStateFor(historyList[i]).actor);
             }
+            if (renderStateFor(historyList[i]).profilePickActor) {
+                const bool profilePickContext =
+                    extrusionDialog
+                    && (currentSelectionMode == ExtrusionSelection
+                        || currentSelectionMode == EdgeSelection
+                        || currentSelectionMode == FaceSelection);
+                const bool profilePickable =
+                    visible && historyList[i].type == SKETCH && profilePickContext;
+                renderStateFor(historyList[i]).profilePickActor->SetVisibility(
+                    visible && historyList[i].type == SKETCH ? 1 : 0);
+                renderStateFor(historyList[i]).profilePickActor->SetPickable(profilePickable ? 1 : 0);
+                if (profilePickable) {
+                    IVtkTools_ShapeObject::SetShapeSource(
+                        renderStateFor(historyList[i]).profilePickShapeDataSource,
+                        renderStateFor(historyList[i]).profilePickActor);
+                } else {
+                    IVtkTools_ShapeObject::SetShapeSource(
+                        nullptr, renderStateFor(historyList[i]).profilePickActor);
+                }
+            }
         }
     }
 }
@@ -564,7 +590,10 @@ int Widget::resolveHistoryIndexByActor(vtkActor* actor) const
 {
     if (!actor) return -1;
     for (int i = 0; i < historyList.size(); ++i) {
-        if (renderStateFor(historyList[i]).actor == actor) return i;
+        if (renderStateFor(historyList[i]).actor == actor
+            || renderStateFor(historyList[i]).profilePickActor == actor) {
+            return i;
+        }
     }
 
     if (g_mirrorRenderContextMap.contains(this)) {

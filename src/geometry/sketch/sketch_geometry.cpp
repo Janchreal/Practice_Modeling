@@ -2,7 +2,10 @@
 
 #include <QtGlobal>
 
+#include <BRepBuilderAPI_MakeFace.hxx>
 #include <BRep_Tool.hxx>
+#include <BRepCheck_Analyzer.hxx>
+#include <BRepAdaptor_Curve.hxx>
 #include <GCPnts_AbscissaPoint.hxx>
 #include <GeomAPI_ExtremaCurveCurve.hxx>
 #include <Geom_Circle.hxx>
@@ -11,10 +14,83 @@
 #include <GeomAPI_ProjectPointOnCurve.hxx>
 #include <Geom_TrimmedCurve.hxx>
 #include <Precision.hxx>
+#include <ShapeAnalysis_FreeBounds.hxx>
+#include <TopTools_HSequenceOfShape.hxx>
+#include <TopoDS_Compound.hxx>
 #include <gp_Ax2.hxx>
+#include <BRep_Builder.hxx>
+#include <TopExp_Explorer.hxx>
 #include <TopoDS.hxx>
 
+#include <cmath>
 #include <limits>
+
+namespace {
+
+bool setProfileError(std::string* errorMessage, const char* message)
+{
+    if (errorMessage) {
+        *errorMessage = message;
+    }
+    return false;
+}
+
+void appendEdges(const TopoDS_Shape& shape, QList<TopoDS_Edge>& edges)
+{
+    if (shape.IsNull()) {
+        return;
+    }
+
+    if (shape.ShapeType() == TopAbs_EDGE) {
+        edges.append(TopoDS::Edge(shape));
+        return;
+    }
+
+    for (TopExp_Explorer explorer(shape, TopAbs_EDGE);
+         explorer.More();
+         explorer.Next()) {
+        const TopoDS_Shape& edgeShape = explorer.Current();
+        if (!edgeShape.IsNull()) {
+            edges.append(TopoDS::Edge(edgeShape));
+        }
+    }
+}
+
+bool edgeIsOnPlane(const TopoDS_Edge& edge,
+                   const gp_Pln& plane,
+                   double tolerance)
+{
+    if (edge.IsNull()) {
+        return false;
+    }
+
+    try {
+        BRepAdaptor_Curve curve(edge);
+        const Standard_Real first = curve.FirstParameter();
+        const Standard_Real last = curve.LastParameter();
+        if (!std::isfinite(first) || !std::isfinite(last)
+            || std::abs(last - first) <= Precision::Confusion()) {
+            return false;
+        }
+
+        const Standard_Real middle = 0.5 * (first + last);
+        const gp_Pnt points[] = {
+            curve.Value(first),
+            curve.Value(middle),
+            curve.Value(last)
+        };
+        for (const gp_Pnt& point : points) {
+            if (plane.Distance(point) > tolerance) {
+                return false;
+            }
+        }
+        return true;
+    } catch (...) {
+        return false;
+    }
+}
+
+} // namespace
 
 namespace SketchGeometry {
 
@@ -145,6 +221,97 @@ QList<gp_Pnt> edgeSnapCandidates(const TopoDS_Edge& edge, bool includeMidpoint, 
         points.append(gp_Pnt(c.X() - yd.X() * r, c.Y() - yd.Y() * r, c.Z() - yd.Z() * r));
     }
     return points;
+}
+
+bool buildPlanarProfile(const TopoDS_Shape& sketchShape,
+                        const gp_Pln& sketchPlane,
+                        TopoDS_Shape& outProfile,
+                        std::string* errorMessage)
+{
+    outProfile = TopoDS_Shape();
+
+    if (sketchShape.IsNull()) {
+        return setProfileError(errorMessage, "草图没有几何");
+    }
+
+    QList<TopoDS_Edge> edges;
+    appendEdges(sketchShape, edges);
+    if (edges.isEmpty()) {
+        return setProfileError(errorMessage, "草图没有可用边");
+    }
+
+    // Keep the source B-Rep untouched.  Only the returned wire/face is used
+    // as a transient extrusion profile.
+    const double planeTolerance = qMax(1.0e-6, Precision::Confusion() * 100.0);
+    for (const TopoDS_Edge& edge : edges) {
+        if (!edgeIsOnPlane(edge, sketchPlane, planeTolerance)) {
+            return setProfileError(errorMessage, "草图轮廓不共面");
+        }
+    }
+
+    try {
+        Handle(TopTools_HSequenceOfShape) edgeSequence =
+            new TopTools_HSequenceOfShape();
+        for (const TopoDS_Edge& edge : edges) {
+            edgeSequence->Append(edge);
+        }
+
+        Handle(TopTools_HSequenceOfShape) wireSequence =
+            new TopTools_HSequenceOfShape();
+        ShapeAnalysis_FreeBounds::ConnectEdgesToWires(
+            edgeSequence, planeTolerance, Standard_False, wireSequence);
+
+        if (wireSequence.IsNull() || wireSequence->Length() == 0) {
+            return setProfileError(errorMessage, "草图轮廓无法组成线框");
+        }
+
+        QList<TopoDS_Face> faces;
+        for (Standard_Integer i = 1; i <= wireSequence->Length(); ++i) {
+            const TopoDS_Shape& wireShape = wireSequence->Value(i);
+            if (wireShape.IsNull() || wireShape.ShapeType() != TopAbs_WIRE) {
+                return setProfileError(errorMessage, "Sketch contour cannot form a wire");
+            }
+
+            const TopoDS_Wire wire = TopoDS::Wire(wireShape);
+            if (!wire.Closed()) {
+                return setProfileError(errorMessage, "草图轮廓未闭合");
+            }
+
+            BRepBuilderAPI_MakeFace faceMaker(sketchPlane, wire, Standard_True);
+            if (!faceMaker.IsDone()) {
+                return setProfileError(errorMessage, "草图轮廓无法生成平面面");
+            }
+
+            const TopoDS_Face face = faceMaker.Face();
+            if (face.IsNull() || !BRepCheck_Analyzer(face).IsValid()) {
+                return setProfileError(errorMessage, "草图平面面无效");
+            }
+            faces.append(face);
+        }
+
+        if (faces.isEmpty()) {
+            return setProfileError(errorMessage, "草图没有闭合轮廓");
+        }
+
+        if (faces.size() == 1) {
+            outProfile = faces.first();
+            return true;
+        }
+
+        TopoDS_Compound compound;
+        BRep_Builder builder;
+        builder.MakeCompound(compound);
+        for (const TopoDS_Face& face : faces) {
+            builder.Add(compound, face);
+        }
+        if (compound.IsNull() || !BRepCheck_Analyzer(compound).IsValid()) {
+            return setProfileError(errorMessage, "草图轮廓组合无效");
+        }
+        outProfile = compound;
+        return true;
+    } catch (...) {
+        return setProfileError(errorMessage, "草图 Profile 构造失败");
+    }
 }
 
 int preferredEdgeSampleCount(const TopoDS_Edge& edge, int lineCount, int curvedCount, int fallbackCount)

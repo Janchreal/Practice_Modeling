@@ -144,8 +144,10 @@ void Widget::clearAllModelsInternal()
         if (renderStateFor(historyList[i]).actor) removeSceneActor(renderStateFor(historyList[i]).actor);
         if (renderStateFor(historyList[i]).outlineActor) removeSceneActor(renderStateFor(historyList[i]).outlineActor);
         if (renderStateFor(historyList[i]).highlightActor) removeSceneActor(renderStateFor(historyList[i]).highlightActor);
+        if (renderStateFor(historyList[i]).profilePickActor) removeSceneActor(renderStateFor(historyList[i]).profilePickActor);
     }
 
+    clearIntersectionRenderStates();
     clearReferenceCsysState();
     modelDocument_.clear();
     geometryStore_.clear();

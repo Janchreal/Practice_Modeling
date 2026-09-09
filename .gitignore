@@ -13,9 +13,11 @@ Makefile.*
 build/
 debug/
 release/
+release_verified/
 build_cursor_check/
 ui_*.h
 moc_*.cpp
+mocinclude.opt
 qrc_*.cpp
 
 # Compiled objects

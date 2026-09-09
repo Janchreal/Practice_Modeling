@@ -113,6 +113,23 @@ void vectordialog::setReverseState(bool reversed)
     reverse_ = reversed;
 }
 
+void vectordialog::setTwoPointPointState(bool hasStart, bool hasEnd,
+                                         bool selectingStart, bool selectingEnd)
+{
+    if (twoPointStartBtn_) {
+        twoPointStartBtn_->setText(
+            (hasStart || selectingStart) ? tr("重新指定起点")
+                                         : tr("指定出发点"));
+        twoPointStartBtn_->setEnabled(true);
+    }
+    if (twoPointEndBtn_) {
+        twoPointEndBtn_->setText(
+            (hasEnd || selectingEnd) ? tr("重新指定终点")
+                                     : tr("指定目标点"));
+        twoPointEndBtn_->setEnabled(hasStart || hasEnd || selectingEnd);
+    }
+}
+
 int vectordialog::twoPointStartSnapKindForPick() const
 {
     return twoPointStartSnapChosen_ ? twoPointStartSnapKind_ : -1;
@@ -239,7 +256,7 @@ void vectordialog::rebuildVectorDefineArea(int modeIndex)
 
         twoPointEndBtn_ = new QPushButton(tr("指定目标点"), endRow);
         twoPointEndSnapToolButton_ = makeTwoPointSnapToolButton(false);
-        twoPointEndBtn_->setEnabled(false);
+        setTwoPointPointState(false, false);
 
         endRowLayout->addWidget(twoPointEndBtn_);
         endRowLayout->addWidget(twoPointEndSnapToolButton_);

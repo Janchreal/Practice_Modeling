@@ -22,16 +22,16 @@
 #include <TopoDS.hxx>
 class OccShapeToVtkConverter::Private {
 public:
-    double linearDeflection = 0.001;
-    double angularDeflection = 0.5;
+    double linearDeflection = 0.003;
+    double angularDeflection = 0.05;
 };
 
 OccShapeToVtkConverter::OccShapeToVtkConverter()
     : d(new Private)
 {
-    // 设置更精细的默认参数
-    d->linearDeflection = 0.003;  // 从0.001改为0.005，更适合曲面
-    d->angularDeflection = 0.05;   // 从0.5改为0.3，提高角度精度，越小精度越高
+    // Keep the fallback converter consistent with the main VIS pipeline.
+    d->linearDeflection = 0.003;
+    d->angularDeflection = 0.05;
 }
 
 OccShapeToVtkConverter::~OccShapeToVtkConverter() {
@@ -46,8 +46,8 @@ vtkSmartPointer<vtkPolyData> OccShapeToVtkConverter::convert(const TopoDS_Shape&
 
     try {
         // 创建网格
-        BRepMesh_IncrementalMesh mesher(shape, d->linearDeflection, false, d->angularDeflection);
-        mesher.Perform();
+        BRepMesh_IncrementalMesh(
+            shape, d->linearDeflection, false, d->angularDeflection);
 
         vtkSmartPointer<vtkPolyData> polyData = vtkSmartPointer<vtkPolyData>::New();
         vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
@@ -99,7 +99,7 @@ vtkSmartPointer<vtkPolyData> OccShapeToVtkConverter::convert(const TopoDS_Shape&
 
         return polyData;
 
-    } catch (Standard_Failure& e) {
+    } catch (const Standard_Failure&) {
         return nullptr;
     } catch (...) {
         return nullptr;
