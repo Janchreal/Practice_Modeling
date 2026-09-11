@@ -958,6 +958,7 @@ void Widget::handleVtkMouseClick(int x, int y)
             onVectorTwoPointStartPicked(snapSelectedPoint_);
             return;
         }
+        if (vectorTwoPointSnapHasHoveredEdge_) return;
         gp_Pnt p;
         if (!tryPickPointOnModelForVector(x, y, p)) return;
         onVectorTwoPointStartPicked(p);
@@ -970,6 +971,7 @@ void Widget::handleVtkMouseClick(int x, int y)
             onVectorTwoPointEndPicked(snapSelectedPoint_);
             return;
         }
+        if (vectorTwoPointSnapHasHoveredEdge_) return;
         gp_Pnt p;
         if (!tryPickPointOnModelForVector(x, y, p)) return;
         onVectorTwoPointEndPicked(p);

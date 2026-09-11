@@ -4,6 +4,7 @@
 #include "ui_main_window.h"
 #include "geometry/boolean/boolean_ops.h"
 #include "geometry/topology/feature_topology.h"
+#include "geometry/sketch/sketch_geometry.h"
 #include "geometry/primitives/primitive_geometry.h"
 #include "geometry/pattern/pattern_geometry.h"
 #include "geometry/revolution/revolve_geometry.h"
@@ -19,9 +20,12 @@
 
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <string>
 
 #include <Standard_Failure.hxx>
+#include <TopAbs_ShapeEnum.hxx>
 #include <TopTools_ListOfShape.hxx>
+#include <TopExp_Explorer.hxx>
 #include <TopoDS.hxx>
 #include <TopoDS_Compound.hxx>
 
@@ -286,7 +290,29 @@ bool Widget::regenerateFeature(int index)
         const RevolveRecipeData& recipe = record.recipe.revolve;
         QList<TopoDS_Shape> profiles;
         for (const SubShapeRef& ref : recipe.profiles) {
-            const TopoDS_Shape resolved = resolveSubShapeRef(getShapeFromHistory(ref.parentIndex), ref);
+            TopoDS_Shape resolved;
+            if (ref.parentIndex >= 0 && ref.parentIndex < historyList.size()
+                && historyList[ref.parentIndex].type == SKETCH
+                && ref.semanticKind == static_cast<int>(SubShapeSemanticKind::SketchContour)) {
+                const ModelingHistory& sketchRecord = historyList[ref.parentIndex];
+                const gp_Pln plane(sketchRecord.recipe.sketch.planeOrigin,
+                                   sketchRecord.recipe.sketch.planeNormal);
+                std::string error;
+                if (SketchGeometry::buildPlanarProfileAt(
+                        getShapeFromHistory(ref.parentIndex), plane,
+                        ref.sketchContourIndex, resolved, &error)
+                    && ref.signatureEdgeCount > 0) {
+                    int edgeCount = 0;
+                    for (TopExp_Explorer ex(resolved, TopAbs_EDGE); ex.More(); ex.Next()) {
+                        ++edgeCount;
+                    }
+                    if (edgeCount != ref.signatureEdgeCount) {
+                        resolved = TopoDS_Shape();
+                    }
+                }
+            } else {
+                resolved = resolveSubShapeRef(getShapeFromHistory(ref.parentIndex), ref);
+            }
             if (resolved.IsNull()) {
                 record.featureRegenerateFailed = true;
                 return false;

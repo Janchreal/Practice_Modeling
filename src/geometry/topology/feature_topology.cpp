@@ -1,15 +1,19 @@
 #include "feature_topology.h"
 
 #include <BRepAdaptor_Curve.hxx>
+#include <BRepGProp.hxx>
 #include <BRep_Tool.hxx>
 #include <GCPnts_AbscissaPoint.hxx>
 #include <Geom_Curve.hxx>
+#include <GProp_GProps.hxx>
 #include <Precision.hxx>
+#include <TopAbs_ShapeEnum.hxx>
 #include <TopExp.hxx>
 #include <TopExp_Explorer.hxx>
 #include <TopTools_IndexedMapOfShape.hxx>
 #include <TopoDS.hxx>
 #include <TopoDS_Edge.hxx>
+#include <TopoDS_Face.hxx>
 
 #include <cmath>
 
@@ -32,6 +36,45 @@ void fillEdgeSignature(const TopoDS_Edge& edge, SubShapeRef& ref)
     ref.signatureMidX = pMid.X();
     ref.signatureMidY = pMid.Y();
     ref.signatureMidZ = pMid.Z();
+}
+
+int countEdges(const TopoDS_Shape& shape)
+{
+    int count = 0;
+    if (shape.IsNull()) {
+        return count;
+    }
+    for (TopExp_Explorer explorer(shape, TopAbs_EDGE); explorer.More(); explorer.Next()) {
+        ++count;
+    }
+    return count;
+}
+
+void fillFaceSignature(const TopoDS_Shape& shape, SubShapeRef& ref)
+{
+    if (shape.IsNull()) {
+        return;
+    }
+
+    ref.signatureEdgeCount = countEdges(shape);
+
+    try {
+        GProp_GProps surfaceProps;
+        BRepGProp::SurfaceProperties(shape, surfaceProps);
+        ref.signatureArea = surfaceProps.Mass();
+        const gp_Pnt center = surfaceProps.CentreOfMass();
+        ref.signatureMidX = center.X();
+        ref.signatureMidY = center.Y();
+        ref.signatureMidZ = center.Z();
+    } catch (...) {
+    }
+
+    try {
+        GProp_GProps linearProps;
+        BRepGProp::LinearProperties(shape, linearProps);
+        ref.signatureLength = linearProps.Mass();
+    } catch (...) {
+    }
 }
 
 TopoDS_Shape findEdgeBySignature(const TopoDS_Shape& parent, const SubShapeRef& ref)
@@ -93,8 +136,27 @@ SubShapeRef makeSubShapeRef(int parentIndex,
 
     if (shapeType == TopAbs_EDGE) {
         fillEdgeSignature(TopoDS::Edge(subShape), ref);
+        ref.signatureEdgeCount = 1;
+    } else if (shapeType == TopAbs_FACE || shapeType == TopAbs_WIRE) {
+        fillFaceSignature(subShape, ref);
     }
 
+    return ref;
+}
+
+SubShapeRef makeSketchContourRef(int parentIndex,
+                                 int contourIndex,
+                                 const TopoDS_Shape& contourProfile,
+                                 std::int64_t subShapeId)
+{
+    SubShapeRef ref;
+    ref.parentIndex = parentIndex;
+    ref.shapeType = TopAbs_FACE;
+    ref.semanticKind = static_cast<int>(SubShapeSemanticKind::SketchContour);
+    ref.sketchContourIndex = contourIndex;
+    ref.persistentShapeIndex = contourIndex >= 0 ? contourIndex + 1 : -1;
+    ref.subShapeId = subShapeId;
+    fillFaceSignature(contourProfile, ref);
     return ref;
 }
 

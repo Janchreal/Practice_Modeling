@@ -12,6 +12,11 @@ SubShapeRef makeSubShapeRef(int parentIndex,
                             TopAbs_ShapeEnum shapeType,
                             std::int64_t subShapeId = -1);
 
+SubShapeRef makeSketchContourRef(int parentIndex,
+                                 int contourIndex,
+                                 const TopoDS_Shape& contourProfile,
+                                 std::int64_t subShapeId = -1);
+
 TopoDS_Shape resolveSubShapeRef(const TopoDS_Shape& parentShape, const SubShapeRef& ref);
 
 #endif // FEATURE_TOPOLOGY_H

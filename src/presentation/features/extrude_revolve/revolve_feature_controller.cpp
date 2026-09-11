@@ -231,12 +231,20 @@ void Widget::on_revolve_clicked()
         recipe.revolve.boolOpType = boolMode;
         recipe.revolve.boolTargetIndex = boolTargetIdx;
         for (const ExtrusionFaceSelection& selection : extrusionSelectedFaces) {
-            recipe.revolve.profiles.append(makeSubShapeRef(
-                selection.modelIndex,
-                geometryStateFor(historyList[selection.modelIndex]).occShape,
-                selection.shape,
-                selection.shapeType,
-                selection.subShapeId));
+            if (selection.isSketchContour) {
+                recipe.revolve.profiles.append(makeSketchContourRef(
+                    selection.modelIndex,
+                    selection.sketchContourIndex,
+                    selection.shape,
+                    selection.subShapeId));
+            } else {
+                recipe.revolve.profiles.append(makeSubShapeRef(
+                    selection.modelIndex,
+                    geometryStateFor(historyList[selection.modelIndex]).occShape,
+                    selection.shape,
+                    selection.shapeType,
+                    selection.subShapeId));
+            }
             if (!recipe.parentIndices.contains(selection.modelIndex)) {
                 recipe.parentIndices.append(selection.modelIndex);
             }
@@ -315,12 +323,20 @@ void Widget::performRevolution(double angle, const gp_Ax1& axis)
         recipe.revolve.axisDir = axis.Direction();
         recipe.revolve.angleDeg = angle * 180.0 / M_PI;
         for (const ExtrusionFaceSelection& selection : extrusionSelectedFaces) {
-            recipe.revolve.profiles.append(makeSubShapeRef(
-                selection.modelIndex,
-                geometryStateFor(historyList[selection.modelIndex]).occShape,
-                selection.shape,
-                selection.shapeType,
-                selection.subShapeId));
+            if (selection.isSketchContour) {
+                recipe.revolve.profiles.append(makeSketchContourRef(
+                    selection.modelIndex,
+                    selection.sketchContourIndex,
+                    selection.shape,
+                    selection.subShapeId));
+            } else {
+                recipe.revolve.profiles.append(makeSubShapeRef(
+                    selection.modelIndex,
+                    geometryStateFor(historyList[selection.modelIndex]).occShape,
+                    selection.shape,
+                    selection.shapeType,
+                    selection.subShapeId));
+            }
             if (!recipe.parentIndices.contains(selection.modelIndex)) {
                 recipe.parentIndices.append(selection.modelIndex);
             }

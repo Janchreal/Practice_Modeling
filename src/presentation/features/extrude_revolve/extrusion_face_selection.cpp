@@ -35,12 +35,89 @@
 #include <vtkNew.h>
 #include <vtkFeatureEdges.h>
 #include <TColStd_MapIteratorOfPackedMapOfInteger.hxx>
+#include <TopExp_Explorer.hxx>
 #include <TopoDS.hxx>
+#include <TopoDS_Edge.hxx>
 #include <gp_Pln.hxx>
 #include <Standard_Failure.hxx>
 #include <BRepMesh_IncrementalMesh.hxx>
 #include <string>
 #include "selection_geometry.h"
+
+namespace {
+
+bool shapeContainsEquivalentEdge(const TopoDS_Shape& shape, const TopoDS_Edge& edge)
+{
+    if (shape.IsNull() || edge.IsNull()) {
+        return false;
+    }
+    for (TopExp_Explorer edgeExp(shape, TopAbs_EDGE); edgeExp.More(); edgeExp.Next()) {
+        const TopoDS_Shape current = edgeExp.Current();
+        if (!current.IsNull()
+            && current.ShapeType() == TopAbs_EDGE
+            && SketchGeometry::sketchEdgesEquivalent(TopoDS::Edge(current), edge)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool firstEdgeOfShape(const TopoDS_Shape& shape, TopoDS_Edge& outEdge)
+{
+    outEdge = TopoDS_Edge();
+    if (shape.IsNull()) {
+        return false;
+    }
+    if (shape.ShapeType() == TopAbs_EDGE) {
+        outEdge = TopoDS::Edge(shape);
+        return !outEdge.IsNull();
+    }
+    for (TopExp_Explorer edgeExp(shape, TopAbs_EDGE); edgeExp.More(); edgeExp.Next()) {
+        const TopoDS_Shape current = edgeExp.Current();
+        if (!current.IsNull() && current.ShapeType() == TopAbs_EDGE) {
+            outEdge = TopoDS::Edge(current);
+            return !outEdge.IsNull();
+        }
+    }
+    return false;
+}
+
+int profileIndexForPickedPart(const TopoDS_Shape& profileRoot,
+                              const TopoDS_Shape& pickedPart)
+{
+    if (profileRoot.IsNull() || pickedPart.IsNull()) {
+        return -1;
+    }
+
+    TopoDS_Edge pickedEdge;
+    const bool hasPickedEdge = firstEdgeOfShape(pickedPart, pickedEdge);
+    int index = 0;
+    for (TopExp_Explorer faceExp(profileRoot, TopAbs_FACE); faceExp.More(); faceExp.Next(), ++index) {
+        const TopoDS_Shape face = faceExp.Current();
+        if (face.IsNull() || face.ShapeType() != TopAbs_FACE) {
+            continue;
+        }
+        if (pickedPart.ShapeType() == TopAbs_FACE && face.IsSame(pickedPart)) {
+            return index;
+        }
+        if (hasPickedEdge && shapeContainsEquivalentEdge(face, pickedEdge)) {
+            return index;
+        }
+    }
+
+    if (index == 0 && profileRoot.ShapeType() == TopAbs_FACE) {
+        if (profileRoot.IsSame(pickedPart)) {
+            return 0;
+        }
+        if (hasPickedEdge && shapeContainsEquivalentEdge(profileRoot, pickedEdge)) {
+            return 0;
+        }
+    }
+
+    return -1;
+}
+
+} // namespace
 
 // 处理拉伸界面的面悬停
 void Widget::handleExtrusionFaceHover(int x, int y)
@@ -384,55 +461,112 @@ void Widget::handleExtrusionFaceClick(int x, int y)
 
                     TopoDS_Shape mainShape = geometryStateFor(record).occShape;
 
-                    // 面代理命中时按“Sketch/Profile”选择整个草图，保留历史依赖，
-                    // 不把透明代理上的 Face 当成一个脱离草图的临时面。
+                    const bool profilePickingActive = extrusionDialog || revolveDialog;
                     const bool pickedSketchProfile =
                         record.type == SKETCH
-                        && extrusionDialog
+                        && profilePickingActive
                         && !renderStateFor(record).profilePickShapeWrapper.IsNull()
                         && pickedShapeWrapper->GetId()
                             == renderStateFor(record).profilePickShapeWrapper->GetId();
-                    bool validSketchProfile = pickedSketchProfile;
-                    if (!validSketchProfile
-                        && record.type == SKETCH
-                        && extrusionDialog
-                        && !extrusionDialog->isSheetBodyType()) {
+
+                    TopoDS_Shape selectedSketchProfile;
+                    int sketchContourIndex = -1;
+                    if (record.type == SKETCH && profilePickingActive) {
                         const gp_Pln sketchPlane(record.recipe.sketch.planeOrigin,
                                                  record.recipe.sketch.planeNormal);
-                        TopoDS_Shape checkedProfile;
-                        std::string profileError;
-                        validSketchProfile = SketchGeometry::buildPlanarProfile(
-                            mainShape, sketchPlane, checkedProfile, &profileError);
-                        if (!validSketchProfile && statusBar()) {
-                            statusBar()->showMessage(
-                                tr("无法拉伸草图：%1")
-                                    .arg(QString::fromStdString(profileError)),
-                                3500);
+                        TopoDS_Shape pickedPart;
+                        if (subShapeId != -1) {
+                            try {
+                                pickedPart = pickedShapeWrapper->GetSubShape(subShapeId);
+                            } catch (Standard_Failure&) {
+                                pickedPart = TopoDS_Shape();
+                            } catch (...) {
+                                pickedPart = TopoDS_Shape();
+                            }
+                        } else if (pickedSketchProfile) {
+                            pickedPart = pickedShapeWrapper->GetShape();
                         }
-                        if (!validSketchProfile) {
+
+                        std::string profileError;
+                        if (pickedSketchProfile && !pickedPart.IsNull()) {
+                            sketchContourIndex = profileIndexForPickedPart(
+                                pickedShapeWrapper->GetShape(), pickedPart);
+                            if (sketchContourIndex >= 0) {
+                                if (!SketchGeometry::buildPlanarProfileAt(
+                                        mainShape, sketchPlane, sketchContourIndex,
+                                        selectedSketchProfile, &profileError)) {
+                                    selectedSketchProfile = TopoDS_Shape();
+                                }
+                            }
+                        } else if (!pickedPart.IsNull()) {
+                            TopoDS_Edge pickedEdge;
+                            if (firstEdgeOfShape(pickedPart, pickedEdge)) {
+                                SketchGeometry::findClosedProfileContainingEdge(
+                                    mainShape, sketchPlane, pickedEdge,
+                                    selectedSketchProfile, &sketchContourIndex,
+                                    &profileError);
+                            }
+                        }
+
+                        if (selectedSketchProfile.IsNull() && pickedSketchProfile) {
+                            if (statusBar()) {
+                                statusBar()->showMessage(
+                                    tr("无法识别选中的草图轮廓：%1")
+                                        .arg(QString::fromStdString(profileError)),
+                                    3500);
+                            }
                             return;
                         }
                     }
-                    if (validSketchProfile) {
-                        if (extrusionSelectedIndices.contains(modelIndex)) {
-                            extrusionSelectedIndices.removeOne(modelIndex);
-                        } else {
-                            extrusionSelectedIndices.append(modelIndex);
+
+                    if (!selectedSketchProfile.IsNull()) {
+                        ExtrusionFaceSelection selection;
+                        selection.modelIndex = modelIndex;
+                        selection.subShapeId = subShapeId;
+                        selection.shape = selectedSketchProfile;
+                        selection.shapeType = selectedSketchProfile.ShapeType();
+                        selection.isSketchContour = true;
+                        selection.sketchContourIndex = sketchContourIndex;
+
+                        int sameShapeIdx = -1;
+                        for (int i = 0; i < extrusionSelectedFaces.size(); ++i) {
+                            const ExtrusionFaceSelection& existing = extrusionSelectedFaces[i];
+                            if (existing.modelIndex == selection.modelIndex
+                                && existing.isSketchContour
+                                && existing.sketchContourIndex == selection.sketchContourIndex) {
+                                sameShapeIdx = i;
+                                break;
+                            }
                         }
-                        extrusionSelectedFaces.clear();
-                        updateExtrusionSelectionHighlight();
+                        if (sameShapeIdx >= 0) {
+                            extrusionSelectedFaces.removeAt(sameShapeIdx);
+                        } else {
+                            extrusionSelectedFaces.append(selection);
+                        }
+                        extrusionSelectedIndices.clear();
+                        updateExtrusionFaceHighlight();
                         if (extrusionDialog) {
                             extrusionDialog->setSelectedGeometryCount(
-                                extrusionSelectedIndices.size());
+                                extrusionSelectedFaces.size());
+                        }
+                        if (revolveDialog) {
+                            revolveDialog->setSelectedGeometryCount(
+                                extrusionSelectedFaces.size());
                         }
                         const int epoch = extrudeRevolveSelectionEpoch_;
                         QTimer::singleShot(0, this, [this, epoch]() {
                             if (epoch != extrudeRevolveSelectionEpoch_) return;
-                            if (!extrusionDialog) return;
+                            if (!extrusionDialog && !revolveDialog) return;
                             try {
                                 applyAutoVectorFromSelection();
-                                updateExtrusionHandles();
-                                refreshExtrusionLivePreview();
+                                if (extrusionDialog) {
+                                    updateExtrusionHandles();
+                                    refreshExtrusionLivePreview();
+                                }
+                                if (revolveDialog) {
+                                    updateRevolveHandles();
+                                    refreshRevolveLivePreview();
+                                }
                             } catch (Standard_Failure&) {
                             } catch (...) {
                             }
@@ -490,12 +624,18 @@ void Widget::handleExtrusionFaceClick(int x, int y)
                     for (int i = 0; i < extrusionSelectedFaces.size(); ++i) {
                         const ExtrusionFaceSelection& ex = extrusionSelectedFaces[i];
                         if (ex.modelIndex != selection.modelIndex) continue;
-                        if (selection.shapeType == TopAbs_WIRE && ex.shapeType == TopAbs_WIRE) {
+                        if (selection.isSketchContour && ex.isSketchContour) {
+                            if (ex.sketchContourIndex == selection.sketchContourIndex) {
+                                sameShapeIdx = i;
+                                break;
+                            }
+                        } else if (selection.shapeType == TopAbs_WIRE && ex.shapeType == TopAbs_WIRE) {
                             if (!ex.shape.IsNull() && ex.shape.IsSame(selection.shape)) {
                                 sameShapeIdx = i;
                                 break;
                             }
-                        } else if (ex.subShapeId == selection.subShapeId) {
+                        } else if (!selection.isSketchContour && !ex.isSketchContour
+                                   && ex.subShapeId == selection.subShapeId) {
                             sameShapeIdx = i;
                             break;
                         }

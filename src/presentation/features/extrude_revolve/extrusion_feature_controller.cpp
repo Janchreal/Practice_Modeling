@@ -511,12 +511,20 @@ void Widget::performExtrusion(ExtrusionDialog* dialog)
                 if (sel.modelIndex < 0 || sel.modelIndex >= historyList.size()) {
                     continue;
                 }
-                recipe.extrusion.profiles.append(makeSubShapeRef(
-                    sel.modelIndex,
-                    geometryStateFor(historyList[sel.modelIndex]).occShape,
-                    sel.shape,
-                    sel.shapeType,
-                    sel.subShapeId));
+                if (sel.isSketchContour) {
+                    recipe.extrusion.profiles.append(makeSketchContourRef(
+                        sel.modelIndex,
+                        sel.sketchContourIndex,
+                        sel.shape,
+                        sel.subShapeId));
+                } else {
+                    recipe.extrusion.profiles.append(makeSubShapeRef(
+                        sel.modelIndex,
+                        geometryStateFor(historyList[sel.modelIndex]).occShape,
+                        sel.shape,
+                        sel.shapeType,
+                        sel.subShapeId));
+                }
                 if (!recipe.parentIndices.contains(sel.modelIndex)) {
                     recipe.parentIndices.append(sel.modelIndex);
                 }

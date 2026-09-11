@@ -268,7 +268,7 @@ void Widget::updateVectorDialogArrow(const gp_Dir& dir, const gp_Pnt& origin)
     vectorDialogArrowActor_->SetVisibility(true);
     vectorDialogArrowActor_->SetPickable(true);
     if (vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
+        renderInteractionFeedbackNow();
     }
 }
 
@@ -470,9 +470,7 @@ void Widget::clearVectorDialogArrowPreview()
     }
     hasVectorDialogArrowOrigin_ = false;
     currentSelectionMode = None;
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 void Widget::reapplyTwoPointSnapKindFilters(int snapKind)
@@ -1142,7 +1140,7 @@ void Widget::openVectorDialog(int desiredModeIndex)
     ensureVectorDialogArrowActor();
     if (vectorDialogArrowActor_) {
         vectorDialogArrowActor_->SetVisibility(false);
-        vtkWidget->renderWindow()->Render();
+        renderInteractionFeedbackNow();
     }
 
     auto* dlg = new vectordialog(dialogParentWidget());
@@ -1608,7 +1606,7 @@ if (found) {
         
         addReferenceActor(hoverTextActor);
         
-        vtkWidget->renderWindow()->Render();
+        renderInteractionFeedbackNow();
     } else {
         clearPointSelectionHover();
     }
@@ -1625,9 +1623,7 @@ void Widget::clearPointSelectionHover()
         removeSceneActor(hoverTextActor);
         hoverTextActor = nullptr;
     }
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 // 显示选中的点（放大显示）
@@ -1688,9 +1684,7 @@ void Widget::showSelectedPoint(const gp_Pnt& point, const QString& label)
         addReferenceActor(selectedTextActor);
     }
     
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 // 清除选中的点显示
@@ -1712,9 +1706,7 @@ void Widget::clearSelectedPoint()
     hasSelectedOriginPoint = false;
     
     // 强制渲染更新
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 // -----------------------------
@@ -2269,6 +2261,7 @@ void Widget::applyOriginFromSnap(const gp_Pnt& p, const QString& chosenLabel)
             refreshRevolveLivePreview();
         });
     }
+    renderInteractionFeedbackNow();
 }
 
 void Widget::clearSnapSettings()
@@ -2330,6 +2323,7 @@ void Widget::clearSnapSettings()
 void Widget::clearVectorTwoPointSnapGhosts()
 {
     vectorSnapPreviewCandidates_.clear();
+    vectorTwoPointSnapHasHoveredEdge_ = false;
     if (!renderer) return;
     for (const auto& a : vectorTwoPointSnapGhostActors_) {
         if (a) removeSceneActor(a);
@@ -2341,6 +2335,7 @@ void Widget::clearSnapHover()
 {
     hasSnapHoverBestPoint_ = false;
     vectorSnapPreviewCandidates_.clear();
+    vectorTwoPointSnapHasHoveredEdge_ = false;
     if (!renderer) return;
     clearVectorTwoPointSnapGhosts();
     if (snapHoverPointActor_) {
@@ -2355,9 +2350,7 @@ void Widget::clearSnapHover()
         removeSceneActor(snapHoverShapeActor_);
         snapHoverShapeActor_ = nullptr;
     }
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 void Widget::clearSnapSelected()
@@ -2372,9 +2365,7 @@ void Widget::clearSnapSelected()
         snapSelectedShapeActor_ = nullptr;
     }
     hasSnapSelectedPoint_ = false;
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 void Widget::addSnapPersistentPoint(const gp_Pnt& p)
@@ -2402,9 +2393,7 @@ void Widget::addSnapPersistentPoint(const gp_Pnt& p)
     snapPersistentPoints_.append(p);
     snapPersistentPointActors_.append(actor);
 
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 void Widget::clearSnapPersistentPoints()
@@ -2417,9 +2406,7 @@ void Widget::clearSnapPersistentPoints()
     }
     snapPersistentPointActors_.clear();
     snapPersistentPoints_.clear();
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 vtkSmartPointer<vtkActor> Widget::buildSnapShapeHighlightActor(const TopoDS_Shape& shape,
@@ -2540,6 +2527,7 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
 
     vectorSnapPreviewCandidates_.clear();
     hasSnapHoverBestPoint_ = false;
+    vectorTwoPointSnapHasHoveredEdge_ = false;
     if (!renderer || (snapKind != -1 && snapKind != 1 && snapKind != 2)) {
         clearSnapHover();
         return;
@@ -2548,12 +2536,12 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
     // Clear the previous candidate actors without changing the global snap filters.
     clearSnapHover();
 
-    constexpr double kVectorSnapPreviewRadiusPx = 35.0;
-    constexpr double kVectorSnapTolerancePx = 12.0;
-    const double previewRadius2 =
-        kVectorSnapPreviewRadiusPx * kVectorSnapPreviewRadiusPx;
-    const double snapTolerance2 =
-        kVectorSnapTolerancePx * kVectorSnapTolerancePx;
+    constexpr double kVectorSnapEdgeHoverRadiusPx = 24.0;
+    constexpr double kVectorSnapPointActivateRadiusPx = 14.0;
+    const double edgeHoverRadius2 =
+        kVectorSnapEdgeHoverRadiusPx * kVectorSnapEdgeHoverRadiusPx;
+    const double pointActivateRadius2 =
+        kVectorSnapPointActivateRadiusPx * kVectorSnapPointActivateRadiusPx;
 
     QList<gp_Pnt> bestEdgePoints;
     TopoDS_Edge bestEdge;
@@ -2612,9 +2600,10 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
     }
 
     if (bestModelIndex < 0 || bestEdgePoints.size() < 2
-        || bestEdgeDistance2 > previewRadius2) {
+        || bestEdgeDistance2 > edgeHoverRadius2) {
         return;
     }
+    vectorTwoPointSnapHasHoveredEdge_ = true;
 
     // Use the actual trimmed curve parameters so circles/arcs/BSplines are not
     // approximated by a bounding-box midpoint.
@@ -2630,12 +2619,14 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
         }
 
         const gp_Pnt endpoint1 = curve.Value(first);
-        const gp_Pnt midpoint = curve.Value((first + last) * 0.5);
+        gp_Pnt midpoint = curve.Value((first + last) * 0.5);
+        gp_Vec midpointTangent;
+        SketchGeometry::edgePointAndTangentAtPosition(
+            bestEdge, 50.0, true, midpoint, midpointTangent, nullptr);
         const gp_Pnt endpoint2 = curve.Value(last);
 
         auto appendCandidate = [&](const gp_Pnt& point, int type) {
             const double distance2 = snapScreenDist2(renderer, point, x, y);
-            if (distance2 > previewRadius2) return;
             VectorSnapPreviewCandidate candidate;
             candidate.point = point;
             candidate.screenDistanceSquared = distance2;
@@ -2644,13 +2635,9 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
             vectorSnapPreviewCandidates_.append(candidate);
         };
 
-        if (snapKind == -1 || snapKind == 1) {
-            appendCandidate(endpoint1, 1);
-            appendCandidate(endpoint2, 1);
-        }
-        if (snapKind == -1 || snapKind == 2) {
-            appendCandidate(midpoint, 2);
-        }
+        appendCandidate(endpoint1, 1);
+        appendCandidate(midpoint, 2);
+        appendCandidate(endpoint2, 1);
     } catch (...) {
         return;
     }
@@ -2668,7 +2655,7 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
         vectorSnapPreviewCandidates_[bestCandidateIndex];
     snapHoverBestPoint_ = bestCandidate.point;
     hasSnapHoverBestPoint_ =
-        bestCandidate.screenDistanceSquared <= snapTolerance2;
+        bestCandidate.screenDistanceSquared <= pointActivateRadius2;
 
     QSet<QString> drawnPoints;
     for (int i = 0; i < vectorSnapPreviewCandidates_.size(); ++i) {
@@ -2726,9 +2713,7 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
         vectorTwoPointSnapGhostActors_.append(marker);
     }
 
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 /** 由屏幕坐标构造拾取射线（Display→World near/far） */
@@ -3356,9 +3341,7 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
         }
     }
 
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)

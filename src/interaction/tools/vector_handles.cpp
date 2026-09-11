@@ -17,6 +17,7 @@
 #include <Precision.hxx>
 
 #include <vtkActor.h>
+#include <vtkCamera.h>
 #include <vtkLineSource.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPropPicker.h>
@@ -28,6 +29,7 @@ namespace {
 constexpr double kVectorTwoPointSphereR = 0.12;
 constexpr double kVectorArrowScreenLen = 0.90;
 constexpr int kHandleSelectToDragThresholdPx2 = 16;
+constexpr double kVectorTwoPointSpherePickRadiusPx = 18.0;
 
 const char* kSpecId = "vector_two_point";
 const char* kCtrlStart = "start_sphere";
@@ -67,6 +69,29 @@ bool rayPlaneHit(vtkRenderer* renderer, int x, int y, const gp_Pnt& planeOrigin,
     return true;
 }
 
+bool actorPositionScreenDistance2(vtkRenderer* renderer,
+                                  vtkActor* actor,
+                                  int x,
+                                  int y,
+                                  double& outDistance2)
+{
+    if (!renderer || !actor || actor->GetVisibility() == 0 || actor->GetPickable() == 0) {
+        return false;
+    }
+
+    double pos[3] = {0.0, 0.0, 0.0};
+    actor->GetPosition(pos);
+    renderer->SetWorldPoint(pos[0], pos[1], pos[2], 1.0);
+    renderer->WorldToDisplay();
+    double display[3] = {0.0, 0.0, 0.0};
+    renderer->GetDisplayPoint(display);
+
+    const double dx = display[0] - static_cast<double>(x);
+    const double dy = display[1] - static_cast<double>(y);
+    outDistance2 = dx * dx + dy * dy;
+    return true;
+}
+
 } // namespace
 
 Widget::VectorTwoPointHandlePart Widget::pickVectorTwoPointHandlePart(int x, int y)
@@ -88,10 +113,29 @@ Widget::VectorTwoPointHandlePart Widget::pickVectorTwoPointHandlePart(int x, int
         hit = picker->GetActor();
     }
 
-    if (!hit) return VectorTwoPointHandlePart::None;
     if (hit == vectorTwoPointStartSphereActor_.GetPointer()) return VectorTwoPointHandlePart::StartSphere;
     if (hit == vectorTwoPointEndSphereActor_.GetPointer()) return VectorTwoPointHandlePart::EndSphere;
     if (hit == vectorDialogArrowActor_.GetPointer()) return VectorTwoPointHandlePart::DirectionArrow;
+
+    const double maxDistance2 = kVectorTwoPointSpherePickRadiusPx * kVectorTwoPointSpherePickRadiusPx;
+    double bestDistance2 = maxDistance2;
+    VectorTwoPointHandlePart bestPart = VectorTwoPointHandlePart::None;
+    auto considerSphere = [&](vtkActor* actor, VectorTwoPointHandlePart part) {
+        double distance2 = 0.0;
+        if (actorPositionScreenDistance2(overlay ? overlay : renderer.GetPointer(),
+                                         actor, x, y, distance2)
+            && distance2 <= bestDistance2) {
+            bestDistance2 = distance2;
+            bestPart = part;
+        }
+    };
+    considerSphere(vectorTwoPointStartSphereActor_.GetPointer(),
+                   VectorTwoPointHandlePart::StartSphere);
+    considerSphere(vectorTwoPointEndSphereActor_.GetPointer(),
+                   VectorTwoPointHandlePart::EndSphere);
+    if (bestPart != VectorTwoPointHandlePart::None) {
+        return bestPart;
+    }
     return VectorTwoPointHandlePart::None;
 }
 
@@ -122,9 +166,7 @@ void Widget::beginVectorTwoPointPickStart(bool refreshSnapKindsFromDialog)
     }
 
     applyTwoPointVectorSnapKind(vectorTwoPointStartSnapKind_, true);
-    if (vtkWidget && vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 void Widget::onVectorTwoPointStartPicked(const gp_Pnt& point)
@@ -300,6 +342,9 @@ gp_Pnt Widget::resolveVectorTwoPointPreviewPosition(int x, int y, int snapKind)
     if (hasSnapHoverBestPoint_) {
         return snapHoverBestPoint_;
     }
+    if (vectorTwoPointSnapHasHoveredEdge_) {
+        return hit;
+    }
     gp_Pnt modelP;
     if (tryPickPointOnModelForVector(x, y, modelP)) {
         return modelP;
@@ -309,16 +354,36 @@ gp_Pnt Widget::resolveVectorTwoPointPreviewPosition(int x, int y, int snapKind)
 
 gp_Pnt Widget::resolveVectorTwoPointDragPosition(int x, int y, int snapKind) const
 {
-    gp_Pnt hit(0, 0, 0);
-    const gp_Pnt planeOrigin(0, 0, 0);
-    const gp_Dir planeNormal(0, 0, 1);
-    if (renderer && rayPlaneHit(renderer, x, y, planeOrigin, planeNormal, hit)) {
-        hit.SetZ(0.0);
+    gp_Pnt planeOrigin(0, 0, 0);
+    if (vectorTwoPointHandleDrag_ == VectorTwoPointHandlePart::StartSphere
+        && hasVectorStartPoint_) {
+        planeOrigin = vectorStartPoint_;
+    } else if (vectorTwoPointHandleDrag_ == VectorTwoPointHandlePart::EndSphere
+               && hasVectorEndPoint_) {
+        planeOrigin = vectorEndPoint_;
     }
+
+    gp_Dir planeNormal(0, 0, 1);
+    if (renderer && renderer->GetActiveCamera()) {
+        double pos[3] = {0, 0, 1};
+        double fp[3] = {0, 0, 0};
+        renderer->GetActiveCamera()->GetPosition(pos);
+        renderer->GetActiveCamera()->GetFocalPoint(fp);
+        gp_Vec viewDir(pos[0] - fp[0], pos[1] - fp[1], pos[2] - fp[2]);
+        if (viewDir.Magnitude() > Precision::Confusion()) {
+            planeNormal = gp_Dir(viewDir);
+        }
+    }
+
+    gp_Pnt hit = planeOrigin;
+    rayPlaneHit(renderer, x, y, planeOrigin, planeNormal, hit);
 
     const_cast<Widget*>(this)->updateVectorTwoPointSnapPresentation(x, y, snapKind, true);
     if (hasSnapHoverBestPoint_) {
         return snapHoverBestPoint_;
+    }
+    if (vectorTwoPointSnapHasHoveredEdge_) {
+        return hit;
     }
     gp_Pnt modelP;
     if (const_cast<Widget*>(this)->tryPickPointOnModelForVector(x, y, modelP)) {
@@ -545,9 +610,7 @@ void Widget::updateVectorTwoPointHandles(const gp_Pnt* previewEnd, const gp_Pnt*
         vectorDialogArrowActor_->SetVisibility(false);
     }
 
-    if (vtkWidget->renderWindow()) {
-        vtkWidget->renderWindow()->Render();
-    }
+    renderInteractionFeedbackNow();
 }
 
 void Widget::handleVectorTwoPointHandleMouseDown(int x, int y)

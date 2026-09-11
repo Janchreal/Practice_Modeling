@@ -354,6 +354,8 @@ void Widget::handleVtkMouseMove(int x, int y)
             } else {
                 updateVectorTwoPointHandles();
             }
+        } else if (vectorTwoPointSnapHasHoveredEdge_) {
+            updateVectorTwoPointHandles();
         } else {
             gp_Pnt preview;
             if ((currentSelectionMode == VectorDialogPickStartPoint

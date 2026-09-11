@@ -21,6 +21,8 @@
 #include <BRep_Builder.hxx>
 #include <TopExp_Explorer.hxx>
 #include <TopoDS.hxx>
+#include <TopoDS_Face.hxx>
+#include <TopoDS_Wire.hxx>
 
 #include <cmath>
 #include <limits>
@@ -87,6 +89,79 @@ bool edgeIsOnPlane(const TopoDS_Edge& edge,
         return true;
     } catch (...) {
         return false;
+    }
+}
+
+bool collectPlanarProfileFaces(const TopoDS_Shape& sketchShape,
+                               const gp_Pln& sketchPlane,
+                               QList<TopoDS_Face>& outFaces,
+                               std::string* errorMessage)
+{
+    outFaces.clear();
+
+    if (sketchShape.IsNull()) {
+        return setProfileError(errorMessage, "草图没有几何");
+    }
+
+    QList<TopoDS_Edge> edges;
+    appendEdges(sketchShape, edges);
+    if (edges.isEmpty()) {
+        return setProfileError(errorMessage, "草图没有可用边");
+    }
+
+    const double planeTolerance = qMax(1.0e-6, Precision::Confusion() * 100.0);
+    for (const TopoDS_Edge& edge : edges) {
+        if (!edgeIsOnPlane(edge, sketchPlane, planeTolerance)) {
+            return setProfileError(errorMessage, "草图轮廓不共面");
+        }
+    }
+
+    try {
+        Handle(TopTools_HSequenceOfShape) edgeSequence =
+            new TopTools_HSequenceOfShape();
+        for (const TopoDS_Edge& edge : edges) {
+            edgeSequence->Append(edge);
+        }
+
+        Handle(TopTools_HSequenceOfShape) wireSequence =
+            new TopTools_HSequenceOfShape();
+        ShapeAnalysis_FreeBounds::ConnectEdgesToWires(
+            edgeSequence, planeTolerance, Standard_False, wireSequence);
+
+        if (wireSequence.IsNull() || wireSequence->Length() == 0) {
+            return setProfileError(errorMessage, "草图轮廓无法组成线框");
+        }
+
+        for (Standard_Integer i = 1; i <= wireSequence->Length(); ++i) {
+            const TopoDS_Shape& wireShape = wireSequence->Value(i);
+            if (wireShape.IsNull() || wireShape.ShapeType() != TopAbs_WIRE) {
+                return setProfileError(errorMessage, "Sketch contour cannot form a wire");
+            }
+
+            const TopoDS_Wire wire = TopoDS::Wire(wireShape);
+            if (!wire.Closed()) {
+                return setProfileError(errorMessage, "草图轮廓未闭合");
+            }
+
+            BRepBuilderAPI_MakeFace faceMaker(sketchPlane, wire, Standard_True);
+            if (!faceMaker.IsDone()) {
+                return setProfileError(errorMessage, "草图轮廓无法生成平面面");
+            }
+
+            const TopoDS_Face face = faceMaker.Face();
+            if (face.IsNull() || !BRepCheck_Analyzer(face).IsValid()) {
+                return setProfileError(errorMessage, "草图平面面无效");
+            }
+            outFaces.append(face);
+        }
+
+        if (outFaces.isEmpty()) {
+            return setProfileError(errorMessage, "草图没有闭合轮廓");
+        }
+        return true;
+    } catch (...) {
+        outFaces.clear();
+        return setProfileError(errorMessage, "草图 Profile 构造失败");
     }
 }
 
@@ -230,88 +305,106 @@ bool buildPlanarProfile(const TopoDS_Shape& sketchShape,
 {
     outProfile = TopoDS_Shape();
 
-    if (sketchShape.IsNull()) {
-        return setProfileError(errorMessage, "草图没有几何");
+    QList<TopoDS_Face> faces;
+    if (!collectPlanarProfileFaces(sketchShape, sketchPlane, faces, errorMessage)) {
+        return false;
     }
 
-    QList<TopoDS_Edge> edges;
-    appendEdges(sketchShape, edges);
-    if (edges.isEmpty()) {
-        return setProfileError(errorMessage, "草图没有可用边");
-    }
-
-    // Keep the source B-Rep untouched.  Only the returned wire/face is used
-    // as a transient extrusion profile.
-    const double planeTolerance = qMax(1.0e-6, Precision::Confusion() * 100.0);
-    for (const TopoDS_Edge& edge : edges) {
-        if (!edgeIsOnPlane(edge, sketchPlane, planeTolerance)) {
-            return setProfileError(errorMessage, "草图轮廓不共面");
-        }
-    }
-
-    try {
-        Handle(TopTools_HSequenceOfShape) edgeSequence =
-            new TopTools_HSequenceOfShape();
-        for (const TopoDS_Edge& edge : edges) {
-            edgeSequence->Append(edge);
-        }
-
-        Handle(TopTools_HSequenceOfShape) wireSequence =
-            new TopTools_HSequenceOfShape();
-        ShapeAnalysis_FreeBounds::ConnectEdgesToWires(
-            edgeSequence, planeTolerance, Standard_False, wireSequence);
-
-        if (wireSequence.IsNull() || wireSequence->Length() == 0) {
-            return setProfileError(errorMessage, "草图轮廓无法组成线框");
-        }
-
-        QList<TopoDS_Face> faces;
-        for (Standard_Integer i = 1; i <= wireSequence->Length(); ++i) {
-            const TopoDS_Shape& wireShape = wireSequence->Value(i);
-            if (wireShape.IsNull() || wireShape.ShapeType() != TopAbs_WIRE) {
-                return setProfileError(errorMessage, "Sketch contour cannot form a wire");
-            }
-
-            const TopoDS_Wire wire = TopoDS::Wire(wireShape);
-            if (!wire.Closed()) {
-                return setProfileError(errorMessage, "草图轮廓未闭合");
-            }
-
-            BRepBuilderAPI_MakeFace faceMaker(sketchPlane, wire, Standard_True);
-            if (!faceMaker.IsDone()) {
-                return setProfileError(errorMessage, "草图轮廓无法生成平面面");
-            }
-
-            const TopoDS_Face face = faceMaker.Face();
-            if (face.IsNull() || !BRepCheck_Analyzer(face).IsValid()) {
-                return setProfileError(errorMessage, "草图平面面无效");
-            }
-            faces.append(face);
-        }
-
-        if (faces.isEmpty()) {
-            return setProfileError(errorMessage, "草图没有闭合轮廓");
-        }
-
-        if (faces.size() == 1) {
-            outProfile = faces.first();
-            return true;
-        }
-
-        TopoDS_Compound compound;
-        BRep_Builder builder;
-        builder.MakeCompound(compound);
-        for (const TopoDS_Face& face : faces) {
-            builder.Add(compound, face);
-        }
-        if (compound.IsNull() || !BRepCheck_Analyzer(compound).IsValid()) {
-            return setProfileError(errorMessage, "草图轮廓组合无效");
-        }
-        outProfile = compound;
+    if (faces.size() == 1) {
+        outProfile = faces.first();
         return true;
-    } catch (...) {
-        return setProfileError(errorMessage, "草图 Profile 构造失败");
     }
+
+    TopoDS_Compound compound;
+    BRep_Builder builder;
+    builder.MakeCompound(compound);
+    for (const TopoDS_Face& face : faces) {
+        builder.Add(compound, face);
+    }
+    if (compound.IsNull() || !BRepCheck_Analyzer(compound).IsValid()) {
+        return setProfileError(errorMessage, "草图轮廓组合无效");
+    }
+    outProfile = compound;
+    return true;
+}
+
+bool buildPlanarProfiles(const TopoDS_Shape& sketchShape,
+                         const gp_Pln& sketchPlane,
+                         QList<TopoDS_Shape>& outProfiles,
+                         std::string* errorMessage)
+{
+    outProfiles.clear();
+
+    QList<TopoDS_Face> faces;
+    if (!collectPlanarProfileFaces(sketchShape, sketchPlane, faces, errorMessage)) {
+        return false;
+    }
+
+    outProfiles.reserve(faces.size());
+    for (const TopoDS_Face& face : faces) {
+        outProfiles.append(face);
+    }
+    return true;
+}
+
+bool buildPlanarProfileAt(const TopoDS_Shape& sketchShape,
+                          const gp_Pln& sketchPlane,
+                          int profileIndex,
+                          TopoDS_Shape& outProfile,
+                          std::string* errorMessage)
+{
+    outProfile = TopoDS_Shape();
+
+    QList<TopoDS_Shape> profiles;
+    if (!buildPlanarProfiles(sketchShape, sketchPlane, profiles, errorMessage)) {
+        return false;
+    }
+    if (profileIndex < 0 || profileIndex >= profiles.size()) {
+        return setProfileError(errorMessage, "草图轮廓引用已不存在");
+    }
+    outProfile = profiles[profileIndex];
+    return !outProfile.IsNull();
+}
+
+bool findClosedProfileContainingEdge(const TopoDS_Shape& sketchShape,
+                                     const gp_Pln& sketchPlane,
+                                     const TopoDS_Edge& pickedEdge,
+                                     TopoDS_Shape& outProfile,
+                                     int* outProfileIndex,
+                                     std::string* errorMessage)
+{
+    outProfile = TopoDS_Shape();
+    if (outProfileIndex) {
+        *outProfileIndex = -1;
+    }
+
+    if (pickedEdge.IsNull()) {
+        return setProfileError(errorMessage, "未选中有效草图边");
+    }
+
+    QList<TopoDS_Shape> profiles;
+    if (!buildPlanarProfiles(sketchShape, sketchPlane, profiles, errorMessage)) {
+        return false;
+    }
+
+    for (int profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        const TopoDS_Shape& profile = profiles[profileIndex];
+        for (TopExp_Explorer edgeExp(profile, TopAbs_EDGE); edgeExp.More(); edgeExp.Next()) {
+            const TopoDS_Shape current = edgeExp.Current();
+            if (current.IsNull() || current.ShapeType() != TopAbs_EDGE) {
+                continue;
+            }
+            if (sketchEdgesEquivalent(TopoDS::Edge(current), pickedEdge)) {
+                outProfile = profile;
+                if (outProfileIndex) {
+                    *outProfileIndex = profileIndex;
+                }
+                return true;
+            }
+        }
+    }
+
+    return setProfileError(errorMessage, "选中的草图边不属于闭合轮廓");
 }
 
 int preferredEdgeSampleCount(const TopoDS_Edge& edge, int lineCount, int curvedCount, int fallbackCount)

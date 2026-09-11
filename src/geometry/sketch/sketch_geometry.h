@@ -36,6 +36,21 @@ bool buildPlanarProfile(const TopoDS_Shape& sketchShape,
                         const gp_Pln& sketchPlane,
                         TopoDS_Shape& outProfile,
                         std::string* errorMessage = nullptr);
+bool buildPlanarProfiles(const TopoDS_Shape& sketchShape,
+                         const gp_Pln& sketchPlane,
+                         QList<TopoDS_Shape>& outProfiles,
+                         std::string* errorMessage = nullptr);
+bool buildPlanarProfileAt(const TopoDS_Shape& sketchShape,
+                          const gp_Pln& sketchPlane,
+                          int profileIndex,
+                          TopoDS_Shape& outProfile,
+                          std::string* errorMessage = nullptr);
+bool findClosedProfileContainingEdge(const TopoDS_Shape& sketchShape,
+                                     const gp_Pln& sketchPlane,
+                                     const TopoDS_Edge& pickedEdge,
+                                     TopoDS_Shape& outProfile,
+                                     int* outProfileIndex = nullptr,
+                                     std::string* errorMessage = nullptr);
 int preferredEdgeSampleCount(const TopoDS_Edge& edge, int lineCount = 2, int curvedCount = 48, int fallbackCount = 32);
 QList<gp_Pnt> sampleEdgePoints(const TopoDS_Edge& edge, int sampleCount);
 bool projectPointOntoEdge(const gp_Pnt& point, const TopoDS_Edge& edge, gp_Pnt& outPoint, double* outParam = nullptr);

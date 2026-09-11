@@ -86,6 +86,8 @@ bool isHoverInteractionMode(SelectionWindowState::SelectionMode mode)
     case SelectionWindowState::PatternPitchInteractive:
     case SelectionWindowState::ExtrusionHandleDrag:
     case SelectionWindowState::RevolveHandleDrag:
+    case SelectionWindowState::VectorTwoPointInteractive:
+    case SelectionWindowState::VectorTwoPointHandleDrag:
     case SelectionWindowState::FeatureBooleanTargetSelect:
         return true;
     default:

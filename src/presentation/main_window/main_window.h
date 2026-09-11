@@ -417,6 +417,7 @@ private:
     void refreshCenterTriadFaceStyle();
     void updateCenterTriadViewport(bool rightBottom);
      void syncCenterAxisCamera();             // 让中心轴相机跟随主相机旋转/缩放
+    void renderInteractionFeedbackNow();
     /**
      * 叠加物（拾取球/手柄/矢量箭头）屏幕尺寸恒定缩放：
      * 世界尺寸 ∝ 相机到该点的视线深度，使滚轮 Dolly 后像素大小不变。

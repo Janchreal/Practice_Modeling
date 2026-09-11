@@ -65,6 +65,8 @@ protected:
         IVtk_IdType subShapeId = static_cast<IVtk_IdType>(-1);
         TopoDS_Shape shape;
         TopAbs_ShapeEnum shapeType = TopAbs_SHAPE;
+        bool isSketchContour = false;
+        int sketchContourIndex = -1;
 
         TopoDS_Face getFace() const
         {
@@ -92,7 +94,10 @@ protected:
 
         bool operator==(const ExtrusionFaceSelection& other) const
         {
-            return modelIndex == other.modelIndex && subShapeId == other.subShapeId;
+            return modelIndex == other.modelIndex
+                && subShapeId == other.subShapeId
+                && isSketchContour == other.isSketchContour
+                && sketchContourIndex == other.sketchContourIndex;
         }
     };
 

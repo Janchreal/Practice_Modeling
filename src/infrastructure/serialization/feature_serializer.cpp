@@ -83,9 +83,13 @@ QJsonObject subShapeRefToJson(const SubShapeRef& ref)
     QJsonObject obj;
     obj["parentIndex"] = ref.parentIndex;
     obj["shapeType"] = static_cast<int>(ref.shapeType);
+    obj["semanticKind"] = ref.semanticKind;
+    obj["sketchContourIndex"] = ref.sketchContourIndex;
     obj["persistentShapeIndex"] = ref.persistentShapeIndex;
     obj["subShapeId"] = static_cast<qint64>(ref.subShapeId);
     obj["signatureLength"] = ref.signatureLength;
+    obj["signatureArea"] = ref.signatureArea;
+    obj["signatureEdgeCount"] = ref.signatureEdgeCount;
     obj["signatureMidX"] = ref.signatureMidX;
     obj["signatureMidY"] = ref.signatureMidY;
     obj["signatureMidZ"] = ref.signatureMidZ;
@@ -97,9 +101,13 @@ SubShapeRef subShapeRefFromJson(const QJsonObject& obj)
     SubShapeRef ref;
     ref.parentIndex = obj.value("parentIndex").toInt(-1);
     ref.shapeType = static_cast<TopAbs_ShapeEnum>(obj.value("shapeType").toInt(TopAbs_FACE));
+    ref.semanticKind = obj.value("semanticKind").toInt(static_cast<int>(SubShapeSemanticKind::None));
+    ref.sketchContourIndex = obj.value("sketchContourIndex").toInt(-1);
     ref.persistentShapeIndex = obj.value("persistentShapeIndex").toInt(-1);
     ref.subShapeId = static_cast<std::int64_t>(obj.value("subShapeId").toInteger(-1));
     ref.signatureLength = obj.value("signatureLength").toDouble(0.0);
+    ref.signatureArea = obj.value("signatureArea").toDouble(0.0);
+    ref.signatureEdgeCount = obj.value("signatureEdgeCount").toInt(-1);
     ref.signatureMidX = obj.value("signatureMidX").toDouble(0.0);
     ref.signatureMidY = obj.value("signatureMidY").toDouble(0.0);
     ref.signatureMidZ = obj.value("signatureMidZ").toDouble(0.0);

@@ -450,6 +450,27 @@ void Widget::refreshOverlayScreenScale()
         a->SetScale(s, s, s);
     }
 
+    for (auto& a : vectorTwoPointSnapGhostActors_) {
+        if (!a) continue;
+        double p[3] = {0, 0, 0};
+        a->GetPosition(p);
+        const double s = overlayWorldScaleAt(p[0], p[1], p[2]);
+        a->SetScale(s, s, s);
+    }
+
+    if (vectorTwoPointStartSphereActor_) {
+        double p[3] = {0, 0, 0};
+        vectorTwoPointStartSphereActor_->GetPosition(p);
+        const double s = overlayWorldScaleAt(p[0], p[1], p[2]);
+        vectorTwoPointStartSphereActor_->SetScale(s, s, s);
+    }
+    if (vectorTwoPointEndSphereActor_) {
+        double p[3] = {0, 0, 0};
+        vectorTwoPointEndSphereActor_->GetPosition(p);
+        const double s = overlayWorldScaleAt(p[0], p[1], p[2]);
+        vectorTwoPointEndSphereActor_->SetScale(s, s, s);
+    }
+
     if (vectorDialogArrowActor_ && vectorDialogArrowActor_->GetVisibility()
         && hasVectorDialogArrowOrigin_) {
         gp_Dir d = hasCustomVectorDir_ ? customVectorDir_ : gp_Dir(1, 0, 0);
@@ -870,6 +891,14 @@ void Widget::applyInitialSceneView()
 void Widget::syncOverlayCameras()
 {
     renderPipeline_.syncCameras();
+}
+
+void Widget::renderInteractionFeedbackNow()
+{
+    syncOverlayCameras();
+    if (vtkWidget && vtkWidget->renderWindow()) {
+        vtkWidget->renderWindow()->Render();
+    }
 }
 
 void Widget::refreshCameraClippingRange()

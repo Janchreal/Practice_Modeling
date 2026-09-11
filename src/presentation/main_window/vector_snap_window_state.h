@@ -70,6 +70,7 @@ protected:
     QList<VectorSnapPreviewCandidate> vectorSnapPreviewCandidates_;
     gp_Pnt snapHoverBestPoint_;
     bool hasSnapHoverBestPoint_ = false;
+    bool vectorTwoPointSnapHasHoveredEdge_ = false;
 
     vtkSmartPointer<vtkActor> vectorDialogArrowActor_;
     vtkSmartPointer<vtkTransform> vectorDialogArrowTransform_;

@@ -5,16 +5,25 @@
 
 #include <cstdint>
 
+enum class SubShapeSemanticKind {
+    None = 0,
+    SketchContour = 1
+};
+
 // Persistent reference to a sub-shape of a parent feature result.
 struct SubShapeRef {
     int parentIndex = -1;
     TopAbs_ShapeEnum shapeType = TopAbs_FACE;
+    int semanticKind = static_cast<int>(SubShapeSemanticKind::None);
+    int sketchContourIndex = -1;
     int persistentShapeIndex = -1; // TopTools_IndexedMapOfShape, 1-based
     // Rendering adapters may assign a sub-shape ID, but the persisted
     // reference must not depend on VTK's typedefs.
     std::int64_t subShapeId = -1;
 
     double signatureLength = 0.0;
+    double signatureArea = 0.0;
+    int signatureEdgeCount = -1;
     double signatureMidX = 0.0;
     double signatureMidY = 0.0;
     double signatureMidZ = 0.0;

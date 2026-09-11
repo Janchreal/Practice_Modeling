@@ -9,6 +9,8 @@
 #include <gp_Pln.hxx>
 #include <gp_Vec.hxx>
 #include <Precision.hxx>
+#include <TopAbs_ShapeEnum.hxx>
+#include <TopExp_Explorer.hxx>
 #include <cmath>
 #include <list>
 
@@ -73,6 +75,36 @@ TopoDS_Shape resolveProfileReference(ModelingCommandPort* context,
     const QList<ModelingHistory>& histories = context->getHistoryList();
     if (profileRef.parentIndex >= 0 && profileRef.parentIndex < histories.size()
         && histories[profileRef.parentIndex].type == SKETCH) {
+        if (profileRef.semanticKind == static_cast<int>(SubShapeSemanticKind::SketchContour)) {
+            const TopoDS_Shape sketchShape = context->getShapeFromHistory(profileRef.parentIndex);
+            if (sketchShape.IsNull()) {
+                return TopoDS_Shape();
+            }
+
+            const ModelingHistory& record = histories[profileRef.parentIndex];
+            const gp_Pln plane(record.recipe.sketch.planeOrigin,
+                               record.recipe.sketch.planeNormal);
+            TopoDS_Shape profile;
+            std::string error;
+            if (!SketchGeometry::buildPlanarProfileAt(
+                    sketchShape, plane, profileRef.sketchContourIndex,
+                    profile, &error)) {
+                return TopoDS_Shape();
+            }
+
+            if (profileRef.signatureEdgeCount > 0) {
+                int edgeCount = 0;
+                for (TopExp_Explorer ex(profile, TopAbs_EDGE); ex.More(); ex.Next()) {
+                    ++edgeCount;
+                }
+                if (edgeCount != profileRef.signatureEdgeCount) {
+                    return TopoDS_Shape();
+                }
+            }
+
+            return profile;
+        }
+
         std::string error;
         return resolveExtrusionProfile(
             context, profileRef.parentIndex, !recipe.makeSheetBody, &error);
