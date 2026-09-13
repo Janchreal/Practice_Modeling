@@ -9,16 +9,10 @@ class TopoDS_Shape;
 
 class OccShapeToVtkConverter {
 public:
-    OccShapeToVtkConverter();
-    ~OccShapeToVtkConverter();
+    OccShapeToVtkConverter() = default;
+    ~OccShapeToVtkConverter() = default;
 
     vtkSmartPointer<vtkPolyData> convert(const TopoDS_Shape& shape);
-    void setLinearDeflection(double deflection);
-    void setAngularDeflection(double deflection);
-
-private:
-    class Private;
-    Private* d;
 };
 
 #endif // OCCVTKCONVERTER_H

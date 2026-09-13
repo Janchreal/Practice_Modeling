@@ -6,8 +6,6 @@
 
 #include <BRep_Builder.hxx>
 #include <BRepBuilderAPI_MakeEdge.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
-#include <BRepTools.hxx>
 
 #include <TopAbs_ShapeEnum.hxx>
 
@@ -175,14 +173,6 @@ void Widget::updateSketchHistoryShape()
 
     geometryStateFor(history).occShape = newShape;
     history.type = SKETCH;
-
-    BRepTools::Clean(newShape);
-    BRepMesh_IncrementalMesh(
-        newShape,
-        ShapePresentationOptions::kDefaultMeshDeflection,
-        Standard_False,
-        ShapePresentationOptions::kDefaultMeshAngle,
-        Standard_True);
 
     ++shapeIDCounter;
     Handle(IVtkOCC_Shape) shapeWrapper = new IVtkOCC_Shape(newShape);

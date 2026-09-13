@@ -372,8 +372,6 @@ void Widget::restoreModel(int index, const QString& name, ModelType type, const 
         ShapePresentationOptions presentationOptions;
         presentationOptions.color = color;
         presentationOptions.shapeId = shapeIDCounter;
-        presentationOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
-        presentationOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
         ModelRenderState renderState =
             ShapePresentationFactory::createSolidModelState(occShape, presentationOptions);
         if (!renderState.actor || !renderState.shapeDataSource) {

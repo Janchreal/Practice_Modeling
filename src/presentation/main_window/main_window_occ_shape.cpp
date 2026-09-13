@@ -1,4 +1,4 @@
-// OCC 基本体创建、旋转复合体、网格化显示与形状校验
+// OCC 基本体创建、旋转复合体、形状显示与形状校验
 #include "main_window.h"
 #include "application/history/modeling_history_placement.h"
 #include "application/history/modeling_history_primitives.h"
@@ -221,8 +221,6 @@ void Widget::displayOccShape(const TopoDS_Shape& shape, const QString& name,
     ShapePresentationOptions presentationOptions;
     presentationOptions.color = color;
     presentationOptions.shapeId = shapeIDCounter;
-    presentationOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
-    presentationOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
     ModelRenderState renderState =
         ShapePresentationFactory::createSolidModelState(shape, presentationOptions);
     if (!renderState.actor || !renderState.shapeDataSource) {

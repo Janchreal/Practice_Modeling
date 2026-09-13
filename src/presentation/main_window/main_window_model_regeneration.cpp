@@ -132,8 +132,6 @@ void Widget::regenerateModel(int index, bool triggerCascade)
         ShapePresentationOptions renderOptions;
         renderOptions.color = history.color;
         renderOptions.shapeId = shapeIDCounter;
-        renderOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
-        renderOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
         ShapePresentationFactory::refreshSolidModelState(renderState, newShape, renderOptions);
         if (!renderState.actor || !renderState.shapeDataSource) {
             QMessageBox::warning(this, "错误", "模型显示数据更新失败！");
@@ -194,8 +192,6 @@ void Widget::updateModelShape(int index, const TopoDS_Shape& newShape, bool trig
         ShapePresentationOptions renderOptions;
         renderOptions.color = history.color;
         renderOptions.shapeId = shapeIDCounter;
-        renderOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
-        renderOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
         renderOptions.deepCopyPolyData = true;
         ShapePresentationFactory::refreshSolidModelState(renderState, newShape, renderOptions);
         if (!renderState.actor || !renderState.shapeDataSource) {
@@ -352,8 +348,6 @@ void Widget::updateModelShapeWithTypeInternal(int index, const TopoDS_Shape& new
     ShapePresentationOptions renderOptions;
     renderOptions.color = history.color;
     renderOptions.shapeId = shapeIDCounter;
-    renderOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
-    renderOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
     renderOptions.deepCopyPolyData = true;
     ShapePresentationFactory::refreshSolidModelState(renderState, newShape, renderOptions);
     if (!renderState.actor || !renderState.shapeDataSource) {

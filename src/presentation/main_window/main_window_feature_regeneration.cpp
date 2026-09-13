@@ -154,8 +154,6 @@ bool Widget::applyShapeToHistory(int index, const TopoDS_Shape& newShape, const 
         ShapePresentationOptions renderOptions;
         renderOptions.color = record.color;
         renderOptions.shapeId = shapeIDCounter;
-        renderOptions.meshDeflection = ShapePresentationOptions::kDefaultMeshDeflection;
-        renderOptions.meshAngle = ShapePresentationOptions::kDefaultMeshAngle;
         ShapePresentationFactory::refreshSolidModelState(renderState, newShape, renderOptions);
         if (!renderState.actor || !renderState.shapeDataSource) {
             record.featureRegenerateFailed = true;

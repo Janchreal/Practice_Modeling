@@ -40,7 +40,6 @@
 #include <TopoDS_Edge.hxx>
 #include <gp_Pln.hxx>
 #include <Standard_Failure.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
 #include <string>
 #include "selection_geometry.h"
 
@@ -758,11 +757,6 @@ void Widget::updateExtrusionHoverHighlight()
                 }
 
                 // 使用 VIS 自动数据源创建悬停高亮。
-                // Step 1: 对形状进行网格离散化
-                BRepMesh_IncrementalMesh mesh(hoveredShape, 0.05, Standard_False, 0.3, Standard_True);
-                mesh.Perform();
-
-                // Step 2: 创建VIS形状包装器
                 Handle(IVtkOCC_Shape) hlShape = new IVtkOCC_Shape(hoveredShape);
                 hlShape->SetId(999998); // 使用另一个特殊的ID，避免与选中高亮冲突
 
@@ -923,9 +917,6 @@ void Widget::updateExtrusionFaceHighlight()
                             dimmedModels.insert(faceSel.modelIndex);
                         }
                     }
-
-                    BRepMesh_IncrementalMesh mesh(faceSel.shape, 0.05, Standard_False, 0.3, Standard_True);
-                    mesh.Perform();
 
                     Handle(IVtkOCC_Shape) hlShape = new IVtkOCC_Shape(faceSel.shape);
                     hlShape->SetId(999999 + idx);

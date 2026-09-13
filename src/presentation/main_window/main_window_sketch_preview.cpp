@@ -37,7 +37,6 @@
 #include <gp_Ax2.hxx>
 #include <gp_Elips.hxx>
 #include <Standard_Failure.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
 #include <BRep_Tool.hxx>
 #include <Bnd_Box.hxx>
 #include <GC_MakeArcOfCircle.hxx>

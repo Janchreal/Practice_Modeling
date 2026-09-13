@@ -16,8 +16,6 @@
 #include <QWidget>
 #include <Qt>
 
-#include <BRepMesh_IncrementalMesh.hxx>
-
 #include <IVtkOCC_Shape.hxx>
 #include <IVtkTools_ShapeObject.hxx>
 #include <IVtkTools_ShapePicker.hxx>
@@ -74,9 +72,6 @@ vtkSmartPointer<vtkActor> buildMirrorActorFromHistory(const ModelingHistory& rec
 
     if (!geometryState.occShape.IsNull()) {
         try {
-            BRepMesh_IncrementalMesh mesh(geometryState.occShape, 0.08, Standard_False, 0.3, Standard_True);
-            mesh.Perform();
-
             Handle(IVtkOCC_Shape) shapeWrapper = new IVtkOCC_Shape(geometryState.occShape);
             vtkSmartPointer<IVtkTools_ShapeDataSource> shapeDataSource =
                 ModelShapePipeline::createShapeDataSource(shapeWrapper);

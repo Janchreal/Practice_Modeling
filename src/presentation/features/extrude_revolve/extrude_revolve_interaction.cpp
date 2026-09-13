@@ -23,7 +23,6 @@
 
 #include <Bnd_Box.hxx>
 #include <BRepBndLib.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
 #include <Precision.hxx>
 #include <Standard_Failure.hxx>
 #include <TopoDS.hxx>
@@ -544,8 +543,6 @@ void Widget::showFeatureLivePreviewShape(const TopoDS_Shape& shape)
         return;
     }
     try {
-        BRepMesh_IncrementalMesh mesh(shape, 0.05, Standard_False, 0.3, Standard_True);
-        mesh.Perform();
         Handle(IVtkOCC_Shape) shapeWrapper = new IVtkOCC_Shape(shape);
         shapeWrapper->SetId(900000010);
         vtkSmartPointer<IVtkTools_ShapeDataSource> shapeDataSource =
@@ -636,8 +633,6 @@ void Widget::showFeatureResultPreviewShape(const TopoDS_Shape& shape, const QCol
         return;
     }
     try {
-        BRepMesh_IncrementalMesh mesh(shape, 0.05, Standard_False, 0.3, Standard_True);
-        mesh.Perform();
         Handle(IVtkOCC_Shape) shapeWrapper = new IVtkOCC_Shape(shape);
         shapeWrapper->SetId(900000011);
         vtkSmartPointer<IVtkTools_ShapeDataSource> shapeDataSource =
@@ -858,8 +853,6 @@ void Widget::refreshExtrusionLivePreview()
         }
 
         // 使用与 displayOccShape 相同的 VIS 自动数据源，避免 OccConverter 对薄片/扫掠面偶发崩溃
-        BRepMesh_IncrementalMesh mesh(shape, 0.05, Standard_False, 0.3, Standard_True);
-        mesh.Perform();
         Handle(IVtkOCC_Shape) shapeWrapper = new IVtkOCC_Shape(shape);
         shapeWrapper->SetId(900000001);
         vtkSmartPointer<IVtkTools_ShapeDataSource> shapeDataSource =
@@ -907,8 +900,6 @@ void Widget::refreshRevolveLivePreview()
             return;
         }
 
-        BRepMesh_IncrementalMesh mesh(shape, 0.05, Standard_False, 0.3, Standard_True);
-        mesh.Perform();
         Handle(IVtkOCC_Shape) shapeWrapper = new IVtkOCC_Shape(shape);
         shapeWrapper->SetId(900000002);
         vtkSmartPointer<IVtkTools_ShapeDataSource> shapeDataSource =

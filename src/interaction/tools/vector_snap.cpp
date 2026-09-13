@@ -35,7 +35,6 @@
 
 #include <BRepAdaptor_Curve.hxx>
 #include <BRepAdaptor_Surface.hxx>
-#include <BRepMesh_IncrementalMesh.hxx>
 #include <BRep_Tool.hxx>
 #include <GeomAPI_ExtremaCurveCurve.hxx>
 #include <GeomAPI_ProjectPointOnCurve.hxx>
@@ -379,9 +378,6 @@ void Widget::applyVectorDialogHoverSubShape(int modelIndex, IVtk_IdType subShape
         }
 
         try {
-            BRepMesh_IncrementalMesh mesh(sh, 0.05, Standard_False, 0.3, Standard_True);
-            mesh.Perform();
-
             Handle(IVtkOCC_Shape) hlShape = new IVtkOCC_Shape(sh);
             hlShape->SetId(999998); // 临时高亮ID
 
@@ -2418,11 +2414,8 @@ vtkSmartPointer<vtkActor> Widget::buildSnapShapeHighlightActor(const TopoDS_Shap
         return nullptr;
     }
 
-    // 与拉伸高亮一致：先离散化，再由 VIS 自动数据源生成 vtkPolyData。
+    // 与拉伸高亮一致：由 VIS 自动数据源完成显示离散并生成 vtkPolyData。
     try {
-        BRepMesh_IncrementalMesh mesh(shape, 0.05, Standard_False, 0.3, Standard_True);
-        mesh.Perform();
-
         Handle(IVtkOCC_Shape) hlShape = new IVtkOCC_Shape(shape);
         hlShape->SetId(888888); // 捕捉点高亮专用ID
 
