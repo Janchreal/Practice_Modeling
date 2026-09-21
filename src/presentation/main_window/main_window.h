@@ -353,13 +353,18 @@ private:
     void setReferenceCsysVisible(bool visible);
     bool handleReferenceCsysAxisPick(int x, int y);
     bool handleReferenceCsysPlanePick(int x, int y);
+    bool handleReferenceCsysOriginPick(int x, int y);
     void applyReferenceAxisHighlight(AxisDirection dir);
     void resetReferenceAxisHighlight();
     void applyReferencePlaneHighlight(int planeId);
     void resetReferencePlaneHighlight();
+    void clearReferenceCsysSelection();
+    void clearReferenceCsysHover();
+    void refreshReferenceCsysHighlight();
     void updateReferenceCsysAxisHover(int x, int y);
     bool pickReferenceCsysAxisAt(int x, int y, AxisDirection& outAxis) const;
     bool pickReferenceCsysPlaneAt(int x, int y, int& outPlaneId) const;
+    bool pickReferenceCsysOriginAt(int x, int y) const;
     QString viewNameForReferenceCsysPlane(int planeId) const;
     void initDefaultReferenceCsys();
     void ensureDefaultReferenceCsysIfMissing();
@@ -367,6 +372,8 @@ private:
     void refreshReferenceCsysScreenScale();
     bool isVectorAxisPickContext() const;
     void applyVectorDirFromDatumAxis(const gp_Dir& baseDir);
+    bool isReferenceCsysPlaneVectorPickContext() const;
+    void applyVectorDirFromReferencePlane(int planeId);
      // 历史记录相关
     void addToHistory(ModelType type, const QString& name, vtkSmartPointer<vtkActor> actor, const QColor& color, double param1, double param2,double param3,vtkSmartPointer<vtkPolyData> polyData,const TopoDS_Shape& occShape = TopoDS_Shape(), Handle(IVtkOCC_Shape) shapeWrapper = nullptr, vtkSmartPointer<IVtkTools_ShapeDataSource> dataSource = nullptr);
     void updateHistoryList();

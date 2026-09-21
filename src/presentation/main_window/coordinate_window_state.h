@@ -59,6 +59,13 @@ protected:
     vtkSmartPointer<vtkActor> refCsysPlaneYZActor_;
     vtkSmartPointer<vtkActor> refCsysPlaneXZActor_;
     vtkSmartPointer<vtkActor> refCsysPlaneFrameActor_;
+    vtkSmartPointer<vtkActor> refCsysOriginActor_;
+    int referenceCsysHoveredAxis_ = -1;    // 0=X, 1=Y, 2=Z
+    int referenceCsysSelectedAxis_ = -1;
+    int referenceCsysHoveredPlane_ = -1;   // 0=XY, 1=YZ, 2=XZ
+    int referenceCsysSelectedPlane_ = -1;
+    bool referenceCsysOriginHovered_ = false;
+    bool referenceCsysOriginSelected_ = false;
 };
 
 #endif // PRESENTATION_MAIN_WINDOW_COORDINATE_WINDOW_STATE_H

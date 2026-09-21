@@ -1407,7 +1407,8 @@ void Widget::openVectorDialog(int desiredModeIndex)
             }
         }
         mergeSnapFiltersFromToolbarAndCaptureUi();
-        resetReferenceAxisHighlight();
+        clearReferenceCsysHover();
+        clearReferenceCsysSelection();
         if (vtkWidget && vtkWidget->renderWindow()) {
             vtkWidget->renderWindow()->Render();
         }
@@ -1470,7 +1471,8 @@ void Widget::openVectorDialog(int desiredModeIndex)
             }
         }
         mergeSnapFiltersFromToolbarAndCaptureUi();
-        resetReferenceAxisHighlight();
+        clearReferenceCsysHover();
+        clearReferenceCsysSelection();
         if (vtkWidget && vtkWidget->renderWindow()) {
             vtkWidget->renderWindow()->Render();
         }

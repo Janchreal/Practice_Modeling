@@ -141,6 +141,11 @@ void Widget::handleVtkMouseClick(int x, int y)
          || currentSelectionMode == PatternBodySelection);
     const int earlyModelIdx = preferModelBeforeTriad ? pickHistoryModelStrict(x, y) : -1;
 
+    // 基准坐标系原点：在点选择/两点矢量等上下文中可直接选中 (0,0,0)
+    if (handleReferenceCsysOriginPick(x, y)) {
+        return;
+    }
+
     // 矢量拾取：点击基准坐标系 X/Y/Z 轴确认方向（优先于平面，避免误切视图）
     if (isVectorAxisPickContext() && handleReferenceCsysAxisPick(x, y)) {
         return;
@@ -728,6 +733,9 @@ void Widget::handleVtkMouseClick(int x, int y)
     if (snap_.armed && (currentSelectionMode == None || currentSelectionMode == PointSelection)) {
         pickSnapAt(x, y);
         if (currentSelectionMode == None) {
+            if (!hasSnapSelectedPoint_) {
+                clearReferenceCsysSelection();
+            }
             // 无论是否捕到点，都不要走后面的整模选中/取消逻辑
             return;
         }
@@ -751,6 +759,7 @@ void Widget::handleVtkMouseClick(int x, int y)
             highlightModel(-1);
             updateHistoryListSelection();
             clearSubShapeHighlight();
+            clearReferenceCsysSelection();
         }
         return;
     }
@@ -1063,6 +1072,7 @@ void Widget::handleVtkMouseClick(int x, int y)
         if (statusBar()) {
             statusBar()->showMessage(tr("已选择旋转中心点。"), 2000);
         }
+        clearReferenceCsysSelection();
         return;
     }
 
@@ -1205,6 +1215,7 @@ void Widget::handleVtkMouseClick(int x, int y)
         currentSelectedIndex = -1;
         highlightModel(-1);
         updateHistoryListSelection();
+        clearReferenceCsysSelection();
     }
 
     if (selectedIndex >= 0) {

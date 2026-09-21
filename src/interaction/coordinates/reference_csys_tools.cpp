@@ -2,6 +2,11 @@
 // 平面点击 → 带动画切到对应正交视图；箭头在矢量选择时可指定方向
 #include "main_window.h"
 #include "rendering/handles/handle_geometry.h"
+#include "presentation/dialogs/primitives/cone_params_dialog.h"
+#include "presentation/dialogs/primitives/cuboid_params_dialog.h"
+#include "presentation/dialogs/primitives/cylinder_dialog.h"
+#include "presentation/dialogs/primitives/sphere_params_dialog.h"
+#include "presentation/dialogs/pattern/pattern_feature_dialog.h"
 #include "presentation/dialogs/tools/vector_dialog.h"
 
 #include <QDateTime>
@@ -22,6 +27,7 @@
 #include <vtkProperty.h>
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
+#include <vtkSphereSource.h>
 #include <vtkTransform.h>
 #include <vtkTransformPolyDataFilter.h>
 #include <vtkVectorText.h>
@@ -31,11 +37,15 @@ namespace {
 constexpr double kRefCsysScale = 0.55;
 constexpr double kRefPlaneSize = 0.42; // 相对单位，再乘 kRefCsysScale
 constexpr double kRefAxisPickRadiusPx = 18.0;
+constexpr double kRefOriginPickRadiusPx = 14.0;
+constexpr double kRefOriginRadius = 0.055;
 
 // 经典 RGB 轴色
 constexpr double kAxisXR = 0.90, kAxisXG = 0.22, kAxisXB = 0.18;
 constexpr double kAxisYR = 0.18, kAxisYG = 0.72, kAxisYB = 0.28;
 constexpr double kAxisZR = 0.20, kAxisZG = 0.42, kAxisZB = 0.92;
+constexpr double kHoverR = 1.0, kHoverG = 0.75, kHoverB = 0.15;
+constexpr double kSelectedR = 0.0, kSelectedG = 0.92, kSelectedB = 1.0;
 
 // 平面半透明色（按法向轴着色）
 constexpr double kPlaneXY_R = 0.25, kPlaneXY_G = 0.50, kPlaneXY_B = 0.95; // 法向 Z
@@ -48,12 +58,13 @@ enum class RefCsysPlane { XY, YZ, XZ };
 
 void worldToQtScreen(vtkRenderer* renderer, int vtkH, const gp_Pnt& p, double& qx, double& qy)
 {
+    Q_UNUSED(vtkH);
     renderer->SetWorldPoint(p.X(), p.Y(), p.Z(), 1.0);
     renderer->WorldToDisplay();
     double d[3] = {0, 0, 0};
     renderer->GetDisplayPoint(d);
     qx = d[0];
-    qy = static_cast<double>(vtkH) - d[1];
+    qy = d[1];
 }
 
 gp_Dir axisDirectionToGpDir(AxisDirection axis)
@@ -64,6 +75,23 @@ gp_Dir axisDirectionToGpDir(AxisDirection axis)
     case AxisDirection::Z:
     default: return gp_Dir(0, 0, 1);
     }
+}
+
+int axisIndex(AxisDirection axis)
+{
+    switch (axis) {
+    case AxisDirection::X: return 0;
+    case AxisDirection::Y: return 1;
+    case AxisDirection::Z:
+    default: return 2;
+    }
+}
+
+gp_Dir planeNormalFromId(int planeId)
+{
+    if (planeId == 1) return gp_Dir(1, 0, 0); // YZ
+    if (planeId == 2) return gp_Dir(0, 1, 0); // XZ
+    return gp_Dir(0, 0, 1);                   // XY
 }
 
 void axisRgb(AxisDirection axis, double& r, double& g, double& b)
@@ -144,6 +172,29 @@ vtkSmartPointer<vtkActor> makeRefAxisLabelActor(const char* text,
     labelActor->GetProperty()->SetLighting(false);
     labelActor->SetPickable(0);
     return labelActor;
+}
+
+vtkSmartPointer<vtkActor> makeRefOriginActor(vtkTransform* userXf)
+{
+    vtkSmartPointer<vtkSphereSource> sphere = vtkSmartPointer<vtkSphereSource>::New();
+    sphere->SetRadius(kRefOriginRadius * kRefCsysScale);
+    sphere->SetThetaResolution(32);
+    sphere->SetPhiResolution(16);
+    sphere->Update();
+
+    vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    mapper->SetInputConnection(sphere->GetOutputPort());
+
+    vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+    actor->SetMapper(mapper);
+    if (userXf) actor->SetUserTransform(userXf);
+    actor->GetProperty()->SetColor(0.96, 0.96, 0.96);
+    actor->GetProperty()->SetOpacity(0.95);
+    actor->GetProperty()->SetAmbient(0.85);
+    actor->GetProperty()->SetDiffuse(0.35);
+    actor->GetProperty()->SetSpecular(0.10);
+    actor->SetPickable(1);
+    return actor;
 }
 
 /** 第一卦限四分之一平面：原点 → 两正半轴 */
@@ -308,6 +359,10 @@ bool Widget::isVectorAxisPickContext() const
 
 void Widget::applyVectorDirFromDatumAxis(const gp_Dir& baseDir)
 {
+    if (!hasVectorDialogArrowOrigin_) {
+        hasVectorDialogArrowOrigin_ = true;
+        vectorDialogArrowOrigin_ = gp_Pnt(0, 0, 0);
+    }
     setCustomVectorDirFromDialog(baseDir);
 
     if (patternVectorPick_ != PatternVectorPick::None) {
@@ -348,7 +403,8 @@ bool Widget::ensureReferenceCsysActorsCreated()
     // 已有完整三轴+三平面，仅补框线
     if (refCsysAxisXActor_ && refCsysAxisYActor_ && refCsysAxisZActor_
         && refCsysLabelXActor_ && refCsysLabelYActor_ && refCsysLabelZActor_
-        && refCsysPlaneXYActor_ && refCsysPlaneYZActor_ && refCsysPlaneXZActor_) {
+        && refCsysPlaneXYActor_ && refCsysPlaneYZActor_ && refCsysPlaneXZActor_
+        && refCsysOriginActor_) {
         if (!refCsysPlaneFrameActor_) {
             if (!refCsysTransform_) {
                 refCsysTransform_ = vtkSmartPointer<vtkTransform>::New();
@@ -383,6 +439,10 @@ bool Widget::ensureReferenceCsysActorsCreated()
             refCsysPlaneFrameActor_ = makeRefPlaneFrameActor(refCsysTransform_);
             addReferenceActor(refCsysPlaneFrameActor_);
         }
+        if (!refCsysOriginActor_) {
+            refCsysOriginActor_ = makeRefOriginActor(refCsysTransform_);
+            addReferenceActor(refCsysOriginActor_);
+        }
         return true;
     }
 
@@ -403,6 +463,7 @@ bool Widget::ensureReferenceCsysActorsCreated()
     removeIf(refCsysPlaneYZActor_);
     removeIf(refCsysPlaneXZActor_);
     removeIf(refCsysPlaneFrameActor_);
+    removeIf(refCsysOriginActor_);
 
     refCsysAxisXActor_ = makeRefAxisArrowActor(AxisDirection::X, refCsysTransform_);
     refCsysAxisYActor_ = makeRefAxisArrowActor(AxisDirection::Y, refCsysTransform_);
@@ -416,11 +477,13 @@ bool Widget::ensureReferenceCsysActorsCreated()
     refCsysPlaneYZActor_ = makeRefPlaneActor(RefCsysPlane::YZ, refCsysTransform_);
     refCsysPlaneXZActor_ = makeRefPlaneActor(RefCsysPlane::XZ, refCsysTransform_);
     refCsysPlaneFrameActor_ = makeRefPlaneFrameActor(refCsysTransform_);
+    refCsysOriginActor_ = makeRefOriginActor(refCsysTransform_);
 
     addReferenceActor(refCsysPlaneXYActor_);
     addReferenceActor(refCsysPlaneYZActor_);
     addReferenceActor(refCsysPlaneXZActor_);
     addReferenceActor(refCsysPlaneFrameActor_);
+    addReferenceActor(refCsysOriginActor_);
     addReferenceActor(refCsysAxisXActor_);
     addReferenceActor(refCsysAxisYActor_);
     addReferenceActor(refCsysAxisZActor_);
@@ -448,6 +511,7 @@ void Widget::setReferenceCsysVisible(bool visible)
     if (refCsysPlaneYZActor_) refCsysPlaneYZActor_->SetVisibility(v);
     if (refCsysPlaneXZActor_) refCsysPlaneXZActor_->SetVisibility(v);
     if (refCsysPlaneFrameActor_) refCsysPlaneFrameActor_->SetVisibility(v);
+    if (refCsysOriginActor_) refCsysOriginActor_->SetVisibility(v);
 }
 
 void Widget::refreshReferenceCsysScreenScale()
@@ -473,69 +537,128 @@ void Widget::refreshReferenceCsysScreenScale()
     refCsysTransform_->Modified();
 }
 
+void Widget::refreshReferenceCsysHighlight()
+{
+    auto styleAxis = [&](vtkSmartPointer<vtkActor>& actor, AxisDirection axis) {
+        if (!actor) return;
+        const int idx = axisIndex(axis);
+        if (referenceCsysSelectedAxis_ == idx) {
+            actor->GetProperty()->SetColor(kSelectedR, kSelectedG, kSelectedB);
+            actor->GetProperty()->SetOpacity(1.0);
+            return;
+        }
+        if (referenceCsysHoveredAxis_ == idx) {
+            actor->GetProperty()->SetColor(kHoverR, kHoverG, kHoverB);
+            actor->GetProperty()->SetOpacity(1.0);
+            return;
+        }
+        double r = 0, g = 0, b = 0;
+        axisRgb(axis, r, g, b);
+        actor->GetProperty()->SetColor(r, g, b);
+        actor->GetProperty()->SetOpacity(1.0);
+    };
+
+    auto stylePlane = [&](vtkSmartPointer<vtkActor>& actor, RefCsysPlane plane, int planeId) {
+        if (!actor) return;
+        if (referenceCsysSelectedPlane_ == planeId) {
+            actor->GetProperty()->SetColor(kSelectedR, kSelectedG, kSelectedB);
+            actor->GetProperty()->SetOpacity(0.72);
+            return;
+        }
+        if (referenceCsysHoveredPlane_ == planeId) {
+            double r = 0, g = 0, b = 0;
+            planeRgb(plane, r, g, b);
+            actor->GetProperty()->SetColor(r, g, b);
+            actor->GetProperty()->SetOpacity(kPlaneHoverOpacity);
+            return;
+        }
+        double r = 0, g = 0, b = 0;
+        planeRgb(plane, r, g, b);
+        actor->GetProperty()->SetColor(r, g, b);
+        actor->GetProperty()->SetOpacity(kPlaneOpacity);
+    };
+
+    styleAxis(refCsysAxisXActor_, AxisDirection::X);
+    styleAxis(refCsysAxisYActor_, AxisDirection::Y);
+    styleAxis(refCsysAxisZActor_, AxisDirection::Z);
+    stylePlane(refCsysPlaneXYActor_, RefCsysPlane::XY, 0);
+    stylePlane(refCsysPlaneYZActor_, RefCsysPlane::YZ, 1);
+    stylePlane(refCsysPlaneXZActor_, RefCsysPlane::XZ, 2);
+
+    if (refCsysOriginActor_) {
+        if (referenceCsysOriginSelected_) {
+            refCsysOriginActor_->GetProperty()->SetColor(kSelectedR, kSelectedG, kSelectedB);
+            refCsysOriginActor_->GetProperty()->SetOpacity(1.0);
+        } else if (referenceCsysOriginHovered_) {
+            refCsysOriginActor_->GetProperty()->SetColor(kHoverR, kHoverG, kHoverB);
+            refCsysOriginActor_->GetProperty()->SetOpacity(1.0);
+        } else {
+            refCsysOriginActor_->GetProperty()->SetColor(0.96, 0.96, 0.96);
+            refCsysOriginActor_->GetProperty()->SetOpacity(0.95);
+        }
+    }
+}
+
+bool Widget::isReferenceCsysPlaneVectorPickContext() const
+{
+    if (currentSelectionMode != VectorDialogPickDirection) {
+        return false;
+    }
+    if (!vectorDialog_ || !vectorDialog_->isVisible()) {
+        return false;
+    }
+    return vectorDialogModeIndex_ == 5 || vectorDialogModeIndex_ == 6;
+}
+
+void Widget::applyVectorDirFromReferencePlane(int planeId)
+{
+    hasVectorDialogArrowOrigin_ = true;
+    vectorDialogArrowOrigin_ = gp_Pnt(0, 0, 0);
+    applyVectorDirFromDatumAxis(planeNormalFromId(planeId));
+}
+
 void Widget::resetReferenceAxisHighlight()
 {
-    auto resetAxis = [&](vtkSmartPointer<vtkActor>& a, AxisDirection dir) {
-        if (!a) return;
-        double r = 0, g = 0, b = 0;
-        axisRgb(dir, r, g, b);
-        a->GetProperty()->SetColor(r, g, b);
-        a->GetProperty()->SetOpacity(1.0);
-    };
-    resetAxis(refCsysAxisXActor_, AxisDirection::X);
-    resetAxis(refCsysAxisYActor_, AxisDirection::Y);
-    resetAxis(refCsysAxisZActor_, AxisDirection::Z);
+    referenceCsysHoveredAxis_ = -1;
+    refreshReferenceCsysHighlight();
 }
 
 void Widget::applyReferenceAxisHighlight(AxisDirection dir)
 {
-    resetReferenceAxisHighlight();
-
-    vtkSmartPointer<vtkActor> target;
-    if (dir == AxisDirection::X) target = refCsysAxisXActor_;
-    else if (dir == AxisDirection::Y) target = refCsysAxisYActor_;
-    else target = refCsysAxisZActor_;
-
-    if (target) {
-        target->GetProperty()->SetColor(1.0, 0.75, 0.15);
-        target->GetProperty()->SetOpacity(1.0);
-    }
+    referenceCsysSelectedAxis_ = axisIndex(dir);
+    referenceCsysSelectedPlane_ = -1;
+    referenceCsysOriginSelected_ = false;
+    refreshReferenceCsysHighlight();
 }
 
 void Widget::resetReferencePlaneHighlight()
 {
-    auto resetPlane = [&](vtkSmartPointer<vtkActor>& a, RefCsysPlane plane) {
-        if (!a) return;
-        double r = 0, g = 0, b = 0;
-        planeRgb(plane, r, g, b);
-        a->GetProperty()->SetColor(r, g, b);
-        a->GetProperty()->SetOpacity(kPlaneOpacity);
-    };
-    resetPlane(refCsysPlaneXYActor_, RefCsysPlane::XY);
-    resetPlane(refCsysPlaneYZActor_, RefCsysPlane::YZ);
-    resetPlane(refCsysPlaneXZActor_, RefCsysPlane::XZ);
+    referenceCsysHoveredPlane_ = -1;
+    refreshReferenceCsysHighlight();
 }
 
 void Widget::applyReferencePlaneHighlight(int planeId)
 {
-    resetReferencePlaneHighlight();
-    vtkSmartPointer<vtkActor> target;
-    RefCsysPlane plane = RefCsysPlane::XY;
-    if (planeId == 0) {
-        target = refCsysPlaneXYActor_;
-        plane = RefCsysPlane::XY;
-    } else if (planeId == 1) {
-        target = refCsysPlaneYZActor_;
-        plane = RefCsysPlane::YZ;
-    } else {
-        target = refCsysPlaneXZActor_;
-        plane = RefCsysPlane::XZ;
-    }
-    if (!target) return;
-    double r = 0, g = 0, b = 0;
-    planeRgb(plane, r, g, b);
-    target->GetProperty()->SetColor(r, g, b);
-    target->GetProperty()->SetOpacity(kPlaneHoverOpacity);
+    referenceCsysSelectedPlane_ = planeId;
+    referenceCsysSelectedAxis_ = -1;
+    referenceCsysOriginSelected_ = false;
+    refreshReferenceCsysHighlight();
+}
+
+void Widget::clearReferenceCsysHover()
+{
+    referenceCsysHoveredAxis_ = -1;
+    referenceCsysHoveredPlane_ = -1;
+    referenceCsysOriginHovered_ = false;
+    refreshReferenceCsysHighlight();
+}
+
+void Widget::clearReferenceCsysSelection()
+{
+    referenceCsysSelectedAxis_ = -1;
+    referenceCsysSelectedPlane_ = -1;
+    referenceCsysOriginSelected_ = false;
+    refreshReferenceCsysHighlight();
 }
 
 bool Widget::pickReferenceCsysAxisAt(int x, int y, AxisDirection& outAxis) const
@@ -630,6 +753,19 @@ bool Widget::pickReferenceCsysPlaneAt(int x, int y, int& outPlaneId) const
     return false;
 }
 
+bool Widget::pickReferenceCsysOriginAt(int x, int y) const
+{
+    if (!renderer || !vtkWidget || !hasReferenceCsys_) return false;
+    if (!refCsysOriginActor_ || refCsysOriginActor_->GetVisibility() == 0) return false;
+
+    double ox = 0.0, oy = 0.0;
+    worldToQtScreen(renderer, vtkWidget->height(), gp_Pnt(0, 0, 0), ox, oy);
+
+    const double dx = static_cast<double>(x) - ox;
+    const double dy = static_cast<double>(y) - oy;
+    return (dx * dx + dy * dy) <= kRefOriginPickRadiusPx * kRefOriginPickRadiusPx;
+}
+
 QString Widget::viewNameForReferenceCsysPlane(int planeId) const
 {
     // 按当前相机落在法向正/负侧，选择更“正面朝向”的正交视图
@@ -658,30 +794,32 @@ void Widget::updateReferenceCsysAxisHover(int x, int y)
     if (!hasReferenceCsys_) return;
     if (!ensureReferenceCsysActorsCreated()) return;
 
-    // 矢量上下文：优先高亮轴；否则高亮平面
-    if (isVectorAxisPickContext()) {
+    referenceCsysHoveredAxis_ = -1;
+    referenceCsysHoveredPlane_ = -1;
+    referenceCsysOriginHovered_ = false;
+
+    if (pickReferenceCsysOriginAt(x, y)) {
+        referenceCsysOriginHovered_ = true;
+    } else if (isVectorAxisPickContext()) {
+        // 矢量上下文：优先高亮轴；否则高亮平面
         AxisDirection axis = AxisDirection::Z;
         if (pickReferenceCsysAxisAt(x, y, axis)) {
-            applyReferenceAxisHighlight(axis);
-            resetReferencePlaneHighlight();
+            referenceCsysHoveredAxis_ = axisIndex(axis);
         } else {
-            resetReferenceAxisHighlight();
             int planeId = -1;
             if (pickReferenceCsysPlaneAt(x, y, planeId)) {
-                applyReferencePlaneHighlight(planeId);
-            } else {
-                resetReferencePlaneHighlight();
+                referenceCsysHoveredPlane_ = planeId;
             }
         }
-    } else {
-        resetReferenceAxisHighlight();
+    } else if (currentSelectionMode != PointSelection
+               && currentSelectionMode != VectorDialogPickStartPoint
+               && currentSelectionMode != VectorDialogPickEndPoint) {
         int planeId = -1;
         if (pickReferenceCsysPlaneAt(x, y, planeId)) {
-            applyReferencePlaneHighlight(planeId);
-        } else {
-            resetReferencePlaneHighlight();
+            referenceCsysHoveredPlane_ = planeId;
         }
     }
+    refreshReferenceCsysHighlight();
 
     if (vtkWidget && vtkWidget->renderWindow()) {
         vtkWidget->renderWindow()->Render();
@@ -743,6 +881,87 @@ bool Widget::handleReferenceCsysAxisPick(int x, int y)
     return true;
 }
 
+bool Widget::handleReferenceCsysOriginPick(int x, int y)
+{
+    if (!hasReferenceCsys_ || !renderer) return false;
+    if (!ensureReferenceCsysActorsCreated()) return false;
+    if (!pickReferenceCsysOriginAt(x, y)) return false;
+
+    referenceCsysOriginSelected_ = true;
+    referenceCsysSelectedAxis_ = -1;
+    referenceCsysSelectedPlane_ = -1;
+    referenceCsysOriginHovered_ = false;
+    refreshReferenceCsysHighlight();
+
+    const gp_Pnt origin(0, 0, 0);
+
+    if (currentSelectionMode == VectorDialogPickStartPoint) {
+        onVectorTwoPointStartPicked(origin);
+        if (vtkWidget && vtkWidget->renderWindow()) vtkWidget->renderWindow()->Render();
+        return true;
+    }
+    if (currentSelectionMode == VectorDialogPickEndPoint) {
+        if (hasVectorStartPoint_) {
+            onVectorTwoPointEndPicked(origin);
+        }
+        if (vtkWidget && vtkWidget->renderWindow()) vtkWidget->renderWindow()->Render();
+        return true;
+    }
+
+    if (originSnapSelectionActive_) {
+        applyOriginFromSnap(origin, tr("基准原点"));
+        if (vtkWidget && vtkWidget->renderWindow()) vtkWidget->renderWindow()->Render();
+        return true;
+    }
+
+    const bool hasPointTarget = (currentSelectionMode == PointSelection);
+
+    if (hasPointTarget) {
+        if (cuboidDialog) {
+            cuboidDialog->setOriginPoint(origin.X(), origin.Y(), origin.Z());
+            if (cuboidInteractiveActive_) {
+                applyCuboidInteractiveOrigin(origin);
+            }
+        } else if (cylinderDialog) {
+            cylinderDialog->setOriginPoint(origin.X(), origin.Y(), origin.Z());
+        } else if (coneDialog) {
+            coneDialog->setOriginPoint(origin.X(), origin.Y(), origin.Z());
+        } else if (sphereDialog) {
+            sphereDialog->setOriginPoint(origin.X(), origin.Y(), origin.Z());
+        } else if (patternDialog_) {
+            patternDialog_->setRotationCenter(origin, true);
+            if (patternDialog_->hasDirection1()) {
+                updatePatternRotationAxisArrow();
+            }
+        }
+
+        selectedOriginPoint = origin;
+        hasSelectedOriginPoint = true;
+        showSelectedPoint(origin, tr("基准原点\n(0.00, 0.00, 0.00)"));
+        clearPointSelectionHover();
+
+        if (revolveDialog) {
+            updateRevolveHandles();
+            refreshRevolveLivePreview();
+        }
+        if (cuboidInteractiveActive_) {
+            currentSelectionMode = PointSelection;
+            updateCuboidInteractivePreview();
+        } else if (patternDialog_) {
+            restorePatternPitchInteractiveAfterOriginPick();
+        } else {
+            currentSelectionMode = None;
+        }
+    } else if (statusBar()) {
+        statusBar()->showMessage(tr("已选中基准坐标系原点。"), 1500);
+    }
+
+    if (vtkWidget && vtkWidget->renderWindow()) {
+        vtkWidget->renderWindow()->Render();
+    }
+    return true;
+}
+
 bool Widget::handleReferenceCsysPlanePick(int x, int y)
 {
     if (!hasReferenceCsys_ || !renderer) return false;
@@ -769,7 +988,20 @@ bool Widget::handleReferenceCsysPlanePick(int x, int y)
         return false;
     }
 
-    applyReferencePlaneHighlight(planeId);
+    if (isReferenceCsysPlaneVectorPickContext()) {
+        applyReferencePlaneHighlight(planeId);
+        referenceCsysHoveredAxis_ = -1;
+        referenceCsysHoveredPlane_ = -1;
+        referenceCsysOriginHovered_ = false;
+        applyVectorDirFromReferencePlane(planeId);
+        if (vtkWidget && vtkWidget->renderWindow()) {
+            vtkWidget->renderWindow()->Render();
+        }
+        return true;
+    }
+
+    referenceCsysHoveredPlane_ = planeId;
+    refreshReferenceCsysHighlight();
     const QString viewName = viewNameForReferenceCsysPlane(planeId);
     switchToView(viewName);
 
@@ -795,6 +1027,7 @@ void Widget::clearReferenceCsysState()
         remove(refCsysPlaneYZActor_);
         remove(refCsysPlaneXZActor_);
         remove(refCsysPlaneFrameActor_);
+        remove(refCsysOriginActor_);
     }
 
     refCsysActor_ = nullptr;
@@ -809,6 +1042,13 @@ void Widget::clearReferenceCsysState()
     refCsysPlaneYZActor_ = nullptr;
     refCsysPlaneXZActor_ = nullptr;
     refCsysPlaneFrameActor_ = nullptr;
+    refCsysOriginActor_ = nullptr;
+    referenceCsysHoveredAxis_ = -1;
+    referenceCsysSelectedAxis_ = -1;
+    referenceCsysHoveredPlane_ = -1;
+    referenceCsysSelectedPlane_ = -1;
+    referenceCsysOriginHovered_ = false;
+    referenceCsysOriginSelected_ = false;
     hasReferenceCsys_ = false;
     referenceCsysHistoryIndex_ = -1;
 }

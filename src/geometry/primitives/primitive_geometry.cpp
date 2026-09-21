@@ -1,3 +1,15 @@
+/*调用关系示意图
+buildPrimitiveShape(request)
+    -> createPrimitive(request.type)
+        -> CuboidPrimitive / CylinderPrimitive / ConePrimitive / SpherePrimitive
+    -> primitive->build(request)
+    -> TopoDS_Shape
+便捷入口：
+buildCuboidShape(...)
+    -> CuboidPrimitive().build(PrimitiveBuildRequest(...))
+    -> TopoDS_Shape
+*/
+
 #include "primitive_geometry.h"
 #include "primitive_shapes.h"
 

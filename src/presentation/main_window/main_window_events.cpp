@@ -48,11 +48,13 @@ bool Widget::eventFilter(QObject *obj, QEvent *event)
     if (event->type() == QEvent::Leave) {
         if (obj == g_mainVtkWidgetMap.value(this, nullptr)) {
             clearModelHoverHighlight();
+            clearReferenceCsysHover();
         } else if (g_mirrorRenderContextMap.contains(this)) {
             auto& map = g_mirrorRenderContextMap[this];
             for (auto it = map.begin(); it != map.end(); ++it) {
                 if (it.value().vtkWidget == obj) {
                     clearModelHoverHighlight();
+                    clearReferenceCsysHover();
                     break;
                 }
             }
@@ -355,6 +357,13 @@ void Widget::handleVtkMouseMove(int x, int y)
     }
 
     if (currentSelectionMode == PointSelection) {
+        if (hasReferenceCsys_) {
+            updateReferenceCsysAxisHover(x, y);
+            if (referenceCsysOriginHovered_) {
+                clearPointSelectionHover();
+                return;
+            }
+        }
         // 点选择模式下，如果捕捉点已开启，则使用捕捉点规则进行悬停提示
         if (snap_.armed) {
             updateSnapHover(x, y);
