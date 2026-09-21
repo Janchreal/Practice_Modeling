@@ -69,13 +69,13 @@ void Widget::syncCenterAxisCamera()
 
 void Widget::setupCenterAxisSelector()
 {
-    // 渲染窗口四层：0=主场景，1=覆盖外观，2=参考操作柄，3=左下角三重轴
+    // 渲染窗口五层：0=主场景，1=覆盖外观，2=草图参考，3=参考操作柄，4=左下角三重轴
     renderPipeline_.initialize(vtkWidget->renderWindow(), renderer,
                                [](vtkRenderer* ren) { Widget::configureSceneLights(ren); });
     renderer->SetLayer(0);
 
     centerAxesRenderer = vtkSmartPointer<vtkRenderer>::New();
-    centerAxesRenderer->SetLayer(3);
+    centerAxesRenderer->SetLayer(4);
     // 将视图三重轴放在左下角，与原来的三轴视图位置一致
     centerAxesRenderer->SetViewport(0.0, 0.0, 0.2, 0.2); // 左下角，占窗口 20% 尺寸
     centerAxesRenderer->SetErase(0); // 不清除背景，叠加绘制

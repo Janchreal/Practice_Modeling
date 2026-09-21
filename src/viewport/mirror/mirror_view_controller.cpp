@@ -198,11 +198,11 @@ void Widget::createNewWindow()
     cubeActor->GetCubeProperty()->SetColor(0.96, 0.96, 0.96);
     cubeActor->GetTextEdgesProperty()->SetColor(0.12, 0.12, 0.12);
 
-    // 子窗口与主窗口一致：L0 主场景 + L3 三重轴（L1/L2 预留给覆盖/参考，镜像暂空）
-    mirrorWindow->vtkWidget->renderWindow()->SetNumberOfLayers(4);
+    // 子窗口与主窗口一致：L0 主场景 + L4 三重轴（L1-L3 预留给覆盖/参考，镜像暂空）
+    mirrorWindow->vtkWidget->renderWindow()->SetNumberOfLayers(5);
     mirrorWindow->renderer->SetLayer(0);
     mirrorCtx.centerAxesRenderer = vtkSmartPointer<vtkRenderer>::New();
-    mirrorCtx.centerAxesRenderer->SetLayer(3);
+    mirrorCtx.centerAxesRenderer->SetLayer(4);
     mirrorCtx.centerAxesRenderer->SetViewport(0.0, 0.0, 0.2, 0.2);
     mirrorCtx.centerAxesRenderer->SetErase(0);
     mirrorWindow->vtkWidget->renderWindow()->AddRenderer(mirrorCtx.centerAxesRenderer);

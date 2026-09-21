@@ -5,10 +5,10 @@
 #include "common/modeltype.h"
 
 namespace PrimitiveGeometry {
-
+    //PrimitiveBuildRequest封装了构建图元所需的全部参数
 struct PrimitiveBuildRequest {
     PrimitiveBuildRequest() = default;
-
+    //模型类型、第一个参数、第二个参数、第三个个参数
     PrimitiveBuildRequest(ModelType shapeType,
                           double firstParameter,
                           double secondParameter = 0.0,

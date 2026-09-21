@@ -15,8 +15,8 @@ class vtkRenderWindow;
  *
  * The model renderer remains owned by the viewport host because picking and
  * camera navigation are still transitional responsibilities there. This
- * class owns the appearance/highlight and reference overlay renderers and
- * keeps their cameras independent from the model camera.
+ * class owns the appearance/highlight, sketch-guide, and reference overlay
+ * renderers and keeps their cameras independent from the model camera.
  */
 class RenderPipeline {
 public:
@@ -27,12 +27,15 @@ public:
                     const SceneLightConfigurer& configureLights);
 
     vtkRenderer* appearanceOverlay();
+    vtkRenderer* sketchGuideOverlay();
     vtkRenderer* referenceOverlay();
 
     void configureAppearanceAlwaysOnTop();
+    void configureSketchGuideAlwaysOnTop();
     void configureReferenceAlwaysOnTop();
 
     void addAppearanceProp(vtkProp* prop);
+    void addSketchGuideProp(vtkProp* prop);
     void addReferenceProp(vtkProp* prop);
     void removeProp(vtkProp* prop);
 
@@ -40,6 +43,7 @@ public:
 
 private:
     vtkRenderer* ensureAppearanceOverlay();
+    vtkRenderer* ensureSketchGuideOverlay();
     vtkRenderer* ensureReferenceOverlay();
     vtkRenderer* configureOverlay(vtkRenderer* overlay,
                                   vtkSmartPointer<vtkCallbackCommand>& observer,
@@ -49,8 +53,10 @@ private:
     vtkRenderer* modelRenderer_ = nullptr;
     SceneLightConfigurer configureLights_;
     vtkSmartPointer<vtkRenderer> appearanceOverlay_;
+    vtkSmartPointer<vtkRenderer> sketchGuideOverlay_;
     vtkSmartPointer<vtkRenderer> referenceOverlay_;
     vtkSmartPointer<vtkCallbackCommand> appearanceObserver_;
+    vtkSmartPointer<vtkCallbackCommand> sketchGuideObserver_;
     vtkSmartPointer<vtkCallbackCommand> referenceObserver_;
 };
 

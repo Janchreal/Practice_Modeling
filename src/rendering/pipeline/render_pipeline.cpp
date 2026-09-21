@@ -7,13 +7,17 @@ namespace {                                    ← 内部工具函数
 
 RenderPipeline::initialize                     ← 初始化
 RenderPipeline::appearanceOverlay              ← 获取外观叠加层
+RenderPipeline::sketchGuideOverlay             ← 获取草图参考层
 RenderPipeline::referenceOverlay               ← 获取参考叠加层
 RenderPipeline::ensureAppearanceOverlay        ← 懒创建外观层
+RenderPipeline::ensureSketchGuideOverlay       ← 懒创建草图参考层
 RenderPipeline::ensureReferenceOverlay         ← 懒创建参考层
 RenderPipeline::configureOverlay               ← 通用叠加层配置 + 观察者
 RenderPipeline::configureAppearanceAlwaysOnTop ← 外观层"置顶"策略
+RenderPipeline::configureSketchGuideAlwaysOnTop← 草图参考层"置顶"策略
 RenderPipeline::configureReferenceAlwaysOnTop  ← 参考层"置顶"策略
 RenderPipeline::addAppearanceProp              ← 添加 Prop 到外观层
+RenderPipeline::addSketchGuideProp             ← 添加 Prop 到草图参考层
 RenderPipeline::addReferenceProp               ← 添加 Prop 到参考层
 RenderPipeline::removeProp                     ← 从所有层移除 Prop
 RenderPipeline::syncCameras                    ← 相机同步
@@ -76,21 +80,27 @@ bool RenderPipeline::initialize(vtkRenderWindow* renderWindow,
     renderWindow_ = renderWindow;
     modelRenderer_ = modelRenderer;
     configureLights_ = configureLights;//一个可调用对象（回调），用来给新叠加层配置光照
-    //层数保证，vtk默认只分配一层，4的原因是预留给后面的扩展
-    if (renderWindow_->GetNumberOfLayers() < 4) {
-        renderWindow_->SetNumberOfLayers(4);
+    // 层数保证：0=主场景，1=外观，2=草图参考，3=操作参考，4=视图三重轴。
+    if (renderWindow_->GetNumberOfLayers() < 5) {
+        renderWindow_->SetNumberOfLayers(5);
     }
 
     ensureAppearanceOverlay();
+    ensureSketchGuideOverlay();
     ensureReferenceOverlay();
-    return appearanceOverlay_ && referenceOverlay_;
+    return appearanceOverlay_ && sketchGuideOverlay_ && referenceOverlay_;
 }
 
-//appearanceOverlay/referenceOverlay——访问器，直接转发到ensureXxx
+//appearanceOverlay/sketchGuideOverlay/referenceOverlay——访问器，直接转发到ensureXxx
 //即使用户没调initialize，只要内部保存了renderWindow_和modelRenderer_，也能按需创建。
 vtkRenderer* RenderPipeline::appearanceOverlay()
 {
     return ensureAppearanceOverlay();
+}
+
+vtkRenderer* RenderPipeline::sketchGuideOverlay()
+{
+    return ensureSketchGuideOverlay();
 }
 
 vtkRenderer* RenderPipeline::referenceOverlay()
@@ -99,7 +109,7 @@ vtkRenderer* RenderPipeline::referenceOverlay()
 }
 
 
-//ensureAppearanceOverlay/ensureReferenceOverlay——懒创建
+//ensureAppearanceOverlay/ensureSketchGuideOverlay/ensureReferenceOverlay——懒创建
 vtkRenderer* RenderPipeline::ensureAppearanceOverlay()
 {//1.幂等保护：已创建 → 直接返回，未初始化 → 返回 nullptr，只有"未创建但已初始化"才继续走创建逻辑
     if (appearanceOverlay_ || !renderWindow_ || !modelRenderer_) {
@@ -124,6 +134,28 @@ vtkRenderer* RenderPipeline::ensureAppearanceOverlay()
     return appearanceOverlay_;
 }
 
+vtkRenderer* RenderPipeline::ensureSketchGuideOverlay()
+{
+    if (sketchGuideOverlay_ || !renderWindow_ || !modelRenderer_) {
+        return sketchGuideOverlay_;
+    }
+
+    sketchGuideOverlay_ = vtkSmartPointer<vtkRenderer>::New();
+    configureOverlayDefaults(sketchGuideOverlay_, 2);
+    configureSketchGuideAlwaysOnTop();
+
+    vtkSmartPointer<vtkCamera> camera = vtkSmartPointer<vtkCamera>::New();
+    if (modelRenderer_->GetActiveCamera()) {
+        camera->DeepCopy(modelRenderer_->GetActiveCamera());
+    }
+    sketchGuideOverlay_->SetActiveCamera(camera);
+    if (configureLights_) {
+        configureLights_(sketchGuideOverlay_);
+    }
+    renderWindow_->AddRenderer(sketchGuideOverlay_);
+    return sketchGuideOverlay_;
+}
+
 //几乎与ensureAppearanceOverlay对称
 vtkRenderer* RenderPipeline::ensureReferenceOverlay()
 {
@@ -132,7 +164,7 @@ vtkRenderer* RenderPipeline::ensureReferenceOverlay()
     }
 
     referenceOverlay_ = vtkSmartPointer<vtkRenderer>::New();
-    configureOverlayDefaults(referenceOverlay_, 2);
+    configureOverlayDefaults(referenceOverlay_, 3);
     configureReferenceAlwaysOnTop();
 
     vtkSmartPointer<vtkCamera> camera = vtkSmartPointer<vtkCamera>::New();
@@ -156,7 +188,7 @@ vtkRenderer* RenderPipeline::configureOverlay(
     if (!overlay) {
         return nullptr;
     }
-    //顺序：主模型层先画，之后外观叠加层画，最后参考叠加层画。
+    // 顺序：主模型层先画，然后是外观层、草图参考层、操作参考层。
     overlay->SetErase(0);//不清屏（不擦除背景色），保持下面层的渲染结果，叠加层只画自己的东西
     overlay->SetPreserveColorBuffer(1);//保留颜色缓冲，确保叠加层画完后不会擦掉已画内容
     overlay->SetPreserveDepthBuffer(0);//不保留深度缓冲，叠加层绘制时要清掉深度，让所有叠加层对象都画在最前面
@@ -202,6 +234,11 @@ void RenderPipeline::configureAppearanceAlwaysOnTop()
     configureOverlay(appearanceOverlay_, appearanceObserver_, false);
 }
 
+void RenderPipeline::configureSketchGuideAlwaysOnTop()
+{
+    configureOverlay(sketchGuideOverlay_, sketchGuideObserver_, false);
+}
+
 void RenderPipeline::configureReferenceAlwaysOnTop()
 {
     configureOverlay(referenceOverlay_, referenceObserver_, true);
@@ -214,6 +251,15 @@ void RenderPipeline::addAppearanceProp(vtkProp* prop)
     }
     removeProp(prop);
     appearanceOverlay_->AddViewProp(prop);
+}
+
+void RenderPipeline::addSketchGuideProp(vtkProp* prop)
+{
+    if (!prop || !sketchGuideOverlay()) {
+        return;
+    }
+    removeProp(prop);
+    sketchGuideOverlay_->AddViewProp(prop);
 }
 
 void RenderPipeline::addReferenceProp(vtkProp* prop)
@@ -235,6 +281,9 @@ void RenderPipeline::removeProp(vtkProp* prop)
     }
     if (appearanceOverlay_) {
         appearanceOverlay_->RemoveViewProp(prop);
+    }
+    if (sketchGuideOverlay_) {
+        sketchGuideOverlay_->RemoveViewProp(prop);
     }
     if (referenceOverlay_) {
         referenceOverlay_->RemoveViewProp(prop);
@@ -282,7 +331,9 @@ void RenderPipeline::syncCameras()
     };
 
     syncOne(appearanceOverlay_);
+    syncOne(sketchGuideOverlay_);
     syncOne(referenceOverlay_);
     configureAppearanceAlwaysOnTop();
+    configureSketchGuideAlwaysOnTop();
     configureReferenceAlwaysOnTop();
 }

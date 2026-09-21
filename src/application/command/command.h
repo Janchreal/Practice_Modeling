@@ -3,7 +3,7 @@
 #define COMMAND_H
 
 #include <QString>
-
+//向前声明，告诉编译器有一个叫做ModelingCommanddPort的类后面会用到
 class ModelingCommandPort;
 
 class Command {
@@ -24,7 +24,7 @@ public:
     virtual bool changesGeometry() const { return true; } // 是否改变几何
 
 protected:
-    // Commands depend on an application port, not on a concrete widget.
+    // Command 不直接依赖具体的 Qt Widget，而是依赖一个“应用接口”
     ModelingCommandPort* context_ = nullptr;
 };
 

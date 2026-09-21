@@ -331,16 +331,19 @@ private:
      * 渲染层级（与规划一致）：
      *  L0 renderer                         — 主渲染：模型默认样式 + 框架轮廓
      *  L1 RenderPipeline appearance layer  — 覆盖外观：高亮/选中/预览
-     *  L2 RenderPipeline reference layer   — 参考：矢量/点操作柄、坐标系轴
-     *  L3 centerAxesRenderer               — 视图三重轴
+     *  L2 RenderPipeline sketch guide layer— 草图参考：进入草图后的平面虚线轴
+     *  L3 RenderPipeline reference layer   — 参考：矢量/点操作柄、坐标系轴
+     *  L4 centerAxesRenderer               — 视图三重轴
      */
     void configureReferenceOverlayAlwaysOnTop();
     void configureFeatureSelectionOverlayAlwaysOnTop();
     vtkRenderer* appearanceOverlay();   // L1
-    vtkRenderer* referenceOverlay();    // L2
+    vtkRenderer* sketchGuideOverlay();  // L2
+    vtkRenderer* referenceOverlay();    // L3
     void addAppearanceActor(vtkProp* prop);
+    void addSketchGuideActor(vtkProp* prop);
     void addReferenceActor(vtkProp* prop);
-    void removeSceneActor(vtkProp* prop); // 从 L0/L1/L2 安全移除
+    void removeSceneActor(vtkProp* prop); // 从 L0/L1/L2/L3 安全移除
      bool ensureWorkCsysActorsCreated();
     void setWorkCsysVisible(bool visible);
     bool handleWorkCsysAxisPick(int x, int y);

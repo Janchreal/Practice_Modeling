@@ -355,6 +355,11 @@ vtkRenderer* Widget::appearanceOverlay()
     return renderPipeline_.appearanceOverlay();
 }
 
+vtkRenderer* Widget::sketchGuideOverlay()
+{
+    return renderPipeline_.sketchGuideOverlay();
+}
+
 vtkRenderer* Widget::referenceOverlay()
 {
     return renderPipeline_.referenceOverlay();
@@ -363,6 +368,11 @@ vtkRenderer* Widget::referenceOverlay()
 void Widget::addAppearanceActor(vtkProp* prop)
 {
     renderPipeline_.addAppearanceProp(prop);
+}
+
+void Widget::addSketchGuideActor(vtkProp* prop)
+{
+    renderPipeline_.addSketchGuideProp(prop);
 }
 
 void Widget::addReferenceActor(vtkProp* prop)

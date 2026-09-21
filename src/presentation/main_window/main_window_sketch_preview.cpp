@@ -406,7 +406,7 @@ void Widget::rebuildSketchPlaneAxisActors()
         actor->GetProperty()->SetLighting(false);
         actor->SetPickable(false);
         actor->SetVisibility(sketchPlaneAxisVisible_ ? 1 : 0);
-        addAppearanceActor(actor);
+        addSketchGuideActor(actor);
         return actor;
     };
 
