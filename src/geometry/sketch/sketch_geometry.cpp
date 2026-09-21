@@ -92,6 +92,72 @@ bool edgeIsOnPlane(const TopoDS_Edge& edge,
     }
 }
 
+bool parameterInPeriodicRange(double parameter,
+                              double first,
+                              double last,
+                              double period,
+                              double tolerance)
+{
+    if (!std::isfinite(parameter) || !std::isfinite(first) || !std::isfinite(last)
+        || period <= Precision::Confusion()) {
+        return false;
+    }
+
+    const double lo = std::min(first, last);
+    const double hi = std::max(first, last);
+    const double span = hi - lo;
+    if (span <= Precision::Confusion()) {
+        return false;
+    }
+    if (span >= period - tolerance) {
+        return true;
+    }
+
+    const double base = parameter + std::floor((lo - parameter) / period) * period;
+    for (int i = -1; i <= 2; ++i) {
+        const double shifted = base + static_cast<double>(i) * period;
+        if (shifted >= lo - tolerance && shifted <= hi + tolerance) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool circularPointLiesOnEdge(const TopoDS_Edge& edge,
+                             const Handle(Geom_Curve)& curve,
+                             Standard_Real first,
+                             Standard_Real last,
+                             const Handle(Geom_Circle)& circle,
+                             const gp_Pnt& point)
+{
+    if (edge.IsNull() || curve.IsNull() || circle.IsNull()) {
+        return false;
+    }
+
+    try {
+        GeomAPI_ProjectPointOnCurve projection(point, curve);
+        if (projection.NbPoints() < 1) {
+            return false;
+        }
+
+        const Standard_Real parameter = projection.LowerDistanceParameter();
+        const gp_Pnt projected = curve->Value(parameter);
+        const double spatialTolerance = qMax(1.0e-6, circle->Radius() * 1.0e-6);
+        if (projected.Distance(point) > spatialTolerance) {
+            return false;
+        }
+
+        return parameterInPeriodicRange(
+            static_cast<double>(parameter),
+            static_cast<double>(first),
+            static_cast<double>(last),
+            2.0 * M_PI,
+            qMax(Precision::Angular() * 100.0, 1.0e-7));
+    } catch (...) {
+        return false;
+    }
+}
+
 bool collectPlanarProfileFaces(const TopoDS_Shape& sketchShape,
                                const gp_Pln& sketchPlane,
                                QList<TopoDS_Face>& outFaces,
@@ -253,6 +319,10 @@ bool circularEdgeMidPoint(const TopoDS_Edge& edge, gp_Pnt& outPoint)
     }
     if (Handle(Geom_Circle)::DownCast(basis).IsNull()) return false;
 
+    gp_Vec tangent;
+    if (edgePointAndTangentAtPosition(edge, 50.0, true, outPoint, tangent, nullptr)) {
+        return true;
+    }
     outPoint = curve->Value(0.5 * (f + l));
     return true;
 }
@@ -273,13 +343,25 @@ QList<gp_Pnt> edgeSnapCandidates(const TopoDS_Edge& edge, bool includeMidpoint, 
     Handle(Geom_Circle) circ = Handle(Geom_Circle)::DownCast(basis);
     if (circ.IsNull()) {
         if (includeMidpoint) {
-            points.append(curve->Value(0.5 * (f + l)));
+            gp_Pnt midpoint;
+            gp_Vec tangent;
+            if (edgePointAndTangentAtPosition(edge, 50.0, true, midpoint, tangent, nullptr)) {
+                points.append(midpoint);
+            } else {
+                points.append(curve->Value(0.5 * (f + l)));
+            }
         }
         return points;
     }
 
     if (includeMidpoint) {
-        points.append(curve->Value(0.5 * (f + l)));
+        gp_Pnt midpoint;
+        gp_Vec tangent;
+        if (edgePointAndTangentAtPosition(edge, 50.0, true, midpoint, tangent, nullptr)) {
+            points.append(midpoint);
+        } else {
+            points.append(curve->Value(0.5 * (f + l)));
+        }
     }
     if (includeCenter) {
         points.append(circ->Location());
@@ -290,10 +372,17 @@ QList<gp_Pnt> edgeSnapCandidates(const TopoDS_Edge& edge, bool includeMidpoint, 
         const gp_Dir xd = ax.XDirection();
         const gp_Dir yd = ax.YDirection();
         const double r = circ->Radius();
-        points.append(gp_Pnt(c.X() + xd.X() * r, c.Y() + xd.Y() * r, c.Z() + xd.Z() * r));
-        points.append(gp_Pnt(c.X() - xd.X() * r, c.Y() - xd.Y() * r, c.Z() - xd.Z() * r));
-        points.append(gp_Pnt(c.X() + yd.X() * r, c.Y() + yd.Y() * r, c.Z() + yd.Z() * r));
-        points.append(gp_Pnt(c.X() - yd.X() * r, c.Y() - yd.Y() * r, c.Z() - yd.Z() * r));
+        const gp_Pnt quadrantPoints[] = {
+            gp_Pnt(c.X() + xd.X() * r, c.Y() + xd.Y() * r, c.Z() + xd.Z() * r),
+            gp_Pnt(c.X() - xd.X() * r, c.Y() - xd.Y() * r, c.Z() - xd.Z() * r),
+            gp_Pnt(c.X() + yd.X() * r, c.Y() + yd.Y() * r, c.Z() + yd.Z() * r),
+            gp_Pnt(c.X() - yd.X() * r, c.Y() - yd.Y() * r, c.Z() - yd.Z() * r),
+        };
+        for (const gp_Pnt& point : quadrantPoints) {
+            if (circularPointLiesOnEdge(edge, curve, f, l, circ, point)) {
+                points.append(point);
+            }
+        }
     }
     return points;
 }

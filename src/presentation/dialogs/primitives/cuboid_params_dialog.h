@@ -81,7 +81,7 @@ private:
     double heightValue_ = 2.0;
     double originX, originY, originZ;
     bool hasOrigin;
-    int originSnapKind_ = -1; // -1 表示未选择：走原逻辑；0最近点/1端点/2中点/3交点/4圆心/5象限点
+    int originSnapKind_ = -1; // -1任意点；0最近点/1端点/2中点/3交点/4圆心/5象限点
 
     bool axisReversed_ = false;
     bool resultPreviewActive_ = false;

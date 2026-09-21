@@ -145,6 +145,27 @@ void SketchToolInputDialog::setArcParameters(double radius, double sweepDeg)
     updating_ = false;
 }
 
+void SketchToolInputDialog::setToolTitle(const QString& title)
+{
+    setWindowTitle(title);
+    if (ui->label_title) {
+        ui->label_title->setText(title);
+    }
+}
+
+void SketchToolInputDialog::setObjectSwitchingVisible(bool visible)
+{
+    if (ui->label_objectType) {
+        ui->label_objectType->setVisible(visible);
+    }
+    if (ui->toolButton_objLine) {
+        ui->toolButton_objLine->setVisible(visible);
+    }
+    if (ui->toolButton_objArc) {
+        ui->toolButton_objArc->setVisible(visible);
+    }
+}
+
 double SketchToolInputDialog::xcValue() const
 {
     bool ok = false;

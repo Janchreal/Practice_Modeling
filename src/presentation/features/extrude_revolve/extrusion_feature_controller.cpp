@@ -39,11 +39,15 @@ namespace {
 
 bool resolveModelExtrusionProfileForCommit(const Widget* widget,
                                            int modelIndex,
-                                           bool solid,
+                                           bool requestedSheetBody,
                                            TopoDS_Shape& outProfile,
+                                           bool* outMakeSheetBody,
                                            QString* errorMessage = nullptr)
 {
     outProfile = TopoDS_Shape();
+    if (outMakeSheetBody) {
+        *outMakeSheetBody = requestedSheetBody;
+    }
     if (!widget || modelIndex < 0 || modelIndex >= widget->getHistoryList().size()) {
         if (errorMessage) *errorMessage = QObject::tr("拉伸对象不存在。");
         return false;
@@ -56,19 +60,25 @@ bool resolveModelExtrusionProfileForCommit(const Widget* widget,
         return false;
     }
 
-    if (record.type == SKETCH && solid) {
+    if (record.type == SKETCH) {
         const gp_Pln plane(record.recipe.sketch.planeOrigin,
                            record.recipe.sketch.planeNormal);
         std::string error;
-        if (!SketchGeometry::buildPlanarProfile(
+        if (SketchGeometry::buildPlanarProfile(
                 source, plane, outProfile, &error)) {
-            if (errorMessage) *errorMessage = QString::fromStdString(error);
-            return false;
+            if (outMakeSheetBody) {
+                *outMakeSheetBody = false;
+            }
+            return true;
+        }
+        outProfile = source;
+        if (outMakeSheetBody) {
+            *outMakeSheetBody = true;
         }
         return true;
     }
 
-    outProfile = solid
+    outProfile = !requestedSheetBody
         ? ExtrusionGeometry::prepareSolidExtrusionProfile(source)
         : source;
     if (outProfile.IsNull()) {
@@ -551,21 +561,28 @@ void Widget::performExtrusion(ExtrusionDialog* dialog)
             // 使用模型选择进行拉伸（兼容旧版本）
             for (int index : extrusionSelectedIndices) {
                 TopoDS_Shape shapeToExtrude;
+                bool profileMakeSheetBody = makeSheetBody;
                 QString profileError;
                 if (!resolveModelExtrusionProfileForCommit(
-                        this, index, !makeSheetBody, shapeToExtrude, &profileError)) {
+                        this, index, makeSheetBody, shapeToExtrude, &profileMakeSheetBody, &profileError)) {
                     QMessageBox::warning(this, "错误",
-                                         QString("无法拉伸模型\"%1\"：%2")
-                                             .arg(historyList[index].name)
+                                          QString("无法拉伸模型\"%1\"：%2")
+                                              .arg(historyList[index].name)
                                              .arg(profileError.isEmpty()
                                                       ? tr("Profile 无效。")
                                                       : profileError));
                     continue;
                 }
+                if (profileMakeSheetBody && boolMode >= 0) {
+                    QMessageBox::warning(this, "警告",
+                                         QString("模型\"%1\"为开放草图，自动按片体拉伸；片体暂不支持布尔运算。")
+                                             .arg(historyList[index].name));
+                    continue;
+                }
 
                 // 执行拉伸（与面选择一致：先起始偏移再扫掠）
                 TopoDS_Shape extruded = ExtrusionGeometry::extrudeResolvedProfile(
-                    shapeToExtrude, extrudeDir, actualDistance, startDistance, makeSheetBody);
+                    shapeToExtrude, extrudeDir, actualDistance, startDistance, profileMakeSheetBody);
                 if (extruded.IsNull()) {
                     QMessageBox::warning(this, "错误",
                                          QString("模型\"%1\"拉伸操作失败！").arg(historyList[index].name));
@@ -585,7 +602,7 @@ void Widget::performExtrusion(ExtrusionDialog* dialog)
                 QColor resultColor = QColor(255, 140, 0);
 
                 FeatureRecipe recipe = ExtrusionRecipeUtils::buildModelExtrusionRecipe(
-                    index, extrudeDir, actualDistance, makeSheetBody, useVectorDir);
+                    index, extrudeDir, actualDistance, profileMakeSheetBody, useVectorDir);
                 recipe.extrusion.startOffset = startDistance;
                 recipe.extrusion.boolOpType = boolMode;
                 recipe.extrusion.boolTargetIndex = boolTargetIdx;

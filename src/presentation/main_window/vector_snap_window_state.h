@@ -9,6 +9,8 @@
 
 #include <TopoDS_Edge.hxx>
 
+#include "interaction/tools/point_picker.h"
+
 #include <gp_Dir.hxx>
 #include <gp_Pnt.hxx>
 
@@ -63,11 +65,15 @@ protected:
     struct VectorSnapPreviewCandidate {
         gp_Pnt point;
         double screenDistanceSquared = 0.0;
-        int type = 0; // 1=endpoint, 2=midpoint
+        int type = 0; // 1=endpoint, 2=midpoint, 3=intersection, 4=center, 5=quadrant, 6=arc midpoint
         int modelIndex = -1;
         IVtk_IdType subShapeId = static_cast<IVtk_IdType>(-1);
+        TopoDS_Shape refShape;
+        bool hasRef = false;
     };
     QList<VectorSnapPreviewCandidate> vectorSnapPreviewCandidates_;
+    PointPicker pointPicker_;
+    PointPickResult snapSelectedResult_;
     gp_Pnt snapHoverBestPoint_;
     bool hasSnapHoverBestPoint_ = false;
     bool vectorTwoPointSnapHasHoveredEdge_ = false;
@@ -98,12 +104,14 @@ protected:
         bool quadrant = false;
         bool onCurve = false;
         bool onFace = false;
+        bool anyPoint = false;
     };
     SnapSettings snap_;
     gp_Pnt snapSelectedPoint_;
     bool hasSnapSelectedPoint_ = false;
     QList<gp_Pnt> snapPersistentPoints_;
     QList<vtkSmartPointer<vtkActor>> snapPersistentPointActors_;
+    QList<vtkSmartPointer<vtkActor>> snapCandidatePointActors_;
     vtkSmartPointer<vtkActor> snapHoverPointActor_;
     vtkSmartPointer<vtkFollower> snapHoverTextActor_;
     vtkSmartPointer<vtkActor> snapHoverShapeActor_;

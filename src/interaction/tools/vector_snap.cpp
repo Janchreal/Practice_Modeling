@@ -7,6 +7,8 @@
 #include "presentation/dialogs/extrude_revolve/extrusion_dialog.h"
 #include "rendering/handles/handle_geometry.h"
 #include "geometry/sketch/sketch_geometry.h"
+#include "interaction/tools/point_candidate_calculator.h"
+#include "interaction/tools/point_snap_manager.h"
 #include "rendering/pipeline/model_shape_pipeline.h"
 #include "presentation/dialogs/primitives/sphere_params_dialog.h"
 #include "presentation/dialogs/tools/vector_dialog.h"
@@ -71,7 +73,6 @@
 #include <vtkActorCollection.h>
 #include <vtkArrowSource.h>
 #include <vtkCamera.h>
-#include <vtkCubeSource.h>
 #include <vtkFeatureEdges.h>
 #include <vtkFollower.h>
 #include <vtkGenericOpenGLRenderWindow.h>
@@ -495,6 +496,9 @@ void Widget::reapplyTwoPointSnapKindFilters(int snapKind)
     case 5:
         snap_.quadrant = true;
         break;
+    case 4:
+        snap_.center = true;
+        break;
     case 6:
         snap_.arcMidpoint = true;
         break;
@@ -550,6 +554,9 @@ void Widget::applyTwoPointVectorSnapKind(int snapKind, bool clearExistingPoints)
         break;
     case 5: // 象限点
         snap_.quadrant = true;
+        break;
+    case 4: // 圆心
+        snap_.center = true;
         break;
     case 6: // 圆弧中点（仅对圆曲线）
         snap_.arcMidpoint = true;
@@ -979,9 +986,17 @@ bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
     return true;
 }
 
-bool Widget::tryPickPointOnModelForVector(int x, int y, gp_Pnt& outPoint)
+bool Widget::tryPickPointOnModelForVector(int x, int y, gp_Pnt& outPoint,
+                                          TopoDS_Shape* outSourceShape,
+                                          PointSnapType* outSnapType)
 {
     if (!shapePicker || !renderer) return false;
+    if (outSourceShape) {
+        *outSourceShape = TopoDS_Shape();
+    }
+    if (outSnapType) {
+        *outSnapType = PointSnapType::None;
+    }
 
     shapePicker->SetRenderer(renderer);
     shapePicker->SetTolerance(0.05);
@@ -1065,6 +1080,7 @@ bool Widget::tryPickPointOnModelForVector(int x, int y, gp_Pnt& outPoint)
     if (hasRay) {
         Standard_Real globalBestW = RealLast();
         gp_Pnt globalBestP;
+        TopoDS_Shape globalBestShape;
         bool foundPoint = false;
 
         for (IVtk_ShapeIdList::Iterator sIt(subShapeIds); sIt.More(); sIt.Next()) {
@@ -1083,6 +1099,7 @@ bool Widget::tryPickPointOnModelForVector(int x, int y, gp_Pnt& outPoint)
                 if (w >= 0.0 && w < globalBestW) {
                     globalBestW = w;
                     globalBestP = intersector.Pnt(i);
+                    globalBestShape = face;
                     foundPoint = true;
                 }
             }
@@ -1090,6 +1107,12 @@ bool Widget::tryPickPointOnModelForVector(int x, int y, gp_Pnt& outPoint)
 
         if (foundPoint) {
             outPoint = globalBestP;
+            if (outSourceShape) {
+                *outSourceShape = globalBestShape;
+            }
+            if (outSnapType) {
+                *outSnapType = PointSnapType::OnFace;
+            }
             return true;
         }
     }
@@ -1100,10 +1123,22 @@ bool Widget::tryPickPointOnModelForVector(int x, int y, gp_Pnt& outPoint)
         const TopoDS_Shape& subShape = shapeWrapper->GetSubShape(subShapeId);
         if (subShape.ShapeType() == TopAbs_VERTEX) {
             outPoint = BRep_Tool::Pnt(TopoDS::Vertex(subShape));
+            if (outSourceShape) {
+                *outSourceShape = subShape;
+            }
+            if (outSnapType) {
+                *outSnapType = PointSnapType::Endpoint;
+            }
             return true;
         } else if (subShape.ShapeType() == TopAbs_EDGE) {
             TopoDS_Edge edge = TopoDS::Edge(subShape);
             if (SketchGeometry::edgeMidPoint(edge, outPoint)) {
+                if (outSourceShape) {
+                    *outSourceShape = edge;
+                }
+                if (outSnapType) {
+                    *outSnapType = PointSnapType::Midpoint;
+                }
                 return true;
             }
         }
@@ -2076,7 +2111,9 @@ void Widget::updateSnapPickGhostPresentation()
         || currentSelectionMode == PointSelection
         || currentSelectionMode == VectorDialogPickStartPoint
         || currentSelectionMode == VectorDialogPickEndPoint
-        || currentSelectionMode == VectorTwoPointHandleDrag;
+        || currentSelectionMode == VectorTwoPointHandleDrag
+        || currentSelectionMode == WorkCsysPlacement
+        || isSketchPointInputMode(currentSelectionMode);
 
     const bool wantSnapGhost = (snap_.armed || inPointPickUi) && !featureDialogBusy;
 
@@ -2106,17 +2143,47 @@ void Widget::startOriginSnapSelection(OriginDialogKind kind, int snapKind)
     originSnapSelectionActive_ = true;
     currentSelectionMode = None; // 只让点击触发 snap 捕捉
 
-    // 清空原有捕捉状态与 UI 勾选
-    clearSnapSettings();
-
     if (!ui) return;
+
+    if (snapKind < 0) {
+        // “任意点”不是一个固定的端点/中点过滤器；它应沿用当前点捕捉器状态。
+        // 这样点捕捉器为 Endpoint+Midpoint 时，基本体原点选择也会显示端点+中点三个候选点。
+        mergeSnapFiltersFromToolbarAndCaptureUi();
+
+        const auto hasFeatureSnapType = [this]() {
+            return snap_.nearest || snap_.endpoint || snap_.midpoint || snap_.arcMidpoint
+                || snap_.intersection || snap_.center || snap_.quadrant || snap_.onCurve
+                || snap_.onFace;
+        };
+
+        snap_.enabled = true;
+        snap_.armed = true;
+        snap_.anyPoint = !hasFeatureSnapType();
+        updateSnapPickGhostPresentation();
+
+        if (vtkWidget) {
+            vtkWidget->setFocus();
+        }
+        if (statusBar()) {
+            statusBar()->showMessage(
+                snap_.anyPoint
+                    ? tr("捕捉原点：请在模型上点击任意点。")
+                    : tr("捕捉原点：请按当前点捕捉器候选点点击。"),
+                3000);
+        }
+        return;
+    }
+
+    // 明确选择“端点/中点/交点...”时，才临时改成该单一捕捉类型。
+    clearSnapSettings();
 
     // 开启捕捉总开关（用于保持交互一致）
     snap_.enabled = true;
     snap_.armed = true;
+    snap_.anyPoint = false;
     ui->Use_Capture->setChecked(true);
 
-    // 设置捕捉类型（最近点）
+    // 设置捕捉类型。
     snap_.nearest = (snapKind == 0);
     snap_.endpoint = (snapKind == 1);
     snap_.midpoint = (snapKind == 2);
@@ -2332,8 +2399,16 @@ void Widget::clearSnapHover()
     hasSnapHoverBestPoint_ = false;
     vectorSnapPreviewCandidates_.clear();
     vectorTwoPointSnapHasHoveredEdge_ = false;
-    if (!renderer) return;
+    pointPicker_.cancelPick();
+    if (!renderer) {
+        snapCandidatePointActors_.clear();
+        return;
+    }
     clearVectorTwoPointSnapGhosts();
+    for (const auto& actor : snapCandidatePointActors_) {
+        if (actor) removeSceneActor(actor);
+    }
+    snapCandidatePointActors_.clear();
     if (snapHoverPointActor_) {
         removeSceneActor(snapHoverPointActor_);
         snapHoverPointActor_ = nullptr;
@@ -2351,6 +2426,7 @@ void Widget::clearSnapHover()
 
 void Widget::clearSnapSelected()
 {
+    snapSelectedResult_ = PointPickResult{};
     if (!renderer) return;
     if (snapSelectedPointActor_) {
         removeSceneActor(snapSelectedPointActor_);
@@ -2514,6 +2590,159 @@ static double edgeScreenDist2(vtkRenderer* renderer,
     return best;
 }
 
+static const char* snapCandidateTextByKind(int kind)
+{
+    switch (kind) {
+    case 1: return "端点";
+    case 2: return "中点";
+    case 3: return "交点";
+    case 4: return "圆心";
+    case 5: return "象限点";
+    case 6: return "圆弧中点";
+    default: return "捕捉点";
+    }
+}
+
+static PointSnapType snapTypeFromCandidateLabel(const QString& label)
+{
+    if (label == PointSnapManager::labelForType(PointSnapType::Endpoint)) {
+        return PointSnapType::Endpoint;
+    }
+    if (label == PointSnapManager::labelForType(PointSnapType::Midpoint)) {
+        return PointSnapType::Midpoint;
+    }
+    if (label == PointSnapManager::labelForType(PointSnapType::ArcMidpoint)) {
+        return PointSnapType::ArcMidpoint;
+    }
+    if (label == PointSnapManager::labelForType(PointSnapType::Intersection)) {
+        return PointSnapType::Intersection;
+    }
+    if (label == PointSnapManager::labelForType(PointSnapType::Center)) {
+        return PointSnapType::Center;
+    }
+    if (label == PointSnapManager::labelForType(PointSnapType::Quadrant)) {
+        return PointSnapType::Quadrant;
+    }
+    if (label == PointSnapManager::labelForType(PointSnapType::OnCurve)) {
+        return PointSnapType::OnCurve;
+    }
+    if (label == PointSnapManager::labelForType(PointSnapType::OnFace)) {
+        return PointSnapType::OnFace;
+    }
+    if (label == PointSnapManager::labelForType(PointSnapType::Nearest)) {
+        return PointSnapType::Nearest;
+    }
+    return PointSnapType::None;
+}
+
+static bool parameterInPeriodicRange(double parameter,
+                                     double first,
+                                     double last,
+                                     double period,
+                                     double tolerance)
+{
+    if (!std::isfinite(parameter) || !std::isfinite(first) || !std::isfinite(last)
+        || period <= Precision::Confusion()) {
+        return false;
+    }
+
+    const double lo = std::min(first, last);
+    const double hi = std::max(first, last);
+    const double span = hi - lo;
+    if (span <= Precision::Confusion()) {
+        return false;
+    }
+    if (span >= period - tolerance) {
+        return true;
+    }
+
+    const double base = parameter + std::floor((lo - parameter) / period) * period;
+    for (int i = -1; i <= 2; ++i) {
+        const double shifted = base + static_cast<double>(i) * period;
+        if (shifted >= lo - tolerance && shifted <= hi + tolerance) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool circularPointLiesOnEdge(const TopoDS_Edge& edge,
+                                    const Handle(Geom_Curve)& curve,
+                                    Standard_Real first,
+                                    Standard_Real last,
+                                    const Handle(Geom_Circle)& circle,
+                                    const gp_Pnt& point)
+{
+    if (edge.IsNull() || curve.IsNull() || circle.IsNull()) {
+        return false;
+    }
+
+    try {
+        GeomAPI_ProjectPointOnCurve projection(point, curve);
+        if (projection.NbPoints() < 1) {
+            return false;
+        }
+
+        const Standard_Real parameter = projection.LowerDistanceParameter();
+        const gp_Pnt projected = curve->Value(parameter);
+        const double spatialTolerance = qMax(1.0e-6, circle->Radius() * 1.0e-6);
+        if (projected.Distance(point) > spatialTolerance) {
+            return false;
+        }
+
+        return parameterInPeriodicRange(
+            static_cast<double>(parameter),
+            static_cast<double>(first),
+            static_cast<double>(last),
+            2.0 * M_PI,
+            qMax(Precision::Angular() * 100.0, 1.0e-7));
+    } catch (...) {
+        return false;
+    }
+}
+
+static bool edgeLengthMidpoint(const TopoDS_Edge& edge,
+                               const Handle(Geom_Curve)& curve,
+                               Standard_Real first,
+                               Standard_Real last,
+                               gp_Pnt& outPoint)
+{
+    gp_Vec tangent;
+    if (SketchGeometry::edgePointAndTangentAtPosition(
+            edge, 50.0, true, outPoint, tangent, nullptr)) {
+        return true;
+    }
+    if (curve.IsNull()) {
+        return false;
+    }
+    outPoint = curve->Value((first + last) * 0.5);
+    return true;
+}
+
+template <typename AddCandidate>
+static void appendEdgeFeatureSnapCandidates(const TopoDS_Edge& edge,
+                                            bool includeEndpoint,
+                                            bool includeMidpoint,
+                                            bool includeArcMidpoint,
+                                            bool includeCenter,
+                                            bool includeQuadrant,
+                                            AddCandidate addCandidate)
+{
+    PointSnapMode mode;
+    mode.endpoint = includeEndpoint;
+    mode.midpoint = includeMidpoint;
+    mode.arcMidpoint = includeArcMidpoint;
+    mode.center = includeCenter;
+    mode.quadrant = includeQuadrant;
+
+    const PointCandidateList candidates =
+        PointCandidateCalculator::edgeCandidates(edge, mode);
+    for (const PointCandidate& candidate : candidates) {
+        addCandidate(PointSnapManager::legacyCandidateKind(candidate.snapType),
+                     candidate.point);
+    }
+}
+
 void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragMode)
 {
     Q_UNUSED(dragMode);
@@ -2521,7 +2750,8 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
     vectorSnapPreviewCandidates_.clear();
     hasSnapHoverBestPoint_ = false;
     vectorTwoPointSnapHasHoveredEdge_ = false;
-    if (!renderer || (snapKind != -1 && snapKind != 1 && snapKind != 2)) {
+    if (!renderer || (snapKind != -1 && snapKind != 1 && snapKind != 2
+        && snapKind != 3 && snapKind != 4 && snapKind != 5 && snapKind != 6)) {
         clearSnapHover();
         return;
     }
@@ -2540,6 +2770,50 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
     TopoDS_Edge bestEdge;
     int bestModelIndex = -1;
     double bestEdgeDistance2 = 1.0e100;
+    QList<TopoDS_Edge> allEdges;
+
+    auto appendEdgesFromShape = [](const TopoDS_Shape& shape, QList<TopoDS_Edge>& edges) {
+        if (shape.IsNull()) return;
+        if (shape.ShapeType() == TopAbs_EDGE) {
+            edges.append(TopoDS::Edge(shape));
+            return;
+        }
+        for (TopExp_Explorer explorer(shape, TopAbs_EDGE); explorer.More(); explorer.Next()) {
+            const TopoDS_Shape current = explorer.Current();
+            if (!current.IsNull() && current.ShapeType() == TopAbs_EDGE) {
+                edges.append(TopoDS::Edge(current));
+            }
+        }
+    };
+
+    auto considerEdge = [&](const TopoDS_Edge& edge, int modelIndex) {
+        if (edge.IsNull()) return;
+        allEdges.append(edge);
+        try {
+            BRepAdaptor_Curve curve(edge);
+            const Standard_Real first = curve.FirstParameter();
+            const Standard_Real last = curve.LastParameter();
+            if (!std::isfinite(first) || !std::isfinite(last)
+                || std::abs(last - first) <= 1.0e-12) {
+                return;
+            }
+
+            const QList<gp_Pnt> samples = SketchGeometry::sampleEdgePoints(
+                edge, SketchGeometry::preferredEdgeSampleCount(edge, 2, 48, 24));
+            if (samples.size() < 2) return;
+
+            const double edgeDistance2 = edgeScreenDist2(renderer, samples, x, y);
+            if (edgeDistance2 >= bestEdgeDistance2 - 1.0e-6) {
+                return;
+            }
+            bestEdgeDistance2 = edgeDistance2;
+            bestEdgePoints = samples;
+            bestEdge = edge;
+            bestModelIndex = modelIndex;
+        } catch (...) {
+            // Ignore invalid/degenerate edges and continue scanning the model.
+        }
+    };
 
     for (int modelIndex = 0; modelIndex < historyList.size(); ++modelIndex) {
         const ModelingHistory& record = historyList[modelIndex];
@@ -2555,44 +2829,24 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
         const TopoDS_Shape modelShape = geometryStateFor(record).occShape;
         if (modelShape.IsNull()) continue;
 
-        for (TopExp_Explorer explorer(modelShape, TopAbs_EDGE);
-             explorer.More();
-             explorer.Next()) {
-            const TopoDS_Shape currentShape = explorer.Current();
-            if (currentShape.IsNull() || currentShape.ShapeType() != TopAbs_EDGE) {
-                continue;
-            }
+        QList<TopoDS_Edge> edges;
+        appendEdgesFromShape(modelShape, edges);
+        for (const TopoDS_Edge& edge : edges) {
+            considerEdge(edge, modelIndex);
+        }
+    }
 
-            try {
-                const TopoDS_Edge edge = TopoDS::Edge(currentShape);
-                BRepAdaptor_Curve curve(edge);
-                const Standard_Real first = curve.FirstParameter();
-                const Standard_Real last = curve.LastParameter();
-                if (!std::isfinite(first) || !std::isfinite(last)
-                    || std::abs(last - first) <= 1.0e-12) {
-                    continue;
-                }
-
-                const QList<gp_Pnt> samples = SketchGeometry::sampleEdgePoints(
-                    edge, SketchGeometry::preferredEdgeSampleCount(edge, 2, 32, 16));
-                if (samples.size() < 2) continue;
-
-                const double edgeDistance2 =
-                    edgeScreenDist2(renderer, samples, x, y);
-                if (edgeDistance2 >= bestEdgeDistance2 - 1.0e-6) {
-                    continue;
-                }
-                bestEdgeDistance2 = edgeDistance2;
-                bestEdgePoints = samples;
-                bestEdge = edge;
-                bestModelIndex = modelIndex;
-            } catch (...) {
-                // Ignore invalid/degenerate edges and continue scanning the model.
+    if (hasActiveSketch_) {
+        for (const TopoDS_Shape& geometry : activeSketch_.getGeometries()) {
+            QList<TopoDS_Edge> edges;
+            appendEdgesFromShape(geometry, edges);
+            for (const TopoDS_Edge& edge : edges) {
+                considerEdge(edge, -1);
             }
         }
     }
 
-    if (bestModelIndex < 0 || bestEdgePoints.size() < 2
+    if (bestEdge.IsNull() || bestEdgePoints.size() < 2
         || bestEdgeDistance2 > edgeHoverRadius2) {
         return;
     }
@@ -2602,53 +2856,111 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
     // approximated by a bounding-box midpoint.
     if (bestEdge.IsNull()) return;
 
-    try {
-        BRepAdaptor_Curve curve(bestEdge);
-        const Standard_Real first = curve.FirstParameter();
-        const Standard_Real last = curve.LastParameter();
-        if (!std::isfinite(first) || !std::isfinite(last)
-            || std::abs(last - first) <= 1.0e-12) {
-            return;
+    auto appendPreviewCandidate = [&](int type, const gp_Pnt& point, const TopoDS_Edge& refEdge) {
+        const double distance2 = snapScreenDist2(renderer, point, x, y);
+        VectorSnapPreviewCandidate candidate;
+        candidate.point = point;
+        candidate.screenDistanceSquared = distance2;
+        candidate.type = type;
+        candidate.modelIndex = bestModelIndex;
+        candidate.refShape = refEdge;
+        candidate.hasRef = !refEdge.IsNull();
+        vectorSnapPreviewCandidates_.append(candidate);
+    };
+
+    if (snapKind == 3) {
+        for (const TopoDS_Edge& edge : allEdges) {
+            if (edge.IsNull() || SketchGeometry::sketchEdgesEquivalent(bestEdge, edge)) {
+                continue;
+            }
+            gp_Pnt intersection;
+            if (SketchGeometry::edgeIntersectionPoint(bestEdge, edge, intersection, 1.0e-3)) {
+                appendPreviewCandidate(3, intersection, bestEdge);
+            }
         }
-
-        const gp_Pnt endpoint1 = curve.Value(first);
-        gp_Pnt midpoint = curve.Value((first + last) * 0.5);
-        gp_Vec midpointTangent;
-        SketchGeometry::edgePointAndTangentAtPosition(
-            bestEdge, 50.0, true, midpoint, midpointTangent, nullptr);
-        const gp_Pnt endpoint2 = curve.Value(last);
-
-        auto appendCandidate = [&](const gp_Pnt& point, int type) {
-            const double distance2 = snapScreenDist2(renderer, point, x, y);
-            VectorSnapPreviewCandidate candidate;
-            candidate.point = point;
-            candidate.screenDistanceSquared = distance2;
-            candidate.type = type;
-            candidate.modelIndex = bestModelIndex;
-            vectorSnapPreviewCandidates_.append(candidate);
-        };
-
-        appendCandidate(endpoint1, 1);
-        appendCandidate(midpoint, 2);
-        appendCandidate(endpoint2, 1);
-    } catch (...) {
-        return;
+    } else {
+        appendEdgeFeatureSnapCandidates(
+            bestEdge,
+            snapKind == -1 || snapKind == 1,
+            snapKind == -1 || snapKind == 2,
+            snapKind == 6,
+            snapKind == 4,
+            snapKind == 5,
+            [&](int type, const gp_Pnt& point) {
+                appendPreviewCandidate(type, point, bestEdge);
+            });
     }
 
     if (vectorSnapPreviewCandidates_.isEmpty()) return;
 
-    int bestCandidateIndex = 0;
-    for (int i = 1; i < vectorSnapPreviewCandidates_.size(); ++i) {
-        if (vectorSnapPreviewCandidates_[i].screenDistanceSquared
-            < vectorSnapPreviewCandidates_[bestCandidateIndex].screenDistanceSquared - 1.0e-6) {
-            bestCandidateIndex = i;
+    {
+        QHash<QString, int> bestIndexByKey;
+        QList<VectorSnapPreviewCandidate> unique;
+        unique.reserve(vectorSnapPreviewCandidates_.size());
+        for (const VectorSnapPreviewCandidate& candidate : vectorSnapPreviewCandidates_) {
+            const QString key = QStringLiteral("%1,%2,%3")
+                .arg(candidate.point.X(), 0, 'f', 5)
+                .arg(candidate.point.Y(), 0, 'f', 5)
+                .arg(candidate.point.Z(), 0, 'f', 5);
+            if (!bestIndexByKey.contains(key)) {
+                bestIndexByKey.insert(key, unique.size());
+                unique.append(candidate);
+                continue;
+            }
+            VectorSnapPreviewCandidate& best = unique[bestIndexByKey.value(key)];
+            if (candidate.screenDistanceSquared < best.screenDistanceSquared - 1.0e-6) {
+                best = candidate;
+            }
+        }
+        vectorSnapPreviewCandidates_ = unique;
+    }
+
+    PointCandidateList pickerCandidates;
+    pickerCandidates.reserve(vectorSnapPreviewCandidates_.size());
+    for (const VectorSnapPreviewCandidate& candidate : vectorSnapPreviewCandidates_) {
+        PointCandidate pickerCandidate;
+        pickerCandidate.label = QString::fromUtf8(
+            snapCandidateTextByKind(candidate.type));
+        pickerCandidate.point = candidate.point;
+        pickerCandidate.snapType =
+            PointSnapManager::typeFromLegacyCandidateKind(candidate.type);
+        pickerCandidate.sourceShape = candidate.refShape;
+        if (!candidate.refShape.IsNull()
+            && candidate.refShape.ShapeType() == TopAbs_EDGE) {
+            pickerCandidate.sourceEdge = TopoDS::Edge(candidate.refShape);
+        }
+        pickerCandidate.screenDistanceSquared = candidate.screenDistanceSquared;
+        pickerCandidates.append(pickerCandidate);
+    }
+
+    pointPicker_.startPick(PointSnapManager::modeFromLegacySnapKind(snapKind));
+    pointPicker_.setCandidates(pickerCandidates);
+    const bool snappedByPicker = pointPicker_.updateSnappedCandidate(
+        [this, x, y](const gp_Pnt& point) {
+            return snapScreenDist2(renderer, point, x, y);
+        },
+        kVectorSnapPointActivateRadiusPx);
+
+    int bestCandidateIndex = pointPicker_.currentCandidateIndex();
+    if (bestCandidateIndex < 0 || bestCandidateIndex >= vectorSnapPreviewCandidates_.size()) {
+        bestCandidateIndex = 0;
+        for (int i = 1; i < vectorSnapPreviewCandidates_.size(); ++i) {
+            if (vectorSnapPreviewCandidates_[i].screenDistanceSquared
+                < vectorSnapPreviewCandidates_[bestCandidateIndex].screenDistanceSquared - 1.0e-6) {
+                bestCandidateIndex = i;
+            }
         }
     }
     const VectorSnapPreviewCandidate& bestCandidate =
         vectorSnapPreviewCandidates_[bestCandidateIndex];
     snapHoverBestPoint_ = bestCandidate.point;
-    hasSnapHoverBestPoint_ =
-        bestCandidate.screenDistanceSquared <= pointActivateRadius2;
+    hasSnapHoverBestPoint_ = snappedByPicker
+        && bestCandidate.screenDistanceSquared <= pointActivateRadius2;
+
+    snapHoverShapeActor_ = buildSnapShapeHighlightActor(bestEdge, 0.0, 0.9, 1.0, 0.85, 4.0);
+    if (snapHoverShapeActor_) {
+        addAppearanceActor(snapHoverShapeActor_);
+    }
 
     QSet<QString> drawnPoints;
     for (int i = 0; i < vectorSnapPreviewCandidates_.size(); ++i) {
@@ -2661,38 +2973,20 @@ void Widget::updateVectorPointSnapPreview(int x, int y, int snapKind, bool dragM
         drawnPoints.insert(key);
 
         const bool isBest = i == bestCandidateIndex && hasSnapHoverBestPoint_;
-        vtkSmartPointer<vtkActor> marker;
-        if (candidate.type == 2) {
-            vtkSmartPointer<vtkCubeSource> cube =
-                vtkSmartPointer<vtkCubeSource>::New();
-            cube->SetXLength(0.12);
-            cube->SetYLength(0.12);
-            cube->SetZLength(0.12);
-            cube->Update();
-            vtkSmartPointer<vtkPolyDataMapper> mapper =
-                vtkSmartPointer<vtkPolyDataMapper>::New();
-            mapper->SetInputConnection(cube->GetOutputPort());
-            marker = vtkSmartPointer<vtkActor>::New();
-            marker->SetMapper(mapper);
-            marker->GetProperty()->SetColor(
-                isBest ? 0.10 : 0.20,
-                isBest ? 1.00 : 0.78,
-                isBest ? 0.35 : 1.00);
-        } else {
-            vtkSmartPointer<vtkSphereSource> sphere =
-                vtkSmartPointer<vtkSphereSource>::New();
-            configureMarkerSphereSource(sphere, 0.055);
-            sphere->Update();
-            vtkSmartPointer<vtkPolyDataMapper> mapper =
-                vtkSmartPointer<vtkPolyDataMapper>::New();
-            mapper->SetInputConnection(sphere->GetOutputPort());
-            marker = vtkSmartPointer<vtkActor>::New();
-            marker->SetMapper(mapper);
-            applyMarkerSphereMaterial(
-                marker->GetProperty(), MarkerSphereStyle::HoverYellow);
-            if (isBest) {
-                marker->GetProperty()->SetColor(0.10, 1.00, 0.35);
-            }
+        vtkSmartPointer<vtkSphereSource> sphere =
+            vtkSmartPointer<vtkSphereSource>::New();
+        configureMarkerSphereSource(sphere, 0.055);
+        sphere->Update();
+        vtkSmartPointer<vtkPolyDataMapper> mapper =
+            vtkSmartPointer<vtkPolyDataMapper>::New();
+        mapper->SetInputConnection(sphere->GetOutputPort());
+
+        vtkSmartPointer<vtkActor> marker = vtkSmartPointer<vtkActor>::New();
+        marker->SetMapper(mapper);
+        applyMarkerSphereMaterial(
+            marker->GetProperty(), MarkerSphereStyle::HoverYellow);
+        if (isBest) {
+            marker->GetProperty()->SetColor(0.10, 1.00, 0.35);
         }
 
         marker->SetPosition(
@@ -2847,21 +3141,20 @@ void Widget::appendActiveSketchSnapScreenCandidates(int x, int y, double maxScre
     if (edges.isEmpty()) return;
 
     for (const TopoDS_Edge& edge : edges) {
+        appendEdgeFeatureSnapCandidates(
+            edge,
+            snap_.endpoint,
+            snap_.midpoint,
+            snap_.arcMidpoint,
+            snap_.center,
+            snap_.quadrant,
+            [&](int type, const gp_Pnt& point) {
+                addIfNear(tr(snapCandidateTextByKind(type)), point, edge, true);
+            });
+
         Standard_Real f = 0.0, l = 0.0;
         Handle(Geom_Curve) curve = BRep_Tool::Curve(edge, f, l);
         if (curve.IsNull()) continue;
-        const Handle(Geom_Circle) circ = SketchGeometry::sketchCircleBasis(curve);
-
-        if (snap_.endpoint) {
-            const gp_Pnt p0 = curve->Value(f);
-            const gp_Pnt p1 = curve->Value(l);
-            addIfNear(tr("端点"), p0, edge, true);
-            addIfNear(tr("端点"), p1, edge, true);
-        }
-
-        if (snap_.midpoint) {
-            addIfNear(tr("中点"), curve->Value((f + l) * 0.5), edge, true);
-        }
 
         if (snap_.onCurve && hasPickRay) {
             gp_Pnt pOn;
@@ -2870,29 +3163,6 @@ void Widget::appendActiveSketchSnapScreenCandidates(int x, int y, double maxScre
                 if (d2 <= onCurveMaxD2) {
                     out.append({tr("点在曲线上"), pOn, d2, edge, true});
                 }
-            }
-        }
-
-        if (snap_.arcMidpoint) {
-            if (!circ.IsNull()) {
-                addIfNear(tr("圆弧中点"), curve->Value((f + l) * 0.5), edge, true);
-            }
-        }
-
-        if (!circ.IsNull()) {
-            const gp_Pnt c = circ->Location();
-            if (snap_.center) {
-                addIfNear(tr("圆心"), c, edge, true);
-            }
-            if (snap_.quadrant) {
-                const gp_Ax2 ax = circ->Position();
-                const gp_Dir xd = ax.XDirection();
-                const gp_Dir yd = ax.YDirection();
-                const double r = circ->Radius();
-                addIfNear(tr("象限点"), gp_Pnt(c.X() + xd.X() * r, c.Y() + xd.Y() * r, c.Z() + xd.Z() * r), edge, true);
-                addIfNear(tr("象限点"), gp_Pnt(c.X() - xd.X() * r, c.Y() - xd.Y() * r, c.Z() - xd.Z() * r), edge, true);
-                addIfNear(tr("象限点"), gp_Pnt(c.X() + yd.X() * r, c.Y() + yd.Y() * r, c.Z() + yd.Z() * r), edge, true);
-                addIfNear(tr("象限点"), gp_Pnt(c.X() - yd.X() * r, c.Y() - yd.Y() * r, c.Z() - yd.Z() * r), edge, true);
             }
         }
     }
@@ -2974,7 +3244,7 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
 
     // 没有任何捕捉类型开启：不显示
     if (!snap_.endpoint && !snap_.midpoint && !snap_.arcMidpoint && !snap_.intersection && !snap_.center && !snap_.quadrant
-        && !snap_.nearest && !snap_.onCurve && !snap_.onFace) {
+        && !snap_.nearest && !snap_.onCurve && !snap_.onFace && !snap_.anyPoint) {
         clearSnapHover();
         return;
     }
@@ -2986,6 +3256,7 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
         double d2 = 0.0;
         TopoDS_Shape refShape;   // 用于高亮的关联形状（一般为 EDGE）
         bool hasRef = false;
+        PointSnapType snapType = PointSnapType::None;
     };
     QList<Candidate> candidates;
 
@@ -3005,58 +3276,36 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
 
         // 端点/中点/圆心/象限点/点在曲线上
         for (const TopoDS_Edge& edge : edges) {
+            appendEdgeFeatureSnapCandidates(
+                edge,
+                snap_.endpoint,
+                snap_.midpoint,
+                snap_.arcMidpoint,
+                snap_.center,
+                snap_.quadrant,
+                [&](int type, const gp_Pnt& point) {
+                    candidates.append({
+                        tr(snapCandidateTextByKind(type)),
+                        point,
+                        snapScreenDist2(renderer, point, x, y),
+                        edge,
+                        true,
+                        PointSnapManager::typeFromLegacyCandidateKind(type)
+                    });
+                });
+
             Standard_Real f = 0.0, l = 0.0;
             Handle(Geom_Curve) curve = BRep_Tool::Curve(edge, f, l);
             if (curve.IsNull()) continue;
-            const Handle(Geom_Circle) circ = SketchGeometry::sketchCircleBasis(curve);
-
-            if (snap_.endpoint) {
-                gp_Pnt p0 = curve->Value(f);
-                gp_Pnt p1 = curve->Value(l);
-                candidates.append({tr("端点"), p0, snapScreenDist2(renderer, p0, x, y), edge, true});
-                candidates.append({tr("端点"), p1, snapScreenDist2(renderer, p1, x, y), edge, true});
-            }
-
-            // 中点：普通边中点；圆弧中点：仅对圆曲线显示
-            if (snap_.midpoint) {
-                gp_Pnt pm = curve->Value((f + l) * 0.5);
-                candidates.append({tr("中点"), pm, snapScreenDist2(renderer, pm, x, y), edge, true});
-            }
 
             if (snap_.onCurve && hasPickRay) {
                 gp_Pnt pOn;
                 if (snapProjectRayOntoEdge(edge, pickRay, pOn)) {
                     const double d2 = snapScreenDist2(renderer, pOn, x, y);
                     if (d2 <= onGeomMaxD2) {
-                        candidates.append({tr("点在曲线上"), pOn, d2, edge, true});
+                        candidates.append({tr("点在曲线上"), pOn, d2, edge, true,
+                                           PointSnapType::OnCurve});
                     }
-                }
-            }
-
-            if (snap_.arcMidpoint && !circ.IsNull()) {
-                const gp_Pnt pm = curve->Value((f + l) * 0.5);
-                candidates.append({tr("圆弧中点"), pm, snapScreenDist2(renderer, pm, x, y), edge, true});
-            }
-
-            // 圆心/象限点：仅对圆（含圆弧/修剪圆）支持
-            if (!circ.IsNull()) {
-                const gp_Pnt c = circ->Location();
-                if (snap_.center) {
-                    candidates.append({tr("圆心"), c, snapScreenDist2(renderer, c, x, y), edge, true});
-                }
-                if (snap_.quadrant) {
-                    const gp_Ax2 ax = circ->Position();
-                    const gp_Dir xd = ax.XDirection();
-                    const gp_Dir yd = ax.YDirection();
-                    const double r = circ->Radius();
-                    const gp_Pnt q0(c.X() + xd.X() * r, c.Y() + xd.Y() * r, c.Z() + xd.Z() * r);
-                    const gp_Pnt q1(c.X() - xd.X() * r, c.Y() - xd.Y() * r, c.Z() - xd.Z() * r);
-                    const gp_Pnt q2(c.X() + yd.X() * r, c.Y() + yd.Y() * r, c.Z() + yd.Z() * r);
-                    const gp_Pnt q3(c.X() - yd.X() * r, c.Y() - yd.Y() * r, c.Z() - yd.Z() * r);
-                    candidates.append({tr("象限点"), q0, snapScreenDist2(renderer, q0, x, y), edge, true});
-                    candidates.append({tr("象限点"), q1, snapScreenDist2(renderer, q1, x, y), edge, true});
-                    candidates.append({tr("象限点"), q2, snapScreenDist2(renderer, q2, x, y), edge, true});
-                    candidates.append({tr("象限点"), q3, snapScreenDist2(renderer, q3, x, y), edge, true});
                 }
             }
         }
@@ -3068,7 +3317,8 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
                 for (int j = i + 1; j < edges.size(); ++j) {
                     gp_Pnt pi;
                     if (SketchGeometry::edgeIntersectionPoint(edges[i], edges[j], pi, tol)) {
-                        candidates.append({tr("交点"), pi, snapScreenDist2(renderer, pi, x, y), TopoDS_Shape(), false});
+                        candidates.append({tr("交点"), pi, snapScreenDist2(renderer, pi, x, y),
+                                           TopoDS_Shape(), false, PointSnapType::Intersection});
                     }
                 }
             }
@@ -3102,7 +3352,8 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
                 const TopoDS_Shape& sh = sw->GetSubShape(it.Value());
                 if (sh.ShapeType() != TopAbs_VERTEX) continue;
                 const gp_Pnt p = BRep_Tool::Pnt(TopoDS::Vertex(sh));
-                candidates.append({tr("端点"), p, snapScreenDist2(renderer, p, x, y), TopoDS_Shape(), false});
+                candidates.append({tr("端点"), p, snapScreenDist2(renderer, p, x, y),
+                                   TopoDS_Shape(), false, PointSnapType::Endpoint});
             }
         }
 
@@ -3119,7 +3370,8 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
                 if (!snapProjectRayOntoFace(face, pickRay, pOn)) continue;
                 const double d2 = snapScreenDist2(renderer, pOn, x, y);
                 if (d2 <= onGeomMaxD2) {
-                    candidates.append({tr("面上的点"), pOn, d2, face, true});
+                    candidates.append({tr("面上的点"), pOn, d2, face, true,
+                                       PointSnapType::OnFace});
                 }
             }
         }
@@ -3140,7 +3392,23 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
         QList<SketchSnapScreenCandidate> sketchCand;
         appendActiveSketchSnapScreenCandidates(x, y, sketchMaxD2, sketchCand);
         for (const auto& sc : sketchCand) {
-            candidates.append({sc.label, sc.p, sc.d2, sc.refShape, sc.hasRef});
+            candidates.append({sc.label, sc.p, sc.d2, sc.refShape, sc.hasRef,
+                               snapTypeFromCandidateLabel(sc.label)});
+        }
+    }
+
+    // 任意点：直接取鼠标射线与模型的交点。它仍然作为一个普通候选点
+    // 交给 PointPicker，因此不会绕开候选点、吸附和确认状态机。
+    if (snap_.anyPoint) {
+        gp_Pnt arbitraryPoint;
+        TopoDS_Shape arbitrarySourceShape;
+        PointSnapType arbitrarySnapType = PointSnapType::None;
+        if (tryPickPointOnModelForVector(
+                x, y, arbitraryPoint, &arbitrarySourceShape, &arbitrarySnapType)) {
+            candidates.append({tr("任意点"), arbitraryPoint,
+                               snapScreenDist2(renderer, arbitraryPoint, x, y),
+                               arbitrarySourceShape, !arbitrarySourceShape.IsNull(),
+                               arbitrarySnapType});
         }
     }
 
@@ -3179,37 +3447,16 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
                 }
 
                 for (const TopoDS_Edge& e : edges) {
-                    Standard_Real f = 0.0, l = 0.0;
-                    Handle(Geom_Curve) curve = BRep_Tool::Curve(e, f, l);
-                    if (curve.IsNull()) continue;
-                    const Handle(Geom_Circle) circ = SketchGeometry::sketchCircleBasis(curve);
-
-                    if (snap_.midpoint) {
-                        addIfNear(tr("中点"), curve->Value((f + l) * 0.5), e, true);
-                    }
-                    if (snap_.arcMidpoint) {
-                        if (!circ.IsNull()) {
-                            addIfNear(tr("圆弧中点"), curve->Value((f + l) * 0.5), e, true);
-                        }
-                    }
-                    if (!circ.IsNull()) {
-                        const gp_Pnt c = circ->Location();
-                        if (snap_.center) addIfNear(tr("圆心"), c, e, true);
-                        if (snap_.quadrant) {
-                            const gp_Ax2 ax = circ->Position();
-                            const gp_Dir xd = ax.XDirection();
-                            const gp_Dir yd = ax.YDirection();
-                            const double r = circ->Radius();
-                            addIfNear(tr("象限点"),
-                                        gp_Pnt(c.X() + xd.X() * r, c.Y() + xd.Y() * r, c.Z() + xd.Z() * r), e, true);
-                            addIfNear(tr("象限点"),
-                                        gp_Pnt(c.X() - xd.X() * r, c.Y() - xd.Y() * r, c.Z() - xd.Z() * r), e, true);
-                            addIfNear(tr("象限点"),
-                                        gp_Pnt(c.X() + yd.X() * r, c.Y() + yd.Y() * r, c.Z() + yd.Z() * r), e, true);
-                            addIfNear(tr("象限点"),
-                                        gp_Pnt(c.X() - yd.X() * r, c.Y() - yd.Y() * r, c.Z() - yd.Z() * r), e, true);
-                        }
-                    }
+                    appendEdgeFeatureSnapCandidates(
+                        e,
+                        false,
+                        snap_.midpoint,
+                        snap_.arcMidpoint,
+                        snap_.center,
+                        snap_.quadrant,
+                        [&](int type, const gp_Pnt& point) {
+                            addIfNear(tr(snapCandidateTextByKind(type)), point, e, true);
+                        });
                 }
 
                 if (snap_.intersection && edges.size() >= 2) {
@@ -3236,21 +3483,69 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
         return a.d2 < b.d2;
     });
 
-    const Candidate best = candidates.front();
+    // 清除旧悬停（点 + 关联形状）；best 点坐标在清除后再写入，避免 clearSnapHover 重置标志
+    clearSnapHover();
+
+    PointSnapMode pickerMode;
+    pickerMode.nearest = snap_.nearest;
+    pickerMode.endpoint = snap_.endpoint;
+    pickerMode.midpoint = snap_.midpoint;
+    pickerMode.arcMidpoint = snap_.arcMidpoint;
+    pickerMode.intersection = snap_.intersection;
+    pickerMode.center = snap_.center;
+    pickerMode.quadrant = snap_.quadrant;
+    pickerMode.onCurve = snap_.onCurve;
+    pickerMode.onFace = snap_.onFace;
+    pickerMode.anyPoint = snap_.anyPoint;
+
+    PointCandidateList pickerCandidates;
+    pickerCandidates.reserve(candidates.size());
+    for (const Candidate& candidate : candidates) {
+        PointCandidate pickerCandidate;
+        pickerCandidate.label = candidate.label;
+        pickerCandidate.point = candidate.p;
+        pickerCandidate.snapType = candidate.snapType != PointSnapType::None
+            ? candidate.snapType
+            : snapTypeFromCandidateLabel(candidate.label);
+        pickerCandidate.sourceShape = candidate.refShape;
+        if (candidate.hasRef && !candidate.refShape.IsNull()
+            && candidate.refShape.ShapeType() == TopAbs_EDGE) {
+            pickerCandidate.sourceEdge = TopoDS::Edge(candidate.refShape);
+        }
+        pickerCandidate.screenDistanceSquared = candidate.d2;
+        pickerCandidates.append(pickerCandidate);
+    }
+
+    pointPicker_.startPick(pickerMode);
+    pointPicker_.setCandidates(pickerCandidates);
+    const bool snappedByPicker = pointPicker_.updateSnappedCandidate(
+        [this, x, y](const gp_Pnt& point) {
+            return snapScreenDist2(renderer, point, x, y);
+        },
+        12.0);
+    const bool pointInputNeedsSnapProximity =
+        originSnapSelectionActive_
+        || currentSelectionMode == WorkCsysPlacement
+        || isSketchPointInputMode(currentSelectionMode);
+
+    int bestCandidateIndex = pointPicker_.currentCandidateIndex();
+    if (bestCandidateIndex < 0 || bestCandidateIndex >= candidates.size()) {
+        bestCandidateIndex = 0;
+    }
+    const Candidate best = candidates[bestCandidateIndex];
     const QString label = QString("%1\n(%2, %3, %4)")
                               .arg(best.label)
                               .arg(best.p.X(), 0, 'f', 2)
                               .arg(best.p.Y(), 0, 'f', 2)
                               .arg(best.p.Z(), 0, 'f', 2);
 
-    // 清除旧悬停（点 + 关联形状）；best 点坐标在清除后再写入，避免 clearSnapHover 重置标志
-    clearSnapHover();
-
     snapHoverBestPoint_ = best.p;
-    hasSnapHoverBestPoint_ = true;
+    // 点输入工具只在鼠标真正靠近候选点时显示“当前可点击”的特殊小球。
+    // 普通全局捕捉保留原有行为，避免影响其它工具的点击路径。
+    hasSnapHoverBestPoint_ = pointInputNeedsSnapProximity ? snappedByPicker : true;
 
     // 1) 悬停点：琥珀高光小球（两点矢量拾取/拖拽时改由手柄球或半透明候选球显示）
-    if (!options.suppressHoverBall) {
+    if (!options.suppressHoverBall && !pointInputNeedsSnapProximity) {
         vtkSmartPointer<vtkSphereSource> sphere = vtkSmartPointer<vtkSphereSource>::New();
         configureMarkerSphereSource(sphere, 0.06);
         sphere->Update();
@@ -3298,7 +3593,45 @@ void Widget::updateSnapHover(int x, int y, SnapHoverOptions options)
         }
     }
 
-    // 4) 拖拽：在高亮边上显示全部可吸附候选点（半透明球）
+    // 4) 点输入工具：显示当前几何上的全部普通候选点，当前 Snap 点用更醒目的候选球表示。
+    if (pointInputNeedsSnapProximity) {
+        QSet<QString> drawnKeys;
+        for (const Candidate& c : candidates) {
+            const QString key = QString("%1,%2,%3")
+                                    .arg(c.p.X(), 0, 'f', 4)
+                                    .arg(c.p.Y(), 0, 'f', 4)
+                                    .arg(c.p.Z(), 0, 'f', 4);
+            if (drawnKeys.contains(key)) continue;
+            drawnKeys.insert(key);
+
+            vtkSmartPointer<vtkSphereSource> cSphere = vtkSmartPointer<vtkSphereSource>::New();
+            const bool isCurrentSnap =
+                hasSnapHoverBestPoint_ && c.p.Distance(best.p) < Precision::Confusion();
+            configureMarkerSphereSource(cSphere, isCurrentSnap ? 0.072 : 0.052);
+            cSphere->Update();
+
+            vtkSmartPointer<vtkPolyDataMapper> cMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+            cMapper->SetInputConnection(cSphere->GetOutputPort());
+
+            vtkSmartPointer<vtkActor> marker = vtkSmartPointer<vtkActor>::New();
+            marker->SetMapper(cMapper);
+            marker->SetPosition(c.p.X(), c.p.Y(), c.p.Z());
+            marker->SetPickable(false);
+            applyMarkerSphereMaterial(marker->GetProperty(), MarkerSphereStyle::HoverYellow);
+            if (isCurrentSnap) {
+                marker->GetProperty()->SetColor(0.10, 1.00, 0.35);
+            }
+            marker->GetProperty()->SetOpacity(isCurrentSnap ? 0.95 : 0.55);
+            {
+                const double s = overlayWorldScaleAt(c.p.X(), c.p.Y(), c.p.Z());
+                marker->SetScale(s, s, s);
+            }
+            addReferenceActor(marker);
+            snapCandidatePointActors_.append(marker);
+        }
+    }
+
+    // 5) 拖拽：在高亮边上显示全部可吸附候选点（半透明球）
     if (options.showCandidateGhosts && best.hasRef && !best.refShape.IsNull()) {
         QSet<QString> drawnKeys;
         for (const Candidate& c : candidates) {
@@ -3373,12 +3706,16 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
         double d2 = 0.0;
         TopoDS_Shape refShape;
         bool hasRef = false;
+        PointSnapType snapType = PointSnapType::None;
     };
     QList<Candidate> candidates;
 
     // 复用 updateSnapHover 的同一套候选生成逻辑（简化：调用一次 edge/vertex pick）
-    auto addCandidate = [&](const QString& t, const gp_Pnt& p, const TopoDS_Shape& refShape = TopoDS_Shape(), const bool hasRef = false) {
-        candidates.append({t, p, snapScreenDist2(renderer, p, x, y), refShape, hasRef});
+    auto addCandidate = [&](const QString& t, const gp_Pnt& p,
+                            const TopoDS_Shape& refShape = TopoDS_Shape(),
+                            const bool hasRef = false,
+                            const PointSnapType snapType = PointSnapType::None) {
+        candidates.append({t, p, snapScreenDist2(renderer, p, x, y), refShape, hasRef, snapType});
     };
 
     gp_Lin pickRay;
@@ -3395,7 +3732,8 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
         auto addCandidateIfNear = [&](const QString& t, const gp_Pnt& p, const TopoDS_Shape& refShape = TopoDS_Shape(), const bool hasRef = false) {
             const double d2 = snapScreenDist2(renderer, p, x, y);
             if (d2 <= maxD2) {
-                candidates.append({t, p, d2, refShape, hasRef});
+                candidates.append({t, p, d2, refShape, hasRef,
+                                   snapTypeFromCandidateLabel(t)});
             }
         };
 
@@ -3424,35 +3762,16 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
                 }
 
                 for (const TopoDS_Edge& e : edges) {
-                    Standard_Real f = 0.0, l = 0.0;
-                    Handle(Geom_Curve) curve = BRep_Tool::Curve(e, f, l);
-                    if (curve.IsNull()) continue;
-                    const Handle(Geom_Circle) circ = SketchGeometry::sketchCircleBasis(curve);
-
-                    if (snap_.midpoint) {
-                        addCandidateIfNear(tr("中点"), curve->Value((f + l) * 0.5), e, true);
-                    }
-
-                    if (snap_.arcMidpoint) {
-                        if (!circ.IsNull()) {
-                            addCandidateIfNear(tr("圆弧中点"), curve->Value((f + l) * 0.5), e, true);
-                        }
-                    }
-
-                    if (!circ.IsNull()) {
-                        const gp_Pnt c = circ->Location();
-                        if (snap_.center) addCandidateIfNear(tr("圆心"), c, e, true);
-                        if (snap_.quadrant) {
-                            const gp_Ax2 ax = circ->Position();
-                            const gp_Dir xd = ax.XDirection();
-                            const gp_Dir yd = ax.YDirection();
-                            const double r = circ->Radius();
-                            addCandidateIfNear(tr("象限点"), gp_Pnt(c.X() + xd.X() * r, c.Y() + xd.Y() * r, c.Z() + xd.Z() * r), e, true);
-                            addCandidateIfNear(tr("象限点"), gp_Pnt(c.X() - xd.X() * r, c.Y() - xd.Y() * r, c.Z() - xd.Z() * r), e, true);
-                            addCandidateIfNear(tr("象限点"), gp_Pnt(c.X() + yd.X() * r, c.Y() + yd.Y() * r, c.Z() + yd.Z() * r), e, true);
-                            addCandidateIfNear(tr("象限点"), gp_Pnt(c.X() - yd.X() * r, c.Y() - yd.Y() * r, c.Z() - yd.Z() * r), e, true);
-                        }
-                    }
+                    appendEdgeFeatureSnapCandidates(
+                        e,
+                        false,
+                        snap_.midpoint,
+                        snap_.arcMidpoint,
+                        snap_.center,
+                        snap_.quadrant,
+                        [&](int type, const gp_Pnt& point) {
+                            addCandidateIfNear(tr(snapCandidateTextByKind(type)), point, e, true);
+                        });
                 }
 
                 if (snap_.intersection && edges.size() >= 2) {
@@ -3473,7 +3792,8 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
             QList<SketchSnapScreenCandidate> sketchCand;
             appendActiveSketchSnapScreenCandidates(x, y, maxD2, sketchCand);
             for (const auto& sc : sketchCand) {
-                candidates.append({sc.label, sc.p, sc.d2, sc.refShape, sc.hasRef});
+                candidates.append({sc.label, sc.p, sc.d2, sc.refShape, sc.hasRef,
+                                   snapTypeFromCandidateLabel(sc.label)});
             }
         }
 
@@ -3507,33 +3827,28 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
                 }
             }
 
-            // 中点/圆弧中点（扫描部分边）
-            if (snap_.midpoint) {
+            // 中点/圆弧中点/圆心/象限点（扫描部分边）
+            if (snap_.midpoint || snap_.arcMidpoint || snap_.center || snap_.quadrant) {
                 for (TopExp_Explorer exE(geometryStateFor(rec).occShape, TopAbs_EDGE); exE.More(); exE.Next()) {
                     if (edgeCount++ > maxEdgesToScan) break;
                     const TopoDS_Edge e = TopoDS::Edge(exE.Current());
-                    const QList<gp_Pnt> snapPts = SketchGeometry::edgeSnapCandidates(e, true, snap_.center, snap_.quadrant);
-                    for (int i = 0; i < snapPts.size(); ++i) {
-                        const gp_Pnt& p = snapPts[i];
-                        QString label = tr("中点");
-                        if (snap_.center && i == 1) {
-                            label = tr("圆心");
-                        } else if ((snap_.center && i >= 2) || (!snap_.center && i >= 1)) {
-                            label = tr("象限点");
-                        }
-                        candidates.append({label, p, snapScreenDist2(renderer, p, x, y), e, true});
-                    }
-                }
-            }
-
-            // 圆弧中点：仅对圆曲线
-            if (snap_.arcMidpoint) {
-                for (TopExp_Explorer exE(geometryStateFor(rec).occShape, TopAbs_EDGE); exE.More(); exE.Next()) {
-                    if (edgeCount++ > maxEdgesToScan) break;
-                    const TopoDS_Edge e = TopoDS::Edge(exE.Current());
-                    gp_Pnt mid;
-                    if (!SketchGeometry::circularEdgeMidPoint(e, mid)) continue;
-                    candidates.append({tr("圆弧中点"), mid, snapScreenDist2(renderer, mid, x, y), e, true});
+                    appendEdgeFeatureSnapCandidates(
+                        e,
+                        false,
+                        snap_.midpoint,
+                        snap_.arcMidpoint,
+                        snap_.center,
+                        snap_.quadrant,
+                        [&](int type, const gp_Pnt& point) {
+                            candidates.append({
+                                tr(snapCandidateTextByKind(type)),
+                                point,
+                                snapScreenDist2(renderer, point, x, y),
+                                e,
+                                true,
+                                PointSnapManager::typeFromLegacyCandidateKind(type)
+                            });
+                        });
                 }
             }
         }
@@ -3543,7 +3858,8 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
             QList<SketchSnapScreenCandidate> sketchCand;
             appendActiveSketchSnapScreenCandidates(x, y, sketchMaxD2, sketchCand);
             for (const auto& sc : sketchCand) {
-                candidates.append({sc.label, sc.p, sc.d2, sc.refShape, sc.hasRef});
+                candidates.append({sc.label, sc.p, sc.d2, sc.refShape, sc.hasRef,
+                                   snapTypeFromCandidateLabel(sc.label)});
             }
         }
 
@@ -3608,47 +3924,29 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
                         }
 
                         for (const TopoDS_Edge& e : edges) {
+                            appendEdgeFeatureSnapCandidates(
+                                e,
+                                snap_.endpoint,
+                                snap_.midpoint,
+                                snap_.arcMidpoint,
+                                snap_.center,
+                                snap_.quadrant,
+                                [&](int type, const gp_Pnt& point) {
+                                    addCandidate(tr(snapCandidateTextByKind(type)), point, e, true);
+                                });
+
                             Standard_Real f = 0.0, l = 0.0;
                             Handle(Geom_Curve) curve = BRep_Tool::Curve(e, f, l);
                             if (curve.IsNull()) continue;
-                            const Handle(Geom_Circle) circ = SketchGeometry::sketchCircleBasis(curve);
-
-                            if (snap_.endpoint) {
-                                addCandidate(tr("端点"), curve->Value(f), e, true);
-                                addCandidate(tr("端点"), curve->Value(l), e, true);
-                            }
-                            if (snap_.midpoint) {
-                                addCandidate(tr("中点"), curve->Value((f + l) * 0.5), e, true);
-                            }
 
                             if (snap_.onCurve && hasPickRay) {
                                 gp_Pnt pOn;
                                 if (snapProjectRayOntoEdge(e, pickRay, pOn)) {
                                     const double d2 = snapScreenDist2(renderer, pOn, x, y);
                                     if (d2 <= onGeomMaxD2) {
-                                        candidates.append({tr("点在曲线上"), pOn, d2, e, true});
+                                        candidates.append({tr("点在曲线上"), pOn, d2, e, true,
+                                                           PointSnapType::OnCurve});
                                     }
-                                }
-                            }
-
-                            if (snap_.arcMidpoint) {
-                                if (!circ.IsNull()) {
-                                    addCandidate(tr("圆弧中点"), curve->Value((f + l) * 0.5), e, true);
-                                }
-                            }
-
-                            if (!circ.IsNull()) {
-                                const gp_Pnt c = circ->Location();
-                                if (snap_.center) addCandidate(tr("圆心"), c, e, true);
-                                if (snap_.quadrant) {
-                                    const gp_Ax2 ax = circ->Position();
-                                    const gp_Dir xd = ax.XDirection();
-                                    const gp_Dir yd = ax.YDirection();
-                                    const double r = circ->Radius();
-                                    addCandidate(tr("象限点"), gp_Pnt(c.X() + xd.X() * r, c.Y() + xd.Y() * r, c.Z() + xd.Z() * r), e, true);
-                                    addCandidate(tr("象限点"), gp_Pnt(c.X() - xd.X() * r, c.Y() - xd.Y() * r, c.Z() - xd.Z() * r), e, true);
-                                    addCandidate(tr("象限点"), gp_Pnt(c.X() + yd.X() * r, c.Y() + yd.Y() * r, c.Z() + yd.Z() * r), e, true);
-                                    addCandidate(tr("象限点"), gp_Pnt(c.X() - yd.X() * r, c.Y() - yd.Y() * r, c.Z() - yd.Z() * r), e, true);
                                 }
                             }
                         }
@@ -3659,7 +3957,8 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
                                         for (int j = i + 1; j < edges.size(); ++j) {
                                             gp_Pnt pi;
                                             if (SketchGeometry::edgeIntersectionPoint(edges[i], edges[j], pi, tol)) {
-                                                addCandidate(tr("交点"), pi);
+                                                addCandidate(tr("交点"), pi, TopoDS_Shape(), false,
+                                                             PointSnapType::Intersection);
                                             }
                                         }
                                     }
@@ -3692,7 +3991,8 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
                             if (!snapProjectRayOntoFace(face, pickRay, pOn)) continue;
                             const double d2 = snapScreenDist2(renderer, pOn, x, y);
                             if (d2 <= onGeomMaxD2) {
-                                candidates.append({tr("面上的点"), pOn, d2, face, true});
+                                candidates.append({tr("面上的点"), pOn, d2, face, true,
+                                                   PointSnapType::OnFace});
                             }
                         }
                     }
@@ -3706,7 +4006,21 @@ void Widget::pickSnapAt(int x, int y, SnapPickContext ctx)
         QList<SketchSnapScreenCandidate> sketchCand;
         appendActiveSketchSnapScreenCandidates(x, y, sketchMaxD2, sketchCand);
         for (const auto& sc : sketchCand) {
-            candidates.append({sc.label, sc.p, sc.d2, sc.refShape, sc.hasRef});
+            candidates.append({sc.label, sc.p, sc.d2, sc.refShape, sc.hasRef,
+                               snapTypeFromCandidateLabel(sc.label)});
+        }
+    }
+
+    if (snap_.anyPoint) {
+        gp_Pnt arbitraryPoint;
+        TopoDS_Shape arbitrarySourceShape;
+        PointSnapType arbitrarySnapType = PointSnapType::None;
+        if (tryPickPointOnModelForVector(
+                x, y, arbitraryPoint, &arbitrarySourceShape, &arbitrarySnapType)) {
+            candidates.append({tr("任意点"), arbitraryPoint,
+                               snapScreenDist2(renderer, arbitraryPoint, x, y),
+                               arbitrarySourceShape, !arbitrarySourceShape.IsNull(),
+                               arbitrarySnapType});
         }
     }
 
@@ -3768,10 +4082,26 @@ SNAP_PICK_CHOSEN:
         return a.d2 < b.d2;
     });
 
+    const bool pointInputNeedsSnapProximity =
+        originSnapSelectionActive_ || ctx == SnapPickContext::SketchTool;
+    if (pointInputNeedsSnapProximity && !snap_.nearest && !snap_.anyPoint) {
+        constexpr double kPointSnapConfirmRadiusPx = 12.0;
+        if (candidates.front().d2 > kPointSnapConfirmRadiusPx * kPointSnapConfirmRadiusPx) {
+            hasSnapSelectedPoint_ = false;
+            if (statusBar()) {
+                statusBar()->showMessage(tr("请靠近候选点后点击。"), 1500);
+            }
+            return;
+        }
+    }
+
     gp_Pnt chosen = candidates.front().p;
     QString chosenLabel = candidates.front().label;
     TopoDS_Shape chosenRefShape = candidates.front().refShape;
     bool chosenHasRef = candidates.front().hasRef;
+    PointSnapType chosenSnapType = candidates.front().snapType != PointSnapType::None
+        ? candidates.front().snapType
+        : snapTypeFromCandidateLabel(chosenLabel);
 
     // 最近点：弹出快速选取列表（需求 2）；草图工具内点击捕捉时跳过模态列表
     if (snap_.nearest && candidates.size() >= 1 && ctx == SnapPickContext::Normal) {
@@ -3844,11 +4174,60 @@ SNAP_PICK_CHOSEN:
             chosenLabel = candidates[idx].label;
             chosenRefShape = candidates[idx].refShape;
             chosenHasRef = candidates[idx].hasRef;
+            chosenSnapType = candidates[idx].snapType != PointSnapType::None
+                ? candidates[idx].snapType
+                : snapTypeFromCandidateLabel(chosenLabel);
         }
     }
 
+    PointSnapMode pickerMode;
+    pickerMode.nearest = snap_.nearest;
+    pickerMode.endpoint = snap_.endpoint;
+    pickerMode.midpoint = snap_.midpoint;
+    pickerMode.arcMidpoint = snap_.arcMidpoint;
+    pickerMode.intersection = snap_.intersection;
+    pickerMode.center = snap_.center;
+    pickerMode.quadrant = snap_.quadrant;
+    pickerMode.onCurve = snap_.onCurve;
+    pickerMode.onFace = snap_.onFace;
+    pickerMode.anyPoint = snap_.anyPoint;
+    PointCandidate pickerCandidate;
+    pickerCandidate.label = chosenLabel;
+    pickerCandidate.point = chosen;
+    pickerCandidate.snapType = chosenSnapType;
+    pickerCandidate.sourceShape = chosenRefShape;
+    if (chosenHasRef && !chosenRefShape.IsNull()
+        && chosenRefShape.ShapeType() == TopAbs_EDGE) {
+        pickerCandidate.sourceEdge = TopoDS::Edge(chosenRefShape);
+    }
+    pickerCandidate.screenDistanceSquared = snapScreenDist2(renderer, chosen, x, y);
+    PointCandidateList confirmedCandidates;
+    confirmedCandidates.append(pickerCandidate);
+    pointPicker_.startPick(pickerMode);
+    pointPicker_.setCandidates(confirmedCandidates);
+    pointPicker_.updateSnappedCandidate(
+        [this, x, y](const gp_Pnt& point) {
+            return snapScreenDist2(renderer, point, x, y);
+        },
+        12.0);
+    pointPicker_.confirmPoint();
+
     snapSelectedPoint_ = chosen;
     hasSnapSelectedPoint_ = true;
+    if (pointPicker_.isConfirmed()) {
+        snapSelectedResult_ = pointPicker_.currentResult();
+    } else {
+        snapSelectedResult_ = PointPickResult{};
+        snapSelectedResult_.valid = true;
+        snapSelectedResult_.point = chosen;
+        snapSelectedResult_.snapType = chosenSnapType;
+        snapSelectedResult_.isConfirmed = true;
+        snapSelectedResult_.sourceShape = chosenRefShape;
+        if (chosenHasRef && !chosenRefShape.IsNull()
+            && chosenRefShape.ShapeType() == TopAbs_EDGE) {
+            snapSelectedResult_.sourceEdge = TopoDS::Edge(chosenRefShape);
+        }
+    }
 
     if (ctx == SnapPickContext::Normal)
         addSnapPersistentPoint(chosen);

@@ -15,6 +15,7 @@
 
 #include <gp_Dir.hxx>
 
+#include <vtkCleanPolyData.h>
 #include <vtkDataSetMapper.h>
 #include <vtkFeatureEdges.h>
 #include <vtkMapper.h>
@@ -42,12 +43,20 @@ void Widget::ensureModelBoundaryOutline(int index)
     ModelingHistory& rec = historyList[index];
     if (!ModelDisplayStyle::needsBoundaryOutline(rec.type) || !renderStateFor(rec).shapeDataSource) return;
     if (!renderStateFor(rec).outlineActor) {
-        vtkSmartPointer<vtkFeatureEdges> featureEdges = vtkSmartPointer<vtkFeatureEdges>::New();
+        vtkSmartPointer<vtkCleanPolyData> cleanPolyData = vtkSmartPointer<vtkCleanPolyData>::New();
         if (renderStateFor(rec).solidDisplayFilter) {
-            featureEdges->SetInputConnection(renderStateFor(rec).solidDisplayFilter->GetOutputPort());
+            cleanPolyData->SetInputConnection(renderStateFor(rec).solidDisplayFilter->GetOutputPort());
         } else {
-            featureEdges->SetInputConnection(renderStateFor(rec).shapeDataSource->GetOutputPort());
+            cleanPolyData->SetInputConnection(renderStateFor(rec).shapeDataSource->GetOutputPort());
         }
+        cleanPolyData->PointMergingOn();
+        cleanPolyData->SetTolerance(1.0e-9);
+        cleanPolyData->ConvertLinesToPointsOff();
+        cleanPolyData->ConvertPolysToLinesOff();
+        cleanPolyData->ConvertStripsToPolysOff();
+
+        vtkSmartPointer<vtkFeatureEdges> featureEdges = vtkSmartPointer<vtkFeatureEdges>::New();
+        featureEdges->SetInputConnection(cleanPolyData->GetOutputPort());
         featureEdges->BoundaryEdgesOn();
         featureEdges->FeatureEdgesOn();
         featureEdges->ManifoldEdgesOff();

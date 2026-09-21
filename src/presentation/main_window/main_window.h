@@ -109,6 +109,7 @@
 #include "presentation/dialogs/sketch/sketch_ellipse_dialog.h"
 
 class SketchRectangleModeDialog;
+class SketchArcModeDialog;
 class SketchCircleModeDialog;
 class SketchConicDialog;
 class SketchPolygonValueDialog;
@@ -475,6 +476,16 @@ private:
      bool tryPickPointOnPlane(const gp_Pln& pln, int x, int y, gp_Pnt& outP) const;
      bool tryPickFacePlaneUnderCursor(int x, int y, gp_Pln& outPlane);
      bool tryPickPlanarFaceUnderCursor(int x, int y, gp_Pln& outPlane, TopoDS_Face& outFace);
+     bool tryPickSketchPrincipalPlane(int x, int y, gp_Pln& outPlane);
+     gp_Pln sketchPrincipalPlaneFromId(int planeId) const;
+     void setSketchPrincipalPlanesVisible(bool visible);
+     void clearSketchPrincipalPlaneActors();
+     void resetSketchPrincipalPlaneHighlight();
+     void applySketchPrincipalPlaneHighlight(int planeId);
+     bool pickSketchPrincipalPlaneAt(int x, int y, int& outPlaneId) const;
+     void openSketchCreateDialog(SelectionMode restoreMode = None,
+                                 SketchToolInputDialog::ObjectKind restoreObj = SketchToolInputDialog::ObjLine,
+                                 bool restoreSketchTool = false);
      void ensureSketchHistoryRecord();
      void updateSketchHistoryShape();
     void rebindHistoryShapeSource(ModelingHistory& history);
@@ -486,6 +497,10 @@ private:
      void clearSketchPlaneHover();
      void updateSketchPlaneHover(int x, int y);
      void createOrUpdateSketchSelectedDatumPlane(const gp_Pln& pln, const TopoDS_Face& refFace);
+     void clearSketchPlaneAxisActors(bool forgetDefinition = true);
+     void createOrUpdateSketchPlaneAxisActors(const gp_Pln& pln, double halfX, double halfY, bool visible);
+     void rebuildSketchPlaneAxisActors();
+     void refreshSketchPlaneAxisScreenScale();
      void ensureSketchPreviewLineActor();
      void updateSketchPreviewLine(const gp_Pnt& p1, const gp_Pnt& p2);
      void clearSketchPreviewLine();
@@ -515,6 +530,10 @@ private:
                                        TopoDS_Edge& outEdge) const;
      void armSnapFiltersForSketchToolFromMenuKind(int snapKind);
      void restoreSnapAfterSketchConicPick();
+     bool isSketchPointInputMode(SelectionMode mode) const;
+     gp_Pnt projectPointToActiveSketchPlane(const gp_Pnt& point) const;
+     bool tryResolveSketchHoverPoint(int x, int y, gp_Pnt& outPoint);
+     bool tryResolveSketchClickPoint(int x, int y, gp_Pnt& outPoint);
      void syncSketchConicDialogOkState();
      void clearSketchConicInternalState(bool clearDialogFields);
      void rebuildSketchConicPreview();
@@ -562,12 +581,15 @@ private:
      void clearSketchCommittedOverlay();
      void appendCommittedSketchEdgeOverlay(const TopoDS_Edge& edge);
 
-     void openOrRaiseSketchToolInput(SketchToolInputDialog::ObjectKind initialObject);
+     void openOrRaiseSketchToolInput(SketchToolInputDialog::ObjectKind initialObject,
+                                      bool allowObjectSwitching = true);
      void closeSketchToolInput();
      void positionSketchToolInputDialog();
      void positionSketchAuxDialog(QDialog* dlg);
      void openOrRaiseSketchRectangleModeDialog();
      void closeSketchRectangleModeDialog();
+     void openOrRaiseSketchArcModeDialog();
+     void closeSketchArcModeDialog();
      void openOrRaiseSketchCircleModeDialog();
      void closeSketchCircleModeDialog();
      void setupSketchCreationToggleButtons();
@@ -582,10 +604,18 @@ private:
      gp_Pnt sketchLineEndFromLengthAngle(const gp_Pln& pln, const gp_Pnt& start, double len, double angDeg) const;
      bool sketchArcCenterFromTwoPointsRadius(const gp_Pln& pln, const gp_Pnt& p1, const gp_Pnt& p2, double R,
                                              const gp_Pnt& hint, gp_Pnt& outCenter) const;
+     bool sketchCircleCenterFromTwoPointsRadius(const gp_Pln& pln, const gp_Pnt& p1, const gp_Pnt& p2, double R,
+                                                const gp_Pnt& hint, gp_Pnt& outCenter) const;
      gp_Pnt sketchArcMidPointOnCircle(const gp_Pln& pln, const gp_Pnt& C, double R, const gp_Pnt& p1, const gp_Pnt& p2) const;
      double sketchArcRadiusFromThreePoints(const gp_Pnt& p1, const gp_Pnt& pm, const gp_Pnt& p2) const;
+     bool sketchArcEndAndMidFromCenterStartHint(const gp_Pln& pln, const gp_Pnt& center,
+                                                const gp_Pnt& start, const gp_Pnt& endHint,
+                                                gp_Pnt& outEnd, gp_Pnt& outMid) const;
      bool sketchArcMidFromTangentAndEnd(const gp_Pln& pln, const gp_Pnt& S, const gp_Dir& tanAtS, const gp_Pnt& E,
                                         gp_Pnt& outMid) const;
+     bool sketchContourArcStartTangentForPoint(const gp_Pln& pln, const gp_Pnt& start,
+                                               const gp_Dir& previousTangent,
+                                               const gp_Pnt& point, gp_Dir& outTangent) const;
      bool sketchArcFromStartRadiusSweep(const gp_Pln& pln, const gp_Pnt& S, const gp_Dir& refTan, double R,
                                          double sweepDeg, gp_Pnt& outEnd, gp_Pnt& outMid, gp_Pnt& outCenter) const;
      void sketchApplyManualInputFromDialog();
@@ -677,7 +707,10 @@ private:
     bool tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
                                         int* outHoverModelIndex = nullptr,
                                         IVtk_IdType* outHoverSubShapeId = nullptr);
-    bool tryPickPointOnModelForVector(int x, int y, gp_Pnt& outPoint);
+    bool tryPickPointOnModelForVector(int x, int y, gp_Pnt& outPoint,
+                                      TopoDS_Shape* outSourceShape = nullptr,
+                                      PointSnapType* outSnapType = nullptr);
+    void armPointPickerForWorkCsysPlacement();
     void clearVectorDialogArrowPreview();
     // 同步原始对话框“反向”按钮：让箭头预览和建模方向一致
     void updateVectorArrowPreviewWithAxisReversed(bool axisReversed);

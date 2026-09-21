@@ -34,6 +34,7 @@ protected:
     vtkSmartPointer<vtkTransform> workCsysTransform;
     bool hasWorkCsys = false;
     bool workCsysDragActive = false;
+    bool workCsysPointPickerAutoArmed_ = false;
     int workCsysHistoryIndex_ = -1;
     double workCsysLastPickWorld[3] = {0.0, 0.0, 0.0};
 

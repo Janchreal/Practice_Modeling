@@ -92,19 +92,27 @@ void Widget::updateIntersectionForPair(int firstIndex, int secondIndex)
         IntersectionOps::computeSection(firstShape, secondShape);
     vtkSmartPointer<vtkPolyData> polyData =
         IntersectionEdgePipeline::createPolyData(section, 0.003);
-    vtkSmartPointer<vtkActor> actor =
-        IntersectionEdgePipeline::createActor(polyData);
-    if (!actor || !renderer) {
+    if (!polyData || polyData->GetNumberOfLines() == 0) {
         removePair();
         return;
     }
 
     removePair();
-    renderer->AddActor(actor);
+
+    // Intersection calculation is kept alive, but modeling should not display
+    // the overlay curve for now.
+    // vtkSmartPointer<vtkActor> actor =
+    //     IntersectionEdgePipeline::createActor(polyData);
+    // if (!actor || !renderer) {
+    //     removePair();
+    //     return;
+    // }
+    // renderer->AddActor(actor);
+
     IntersectionRenderState& state =
         intersectionRenderStore_.ensure(firstId, secondId);
     state.polyData = polyData;
-    state.actor = actor;
+    state.actor = nullptr;
 }
 
 void Widget::updateIntersectionsForRecord(int index)

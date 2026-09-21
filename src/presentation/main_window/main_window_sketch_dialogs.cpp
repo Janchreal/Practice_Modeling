@@ -62,6 +62,48 @@ void Widget::closeSketchRectangleModeDialog()
     }
 }
 
+void Widget::openOrRaiseSketchArcModeDialog()
+{
+    if (!sketchArcModeDialog_) {
+        sketchArcModeDialog_ = new SketchArcModeDialog(this);
+        sketchArcModeDialog_->setAttribute(Qt::WA_DeleteOnClose);
+        connect(sketchArcModeDialog_, &SketchArcModeDialog::closedByUser, this, [this]() {
+            sketchArcModeDialog_ = nullptr;
+            positionSketchToolInputDialog();
+        });
+        connect(sketchArcModeDialog_, &QObject::destroyed, this, [this]() {
+            sketchArcModeDialog_ = nullptr;
+            positionSketchToolInputDialog();
+        });
+        connect(sketchArcModeDialog_, &SketchArcModeDialog::methodChanged, this,
+                [this](SketchArcModeDialog::Method) {
+                    sketchClickCount_ = 0;
+                    sketchCommittedPointValid_ = false;
+                    sketchChainTangentValid_ = false;
+                    clearSketchPreviewArc();
+                    clearSketchPreviewLine();
+                });
+    }
+    sketchArcModeDialog_->show();
+    sketchArcModeDialog_->raise();
+    positionSketchAuxDialogImpl(vtkWidget, sketchArcModeDialog_);
+    if (sketchToolInputDialog_ && sketchToolInputDialog_->isVisible() && vtkWidget) {
+        const QPoint g = vtkWidget->mapToGlobal(QPoint(0, 0));
+        const int x = g.x() + vtkWidget->width() - sketchToolInputDialog_->width() - 8;
+        const int y = sketchArcModeDialog_->y() + sketchArcModeDialog_->height() + 8;
+        sketchToolInputDialog_->move(x, y);
+    }
+}
+
+void Widget::closeSketchArcModeDialog()
+{
+    if (sketchArcModeDialog_) {
+        sketchArcModeDialog_->close();
+        sketchArcModeDialog_ = nullptr;
+        positionSketchToolInputDialog();
+    }
+}
+
 void Widget::openOrRaiseSketchCircleModeDialog()
 {
     if (!sketchCircleModeDialog_) {

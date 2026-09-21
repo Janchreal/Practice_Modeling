@@ -9,65 +9,377 @@
 #include <QStatusBar>
 #include <QVTKOpenGLNativeWidget.h>
 
+#include <vtkActor.h>
+#include <vtkCellPicker.h>
+#include <vtkFeatureEdges.h>
+#include <vtkPlaneSource.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
+#include <vtkTransform.h>
+
+#include <algorithm>
+#include <cmath>
 
 #include <Qt>
+
+namespace {
+
+void sketchPrincipalPlaneColor(int planeId, double& r, double& g, double& b)
+{
+    if (planeId == 0) {        // XC-YC
+        r = 0.95; g = 0.58; b = 0.16;
+    } else if (planeId == 1) { // YC-ZC
+        r = 0.85; g = 0.28; b = 0.20;
+    } else {                   // XC-ZC
+        r = 0.20; g = 0.62; b = 0.54;
+    }
+}
+
+} // namespace
 
 void Widget::on_pushButton_5_clicked()
 {
     clearSketchEditHover();
     endSketchBrushStroke();
-    // 创建草图：弹出对话框，拾取平面作为草图平面
+    openSketchCreateDialog();
+}
+
+gp_Pln Widget::sketchPrincipalPlaneFromId(int planeId) const
+{
+    if (planeId == 1) {
+        return gp_Pln(gp_Pnt(0, 0, 0), gp_Dir(1, 0, 0)); // YC-ZC
+    }
+    if (planeId == 2) {
+        return gp_Pln(gp_Pnt(0, 0, 0), gp_Dir(0, 1, 0)); // XC-ZC
+    }
+    return gp_Pln(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));     // XC-YC
+}
+
+bool Widget::tryPickSketchPrincipalPlane(int x, int y, gp_Pln& outPlane)
+{
+    int planeId = -1;
+    if (!pickSketchPrincipalPlaneAt(x, y, planeId)) {
+        return false;
+    }
+    outPlane = sketchPrincipalPlaneFromId(planeId);
+    applySketchPrincipalPlaneHighlight(planeId);
+    return true;
+}
+
+void Widget::setSketchPrincipalPlanesVisible(bool visible)
+{
+    if (!renderer) {
+        return;
+    }
+    if (!visible) {
+        clearSketchPrincipalPlaneActors();
+        if (vtkWidget && vtkWidget->renderWindow()) {
+            vtkWidget->renderWindow()->Render();
+        }
+        return;
+    }
+
+    clearSketchPrincipalPlaneActors();
+
+    double halfSize = 3.0;
+    bool hasBounds = false;
+    double xmin = -1.0, xmax = 1.0;
+    double ymin = -1.0, ymax = 1.0;
+    double zmin = -1.0, zmax = 1.0;
+    for (const ModelingHistory& record : historyList) {
+        vtkActor* actor = renderStateFor(record).actor;
+        if (!actor || actor->GetVisibility() == 0) continue;
+        if (record.type == REFERENCE_CSYS || record.type == WORK_CSYS) continue;
+        double b[6] = {0, 0, 0, 0, 0, 0};
+        actor->GetBounds(b);
+        if (!std::isfinite(b[0]) || !std::isfinite(b[1])) continue;
+        if (!hasBounds) {
+            xmin = b[0]; xmax = b[1];
+            ymin = b[2]; ymax = b[3];
+            zmin = b[4]; zmax = b[5];
+            hasBounds = true;
+        } else {
+            xmin = std::min(xmin, b[0]); xmax = std::max(xmax, b[1]);
+            ymin = std::min(ymin, b[2]); ymax = std::max(ymax, b[3]);
+            zmin = std::min(zmin, b[4]); zmax = std::max(zmax, b[5]);
+        }
+    }
+    if (hasBounds) {
+        const double maxSize = std::max({xmax - xmin, ymax - ymin, zmax - zmin});
+        if (std::isfinite(maxSize) && maxSize > 0.0) {
+            halfSize = std::max(3.0, maxSize * 0.85);
+        }
+    }
+
+    auto makePlane = [this, halfSize](int planeId, vtkSmartPointer<vtkActor>& outlineActor) {
+        vtkSmartPointer<vtkPlaneSource> src = vtkSmartPointer<vtkPlaneSource>::New();
+        const double h = halfSize;
+        if (planeId == 0) {
+            src->SetOrigin(-h, -h, 0.0);
+            src->SetPoint1(h, -h, 0.0);
+            src->SetPoint2(-h, h, 0.0);
+        } else if (planeId == 1) {
+            src->SetOrigin(0.0, -h, -h);
+            src->SetPoint1(0.0, h, -h);
+            src->SetPoint2(0.0, -h, h);
+        } else {
+            src->SetOrigin(-h, 0.0, -h);
+            src->SetPoint1(h, 0.0, -h);
+            src->SetPoint2(-h, 0.0, h);
+        }
+        src->SetXResolution(1);
+        src->SetYResolution(1);
+        src->Update();
+
+        vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+        mapper->SetInputConnection(src->GetOutputPort());
+        mapper->ScalarVisibilityOff();
+
+        vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+        actor->SetMapper(mapper);
+        double r = 0, g = 0, b = 0;
+        sketchPrincipalPlaneColor(planeId, r, g, b);
+        actor->GetProperty()->SetColor(r, g, b);
+        actor->GetProperty()->SetOpacity(0.24);
+        actor->GetProperty()->SetAmbient(0.75);
+        actor->GetProperty()->SetDiffuse(0.35);
+        actor->GetProperty()->SetSpecular(0.0);
+        actor->GetProperty()->BackfaceCullingOff();
+        actor->GetProperty()->SetRepresentationToSurface();
+        actor->GetProperty()->EdgeVisibilityOff();
+        actor->SetPickable(true);
+        addAppearanceActor(actor);
+
+        vtkSmartPointer<vtkFeatureEdges> edges = vtkSmartPointer<vtkFeatureEdges>::New();
+        edges->SetInputConnection(src->GetOutputPort());
+        edges->BoundaryEdgesOn();
+        edges->FeatureEdgesOff();
+        edges->ManifoldEdgesOff();
+        edges->NonManifoldEdgesOff();
+        edges->Update();
+
+        vtkSmartPointer<vtkPolyDataMapper> outlineMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+        outlineMapper->SetInputConnection(edges->GetOutputPort());
+        outlineMapper->ScalarVisibilityOff();
+        outlineMapper->SetRelativeCoincidentTopologyLineOffsetParameters(-6.0, -6.0);
+
+        outlineActor = vtkSmartPointer<vtkActor>::New();
+        outlineActor->SetMapper(outlineMapper);
+        outlineActor->GetProperty()->SetColor(r, g, b);
+        outlineActor->GetProperty()->SetOpacity(1.0);
+        outlineActor->GetProperty()->SetLineWidth(2.4);
+        outlineActor->GetProperty()->SetLighting(false);
+        outlineActor->SetPickable(false);
+        addAppearanceActor(outlineActor);
+        return actor;
+    };
+
+    sketchPrincipalPlaneXYActor_ = makePlane(0, sketchPrincipalPlaneXYOutlineActor_);
+    sketchPrincipalPlaneYZActor_ = makePlane(1, sketchPrincipalPlaneYZOutlineActor_);
+    sketchPrincipalPlaneXZActor_ = makePlane(2, sketchPrincipalPlaneXZOutlineActor_);
+
+    if (vtkWidget && vtkWidget->renderWindow()) {
+        vtkWidget->renderWindow()->Render();
+    }
+}
+
+void Widget::clearSketchPrincipalPlaneActors()
+{
+    if (!renderer) return;
+    auto removeIf = [this](vtkSmartPointer<vtkActor>& actor) {
+        if (actor) {
+            removeSceneActor(actor);
+            actor = nullptr;
+        }
+    };
+    removeIf(sketchPrincipalPlaneXYActor_);
+    removeIf(sketchPrincipalPlaneYZActor_);
+    removeIf(sketchPrincipalPlaneXZActor_);
+    removeIf(sketchPrincipalPlaneXYOutlineActor_);
+    removeIf(sketchPrincipalPlaneYZOutlineActor_);
+    removeIf(sketchPrincipalPlaneXZOutlineActor_);
+}
+
+void Widget::resetSketchPrincipalPlaneHighlight()
+{
+    auto resetPlane = [](const vtkSmartPointer<vtkActor>& actor, int planeId) {
+        if (!actor) return;
+        double r = 0, g = 0, b = 0;
+        sketchPrincipalPlaneColor(planeId, r, g, b);
+        actor->GetProperty()->SetColor(r, g, b);
+        actor->GetProperty()->SetEdgeColor(r, g, b);
+        actor->GetProperty()->SetOpacity(0.24);
+    };
+    auto resetOutline = [](const vtkSmartPointer<vtkActor>& actor, int planeId) {
+        if (!actor) return;
+        double r = 0, g = 0, b = 0;
+        sketchPrincipalPlaneColor(planeId, r, g, b);
+        actor->GetProperty()->SetColor(r, g, b);
+        actor->GetProperty()->SetOpacity(1.0);
+        actor->GetProperty()->SetLineWidth(2.4);
+    };
+    resetPlane(sketchPrincipalPlaneXYActor_, 0);
+    resetPlane(sketchPrincipalPlaneYZActor_, 1);
+    resetPlane(sketchPrincipalPlaneXZActor_, 2);
+    resetOutline(sketchPrincipalPlaneXYOutlineActor_, 0);
+    resetOutline(sketchPrincipalPlaneYZOutlineActor_, 1);
+    resetOutline(sketchPrincipalPlaneXZOutlineActor_, 2);
+}
+
+void Widget::applySketchPrincipalPlaneHighlight(int planeId)
+{
+    resetSketchPrincipalPlaneHighlight();
+    vtkSmartPointer<vtkActor> actor;
+    vtkSmartPointer<vtkActor> outlineActor;
+    if (planeId == 0) {
+        actor = sketchPrincipalPlaneXYActor_;
+        outlineActor = sketchPrincipalPlaneXYOutlineActor_;
+    } else if (planeId == 1) {
+        actor = sketchPrincipalPlaneYZActor_;
+        outlineActor = sketchPrincipalPlaneYZOutlineActor_;
+    } else {
+        actor = sketchPrincipalPlaneXZActor_;
+        outlineActor = sketchPrincipalPlaneXZOutlineActor_;
+    }
+    if (!actor) return;
+    double r = 0, g = 0, b = 0;
+    sketchPrincipalPlaneColor(planeId, r, g, b);
+    actor->GetProperty()->SetColor(r, g, b);
+    actor->GetProperty()->SetEdgeColor(r, g, b);
+    actor->GetProperty()->SetOpacity(0.50);
+    if (outlineActor) {
+        outlineActor->GetProperty()->SetColor(r, g, b);
+        outlineActor->GetProperty()->SetOpacity(1.0);
+        outlineActor->GetProperty()->SetLineWidth(3.2);
+    }
+}
+
+bool Widget::pickSketchPrincipalPlaneAt(int x, int y, int& outPlaneId) const
+{
+    if (!renderer || !sketchPrincipalPlaneXYActor_) return false;
+    if (sketchPrincipalPlaneXYActor_->GetVisibility() == 0) return false;
+
+    vtkSmartPointer<vtkCellPicker> picker = vtkSmartPointer<vtkCellPicker>::New();
+    picker->SetTolerance(0.02);
+    picker->PickFromListOn();
+    picker->AddPickList(const_cast<vtkActor*>(sketchPrincipalPlaneXYActor_.GetPointer()));
+    picker->AddPickList(const_cast<vtkActor*>(sketchPrincipalPlaneYZActor_.GetPointer()));
+    picker->AddPickList(const_cast<vtkActor*>(sketchPrincipalPlaneXZActor_.GetPointer()));
+    picker->Pick(x, y, 0, renderer);
+
+    vtkActor* picked = picker->GetActor();
+    if (picked == sketchPrincipalPlaneXYActor_.GetPointer()) {
+        outPlaneId = 0;
+        return true;
+    }
+    if (picked == sketchPrincipalPlaneYZActor_.GetPointer()) {
+        outPlaneId = 1;
+        return true;
+    }
+    if (picked == sketchPrincipalPlaneXZActor_.GetPointer()) {
+        outPlaneId = 2;
+        return true;
+    }
+    return false;
+}
+
+void Widget::openSketchCreateDialog(SelectionMode restoreMode,
+                                    SketchToolInputDialog::ObjectKind restoreObj,
+                                    bool restoreSketchTool)
+{
+    clearSketchEditHover();
+    endSketchBrushStroke();
+
+    if (activeSketchCreateDialog_) {
+        activeSketchCreateDialog_->raise();
+        activeSketchCreateDialog_->activateWindow();
+        return;
+    }
+
     auto* dlg = new SketchCreateDialog(dialogParentWidget());
     dlg->setModal(false);
+    dlg->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint);
     dlg->setAttribute(Qt::WA_DeleteOnClose);
 
     activeSketchCreateDialog_ = dlg;
 
-    connect(dlg, &SketchCreateDialog::requestPickPlane, this, [this]() {
-        currentSelectionMode = SketchPlaneSelection;
-        statusBar()->showMessage(tr("创建草图：请在模型上点击一个平面作为参考平面。"), 4000);
+    connect(dlg, &SketchCreateDialog::showPrincipalPlanesChanged,
+            this, &Widget::setSketchPrincipalPlanesVisible);
+
+    connect(dlg, &SketchCreateDialog::planeNormalReversed, this, [this](const gp_Pln& pln) {
+        createOrUpdateSketchSelectedDatumPlane(pln, TopoDS_Face());
         if (vtkWidget) vtkWidget->setFocus();
     });
 
-    connect(dlg, &QDialog::accepted, this, [this, dlg]() {
+    connect(dlg, &SketchCreateDialog::requestPickPlane, this, [this]() {
+        currentSelectionMode = SketchPlaneSelection;
+        statusBar()->showMessage(tr("创建草图：请点击模型平面或显示的主平面。"), 4000);
+        if (vtkWidget) vtkWidget->setFocus();
+    });
+
+    connect(dlg, &QDialog::accepted, this, [this, dlg, restoreMode, restoreObj, restoreSketchTool]() {
         if (!dlg->hasPickedPlane()) {
             QMessageBox::warning(this, tr("创建草图"), tr("请先拾取参考平面。"));
             return;
         }
 
-        activeSketch_.clear();
-        clearSketchCommittedOverlay();
+        if (!restoreSketchTool || (hasActiveSketch_ && activeSketch_.isValid())) {
+            activeSketch_.clear();
+            clearSketchCommittedOverlay();
+            activeSketchHistoryIndex_ = -1;
+            clearSketchPreviewLine();
+            clearSketchPreviewArc();
+            clearSketchPreviewCircle();
+            clearSketchPreviewConic();
+        }
         activeSketchPlane_ = dlg->pickedPlane();
         activeSketch_.setPlane(activeSketchPlane_);
         activeSketch_.setName(tr("草图"));
         hasActiveSketch_ = true;
         sketchClickCount_ = 0;
-        activeSketchHistoryIndex_ = -1;
+        sketchCommittedPointValid_ = false;
 
+        createOrUpdateSketchSelectedDatumPlane(activeSketchPlane_, TopoDS_Face());
         ensureSketchHistoryRecord();
         updateSketchHistoryShape();
 
         alignViewToSketchPlane(activeSketchPlane_);
 
-        currentSelectionMode = None;
-        statusBar()->showMessage(tr("草图已创建。现在可点击“直线/圆弧”在该平面上绘制。"), 4000);
+        if (restoreSketchTool) {
+            currentSelectionMode = restoreMode;
+            openOrRaiseSketchToolInput(restoreObj, sketchContourChaining_);
+            statusBar()->showMessage(tr("草图平面已更新，可继续绘制。"), 2500);
+        } else {
+            currentSelectionMode = None;
+            statusBar()->showMessage(tr("草图已创建。现在可点击“直线/圆弧”在该平面上绘制。"), 4000);
+        }
+        if (vtkWidget) vtkWidget->setFocus();
     });
 
-    connect(dlg, &QDialog::rejected, this, [this]() {
+    connect(dlg, &QDialog::rejected, this, [this, restoreMode, restoreSketchTool]() {
         if (currentSelectionMode == SketchPlaneSelection) {
-            currentSelectionMode = None;
+            currentSelectionMode = restoreSketchTool ? restoreMode : None;
         }
         activeSketchCreateDialog_ = nullptr;
     });
 
-    connect(dlg, &QObject::destroyed, this, [this]() {
+    connect(dlg, &QObject::destroyed, this,
+            [this, restoreMode, restoreSketchTool]() {
         if (activeSketchCreateDialog_) activeSketchCreateDialog_ = nullptr;
-        if (currentSelectionMode == SketchPlaneSelection) currentSelectionMode = None;
+        if (currentSelectionMode == SketchPlaneSelection) {
+            currentSelectionMode = restoreSketchTool ? restoreMode : None;
+        }
+        setSketchPrincipalPlanesVisible(false);
     });
 
-    // 当处于拾取模式时，鼠标点击会在 handleVtkMouseClick 中处理，这里只需显示对话框
+    setSketchPrincipalPlanesVisible(dlg->showPrincipalPlanes());
     dlg->show();
+    dlg->raise();
+    if (vtkWidget) {
+        const QPoint g = vtkWidget->mapToGlobal(QPoint(8, 8));
+        dlg->move(g);
+    }
 }
 
 void Widget::setupSketchCreationToggleButtons()
@@ -151,6 +463,9 @@ bool Widget::sketchCreationExitIfRepeatClick(QPushButton* clickedButton)
                 vtkWidget->renderWindow()->Render();
             return true;
         }
+        if (clickedButton == ui->pushButton_42) {
+            closeSketchArcModeDialog();
+        }
         exitSketchCreationMode();
         return true;
     }
@@ -165,6 +480,8 @@ void Widget::prepareSketchCreationToolClick(QPushButton* clickedButton)
         closeSketchPolygonDialog();
     if (clickedButton != ui->pushButton_10)
         closeSketchEllipseDialog();
+    if (clickedButton != ui->pushButton_42)
+        closeSketchArcModeDialog();
     uncheckAllSketchCreationButtons();
     sketchCreationExclusiveButton_ = clickedButton;
     if (clickedButton)
@@ -186,6 +503,7 @@ void Widget::exitSketchCreationMode()
         sketchContourChaining_ = false;
         closeSketchToolInput();
         closeSketchRectangleModeDialog();
+        closeSketchArcModeDialog();
         closeSketchCircleModeDialog();
         closeSketchPolygonDialog();
         clearSketchPreviewLine();
@@ -218,7 +536,8 @@ void Widget::on_pushButton_7_clicked()
     clearSketchPreviewCircle();
     clearSketchPreviewArc();
     clearSketchPreviewLine();
-    openOrRaiseSketchToolInput(SketchToolInputDialog::ObjLine);
+    closeSketchArcModeDialog();
+    openOrRaiseSketchToolInput(SketchToolInputDialog::ObjLine, true);
     statusBar()->showMessage(tr("轮廓：在对话框中选择直线/圆弧与输入模式；上一段终点为下一段起点。"), 5000);
     if (vtkWidget) vtkWidget->setFocus();
 }
@@ -239,7 +558,8 @@ void Widget::on_pushButton_40_clicked()
     clearSketchPreviewCircle();
     clearSketchPreviewArc();
     clearSketchPreviewLine();
-    openOrRaiseSketchToolInput(SketchToolInputDialog::ObjLine);
+    closeSketchArcModeDialog();
+    openOrRaiseSketchToolInput(SketchToolInputDialog::ObjLine, false);
     statusBar()->showMessage(tr("直线：两次点击画一条线段；下一条需重新点起点。"), 4000);
     if (vtkWidget) vtkWidget->setFocus();
 }
@@ -282,8 +602,9 @@ void Widget::on_pushButton_42_clicked()
     clearSketchPreviewCircle();
     clearSketchPreviewArc();
     clearSketchPreviewLine();
-    openOrRaiseSketchToolInput(SketchToolInputDialog::ObjArc);
-    statusBar()->showMessage(tr("圆弧：三点定弧；仅在「轮廓」链式绘制且存在上一段切向时，第二次点击可一步完成相切弧。"), 5000);
+    openOrRaiseSketchToolInput(SketchToolInputDialog::ObjArc, false);
+    openOrRaiseSketchArcModeDialog();
+    statusBar()->showMessage(tr("圆弧：可用三点或中心端点方式创建。"), 5000);
     if (vtkWidget) vtkWidget->setFocus();
 }
 
@@ -305,7 +626,7 @@ void Widget::on_pushButton_11_clicked()
     clearSketchPreviewLine();
     clearSketchPreviewRectangle();
     openOrRaiseSketchCircleModeDialog();
-    statusBar()->showMessage(tr("圆：圆心+半径或三点定圆；每次完成后需重新点击定义。"), 5000);
+    statusBar()->showMessage(tr("圆：圆心+半径或圆上两点+半径；每次完成后需重新点击定义。"), 5000);
     if (vtkWidget) vtkWidget->setFocus();
 }
 

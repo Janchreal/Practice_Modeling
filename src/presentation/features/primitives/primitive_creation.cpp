@@ -91,11 +91,7 @@ void Widget::on_cuboid_clicked()
     
     // 连接点选择信号
     connect(dialog, &CuboidParamsDialog::requestPointSelection, this, [this]() {
-        // 进入点选择模式（可多选切换原点 A → a）
-        currentSelectionMode = PointSelection;
-        if (statusBar()) {
-            statusBar()->showMessage(tr("块：请在视图中点击选择原点（可再次点击切换）"), 4000);
-        }
+        startOriginSnapSelection(OriginDialogKind::Cuboid, -1);
     });
 
     // 连接点选择信号（snap 捕捉类型）
@@ -232,9 +228,9 @@ void Widget::on_cuboid_clicked()
 
     // 打开后启动半透明实体预览 + 操作柄，并自动进入“指定点”
     startCuboidInteractiveMode();
-    currentSelectionMode = PointSelection;
+    startOriginSnapSelection(OriginDialogKind::Cuboid, -1);
     if (statusBar()) {
-        statusBar()->showMessage(tr("块：请指定原点（原点和边长）"), 4000);
+        statusBar()->showMessage(tr("块：请指定原点（任意点，原点和边长）"), 4000);
     }
     vtkWidget->setFocus();
 }
@@ -266,8 +262,7 @@ void Widget::on_cylinder_clicked()
     dialog->setModal(false);
     
     connect(dialog, &CylinderDialog::requestPointSelection, this, [this]() {
-        currentSelectionMode = PointSelection;
-        QMessageBox::information(dialogParentWidget(), "提示", "请在3D视图中点击模型上的点来选择原点位置");
+        startOriginSnapSelection(OriginDialogKind::Cylinder, -1);
     });
 
     connect(dialog, &CylinderDialog::requestPointSelectionWithSnap, this,
@@ -408,8 +403,7 @@ void Widget::on_cone_clicked()
     dialog->setModal(false);
     
     connect(dialog, &ConeParamsDialog::requestPointSelection, this, [this]() {
-        currentSelectionMode = PointSelection;
-        QMessageBox::information(dialogParentWidget(), "提示", "请在3D视图中点击模型上的点来选择原点位置");
+        startOriginSnapSelection(OriginDialogKind::Cone, -1);
     });
 
     connect(dialog, &ConeParamsDialog::requestPointSelectionWithSnap, this,
@@ -550,8 +544,7 @@ void Widget::on_sphere_clicked()
     dialog->setModal(false);
     
     connect(dialog, &SphereParamsDialog::requestPointSelection, this, [this]() {
-        currentSelectionMode = PointSelection;
-        QMessageBox::information(dialogParentWidget(), "提示", "请在3D视图中点击模型上的点来选择原点位置");
+        startOriginSnapSelection(OriginDialogKind::Sphere, -1);
     });
 
     connect(dialog, &SphereParamsDialog::requestPointSelectionWithSnap, this,

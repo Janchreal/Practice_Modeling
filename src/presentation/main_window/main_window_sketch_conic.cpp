@@ -518,6 +518,12 @@ bool Widget::sketchArcCenterFromTwoPointsRadius(const gp_Pln& pln, const gp_Pnt&
     return true;
 }
 
+bool Widget::sketchCircleCenterFromTwoPointsRadius(const gp_Pln& pln, const gp_Pnt& p1, const gp_Pnt& p2, double R,
+                                                   const gp_Pnt& hint, gp_Pnt& outCenter) const
+{
+    return sketchArcCenterFromTwoPointsRadius(pln, p1, p2, R, hint, outCenter);
+}
+
 gp_Pnt Widget::sketchArcMidPointOnCircle(const gp_Pln& pln, const gp_Pnt& C, double R, const gp_Pnt& p1, const gp_Pnt& p2) const
 {
     gp_Vec v1(C, p1);
@@ -535,6 +541,43 @@ gp_Pnt Widget::sketchArcMidPointOnCircle(const gp_Pln& pln, const gp_Pnt& C, dou
     }
     gp_Dir d(bis);
     return C.Translated(R * gp_Vec(d));
+}
+
+bool Widget::sketchArcEndAndMidFromCenterStartHint(const gp_Pln& pln, const gp_Pnt& center,
+                                                   const gp_Pnt& start, const gp_Pnt& endHint,
+                                                   gp_Pnt& outEnd, gp_Pnt& outMid) const
+{
+    const gp_Ax3 ax = pln.Position();
+    const gp_Dir xd = ax.XDirection();
+    const gp_Dir yd = ax.YDirection();
+    gp_Vec cs(center, start);
+    gp_Vec ch(center, endHint);
+    const double radius = cs.Magnitude();
+    if (radius <= Precision::Confusion() || ch.Magnitude() <= Precision::Confusion()) {
+        return false;
+    }
+
+    ch.Normalize();
+    outEnd = center.Translated(radius * ch);
+
+    const double sx = cs.Dot(gp_Vec(xd));
+    const double sy = cs.Dot(gp_Vec(yd));
+    gp_Vec ce(center, outEnd);
+    const double ex = ce.Dot(gp_Vec(xd));
+    const double ey = ce.Dot(gp_Vec(yd));
+    double a0 = std::atan2(sy, sx);
+    double a1 = std::atan2(ey, ex);
+    double delta = a1 - a0;
+    while (delta > M_PI) delta -= 2.0 * M_PI;
+    while (delta <= -M_PI) delta += 2.0 * M_PI;
+    if (std::abs(delta) <= Precision::Angular()) {
+        return false;
+    }
+
+    const double amid = a0 + delta * 0.5;
+    outMid = center.Translated(radius * std::cos(amid) * gp_Vec(xd)
+                               + radius * std::sin(amid) * gp_Vec(yd));
+    return true;
 }
 
 bool Widget::sketchArcMidFromTangentAndEnd(const gp_Pln& pln, const gp_Pnt& S, const gp_Dir& tanAtS, const gp_Pnt& E,
@@ -555,6 +598,50 @@ bool Widget::sketchArcMidFromTangentAndEnd(const gp_Pln& pln, const gp_Pnt& S, c
     const double R = gp_Vec(C, S).Magnitude();
     if (R <= Precision::Confusion()) return false;
     outMid = sketchArcMidPointOnCircle(pln, C, R, S, E);
+    return true;
+}
+
+bool Widget::sketchContourArcStartTangentForPoint(const gp_Pln& pln, const gp_Pnt& start,
+                                                  const gp_Dir& previousTangent,
+                                                  const gp_Pnt& point, gp_Dir& outTangent) const
+{
+    gp_Vec toPoint(start, point);
+    if (toPoint.Magnitude() <= Precision::Confusion()) {
+        return false;
+    }
+    toPoint.Normalize();
+
+    gp_Vec t(previousTangent);
+    if (t.Magnitude() <= Precision::Confusion()) {
+        return false;
+    }
+    t.Normalize();
+
+    gp_Vec n(pln.Axis().Direction());
+    gp_Vec left = n.Crossed(t);
+    if (left.Magnitude() <= Precision::Confusion()) {
+        return false;
+    }
+    left.Normalize();
+
+    const double x = toPoint.Dot(t);
+    const double y = toPoint.Dot(left);
+    const double angle = std::atan2(y, x);
+    gp_Vec chosen;
+    if (std::abs(angle) <= M_PI / 4.0) {
+        chosen = t;
+    } else if (angle > M_PI / 4.0 && angle <= 3.0 * M_PI / 4.0) {
+        chosen = left;
+    } else if (angle < -M_PI / 4.0 && angle >= -3.0 * M_PI / 4.0) {
+        chosen = -left;
+    } else {
+        chosen = -t;
+    }
+
+    if (chosen.Magnitude() <= Precision::Confusion()) {
+        return false;
+    }
+    outTangent = gp_Dir(chosen);
     return true;
 }
 

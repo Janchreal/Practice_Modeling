@@ -11,6 +11,7 @@
 #include <QMouseEvent>
 #include <QResizeEvent>
 #include <QObject>
+#include <QStatusBar>
 #include <QVTKOpenGLNativeWidget.h>
 
 #include <limits>
@@ -60,6 +61,19 @@ bool Widget::eventFilter(QObject *obj, QEvent *event)
 
     if (event->type() == QEvent::KeyPress && vtkWidget && obj == vtkWidget) {
         auto* ke = static_cast<QKeyEvent*>(event);
+        if (ke->key() == Qt::Key_Escape && sketchContourChaining_
+            && (currentSelectionMode == SketchDrawLine || currentSelectionMode == SketchDrawArc)) {
+            sketchClickCount_ = 0;
+            sketchChainTangentValid_ = false;
+            sketchCommittedPointValid_ = false;
+            clearSketchPreviewLine();
+            clearSketchPreviewArc();
+            statusBar()->showMessage(tr("轮廓：已中断本次连锁，请重新点击下一段起点。"), 2500);
+            if (vtkWidget && vtkWidget->renderWindow()) {
+                vtkWidget->renderWindow()->Render();
+            }
+            return true;
+        }
         if (currentSelectionMode == SketchDrawPolygon && sketchPolygonHasCenter_ && sketchPolygonValueDialog_) {
             if (ke->key() == Qt::Key_Up || ke->key() == Qt::Key_Down
                 || ke->key() == Qt::Key_Left || ke->key() == Qt::Key_Right) {
@@ -148,31 +162,8 @@ void Widget::handleVtkMouseMove(int x, int y)
         || currentSelectionMode == SketchDrawPoint || currentSelectionMode == SketchDrawPolygon) {
         if (!hasActiveSketch_) return;
 
-        struct SketchSnapHoverGuard {
-            Widget* w;
-            int mx, my;
-            ~SketchSnapHoverGuard()
-            {
-                if (w)
-                    w->refreshSnapHoverAfterSketchMouseMove(mx, my);
-            }
-        } snapHoverGuard{this, x, y};
-
         gp_Pnt p;
-        if (!tryPickPointOnPlane(activeSketchPlane_, x, y, p)) return;
-
-        {
-            const gp_Ax3 ax = activeSketchPlane_.Position();
-            const gp_Pnt o = ax.Location();
-            const gp_Dir xd = ax.XDirection();
-            const gp_Dir yd = ax.YDirection();
-            gp_Vec op(o, p);
-            const double u = op.Dot(gp_Vec(xd));
-            const double v = op.Dot(gp_Vec(yd));
-            p = gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
-                      o.Y() + xd.Y() * u + yd.Y() * v,
-                      o.Z() + xd.Z() * u + yd.Z() * v);
-        }
+        if (!tryResolveSketchHoverPoint(x, y, p)) return;
 
         sketchCommittedPointValid_ = false;
         sketchLastHoverPoint_ = p;
@@ -188,20 +179,18 @@ void Widget::handleVtkMouseMove(int x, int y)
                 const double R = gp_Vec(sketchP1_, p).Magnitude();
                 updateSketchPreviewCircle(sketchP1_, R);
                 clearSketchPreviewLine();
-            } else if (cm == SketchCircleModeDialog::ThreePoint && sketchClickCount_ == 1) {
-                // 与圆弧一致：第一点→第二点之间用直线预览
+            } else if (cm == SketchCircleModeDialog::TwoPointRadius && sketchClickCount_ == 1) {
                 updateSketchPreviewLine(sketchP1_, p);
                 clearSketchPreviewCircle();
                 clearSketchPreviewArc();
-            } else if (cm == SketchCircleModeDialog::ThreePoint && sketchClickCount_ == 2) {
+            } else if (cm == SketchCircleModeDialog::TwoPointRadius && sketchClickCount_ == 2) {
                 clearSketchPreviewLine();
-                if (sketchP1_.Distance(sketchP2_) > Precision::Confusion()) {
-                    try {
-                        updateSketchPreviewArc(sketchP1_, p, sketchP2_);
-                    } catch (...) {
-                    }
+                const double R = gp_Vec(sketchP1_, p).Magnitude();
+                gp_Pnt center;
+                if (sketchCircleCenterFromTwoPointsRadius(activeSketchPlane_, sketchP1_, sketchP2_, R, p, center)) {
+                    updateSketchPreviewCircle(center, R);
                 } else {
-                    clearSketchPreviewArc();
+                    clearSketchPreviewCircle();
                 }
             }
             clearSketchPreviewRectangle();
@@ -251,18 +240,8 @@ void Widget::handleVtkMouseMove(int x, int y)
                 const gp_Dir n = pln.Axis().Direction();
                 if (sketchClickCount_ == 1) {
                     const gp_Pnt C = sketchP1_;
-                    gp_Vec ua(C, p);
-                    const double hx = ua.Magnitude();
-                    if (hx > Precision::Confusion()) {
-                        gp_Dir e1(ua);
-                        gp_Dir e2 = n.Crossed(e1);
-                        const double hy = hx;
-                        const gp_Pnt q1 = C.Translated(-hx * gp_Vec(e1)).Translated(-hy * gp_Vec(e2));
-                        const gp_Pnt q2 = C.Translated(-hx * gp_Vec(e1)).Translated(hy * gp_Vec(e2));
-                        const gp_Pnt q3 = C.Translated(hx * gp_Vec(e1)).Translated(hy * gp_Vec(e2));
-                        const gp_Pnt q4 = C.Translated(hx * gp_Vec(e1)).Translated(-hy * gp_Vec(e2));
-                        updateSketchPreviewRectangleGeneral(q1, q2, q3, q4);
-                    }
+                    updateSketchPreviewLine(C, p);
+                    clearSketchPreviewRectangle();
                 } else if (sketchClickCount_ == 2) {
                     const gp_Pnt C = sketchP1_;
                     const gp_Pnt pMid = sketchP2_;
@@ -285,10 +264,17 @@ void Widget::handleVtkMouseMove(int x, int y)
         }
 
         if (currentSelectionMode == SketchDrawArc) {
+            const SketchArcModeDialog::Method arcMethod =
+                sketchArcModeDialog_ ? sketchArcModeDialog_->method()
+                                     : SketchArcModeDialog::ThreePoint;
             if (sketchClickCount_ == 1) {
                 gp_Pnt pm;
+                gp_Dir arcStartTangent = sketchChainTangentDir_;
                 if (sketchContourChaining_ && sketchChainTangentValid_
-                    && sketchArcMidFromTangentAndEnd(activeSketchPlane_, sketchP1_, sketchChainTangentDir_, p, pm)) {
+                    && sketchContourArcStartTangentForPoint(activeSketchPlane_, sketchP1_,
+                                                            sketchChainTangentDir_, p,
+                                                            arcStartTangent)
+                    && sketchArcMidFromTangentAndEnd(activeSketchPlane_, sketchP1_, arcStartTangent, p, pm)) {
                     try {
                         updateSketchPreviewArc(sketchP1_, pm, p);
                     } catch (...) {
@@ -301,7 +287,18 @@ void Widget::handleVtkMouseMove(int x, int y)
                 }
             } else if (sketchClickCount_ == 2) {
                 clearSketchPreviewLine();
-                updateSketchPreviewArc(sketchP1_, p, sketchP2_);
+                if (arcMethod == SketchArcModeDialog::CenterEndpoint && !sketchContourChaining_) {
+                    gp_Pnt endPoint;
+                    gp_Pnt midPoint;
+                    if (sketchArcEndAndMidFromCenterStartHint(activeSketchPlane_, sketchP1_, sketchP2_, p,
+                                                               endPoint, midPoint)) {
+                        updateSketchPreviewArc(sketchP2_, midPoint, endPoint);
+                    } else {
+                        clearSketchPreviewArc();
+                    }
+                } else {
+                    updateSketchPreviewArc(sketchP1_, p, sketchP2_);
+                }
             }
             clearSketchPreviewRectangle();
             clearSketchPreviewCircle();
@@ -323,10 +320,36 @@ void Widget::handleVtkMouseMove(int x, int y)
         return;
     }
 
+    if (currentSelectionMode == SketchPolygonPick
+        || currentSelectionMode == SketchEllipsePick
+        || currentSelectionMode == SketchConicPick) {
+        gp_Pnt p;
+        if (tryResolveSketchHoverPoint(x, y, p)) {
+            sketchLastHoverPoint_ = p;
+            sketchLastHoverValid_ = true;
+        }
+        return;
+    }
+
     if (isSketchEditMode(currentSelectionMode)) {
         handleSketchEditHover(x, y);
         if (sketchBrushActive_) {
             handleSketchEditClick(x, y, true);
+        }
+        return;
+    }
+
+    if (inSketchEnvironment_ && currentSelectionMode == None) {
+        clearModelHoverHighlight();
+        clearSubShapeHighlight();
+        return;
+    }
+
+    if (currentSelectionMode == WorkCsysPlacement) {
+        if (snap_.armed) {
+            updateSnapHover(x, y);
+        } else {
+            clearSnapHover();
         }
         return;
     }

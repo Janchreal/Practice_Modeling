@@ -280,6 +280,16 @@ void Widget::setModelVisibility(int index, bool visible)
         if (renderStateFor(historyList[index]).outlineActor) {
             renderStateFor(historyList[index]).outlineActor->SetVisibility(visible ? 1 : 0);
         }
+        if (index == activeSketchHistoryIndex_) {
+            const bool showSketchAxes = visible && inSketchEnvironment_ && hasActiveSketch_;
+            sketchPlaneAxisVisible_ = showSketchAxes;
+            if (sketchPlaneXAxisActor_) {
+                sketchPlaneXAxisActor_->SetVisibility(showSketchAxes ? 1 : 0);
+            }
+            if (sketchPlaneYAxisActor_) {
+                sketchPlaneYAxisActor_->SetVisibility(showSketchAxes ? 1 : 0);
+            }
+        }
         if (!visible && renderStateFor(historyList[index]).highlightActor) {
             renderStateFor(historyList[index]).highlightActor->SetVisibility(0);
         }

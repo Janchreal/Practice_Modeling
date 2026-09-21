@@ -19,9 +19,12 @@ public:
     void setPickedPlane(const gp_Pln& pln);
     bool hasPickedPlane() const;
     gp_Pln pickedPlane() const;
+    bool showPrincipalPlanes() const;
 
 signals:
     void requestPickPlane();
+    void showPrincipalPlanesChanged(bool visible);
+    void planeNormalReversed(const gp_Pln& plane);
 
 private:
     Ui::SketchCreateDialog* ui;

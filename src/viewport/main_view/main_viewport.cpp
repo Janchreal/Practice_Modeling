@@ -478,6 +478,7 @@ void Widget::refreshOverlayScreenScale()
     }
 
     refreshReferenceCsysScreenScale();
+    refreshSketchPlaneAxisScreenScale();
 
     if (extrusionDialog) updateExtrusionHandles();
     if (revolveDialog) updateRevolveHandles();
@@ -939,7 +940,7 @@ void Widget::alignViewToSketchPlane(const gp_Pln& plane)
         const gp_Ax3 ax = plane.Position();
         const gp_Pnt origin = ax.Location();
         const gp_Dir normal = ax.Direction();
-        const gp_Dir xDir = ax.XDirection();
+        const gp_Dir yDir = ax.YDirection();
 
         double bounds[6];
         bool hasBounds = false;
@@ -988,7 +989,7 @@ void Widget::alignViewToSketchPlane(const gp_Pln& plane)
 
         camera->SetPosition(camPos.X(), camPos.Y(), camPos.Z());
         camera->SetFocalPoint(origin.X(), origin.Y(), origin.Z());
-        camera->SetViewUp(xDir.X(), xDir.Y(), xDir.Z());
+        camera->SetViewUp(yDir.X(), yDir.Y(), yDir.Z());
         refreshCameraClippingRange();
     });
 }

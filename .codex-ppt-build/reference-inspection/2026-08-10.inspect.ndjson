@@ -1,0 +1,68 @@
+{"kind":"deck","id":"pr/t47o0n","name":"Deck"}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster1.xml","name":"","type":"master","placeholders":[{"name":"title","type":"title","textPreview":"单击此处编辑母版标题样式"},{"name":"body","type":"body","textPreview":"单击此处编辑母版文本样式 | 第二级 | 第三级 | 第四级 | 第五级"},{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout1.xml","name":"标题幻灯片","type":"title","placeholders":[{"name":"title","type":"title","textPreview":"单击此处编辑标题"},{"name":"subtitle","type":"subtitle","textPreview":"单击此处编辑副标题"},{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout2.xml","name":"Blank","type":"blank","placeholders":[{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"},{"name":"body","type":"body","textPreview":"单击此处编辑母版文本样式"},{"name":"5","textPreview":"单击此处编辑母版文本样式 | 二级 | 三级 | 四级 | 五级"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout3.xml","name":"标题和内容","type":"obj","placeholders":[{"name":"title","type":"title","textPreview":"单击此处编辑母版标题样式"},{"name":"2","textPreview":"单击此处编辑母版文本样式 | 第二级 | 第三级 | 第四级 | 第五级"},{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster2.xml","name":"","type":"master"}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout4.xml","name":"自定义版式"}
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"周汇报","textShapes":2}
+{"kind":"textbox","id":"sh/547294r6","slide":1,"name":"标题 1","placeholder":"title","text":"周汇报","textPreview":"周汇报","textChars":3,"textLines":1,"bbox":[0,205.94,1280,111.2]}
+{"kind":"textbox","id":"sh/ul4vaxgb","slide":1,"name":"标题 1","text":"✪汇报人：陈景煌    ","textPreview":"✪汇报人：陈景煌","textChars":12,"textLines":1,"bbox":[308.3,371.55,663.46,46.33]}
+{"kind":"image","id":"im/kr6xgnu5","slide":1,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/bmxw3ido","slide":1,"name":"图片 18","bbox":[32.47,381.53,1215.13,253.8]}
+{"kind":"image","id":"im/alovadw3","slide":1,"name":"图片 8","bbox":[32.07,597.13,1215.87,91.07]}
+{"kind":"notes","id":"nt/y90nupkv","slide":1,"text":""}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"1","textShapes":8}
+{"kind":"shape","id":"sh/x4r21kru","slide":2,"name":"矩形 5","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/nu58f2hs","slide":2,"name":"MH_Number_1","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[437.23,282.33,39.87,39.87]}
+{"kind":"textbox","id":"sh/wjy9sry9","slide":2,"name":"MH_Entry_1","text":"旋转矢量提示优化","textPreview":"旋转矢量提示优化","textChars":8,"textLines":1,"bbox":[516.1,280,319.33,45.2]}
+{"kind":"textbox","id":"sh/hcvy14ne","slide":2,"name":"MH_Number_2","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[437.23,346.93,39.87,39.87]}
+{"kind":"textbox","id":"sh/u94fqp4n","slide":2,"name":"MH_Entry_2","text":"光照与模型轮廓线","textPreview":"光照与模型轮廓线","textChars":8,"textLines":1,"bbox":[516.1,349.4,424.8,45.2]}
+{"kind":"textbox","id":"sh/p0vy54na","slide":2,"name":"MH_Number_3","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[437.23,411.53,39.87,39.87]}
+{"kind":"shape","id":"sh/4zmxwzmp","slide":2,"name":"MH_Entry_3","bbox":[516.1,415.73,282.93,45.2]}
+{"kind":"textbox","id":"sh/9o7ulg3y","slide":2,"name":"MH_Others_2","text":"CONTENTS","textPreview":"CONTENTS","textChars":8,"textLines":1,"bbox":[328.77,189.87,622.47,32.27]}
+{"kind":"textbox","id":"sh/onydsbmd","slide":2,"name":"MH_Others_1","text":"目 录","textPreview":"目 录","textChars":3,"textLines":1,"bbox":[502.13,147.87,275.75,116.27]}
+{"kind":"textbox","id":"sh/w3i1sfa9","slide":2,"name":"MH_Entry_1","text":"基本体素显示结果","textPreview":"基本体素显示结果","textChars":8,"textLines":1,"bbox":[516.1,415.87,319.33,45.2]}
+{"kind":"image","id":"im/5sripona","slide":2,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/kry1gjmp","slide":2,"name":"图片 11","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/hwbqtkby","slide":2,"text":""}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"01 旋转矢量提示优化","textShapes":3}
+{"kind":"shape","id":"sh/re9g7yxo","slide":3,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/cza94vmx","slide":3,"name":"文本框 1","text":"01 旋转矢量提示优化","textPreview":"01 旋转矢量提示优化","textChars":11,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/298ryl4v","slide":3,"name":"文本框 3","text":"1.1 主要工作：矢量箭头的提示位置调整在旋转中心上方\n\n1.2 具体细节：确定矢量起点\n\n\n","textPreview":"1.1 主要工作：矢量箭头的提示位置调整在旋转中心上方 |  | 1.2 具体细节：确定矢量起点 |  |  |","textChars":47,"textLines":6,"bbox":[136.93,100.8,1091.73,623]}
+{"kind":"textbox","id":"sh/obq90bml","slide":3,"name":"文本框 5","text":"①取旋转轴\n②把剖面中心投影到轴上\ncomputeExtrusionProfileCenter：\n算出剖面几何中心profileCenter\noc.Dot(az)：\n向量O→profileCenter在轴方向上的投影长度axial\nO.Translated(az*axial)：\n从O沿轴平移axial，得到剖面中心在轴上的垂足，也就是\n      旋转中心球所在位置\n③返回结果：投影点 = 球心 = 矢量箭头起点\n\n","textPreview":"①取旋转轴 | ②把剖面中心投影到轴上 | computeExtrusionProfileCenter： | 算出剖面几何中心profileCenter | oc.Dot(az)： | 向量O→profileCenter在轴方向上的投影长度axial | O.Transla...","textChars":210,"textLines":12,"bbox":[47.53,217.6,751.67,402.2]}
+{"kind":"image","id":"im/fytczylk","slide":3,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/ed0vqtkz","slide":3,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/lwvexsju","slide":3,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"image","id":"im/kvmd4n29","slide":3,"name":"图片 10","bbox":[711.33,209.6,531.8,402.07]}
+{"kind":"image","id":"im/ihgryp0r","slide":3,"name":"2026-08-08 17-25-04","bbox":[470.67,241.6,205.6,128.6]}
+{"kind":"notes","id":"nt/ofy9wn61","slide":3,"text":""}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"02 光照与模型轮廓线","textShapes":3}
+{"kind":"shape","id":"sh/gv29g7q5","slide":4,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/rm1k7yt4","slide":4,"name":"文本框 3","text":"02 光照与模型轮廓线","textPreview":"02 光照与模型轮廓线","textChars":11,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/ql8jytsj","slide":4,"name":"文本框 4","text":"2.1 主要工作：参考UG的参数修改光照，并修改轮廓线\n\n2.2 轮廓线细节：使用IVtkTools_DisplayModeFilter显示\n①创建两个actor：\n面：filterFace->SetDisplayMode(DM_Shading);\n边：filterEdge->SetDisplayMode(DM_Wireframe);\n②分别设置颜色\n③这种情况下只能看到可见轮廓线，背面的边会被前面的面遮挡掉，就不会出现所有轮廓线可见的情况了\n\n2.3光照细节：","textPreview":"2.1 主要工作：参考UG的参数修改光照，并修改轮廓线 |  | 2.2 轮廓线细节：使用IVtkTools_DisplayModeFilter显示 | ①创建两个actor： | 面：filterFace->SetDisplayMode(DM_Shading); | 边：...","textChars":233,"textLines":10,"bbox":[136.93,126.87,1056.53,390.87]}
+{"kind":"textbox","id":"sh/sna103ap","slide":4,"name":"文本框 6","text":"①UG基本光中共有8种：\n左上、左下、右上、右下、\n顶部、底部、正前方、环境光\n②按照默认光源设置：\n左上+右上+环境光\n0.21  0.45   0.68","textPreview":"①UG基本光中共有8种： | 左上、左下、右上、右下、 | 顶部、底部、正前方、环境光 | ②按照默认光源设置： | 左上+右上+环境光 | 0.21  0.45   0.68","textChars":78,"textLines":6,"bbox":[753.27,447.6,392.13,184.07]}
+{"kind":"image","id":"im/w7u9kj25","slide":4,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/x83qdojq","slide":4,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/q9876pkv","slide":4,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"image","id":"im/bah8zulg","slide":4,"name":"图片 2","bbox":[360.87,418.53,172.67,253.13]}
+{"kind":"image","id":"im/tona5s3y","slide":4,"name":"图片 5","bbox":[555.4,418.53,169.2,248.2]}
+{"kind":"image","id":"im/s3etcnmd","slide":4,"name":"2026-08-08 17-26-16","bbox":[953.47,165.47,283.27,177.07]}
+{"kind":"notes","id":"nt/jyx0ra1s","slide":4,"text":""}
+{"kind":"slide","id":"sl/i107q5of","slide":5,"title":"03 基本体素显示结果","textShapes":2}
+{"kind":"shape","id":"sh/4ji5kbid","slide":5,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/z2tcnm5s","slide":5,"name":"文本框 3","text":"03 基本体素显示结果","textPreview":"03 基本体素显示结果","textChars":11,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/yhkbe1o7","slide":5,"name":"文本框 4","text":"3.1 主要工作：明确显示结果、预览、确定三者的区别，不再隐藏手柄而是直接删除\n                                   \n3.2 具体细节：\n①显示结果：正式创建实体、压入撤销栈、进历史树，并删除交互手柄\n②显示结果VS确认\nⅠ显示结果：同①\nⅡ直接确认：同①，但关闭对话框并清理状态\n④四种基本体素采用同一种模式\n\n\n","textPreview":"3.1 主要工作：明确显示结果、预览、确定三者的区别，不再隐藏手柄而是直接删除 |                                     | 3.2 具体细节： | ①显示结果：正式创建实体、压入撤销栈、进历史树，并删除交互手柄 | ②显示结果VS确认 |...","textChars":175,"textLines":11,"bbox":[136.93,100.8,993.73,500.73]}
+{"kind":"table","id":"tb/bm1sr2pc","slide":5,"name":"表格 1","rows":5,"cols":3,"preview":"基本体 | 创建函数 | 显示结果","bbox":[146.27,463.93,1084.2,200.8]}
+{"kind":"image","id":"im/8j2x8b6t","slide":5,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/9kbyhg7e","slide":5,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/ulkfaloz","slide":5,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"image","id":"im/5gfi9krm","slide":5,"name":"2026-08-08 17-26-52","bbox":[986.4,309.93,235.27,147.07]}
+{"kind":"notes","id":"nt/i107q5of","slide":5,"text":""}
+{"kind":"slide","id":"sl/x8f69ofe","slide":6,"title":"周汇报","textShapes":2}
+{"kind":"textbox","id":"sh/yhg7epsj","slide":6,"name":"标题 1","placeholder":"title","text":"周汇报","textPreview":"周汇报","textChars":3,"textLines":1,"bbox":[217.42,212.63,845.16,111.2]}
+{"kind":"textbox","id":"sh/v2tcn650","slide":6,"name":"标题 1","text":"✪汇报人：陈景煌","textPreview":"✪汇报人：陈景煌","textChars":8,"textLines":1,"bbox":[308.27,359.27,663.46,46.33]}
+{"kind":"image","id":"im/t03ulobq","slide":6,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/y9sbm9c3","slide":6,"name":"图片 18","bbox":[32.47,381.53,1215.13,253.8]}
+{"kind":"image","id":"im/ju1cfeto","slide":6,"name":"图片 8","bbox":[32.07,597.13,1215.87,91.07]}
+{"kind":"notes","id":"nt/x8f69ofe","slide":6,"text":""}

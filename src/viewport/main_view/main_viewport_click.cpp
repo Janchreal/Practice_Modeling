@@ -11,7 +11,6 @@
 #include <GC_MakeArcOfCircle.hxx>
 #include <Geom_Circle.hxx>
 #include <Geom_TrimmedCurve.hxx>
-#include <gce_MakeCirc.hxx>
 #include <gp_Ax2.hxx>
 #include <Precision.hxx>
 #include <TopoDS_Edge.hxx>
@@ -37,6 +36,87 @@
 #include <vtkRenderWindow.h>
 #include <vtkSmartPointer.h>
 #include <vtkTransform.h>
+
+bool Widget::isSketchPointInputMode(SelectionMode mode) const
+{
+    switch (mode) {
+    case SketchDrawLine:
+    case SketchDrawArc:
+    case SketchDrawRectangle:
+    case SketchDrawCircle:
+    case SketchDrawPoint:
+    case SketchDrawPolygon:
+    case SketchPolygonPick:
+    case SketchEllipsePick:
+    case SketchConicPick:
+        return true;
+    default:
+        return false;
+    }
+}
+
+gp_Pnt Widget::projectPointToActiveSketchPlane(const gp_Pnt& point) const
+{
+    const gp_Ax3 ax = activeSketchPlane_.Position();
+    const gp_Pnt o = ax.Location();
+    const gp_Dir xd = ax.XDirection();
+    const gp_Dir yd = ax.YDirection();
+
+    gp_Vec op(o, point);
+    const double u = op.Dot(gp_Vec(xd));
+    const double v = op.Dot(gp_Vec(yd));
+    return gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
+                  o.Y() + xd.Y() * u + yd.Y() * v,
+                  o.Z() + xd.Z() * u + yd.Z() * v);
+}
+
+bool Widget::tryResolveSketchHoverPoint(int x, int y, gp_Pnt& outPoint)
+{
+    if (!hasActiveSketch_) return false;
+
+    gp_Pnt p;
+    bool useSnapPoint = false;
+    if (snap_.armed) {
+        updateSnapHover(x, y);
+        if (hasSnapHoverBestPoint_) {
+            p = snapHoverBestPoint_;
+            useSnapPoint = true;
+        }
+    } else {
+        clearSnapHover();
+    }
+
+    if (!useSnapPoint && !tryPickPointOnPlane(activeSketchPlane_, x, y, p)) {
+        return false;
+    }
+
+    outPoint = projectPointToActiveSketchPlane(p);
+    return true;
+}
+
+bool Widget::tryResolveSketchClickPoint(int x, int y, gp_Pnt& outPoint)
+{
+    if (!hasActiveSketch_) return false;
+
+    if (snap_.armed) {
+        updateSnapHover(x, y);
+        if (hasSnapHoverBestPoint_) {
+            pickSnapAt(x, y, SnapPickContext::SketchTool);
+            if (hasSnapSelectedPoint_) {
+                outPoint = projectPointToActiveSketchPlane(snapSelectedPoint_);
+                clearSnapSelected();
+                return true;
+            }
+        }
+    }
+
+    gp_Pnt planePoint;
+    if (!tryPickPointOnPlane(activeSketchPlane_, x, y, planePoint)) {
+        return false;
+    }
+    outPoint = projectPointToActiveSketchPlane(planePoint);
+    return true;
+}
 
 void Widget::handleVtkMouseClick(int x, int y)
 {
@@ -89,7 +169,11 @@ void Widget::handleVtkMouseClick(int x, int y)
     if (currentSelectionMode == SketchPlaneSelection) {
         gp_Pln pln;
         TopoDS_Face face;
-        if (!tryPickPlanarFaceUnderCursor(x, y, pln, face)) {
+        bool picked = tryPickSketchPrincipalPlane(x, y, pln);
+        if (!picked) {
+            picked = tryPickPlanarFaceUnderCursor(x, y, pln, face);
+        }
+        if (!picked) {
             statusBar()->showMessage(tr("创建草图：未拾取到平面，请点击一个平面面片。"), 3000);
             return;
         }
@@ -110,43 +194,12 @@ void Widget::handleVtkMouseClick(int x, int y)
             return;
         }
         gp_Pnt p;
-        if (!tryPickPointOnPlane(activeSketchPlane_, x, y, p)) {
+        if (sketchCommittedPointValid_) {
+            p = projectPointToActiveSketchPlane(sketchCommittedPoint_);
+            sketchCommittedPointValid_ = false;
+        } else if (!tryResolveSketchClickPoint(x, y, p)) {
             statusBar()->showMessage(tr("草图：无法在平面上取点（可能视线与平面近平行）。"), 2500);
             return;
-        }
-        {
-            const gp_Ax3 ax = activeSketchPlane_.Position();
-            const gp_Pnt o = ax.Location();
-            const gp_Dir xd = ax.XDirection();
-            const gp_Dir yd = ax.YDirection();
-            gp_Vec op(o, p);
-            const double u = op.Dot(gp_Vec(xd));
-            const double v = op.Dot(gp_Vec(yd));
-            p = gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
-                      o.Y() + xd.Y() * u + yd.Y() * v,
-                      o.Z() + xd.Z() * u + yd.Z() * v);
-        }
-        if (sketchCommittedPointValid_) {
-            p = sketchCommittedPoint_;
-            sketchCommittedPointValid_ = false;
-        } else if (snap_.armed) {
-            pickSnapAt(x, y, SnapPickContext::SketchTool);
-            if (hasSnapSelectedPoint_) {
-                p = snapSelectedPoint_;
-                clearSnapSelected();
-            }
-        }
-        {
-            const gp_Ax3 ax = activeSketchPlane_.Position();
-            const gp_Pnt o = ax.Location();
-            const gp_Dir xd = ax.XDirection();
-            const gp_Dir yd = ax.YDirection();
-            gp_Vec op(o, p);
-            const double u = op.Dot(gp_Vec(xd));
-            const double v = op.Dot(gp_Vec(yd));
-            p = gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
-                      o.Y() + xd.Y() * u + yd.Y() * v,
-                      o.Z() + xd.Z() * u + yd.Z() * v);
         }
         completeSketchPolygonPick(p);
         return;
@@ -158,43 +211,12 @@ void Widget::handleVtkMouseClick(int x, int y)
             return;
         }
         gp_Pnt p;
-        if (!tryPickPointOnPlane(activeSketchPlane_, x, y, p)) {
+        if (sketchCommittedPointValid_) {
+            p = projectPointToActiveSketchPlane(sketchCommittedPoint_);
+            sketchCommittedPointValid_ = false;
+        } else if (!tryResolveSketchClickPoint(x, y, p)) {
             statusBar()->showMessage(tr("草图：无法在平面上取点（可能视线与平面近平行）。"), 2500);
             return;
-        }
-        {
-            const gp_Ax3 ax = activeSketchPlane_.Position();
-            const gp_Pnt o = ax.Location();
-            const gp_Dir xd = ax.XDirection();
-            const gp_Dir yd = ax.YDirection();
-            gp_Vec op(o, p);
-            const double u = op.Dot(gp_Vec(xd));
-            const double v = op.Dot(gp_Vec(yd));
-            p = gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
-                      o.Y() + xd.Y() * u + yd.Y() * v,
-                      o.Z() + xd.Z() * u + yd.Z() * v);
-        }
-        if (sketchCommittedPointValid_) {
-            p = sketchCommittedPoint_;
-            sketchCommittedPointValid_ = false;
-        } else if (snap_.armed) {
-            pickSnapAt(x, y, SnapPickContext::SketchTool);
-            if (hasSnapSelectedPoint_) {
-                p = snapSelectedPoint_;
-                clearSnapSelected();
-            }
-        }
-        {
-            const gp_Ax3 ax = activeSketchPlane_.Position();
-            const gp_Pnt o = ax.Location();
-            const gp_Dir xd = ax.XDirection();
-            const gp_Dir yd = ax.YDirection();
-            gp_Vec op(o, p);
-            const double u = op.Dot(gp_Vec(xd));
-            const double v = op.Dot(gp_Vec(yd));
-            p = gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
-                      o.Y() + xd.Y() * u + yd.Y() * v,
-                      o.Z() + xd.Z() * u + yd.Z() * v);
         }
         completeSketchEllipsePick(p);
         return;
@@ -206,43 +228,12 @@ void Widget::handleVtkMouseClick(int x, int y)
             return;
         }
         gp_Pnt p;
-        if (!tryPickPointOnPlane(activeSketchPlane_, x, y, p)) {
+        if (sketchCommittedPointValid_) {
+            p = projectPointToActiveSketchPlane(sketchCommittedPoint_);
+            sketchCommittedPointValid_ = false;
+        } else if (!tryResolveSketchClickPoint(x, y, p)) {
             statusBar()->showMessage(tr("草图：无法在平面上取点（可能视线与平面近平行）。"), 2500);
             return;
-        }
-        {
-            const gp_Ax3 ax = activeSketchPlane_.Position();
-            const gp_Pnt o = ax.Location();
-            const gp_Dir xd = ax.XDirection();
-            const gp_Dir yd = ax.YDirection();
-            gp_Vec op(o, p);
-            const double u = op.Dot(gp_Vec(xd));
-            const double v = op.Dot(gp_Vec(yd));
-            p = gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
-                      o.Y() + xd.Y() * u + yd.Y() * v,
-                      o.Z() + xd.Z() * u + yd.Z() * v);
-        }
-        if (sketchCommittedPointValid_) {
-            p = sketchCommittedPoint_;
-            sketchCommittedPointValid_ = false;
-        } else if (snap_.armed) {
-            pickSnapAt(x, y, SnapPickContext::SketchTool);
-            if (hasSnapSelectedPoint_) {
-                p = snapSelectedPoint_;
-                clearSnapSelected();
-            }
-        }
-        {
-            const gp_Ax3 ax = activeSketchPlane_.Position();
-            const gp_Pnt o = ax.Location();
-            const gp_Dir xd = ax.XDirection();
-            const gp_Dir yd = ax.YDirection();
-            gp_Vec op(o, p);
-            const double u = op.Dot(gp_Vec(xd));
-            const double v = op.Dot(gp_Vec(yd));
-            p = gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
-                      o.Y() + xd.Y() * u + yd.Y() * v,
-                      o.Z() + xd.Z() * u + yd.Z() * v);
         }
         completeSketchConicPick(p);
         return;
@@ -258,48 +249,12 @@ void Widget::handleVtkMouseClick(int x, int y)
         }
 
         gp_Pnt p;
-        if (!tryPickPointOnPlane(activeSketchPlane_, x, y, p)) {
+        if (sketchCommittedPointValid_) {
+            p = projectPointToActiveSketchPlane(sketchCommittedPoint_);
+            sketchCommittedPointValid_ = false;
+        } else if (!tryResolveSketchClickPoint(x, y, p)) {
             statusBar()->showMessage(tr("草图：无法在平面上取点（可能视线与平面近平行）。"), 2500);
             return;
-        }
-
-        {
-            const gp_Ax3 ax = activeSketchPlane_.Position();
-            const gp_Pnt o = ax.Location();
-            const gp_Dir xd = ax.XDirection();
-            const gp_Dir yd = ax.YDirection();
-
-            gp_Vec op(o, p);
-            const double u = op.Dot(gp_Vec(xd));
-            const double v = op.Dot(gp_Vec(yd));
-            p = gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
-                      o.Y() + xd.Y() * u + yd.Y() * v,
-                      o.Z() + xd.Z() * u + yd.Z() * v);
-        }
-
-        if (sketchCommittedPointValid_) {
-            p = sketchCommittedPoint_;
-            sketchCommittedPointValid_ = false;
-        } else if (snap_.armed) {
-            pickSnapAt(x, y, SnapPickContext::SketchTool);
-            if (hasSnapSelectedPoint_) {
-                p = snapSelectedPoint_;
-                clearSnapSelected();
-            }
-        }
-
-        // 捕捉点可能落在模型非草图平面处，再次投影到草图平面
-        {
-            const gp_Ax3 ax = activeSketchPlane_.Position();
-            const gp_Pnt o = ax.Location();
-            const gp_Dir xd = ax.XDirection();
-            const gp_Dir yd = ax.YDirection();
-            gp_Vec op(o, p);
-            const double u = op.Dot(gp_Vec(xd));
-            const double v = op.Dot(gp_Vec(yd));
-            p = gp_Pnt(o.X() + xd.X() * u + yd.X() * v,
-                      o.Y() + xd.Y() * u + yd.Y() * v,
-                      o.Z() + xd.Z() * u + yd.Z() * v);
         }
 
         if (currentSelectionMode == SketchDrawPoint) {
@@ -369,16 +324,16 @@ void Widget::handleVtkMouseClick(int x, int y)
                 statusBar()->showMessage(tr("圆已创建。下一次请重新选择圆心。"), 2500);
                 return;
             }
-            // 三点定圆（仅三点模式；避免与其它工具共用 clickCount 时误走圆逻辑）
-            if (cm != SketchCircleModeDialog::ThreePoint) {
+            // 圆上两点+半径控制点（旧“三点定圆”模式已改为此交互）
+            if (cm != SketchCircleModeDialog::TwoPointRadius) {
                 sketchClickCount_ = 0;
-                statusBar()->showMessage(tr("圆：请在模式面板中选择“圆心”或“三点”。"), 3000);
+                statusBar()->showMessage(tr("圆：请在模式面板中选择“圆心”或“两点半径”。"), 3000);
                 return;
             }
             if (sketchClickCount_ == 0) {
                 sketchP1_ = p;
                 sketchClickCount_ = 1;
-                statusBar()->showMessage(tr("圆：请选择第二点。"), 2000);
+                statusBar()->showMessage(tr("圆：请选择圆上的第二点。"), 2000);
                 return;
             }
             if (sketchClickCount_ == 1) {
@@ -388,34 +343,35 @@ void Widget::handleVtkMouseClick(int x, int y)
                 }
                 sketchP2_ = p;
                 sketchClickCount_ = 2;
-                statusBar()->showMessage(tr("圆：请选择第三点。"), 2000);
+                statusBar()->showMessage(tr("圆：请选择半径控制点。"), 2000);
                 return;
             }
-            const gp_Pnt p3 = p;
+            const double R = gp_Vec(sketchP1_, p).Magnitude();
+            gp_Pnt center;
+            if (!sketchCircleCenterFromTwoPointsRadius(activeSketchPlane_, sketchP1_, sketchP2_, R, p, center)) {
+                statusBar()->showMessage(tr("圆：半径必须大于两点距离的一半。"), 3000);
+                sketchClickCount_ = 0;
+                clearSketchPreviewCircle();
+                clearSketchPreviewLine();
+                clearSketchPreviewArc();
+                return;
+            }
             try {
-                gce_MakeCirc mk(sketchP1_, sketchP2_, p3);
-                if (!mk.IsDone()) {
-                    statusBar()->showMessage(tr("三点定圆失败（可能共线）。"), 3000);
-                    sketchClickCount_ = 0;
-                    clearSketchPreviewCircle();
-                    clearSketchPreviewLine();
-                    clearSketchPreviewArc();
-                    return;
-                }
-                const gp_Circ circ = mk.Value();
-                Handle(Geom_Circle) gc = new Geom_Circle(circ);
+                const gp_Ax2 ax2(center, activeSketchPlane_.Axis().Direction());
+                Handle(Geom_Circle) gc = new Geom_Circle(ax2, R);
                 TopoDS_Edge edge = BRepBuilderAPI_MakeEdge(gc).Edge();
                 activeSketch_.addGeometry(edge);
                 ensureSketchHistoryRecord();
                 updateSketchHistoryShape();
                 markDocumentModified(true);
             } catch (...) {
-                statusBar()->showMessage(tr("三点定圆失败。"), 3000);
+                statusBar()->showMessage(tr("两点半径定圆失败。"), 3000);
             }
             clearSketchPreviewCircle();
             clearSketchPreviewLine();
             clearSketchPreviewArc();
             sketchClickCount_ = 0;
+            statusBar()->showMessage(tr("圆已创建。"), 2500);
             return;
         }
 
@@ -556,13 +512,13 @@ void Widget::handleVtkMouseClick(int x, int y)
             if (sketchClickCount_ == 0) {
                 sketchP1_ = p;
                 sketchClickCount_ = 1;
-                statusBar()->showMessage(tr("矩形(中心)：请选择一侧边中点。"), 2500);
+                statusBar()->showMessage(tr("矩形(中心)：请选择第二点，定义角度和宽度。"), 2500);
                 return;
             }
             if (sketchClickCount_ == 1) {
                 sketchP2_ = p;
                 sketchClickCount_ = 2;
-                statusBar()->showMessage(tr("矩形(中心)：请选择角点大致位置。"), 2500);
+                statusBar()->showMessage(tr("矩形(中心)：请选择第三点，定义高度。"), 2500);
                 return;
             }
             const gp_Pnt C = sketchP1_;
@@ -596,25 +552,86 @@ void Widget::handleVtkMouseClick(int x, int y)
             ensureSketchHistoryRecord();
             updateSketchHistoryShape();
             clearSketchPreviewRectangle();
+            clearSketchPreviewLine();
             markDocumentModified(true);
             sketchClickCount_ = 0;
             statusBar()->showMessage(tr("矩形(中心)已创建。"), 2500);
             return;
         }
 
-        // 圆弧：必须判断模式。否则三点定圆在 sketchClickCount_==2 时会误入此处并触发
-        // GC_MakeArcOfCircle 的 StdFail_NotDone，表现为第二次点击崩溃。
+        // 圆弧独立处理，避免与圆/矩形等工具复用 clickCount 时互相串状态。
         if (currentSelectionMode == SketchDrawArc) {
+            const SketchArcModeDialog::Method arcMethod =
+                sketchArcModeDialog_ ? sketchArcModeDialog_->method()
+                                     : SketchArcModeDialog::ThreePoint;
+
             if (sketchClickCount_ == 0) {
                 sketchP1_ = p;
                 sketchClickCount_ = 1;
-                statusBar()->showMessage(tr("圆弧：请选择终点。"), 2000);
+                statusBar()->showMessage(
+                    arcMethod == SketchArcModeDialog::CenterEndpoint
+                        ? tr("圆弧(中心端点)：请选择起点。")
+                        : tr("圆弧：请选择终点。"),
+                    2000);
+                return;
+            }
+            if (arcMethod == SketchArcModeDialog::CenterEndpoint && !sketchContourChaining_) {
+                if (sketchClickCount_ == 1) {
+                    if (gp_Vec(sketchP1_, p).Magnitude() <= Precision::Confusion()) {
+                        statusBar()->showMessage(tr("圆弧：起点离中心过近。"), 2500);
+                        sketchClickCount_ = 0;
+                        clearSketchPreviewLine();
+                        clearSketchPreviewArc();
+                        return;
+                    }
+                    sketchP2_ = p;
+                    sketchClickCount_ = 2;
+                    statusBar()->showMessage(tr("圆弧(中心端点)：请选择终点方向。"), 2500);
+                    return;
+                }
+
+                gp_Pnt endPoint;
+                gp_Pnt midPoint;
+                if (!sketchArcEndAndMidFromCenterStartHint(activeSketchPlane_, sketchP1_, sketchP2_, p,
+                                                           endPoint, midPoint)) {
+                    statusBar()->showMessage(tr("圆弧创建失败：终点方向无效。"), 3000);
+                    sketchClickCount_ = 0;
+                    clearSketchPreviewLine();
+                    clearSketchPreviewArc();
+                    return;
+                }
+                try {
+                    GC_MakeArcOfCircle mkArc(sketchP2_, midPoint, endPoint);
+                    if (!mkArc.IsDone()) {
+                        statusBar()->showMessage(tr("圆弧创建失败：请调整终点方向。"), 3000);
+                    } else {
+                        Handle(Geom_TrimmedCurve) arc = mkArc.Value();
+                        TopoDS_Edge edge = BRepBuilderAPI_MakeEdge(arc).Edge();
+                        activeSketch_.addGeometry(edge);
+                        ensureSketchHistoryRecord();
+                        updateSketchHistoryShape();
+                        markDocumentModified(true);
+                        statusBar()->showMessage(tr("圆弧已创建。请重新点击选择新圆弧的中心。"), 2500);
+                    }
+                } catch (...) {
+                    statusBar()->showMessage(tr("圆弧创建失败：请调整终点方向。"), 3000);
+                }
+                sketchClickCount_ = 0;
+                sketchChainTangentValid_ = false;
+                clearSketchPreviewLine();
+                clearSketchPreviewArc();
                 return;
             }
             if (sketchClickCount_ == 1) {
                 gp_Pnt pm;
-                if (sketchContourChaining_ && sketchChainTangentValid_
-                    && sketchArcMidFromTangentAndEnd(activeSketchPlane_, sketchP1_, sketchChainTangentDir_, p, pm)) {
+                gp_Dir arcStartTangent = sketchChainTangentDir_;
+                const bool hasContourArc =
+                    sketchContourChaining_ && sketchChainTangentValid_
+                    && sketchContourArcStartTangentForPoint(activeSketchPlane_, sketchP1_,
+                                                            sketchChainTangentDir_, p,
+                                                            arcStartTangent)
+                    && sketchArcMidFromTangentAndEnd(activeSketchPlane_, sketchP1_, arcStartTangent, p, pm);
+                if (hasContourArc) {
                     try {
                         GC_MakeArcOfCircle mkArc(sketchP1_, pm, p);
                         if (!mkArc.IsDone()) {
@@ -698,6 +715,15 @@ void Widget::handleVtkMouseClick(int x, int y)
         return;
     }
 
+    if (inSketchEnvironment_ && currentSelectionMode == None) {
+        currentSelectedIndex = -1;
+        highlightModel(-1);
+        updateHistoryListSelection();
+        clearSubShapeHighlight();
+        clearModelHoverHighlight();
+        return;
+    }
+
     // 捕捉点：开启时只做点捕捉，绝不整模高亮；模型改用幽灵外观
     if (snap_.armed && (currentSelectionMode == None || currentSelectionMode == PointSelection)) {
         pickSnapAt(x, y);
@@ -752,8 +778,19 @@ void Widget::handleVtkMouseClick(int x, int y)
         // 使用与屏幕点击更一致的方式计算放置点：
         // 将当前 VTK 屏幕坐标射线投影到全局 Z=0 平面上
         gp_Pnt p(0.0, 0.0, 0.0);
+        bool usedPointPicker = false;
 
-        if (renderer && vtkWidget) {
+        if (snap_.armed) {
+            pickSnapAt(x, y, SnapPickContext::SketchTool);
+            if (hasSnapSelectedPoint_) {
+                p = snapSelectedPoint_;
+                usedPointPicker = true;
+                clearSnapSelected();
+                clearSnapHover();
+            }
+        }
+
+        if (!usedPointPicker && renderer && vtkWidget) {
             double displayX = static_cast<double>(x);
             double displayY = static_cast<double>(y);
 
@@ -803,7 +840,7 @@ void Widget::handleVtkMouseClick(int x, int y)
                 // 射线几乎平行于 Z=0，退化情况下直接使用近裁剪点
                 p = gp_Pnt(worldNear[0], worldNear[1], worldNear[2]);
             }
-        } else {
+        } else if (!usedPointPicker) {
             // 兜底：退回到上一次点击的世界坐标
             p = gp_Pnt(lastWorldPoint[0], lastWorldPoint[1], lastWorldPoint[2]);
         }
@@ -823,6 +860,17 @@ void Widget::handleVtkMouseClick(int x, int y)
         applyAxisDirectionHighlight(currentAxisDirection);
         // 放置完成后恢复正常视图交互，暂不启用拖拽模式
         currentSelectionMode = None;
+
+        if (workCsysPointPickerAutoArmed_) {
+            workCsysPointPickerAutoArmed_ = false;
+            snap_.enabled = false;
+            snap_.anyPoint = false;
+            setSnapArmed(false);
+            if (ui && ui->Use_Capture) {
+                QSignalBlocker blocker(ui->Use_Capture);
+                ui->Use_Capture->setChecked(false);
+            }
+        }
 
         if (vtkWidget && vtkWidget->renderWindow()) {
             vtkWidget->renderWindow()->Render();

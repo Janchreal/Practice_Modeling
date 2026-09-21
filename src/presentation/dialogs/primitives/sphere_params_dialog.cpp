@@ -31,12 +31,14 @@ SphereParamsDialog::SphereParamsDialog(QWidget *parent)
             });
         };
 
+        addAct(tr("任意点"), -1);
         addAct(tr("最近点"), 0);
         addAct(tr("端点"), 1);
         addAct(tr("中点"), 2);
         addAct(tr("交点"), 3);
         addAct(tr("圆心"), 4);
         addAct(tr("象限点"), 5);
+        ui->originSnapToolButton->setText(tr("任意点"));
 
         ui->originSnapToolButton->setMenu(menu);
         ui->originSnapToolButton->setPopupMode(QToolButton::InstantPopup);
@@ -110,11 +112,7 @@ void SphereParamsDialog::getOriginPoint(double& x, double& y, double& z) const
 
 void SphereParamsDialog::on_designated_point_clicked()
 {
-    if (originSnapKind_ >= 0) {
-        emit requestPointSelectionWithSnap(originSnapKind_);
-    } else {
-        emit requestPointSelection();
-    }
+    emit requestPointSelectionWithSnap(originSnapKind_);
 }
 
 void SphereParamsDialog::on_applyButton_clicked()
@@ -168,5 +166,4 @@ void SphereParamsDialog::onShowResultButtonClicked()
     }
     emit previewRequested();
 }
-
 

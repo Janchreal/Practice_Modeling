@@ -31,6 +31,16 @@ For a deployable folder, run `scripts\build_release.bat`. It builds the release 
 
 Visual Studio builds now write to `vsbuild\Debug` and `vsbuild\Release`.
 
+## Solution Explorer Folders
+
+Visual Studio stores the Solution Explorer tree in `Practice_Modeling.vcxproj.filters`, not in the physical source folders. This project keeps that file synced to the real directory layout with:
+
+```powershell
+.\scripts\sync_vs_filters.bat
+```
+
+Run it after regenerating `Practice_Modeling.vcxproj` with qmake or after adding many files. Then reload the project in Visual Studio, or close and reopen `Practice_Modeling.sln`, so Solution Explorer rereads the updated filters.
+
 ## Command Line Build
 
 From a regular PowerShell prompt:

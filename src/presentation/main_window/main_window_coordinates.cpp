@@ -13,6 +13,7 @@
 #include <cmath>
 
 #include <QMessageBox>
+#include <QSignalBlocker>
 #include <QStatusBar>
 
 #include <Standard_Real.hxx>
@@ -40,6 +41,43 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkTransform.h>
+
+void Widget::armPointPickerForWorkCsysPlacement()
+{
+    mergeSnapFiltersFromToolbarAndCaptureUi();
+
+    const auto hasAnySnapType = [this]() {
+        return snap_.nearest || snap_.endpoint || snap_.midpoint || snap_.arcMidpoint
+            || snap_.intersection || snap_.center || snap_.quadrant || snap_.onCurve
+            || snap_.onFace || snap_.anyPoint;
+    };
+    workCsysPointPickerAutoArmed_ = !(snap_.armed && hasAnySnapType());
+
+    snap_.enabled = true;
+    snap_.armed = true;
+    if (!hasAnySnapType()) {
+        snap_.anyPoint = true;
+    }
+
+    if (workCsysPointPickerAutoArmed_ && ui && ui->Use_Capture) {
+        QSignalBlocker blocker(ui->Use_Capture);
+        ui->Use_Capture->setChecked(true);
+    }
+
+    PointSnapMode pickerMode;
+    pickerMode.nearest = snap_.nearest;
+    pickerMode.endpoint = snap_.endpoint;
+    pickerMode.midpoint = snap_.midpoint;
+    pickerMode.arcMidpoint = snap_.arcMidpoint;
+    pickerMode.intersection = snap_.intersection;
+    pickerMode.center = snap_.center;
+    pickerMode.quadrant = snap_.quadrant;
+    pickerMode.onCurve = snap_.onCurve;
+    pickerMode.onFace = snap_.onFace;
+    pickerMode.anyPoint = snap_.anyPoint;
+    pointPicker_.startPick(pickerMode);
+    updateSnapPickGhostPresentation();
+}
 
 void Widget::on_workAxisButton_clicked()
 {
@@ -81,8 +119,9 @@ void Widget::on_workAxisButton_clicked()
     }
 
     currentSelectionMode = WorkCsysPlacement;
+    armPointPickerForWorkCsysPlacement();
     if (statusBar()) {
-        statusBar()->showMessage(tr("工作坐标系：请在 3D 视图中点击一个位置来创建/移动。"), 4000);
+        statusBar()->showMessage(tr("工作坐标系：请在 3D 视图中指定原点，可捕捉候选点或点击空白处。"), 4000);
     }
     if (vtkWidget) {
         vtkWidget->setFocus();

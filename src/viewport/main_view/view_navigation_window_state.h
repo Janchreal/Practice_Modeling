@@ -20,6 +20,8 @@ protected:
     ViewCameraPose viewAnimFrom_{};
     ViewCameraPose viewAnimTo_{};
     bool viewTransitionAnimating_ = false;
+    ViewCameraPose sketchReturnViewPose_{};
+    bool sketchReturnViewPoseValid_ = false;
     static constexpr int kViewAnimDurationMs_ = 380;
 };
 

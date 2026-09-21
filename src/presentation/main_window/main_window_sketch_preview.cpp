@@ -69,6 +69,7 @@
 
 #include <vtkActor.h>
 #include <vtkActorCollection.h>
+#include <vtkCamera.h>
 #include <vtkCellArray.h>
 #include <vtkFeatureEdges.h>
 #include <vtkLineSource.h>
@@ -281,12 +282,151 @@ void Widget::clearSketchPlaneHover()
     }
 }
 
+void Widget::clearSketchPlaneAxisActors(bool forgetDefinition)
+{
+    if (forgetDefinition) {
+        sketchPlaneAxisDefinitionValid_ = false;
+        sketchPlaneAxisVisible_ = false;
+    }
+    if (!renderer) {
+        sketchPlaneXAxisActor_ = nullptr;
+        sketchPlaneYAxisActor_ = nullptr;
+        return;
+    }
+    if (sketchPlaneXAxisActor_) {
+        removeSceneActor(sketchPlaneXAxisActor_);
+        sketchPlaneXAxisActor_ = nullptr;
+    }
+    if (sketchPlaneYAxisActor_) {
+        removeSceneActor(sketchPlaneYAxisActor_);
+        sketchPlaneYAxisActor_ = nullptr;
+    }
+}
+
+void Widget::createOrUpdateSketchPlaneAxisActors(const gp_Pln& pln,
+                                                 double halfX,
+                                                 double halfY,
+                                                 bool visible)
+{
+    sketchPlaneAxisPlane_ = pln;
+    sketchPlaneAxisHalfX_ = std::max(1.0, halfX);
+    sketchPlaneAxisHalfY_ = std::max(1.0, halfY);
+    sketchPlaneAxisVisible_ = visible;
+    sketchPlaneAxisDefinitionValid_ = true;
+    rebuildSketchPlaneAxisActors();
+}
+
+void Widget::refreshSketchPlaneAxisScreenScale()
+{
+    if (!sketchPlaneAxisDefinitionValid_) return;
+    rebuildSketchPlaneAxisActors();
+}
+
+void Widget::rebuildSketchPlaneAxisActors()
+{
+    if (!renderer || !sketchPlaneAxisDefinitionValid_) return;
+    clearSketchPlaneAxisActors(false);
+
+    const gp_Ax3 ax = sketchPlaneAxisPlane_.Position();
+    const gp_Pnt o = ax.Location();
+    const gp_Dir xd = ax.XDirection();
+    const gp_Dir yd = ax.YDirection();
+
+    double axisHalfLen = std::max(10.0, std::max(sketchPlaneAxisHalfX_, sketchPlaneAxisHalfY_));
+    if (vtkCamera* camera = renderer->GetActiveCamera()) {
+        double aspect = 1.0;
+        if (vtkWidget && vtkWidget->height() > 0) {
+            aspect = static_cast<double>(vtkWidget->width()) / static_cast<double>(vtkWidget->height());
+        }
+
+        double viewHalfDiagonal = 0.0;
+        if (camera->GetParallelProjection()) {
+            const double halfH = camera->GetParallelScale();
+            viewHalfDiagonal = halfH * std::sqrt(1.0 + aspect * aspect);
+        } else {
+            double camPos[3] = {0, 0, 0};
+            double fp[3] = {0, 0, 0};
+            camera->GetPosition(camPos);
+            camera->GetFocalPoint(fp);
+            double vpn[3] = {fp[0] - camPos[0], fp[1] - camPos[1], fp[2] - camPos[2]};
+            const double vpnLen = std::sqrt(vpn[0] * vpn[0] + vpn[1] * vpn[1] + vpn[2] * vpn[2]);
+            if (vpnLen > 1e-12) {
+                vpn[0] /= vpnLen;
+                vpn[1] /= vpnLen;
+                vpn[2] /= vpnLen;
+                double depth = (o.X() - camPos[0]) * vpn[0]
+                             + (o.Y() - camPos[1]) * vpn[1]
+                             + (o.Z() - camPos[2]) * vpn[2];
+                if (depth <= 1e-6) depth = std::max(1.0, camera->GetDistance());
+                const double halfH = depth * std::tan(camera->GetViewAngle() * 3.14159265358979323846 / 360.0);
+                viewHalfDiagonal = halfH * std::sqrt(1.0 + aspect * aspect);
+            }
+        }
+        if (std::isfinite(viewHalfDiagonal) && viewHalfDiagonal > Precision::Confusion()) {
+            axisHalfLen = std::max(1.0, viewHalfDiagonal * 1.35);
+        }
+    }
+
+    auto makeAxisActor = [&](const gp_Dir& dir, double halfLen,
+                             double r, double g, double b) {
+        const double len = std::max(1.0, halfLen);
+        const int dashCount = 96;
+        const double period = (2.0 * len) / static_cast<double>(dashCount);
+        const double dashLen = period * 0.5;
+
+        vtkSmartPointer<vtkPoints> pts = vtkSmartPointer<vtkPoints>::New();
+        vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
+        for (int i = 0; i < dashCount; ++i) {
+            const double t0 = -len + static_cast<double>(i) * period;
+            const double t1 = std::min(len, t0 + dashLen);
+            if (t1 <= -len || t0 >= len) continue;
+            const gp_Pnt a = o.Translated(std::max(-len, t0) * gp_Vec(dir));
+            const gp_Pnt c = o.Translated(t1 * gp_Vec(dir));
+            const vtkIdType id0 = pts->InsertNextPoint(a.X(), a.Y(), a.Z());
+            const vtkIdType id1 = pts->InsertNextPoint(c.X(), c.Y(), c.Z());
+            lines->InsertNextCell(2);
+            lines->InsertCellPoint(id0);
+            lines->InsertCellPoint(id1);
+        }
+
+        vtkSmartPointer<vtkPolyData> pd = vtkSmartPointer<vtkPolyData>::New();
+        pd->SetPoints(pts);
+        pd->SetLines(lines);
+
+        vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+        mapper->SetInputData(pd);
+        mapper->ScalarVisibilityOff();
+        mapper->SetRelativeCoincidentTopologyLineOffsetParameters(-4.0, -4.0);
+
+        vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+        actor->SetMapper(mapper);
+        actor->GetProperty()->SetColor(r, g, b);
+        actor->GetProperty()->SetOpacity(0.95);
+        actor->GetProperty()->SetLineWidth(1.6);
+        actor->GetProperty()->SetLighting(false);
+        actor->SetPickable(false);
+        actor->SetVisibility(sketchPlaneAxisVisible_ ? 1 : 0);
+        addAppearanceActor(actor);
+        return actor;
+    };
+
+    sketchPlaneXAxisActor_ = makeAxisActor(xd, axisHalfLen, 0.85, 0.18, 0.14);
+    sketchPlaneYAxisActor_ = makeAxisActor(yd, axisHalfLen, 0.12, 0.62, 0.24);
+}
+
 void Widget::updateSketchPlaneHover(int x, int y)
 {
     if (currentSelectionMode != SketchPlaneSelection) return;
     if (!renderer || !vtkWidget) return;
 
     gp_Pln pln;
+    if (tryPickSketchPrincipalPlane(x, y, pln)) {
+        clearSketchPlaneHover();
+        if (vtkWidget && vtkWidget->renderWindow()) vtkWidget->renderWindow()->Render();
+        return;
+    }
+    resetSketchPrincipalPlaneHighlight();
+
     TopoDS_Face face;
     if (!tryPickPlanarFaceUnderCursor(x, y, pln, face)) {
         clearSketchPlaneHover();
@@ -314,6 +454,8 @@ void Widget::createOrUpdateSketchSelectedDatumPlane(const gp_Pln& pln, const Top
     // 导致只 RemoveActor 成员变量不足以彻底清除旧轮廓/填充。
     vtkActor* oldFillActor = sketchSelectedPlaneFillActor_.GetPointer();
     vtkActor* oldOutlineActor = sketchSelectedPlaneOutlineActor_.GetPointer();
+    vtkActor* oldXAxisActor = sketchPlaneXAxisActor_.GetPointer();
+    vtkActor* oldYAxisActor = sketchPlaneYAxisActor_.GetPointer();
     vtkActor* oldFillActorHist = nullptr;
     vtkActor* oldOutlineActorHist = nullptr;
     bool hasOldDatumHist = (sketchSelectedPlaneHistoryIndex_ >= 0 &&
@@ -327,9 +469,35 @@ void Widget::createOrUpdateSketchSelectedDatumPlane(const gp_Pln& pln, const Top
         }
     }
 
-    // 计算 refFace 在平面局部坐标系下的 u/v 范围，用于生成略大一点的显示平面
+    // 计算 refFace 在平面局部坐标系下的 u/v 范围，用于生成略大一点的显示平面。
+    // 主平面没有 OCC 参考面时，退回到当前场景包围盒；空场景使用固定大小。
     Bnd_Box box;
-    BRepBndLib::Add(refFace, box);
+    if (!refFace.IsNull()) {
+        BRepBndLib::Add(refFace, box);
+    }
+    if (box.IsVoid()) {
+        bool hasSceneBounds = false;
+        double bxmin = -10.0, bymin = -10.0, bzmin = -10.0;
+        double bxmax = 10.0, bymax = 10.0, bzmax = 10.0;
+        for (const auto& record : historyList) {
+            vtkActor* actor = renderStateFor(record).actor;
+            if (!actor || actor->GetVisibility() == 0) continue;
+            double b[6] = {0, 0, 0, 0, 0, 0};
+            actor->GetBounds(b);
+            if (!std::isfinite(b[0]) || !std::isfinite(b[1])) continue;
+            if (!hasSceneBounds) {
+                bxmin = b[0]; bxmax = b[1];
+                bymin = b[2]; bymax = b[3];
+                bzmin = b[4]; bzmax = b[5];
+                hasSceneBounds = true;
+            } else {
+                bxmin = std::min(bxmin, b[0]); bxmax = std::max(bxmax, b[1]);
+                bymin = std::min(bymin, b[2]); bymax = std::max(bymax, b[3]);
+                bzmin = std::min(bzmin, b[4]); bzmax = std::max(bzmax, b[5]);
+            }
+        }
+        box.Update(bxmin, bymin, bzmin, bxmax, bymax, bzmax);
+    }
     if (box.IsVoid()) return;
 
     Standard_Real xmin = 0, ymin = 0, zmin = 0, xmax = 0, ymax = 0, zmax = 0;
@@ -425,6 +593,10 @@ void Widget::createOrUpdateSketchSelectedDatumPlane(const gp_Pln& pln, const Top
     };
     removeIf(oldFillActor);
     removeIf(oldOutlineActor);
+    removeIf(oldXAxisActor);
+    removeIf(oldYAxisActor);
+    sketchPlaneXAxisActor_ = nullptr;
+    sketchPlaneYAxisActor_ = nullptr;
     removeIf(oldFillActorHist);
     removeIf(oldOutlineActorHist);
 
@@ -436,6 +608,7 @@ void Widget::createOrUpdateSketchSelectedDatumPlane(const gp_Pln& pln, const Top
     sketchSelectedPlaneOutlineActor_ = outlineActor;
     addAppearanceActor(sketchSelectedPlaneFillActor_);
     addAppearanceActor(sketchSelectedPlaneOutlineActor_);
+    createOrUpdateSketchPlaneAxisActors(pln, hu, hv, oldDatumVisible);
 
     // 作为“自动创建的基准平面”写入历史（便于特征树控制可见性）
     if (sketchSelectedPlaneHistoryIndex_ < 0 || sketchSelectedPlaneHistoryIndex_ >= historyList.size()) {

@@ -23,6 +23,7 @@
 
 #include <Bnd_Box.hxx>
 #include <BRepBndLib.hxx>
+#include <BRep_Builder.hxx>
 #include <Precision.hxx>
 #include <Standard_Failure.hxx>
 #include <TopoDS.hxx>
@@ -163,11 +164,15 @@ bool rayPlaneHit(vtkRenderer* renderer, int x, int y, const gp_Pnt& planeOrigin,
 
 bool resolveModelExtrusionProfile(Widget* widget,
                                   int modelIndex,
-                                  bool solid,
+                                  bool requestedSheetBody,
                                   TopoDS_Shape& outProfile,
+                                  bool* outMakeSheetBody,
                                   QString* errorMessage = nullptr)
 {
     outProfile = TopoDS_Shape();
+    if (outMakeSheetBody) {
+        *outMakeSheetBody = requestedSheetBody;
+    }
     if (!widget || modelIndex < 0 || modelIndex >= widget->getHistoryList().size()) {
         if (errorMessage) *errorMessage = QObject::tr("拉伸对象不存在。");
         return false;
@@ -180,21 +185,25 @@ bool resolveModelExtrusionProfile(Widget* widget,
         return false;
     }
 
-    if (record.type == SKETCH && solid) {
+    if (record.type == SKETCH) {
         const gp_Pln plane(record.recipe.sketch.planeOrigin,
                            record.recipe.sketch.planeNormal);
         std::string error;
-        if (!SketchGeometry::buildPlanarProfile(
+        if (SketchGeometry::buildPlanarProfile(
                 source, plane, outProfile, &error)) {
-            if (errorMessage) {
-                *errorMessage = QString::fromStdString(error);
+            if (outMakeSheetBody) {
+                *outMakeSheetBody = false;
             }
-            return false;
+            return true;
+        }
+        outProfile = source;
+        if (outMakeSheetBody) {
+            *outMakeSheetBody = true;
         }
         return true;
     }
 
-    outProfile = solid
+    outProfile = !requestedSheetBody
         ? ExtrusionGeometry::prepareSolidExtrusionProfile(source)
         : source;
     if (outProfile.IsNull()) {
@@ -352,12 +361,15 @@ bool Widget::buildExtrusionPreviewShape(ExtrusionDialog* dialog, TopoDS_Shape& o
     const double endD = dialog->getEndDistance();
     gp_Dir dir = getExtrusionDirection(dialog);
     QList<TopoDS_Shape> profiles;
+    QList<bool> profileSheetFlags;
     QList<TopoDS_Edge> edges;
     for (const ExtrusionFaceSelection& sel : extrusionSelectedFaces) {
         if (sel.shapeType == TopAbs_FACE) {
             profiles.append(sel.getFace());
+            profileSheetFlags.append(sel.isSketchContour ? false : dialog->isSheetBodyType());
         } else if (sel.shapeType == TopAbs_WIRE) {
             profiles.append(sel.getWire());
+            profileSheetFlags.append(sel.isSketchContour ? false : dialog->isSheetBodyType());
         } else if (sel.shapeType == TopAbs_EDGE) {
             edges.append(sel.getEdge());
         }
@@ -365,10 +377,12 @@ bool Widget::buildExtrusionPreviewShape(ExtrusionDialog* dialog, TopoDS_Shape& o
     if (extrusionSelectedFaces.isEmpty()) {
         for (const int index : extrusionSelectedIndices) {
             TopoDS_Shape profile;
+            bool profileMakeSheetBody = dialog->isSheetBodyType();
             if (resolveModelExtrusionProfile(
                     const_cast<Widget*>(this), index,
-                    !dialog->isSheetBodyType(), profile, nullptr)) {
+                    dialog->isSheetBodyType(), profile, &profileMakeSheetBody, nullptr)) {
                 profiles.append(profile);
+                profileSheetFlags.append(profileMakeSheetBody);
             }
         }
     }
@@ -377,28 +391,53 @@ bool Widget::buildExtrusionPreviewShape(ExtrusionDialog* dialog, TopoDS_Shape& o
             const TopoDS_Shape prepared = ExtrusionGeometry::prepareSolidExtrusionProfile(edges);
             if (!prepared.IsNull()) {
                 profiles.append(prepared);
+                profileSheetFlags.append(dialog->isSheetBodyType());
             } else {
                 for (const TopoDS_Edge& e : edges) {
-                    if (!e.IsNull()) profiles.append(e);
+                    if (!e.IsNull()) {
+                        profiles.append(e);
+                        profileSheetFlags.append(true);
+                    }
                 }
             }
         } catch (Standard_Failure&) {
             for (const TopoDS_Edge& e : edges) {
-                if (!e.IsNull()) profiles.append(e);
+                if (!e.IsNull()) {
+                    profiles.append(e);
+                    profileSheetFlags.append(true);
+                }
             }
         } catch (...) {
             for (const TopoDS_Edge& e : edges) {
-                if (!e.IsNull()) profiles.append(e);
+                if (!e.IsNull()) {
+                    profiles.append(e);
+                    profileSheetFlags.append(true);
+                }
             }
         }
     }
     if (profiles.isEmpty()) return false;
 
     TopoDS_Compound compound;
-    if (!ExtrusionGeometry::buildExtrusionCompound(profiles, dir, startD, endD,
-                                                   dialog->isSheetBodyType(), compound)) {
+    const double length = endD - startD;
+    if (std::abs(length) < Precision::Confusion()) {
         return false;
     }
+    BRep_Builder builder;
+    builder.MakeCompound(compound);
+    bool anyExtruded = false;
+    for (int i = 0; i < profiles.size(); ++i) {
+        const bool makeSheet = (i < profileSheetFlags.size())
+            ? profileSheetFlags[i]
+            : dialog->isSheetBodyType();
+        const TopoDS_Shape extruded = ExtrusionGeometry::extrudeResolvedProfile(
+            profiles[i], dir, length, startD, makeSheet);
+        if (!extruded.IsNull()) {
+            builder.Add(compound, extruded);
+            anyExtruded = true;
+        }
+    }
+    if (!anyExtruded) return false;
     TopoDS_Shape feature = compound;
     if (applyDialogBooleanToShape(dialog->booleanMode(), dialog->booleanTargetIndex(),
                                   feature, outShape) && !outShape.IsNull()) {

@@ -1,0 +1,125 @@
+{"kind":"deck","id":"pr/a48n14","name":"Deck"}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster1.xml","name":"","type":"master","placeholders":[{"name":"title","type":"title","textPreview":"单击此处编辑母版标题样式"},{"name":"body","type":"body","textPreview":"单击此处编辑母版文本样式 | 第二级 | 第三级 | 第四级 | 第五级"},{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout1.xml","name":"标题幻灯片","type":"title","placeholders":[{"name":"title","type":"title","textPreview":"单击此处编辑标题"},{"name":"subtitle","type":"subtitle","textPreview":"单击此处编辑副标题"},{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout2.xml","name":"Blank","type":"blank","placeholders":[{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"},{"name":"body","type":"body","textPreview":"单击此处编辑母版文本样式"},{"name":"5","textPreview":"单击此处编辑母版文本样式 | 二级 | 三级 | 四级 | 五级"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout3.xml","name":"标题和内容","type":"obj","placeholders":[{"name":"title","type":"title","textPreview":"单击此处编辑母版标题样式"},{"name":"2","textPreview":"单击此处编辑母版文本样式 | 第二级 | 第三级 | 第四级 | 第五级"},{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster2.xml","name":"","type":"master"}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout4.xml","name":"自定义版式"}
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"周汇报","textShapes":2}
+{"kind":"textbox","id":"sh/547294r6","slide":1,"name":"标题 1","placeholder":"title","text":"周汇报","textPreview":"周汇报","textChars":3,"textLines":1,"bbox":[0,205.94,1280,111.2]}
+{"kind":"textbox","id":"sh/ul4vaxgb","slide":1,"name":"标题 1","text":"✪汇报人：陈景煌    2026.9.7-9.13","textPreview":"✪汇报人：陈景煌    2026.9.7-9.13","textChars":25,"textLines":1,"bbox":[308.3,371.55,663.46,46.33]}
+{"kind":"image","id":"im/kr6xgnu5","slide":1,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/bmxw3ido","slide":1,"name":"图片 18","bbox":[32.47,381.53,1215.13,253.8]}
+{"kind":"image","id":"im/alovadw3","slide":1,"name":"图片 8","bbox":[32.07,597.13,1215.87,91.07]}
+{"kind":"notes","id":"nt/y90nupkv","slide":1,"text":""}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"1","textShapes":10}
+{"kind":"shape","id":"sh/x4r21kru","slide":2,"name":"矩形 5","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/nu58f2hs","slide":2,"name":"MH_Number_1","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[437.23,282.33,39.87,39.87]}
+{"kind":"textbox","id":"sh/wjy9sry9","slide":2,"name":"MH_Entry_1","text":"手柄功能","textPreview":"手柄功能","textChars":4,"textLines":1,"bbox":[516.1,280,319.33,45.2]}
+{"kind":"textbox","id":"sh/hcvy14ne","slide":2,"name":"MH_Number_2","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[437.23,346.93,39.87,39.87]}
+{"kind":"textbox","id":"sh/u94fqp4n","slide":2,"name":"MH_Entry_2","text":"矢量工具整理","textPreview":"矢量工具整理","textChars":6,"textLines":1,"bbox":[516.1,349.47,538.07,45.2]}
+{"kind":"textbox","id":"sh/p0vy54na","slide":2,"name":"MH_Number_3","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[437.23,411.53,39.87,39.87]}
+{"kind":"shape","id":"sh/4zmxwzmp","slide":2,"name":"MH_Entry_3","bbox":[516.1,415.73,282.93,45.2]}
+{"kind":"textbox","id":"sh/9o7ulg3y","slide":2,"name":"MH_Others_2","text":"CONTENTS","textPreview":"CONTENTS","textChars":8,"textLines":1,"bbox":[328.77,189.87,622.47,32.27]}
+{"kind":"textbox","id":"sh/onydsbmd","slide":2,"name":"MH_Others_1","text":"目 录","textPreview":"目 录","textChars":3,"textLines":1,"bbox":[502.13,147.87,275.75,116.27]}
+{"kind":"textbox","id":"sh/w3i1sfa9","slide":2,"name":"MH_Entry_1","text":"渲染问题","textPreview":"渲染问题","textChars":4,"textLines":1,"bbox":[516.1,415.87,319.33,45.2]}
+{"kind":"textbox","id":"sh/9072xkry","slide":2,"name":"MH_Number_3","text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[437.23,476.13,39.87,39.87]}
+{"kind":"textbox","id":"sh/a10jqpsj","slide":2,"name":"MH_Entry_1","text":"总结与下周计划","textPreview":"总结与下周计划","textChars":7,"textLines":1,"bbox":[516.1,475.87,319.33,45.2]}
+{"kind":"image","id":"im/5sripona","slide":2,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/kry1gjmp","slide":2,"name":"图片 11","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/hwbqtkby","slide":2,"text":""}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"01 本周工作总览","textShapes":3}
+{"kind":"shape","id":"sh/re9g7yxo","slide":3,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/cza94vmx","slide":3,"name":"文本框 1","text":"01 本周工作总览","textPreview":"01 本周工作总览","textChars":9,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/batgjixs","slide":3,"name":"section-1.1","text":"1.1 主要工作：完成手柄交互和显示渲染问题的收敛","textPreview":"1.1 主要工作：完成手柄交互和显示渲染问题的收敛","textChars":25,"textLines":1,"bbox":[136,112,1040,36]}
+{"kind":"textbox","id":"sh/l4fi9cza","slide":3,"name":"body","text":"① 两点确定矢量：补齐起点、终点点柄，支持选中、拖拽和捕捉吸附\n② 矢量方向控制：矢量箭头支持双击反向，对话框状态和预览同步更新\n③ 工具归档：矢量捕捉与矢量手柄集中到 interaction/tools，减少主窗口耦合\n④ 渲染链路：从业务层手动构建 Mesh，收敛到 IVtk 统一生成显示数据","textPreview":"① 两点确定矢量：补齐起点、终点点柄，支持选中、拖拽和捕捉吸附 | ② 矢量方向控制：矢量箭头支持双击反向，对话框状态和预览同步更新 | ③ 工具归档：矢量捕捉与矢量手柄集中到 interaction/tools，减少主窗口耦合 | ④ 渲染链路：从业务层手动构建 Mesh...","textChars":149,"textLines":4,"bbox":[150,166,1010,170]}
+{"kind":"table","id":"tb/na58fy1g","slide":3,"name":"","rows":3,"cols":3,"preview":"提交 | 本周主题 | 结果","bbox":[150,382,970,168]}
+{"kind":"image","id":"im/fytczylk","slide":3,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/ed0vqtkz","slide":3,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/lwvexsju","slide":3,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/ofy9wn61","slide":3,"text":"依据：C:\\Users\\陈景煌\\Desktop\\9.7-9.13.txt；git show --stat 80c2250；git show --stat de28007。"}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"02 两点确定矢量：点操作手柄","textShapes":4}
+{"kind":"shape","id":"sh/gv29g7q5","slide":4,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/rm1k7yt4","slide":4,"name":"文本框 3","text":"02 两点确定矢量：点操作手柄","textPreview":"02 两点确定矢量：点操作手柄","textChars":15,"textLines":1,"bbox":[95.33,46,845.4,54.8]}
+{"kind":"textbox","id":"sh/jm5gze1g","slide":4,"name":"section-2.1","text":"2.1 主要工作：两个点柄承担起点和终点的选择与拖拽","textPreview":"2.1 主要工作：两个点柄承担起点和终点的选择与拖拽","textChars":26,"textLines":1,"bbox":[136,112,1040,36]}
+{"kind":"textbox","id":"sh/knex8j21","slide":4,"name":"body","text":"① 起点、终点使用球形 actor 表示，鼠标按下先判断是否命中点柄\n② 拖拽时把屏幕位移投影到视图平面，再结合点捕捉器求新的三维坐标\n③ 拖拽过程中实时刷新矢量预览、对话框参数和参考覆盖层尺寸\n④ 点选完成后立即同步 overlay 相机并 Render，解决高亮延迟一拍的问题","textPreview":"① 起点、终点使用球形 actor 表示，鼠标按下先判断是否命中点柄 | ② 拖拽时把屏幕位移投影到视图平面，再结合点捕捉器求新的三维坐标 | ③ 拖拽过程中实时刷新矢量预览、对话框参数和参考覆盖层尺寸 | ④ 点选完成后立即同步 overlay 相机并 Render，解决...","textChars":140,"textLines":4,"bbox":[150,166,1010,170]}
+{"kind":"textbox","id":"sh/5ony1oj6","slide":4,"name":"code-box","text":"handleVectorTwoPointHandleMouseDown(x, y)\nhandleVectorTwoPointHandleMouseMove(x, y)\nhandleVectorTwoPointHandleMouseUp(x, y)\n\nshowSelectedPoint(point)\nrefreshPointSelectionOverlay()","textPreview":"handleVectorTwoPointHandleMouseDown(x, y) | handleVectorTwoPointHandleMouseMove(x, y) | handleVectorTwoPointHandleMouseUp(x, y) |  | show...","textChars":180,"textLines":6,"bbox":[188,400,840,150]}
+{"kind":"table","id":"tb/jq1w7ulw","slide":4,"name":"表格 7","rows":5,"cols":4,"preview":"类型 | 形状 | 可拖拽性 | 实例","bbox":[201.73,184.2,965.8,200]}
+{"kind":"table","id":"tb/dk3yxony","slide":4,"name":"表格 9","rows":5,"cols":4,"preview":"状态 | 颜色 | 缩放因子 | 触发条件","bbox":[201.73,448.07,967.47,200]}
+{"kind":"image","id":"im/w7u9kj25","slide":4,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/x83qdojq","slide":4,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/q9876pkv","slide":4,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/jyx0ra1s","slide":4,"text":"依据：src\\interaction\\tools\\vector_handles.cpp；src\\interaction\\tools\\vector_snap.cpp；src\\viewport\\main_view\\main_viewport.cpp。"}
+{"kind":"slide","id":"sl/i107q5of","slide":5,"title":"03 两点确定矢量：选中与反向","textShapes":7}
+{"kind":"shape","id":"sh/4ji5kbid","slide":5,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/z2tcnm5s","slide":5,"name":"文本框 3","text":"03 两点确定矢量：选中与反向","textPreview":"03 两点确定矢量：选中与反向","textChars":15,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/kny587i9","slide":5,"name":"section-3.1","text":"3.1 主要工作：点柄可选中，矢量箭头支持双击反向","textPreview":"3.1 主要工作：点柄可选中，矢量箭头支持双击反向","textChars":25,"textLines":1,"bbox":[136,112,1040,36]}
+{"kind":"textbox","id":"sh/atcjidg7","slide":5,"name":"body","text":"① 选中：通过 picker 判断 start/end 点柄，进入拖拽或确认状态\n② 候选点：边附近只显示端点、中点候选，未进入激活半径时不落点\n③ 反向：双击矢量箭头后交换起点和终点，当前矢量方向同步翻转\n④ 同步：反向后刷新 dialog、预览 actor 和已选点反馈，避免状态分裂","textPreview":"① 选中：通过 picker 判断 start/end 点柄，进入拖拽或确认状态 | ② 候选点：边附近只显示端点、中点候选，未进入激活半径时不落点 | ③ 反向：双击矢量箭头后交换起点和终点，当前矢量方向同步翻转 | ④ 同步：反向后刷新 dialog、预览 actor ...","textChars":144,"textLines":4,"bbox":[150,166,1010,190]}
+{"kind":"textbox","id":"sh/vu5kbihc","slide":5,"text":"点柄命中","textPreview":"点柄命中","textChars":4,"textLines":1,"bbox":[190,436,175,48]}
+{"kind":"shape","id":"sh/wve1knyx","slide":5,"name":"process-line","bbox":[365,460,120,0]}
+{"kind":"textbox","id":"sh/xwn2dszi","slide":5,"text":"拖拽更新","textPreview":"拖拽更新","textChars":4,"textLines":1,"bbox":[490,436,175,48]}
+{"kind":"shape","id":"sh/ihw3mxg3","slide":5,"name":"process-line","bbox":[665,460,120,0]}
+{"kind":"textbox","id":"sh/ji5kf2ho","slide":5,"text":"参数同步","textPreview":"参数同步","textChars":4,"textLines":1,"bbox":[790,436,175,48]}
+{"kind":"textbox","id":"sh/kjelony9","slide":5,"name":"code-box","text":"handleVectorTwoPointArrowDoubleClick(x, y)\nreverseVectorTwoPointDirection()","textPreview":"handleVectorTwoPointArrowDoubleClick(x, y) | reverseVectorTwoPointDirection()","textChars":75,"textLines":2,"bbox":[250,530,700,72]}
+{"kind":"image","id":"im/8j2x8b6t","slide":5,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/9kbyhg7e","slide":5,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/ulkfaloz","slide":5,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/i107q5of","slide":5,"text":"依据：src\\interaction\\tools\\vector_handles.cpp；src\\presentation\\main_window\\main_window_events.cpp；src\\viewport\\main_view\\mouse_interactor.cpp。"}
+{"kind":"slide","id":"sl/x8f69ofe","slide":6,"title":"04 其他矢量确定方式","textShapes":3}
+{"kind":"shape","id":"sh/lg76d8zy","slide":6,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/87ipkzal","slide":6,"name":"文本框 3","text":"04 其他矢量确定方式","textPreview":"04 其他矢量确定方式","textChars":11,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/1k3mhozu","slide":6,"name":"section-4.1","text":"4.1 主要工作：把不同矢量来源纳入同一种反向语义","textPreview":"4.1 主要工作：把不同矢量来源纳入同一种反向语义","textChars":25,"textLines":1,"bbox":[136,112,1040,36]}
+{"kind":"textbox","id":"sh/jet8nm1c","slide":6,"name":"body","text":"① 曲线上矢量：点柄沿曲线移动，矢量取该点的切线方向\n② 面和平面法向量：箭头代表当前法向，双击后方向翻转\n③ 轴矢量：从基准轴或模型轴获得方向，复用箭头反向入口\n④ 反向只改变方向符号，不改变点、边、面等几何来源","textPreview":"① 曲线上矢量：点柄沿曲线移动，矢量取该点的切线方向 | ② 面和平面法向量：箭头代表当前法向，双击后方向翻转 | ③ 轴矢量：从基准轴或模型轴获得方向，复用箭头反向入口 | ④ 反向只改变方向符号，不改变点、边、面等几何来源","textChars":107,"textLines":4,"bbox":[150,166,1010,184]}
+{"kind":"table","id":"tb/18f65wbq","slide":6,"name":"","rows":4,"cols":3,"preview":"矢量来源 | 操作柄 | 反向方式","bbox":[150,392,980,210]}
+{"kind":"image","id":"im/90zqp0r6","slide":6,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/ofq9wfal","slide":6,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/3id8b69w","slide":6,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/x8f69ofe","slide":6,"text":"依据：C:\\Users\\陈景煌\\Desktop\\9.7-9.13.txt；src\\presentation\\dialogs\\tools\\vector_dialog.cpp；src\\presentation\\dialogs\\coordinates\\datum_axis.cpp。"}
+{"kind":"slide","id":"sl/gnmp4jqx","slide":7,"title":"05 矢量工具整理","textShapes":3}
+{"kind":"shape","id":"sh/r2dkrq5g","slide":7,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/ydkbm5sv","slide":7,"name":"文本框 3","text":"05 矢量工具整理","textPreview":"05 矢量工具整理","textChars":9,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/f6xkvq5c","slide":7,"name":"section-5.1","text":"5.1 主要工作：矢量工具从主窗口逻辑中单独抽出管理","textPreview":"5.1 主要工作：矢量工具从主窗口逻辑中单独抽出管理","textChars":26,"textLines":1,"bbox":[136,112,1040,36]}
+{"kind":"textbox","id":"sh/p0zmlk7u","slide":7,"name":"body","text":"① 主窗口只负责接收交互结果和触发刷新，工具细节下沉到 src/interaction/tools\n② 捕捉、高亮、拖拽和双击反向分别有清晰入口，后续维护更容易定位","textPreview":"① 主窗口只负责接收交互结果和触发刷新，工具细节下沉到 src/interaction/tools | ② 捕捉、高亮、拖拽和双击反向分别有清晰入口，后续维护更容易定位","textChars":82,"textLines":2,"bbox":[150,166,1010,95]}
+{"kind":"table","id":"tb/ny58ja1s","slide":7,"name":"","rows":5,"cols":3,"preview":"文件 | 当前责任 | 汇报重点","bbox":[120,300,1040,270]}
+{"kind":"image","id":"im/3ydory5k","slide":7,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/ix4nytoz","slide":7,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/l4rmh4n6","slide":7,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/gnmp4jqx","slide":7,"text":"依据：rg --files；Practice_Modeling.vcxproj 中 vector_snap.cpp 和 vector_handles.cpp 的编译项；80c2250 提交统计。"}
+{"kind":"slide","id":"sl/fu1gfa1s","slide":8,"title":"06 渲染问题：自动显示管线","textShapes":4}
+{"kind":"shape","id":"sh/kredcr6t","slide":8,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/ri9g7uhw","slide":8,"name":"文本框 3","text":"06 渲染问题：自动显示管线","textPreview":"06 渲染问题：自动显示管线","textChars":14,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/w3ed8r6x","slide":8,"name":"section-6.1","text":"6.1 总工作：从手动构建转为 IVtk 自动构建","textPreview":"6.1 总工作：从手动构建转为 IVtk 自动构建","textChars":25,"textLines":1,"bbox":[136,112,1040,36]}
+{"kind":"textbox","id":"sh/m9sb2x4v","slide":8,"name":"body","text":"① 旧链路：显示、预览、高亮和镜像各处都可能手动构建 Mesh\n② 问题：球与圆柱、圆锥交界处容易出现锯齿状突出角，调参也容易反复\n③ 新链路：所有显示入口先创建 ShapeDataSource，再由显示管线生成 VTK 数据\n④ 结果：业务层不再直接调用 BRepMesh_IncrementalMesh，质量策略集中到渲染层","textPreview":"① 旧链路：显示、预览、高亮和镜像各处都可能手动构建 Mesh | ② 问题：球与圆柱、圆锥交界处容易出现锯齿状突出角，调参也容易反复 | ③ 新链路：所有显示入口先创建 ShapeDataSource，再由显示管线生成 VTK 数据 | ④ 结果：业务层不再直接调用 BR...","textChars":164,"textLines":4,"bbox":[150,166,1010,192]}
+{"kind":"textbox","id":"sh/na1sb2lg","slide":8,"name":"code-box","text":"TopoDS_Shape\nIVtkOCC_Shape\nModelShapePipeline::createShapeDataSource()\nModelShapePipeline::copyShapeDataSourceOutput()\nMapper / Actor / Render","textPreview":"TopoDS_Shape | IVtkOCC_Shape | ModelShapePipeline::createShapeDataSource() | ModelShapePipeline::copyShapeDataSourceOutput() | Mapper / A...","textChars":142,"textLines":5,"bbox":[226,430,760,138]}
+{"kind":"image","id":"im/wnq9gnm1","slide":8,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/xoza9s3m","slide":8,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/uhsbqhkf","slide":8,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/fu1gfa1s","slide":8,"text":"依据：src\\rendering\\pipeline\\model_shape_pipeline.cpp；src\\rendering\\model\\shape_presentation_factory.cpp；de28007 提交统计。"}
+{"kind":"slide","id":"sl/udsvah03","slide":9,"title":"07 BRepMesh_IncrementalMesh","textShapes":3}
+{"kind":"shape","id":"sh/wba1cjqp","slide":9,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/nex4jq5k","slide":9,"name":"文本框 3","text":"07 BRepMesh_IncrementalMesh","textPreview":"07 BRepMesh_IncrementalMesh","textChars":27,"textLines":1,"bbox":[95.33,46,534,99.2]}
+{"kind":"textbox","id":"sh/cf6h0fql","slide":9,"name":"section-7.1","text":"7.1 是什么：OCCT 用于把 B-Rep 形状离散成三角网格的工具","textPreview":"7.1 是什么：OCCT 用于把 B-Rep 形状离散成三角网格的工具","textChars":35,"textLines":1,"bbox":[136,112,1040,36]}
+{"kind":"textbox","id":"sh/nmdg3q54","slide":9,"name":"code-box","text":"BRepMesh_IncrementalMesh(shape, linDeflection,\n                         isRelative, angDeflection,\n                         isInParallel)","textPreview":"BRepMesh_IncrementalMesh(shape, linDeflection, |                          isRelative, angDeflection, |                          isInParal...","textChars":137,"textLines":3,"bbox":[245,528,690,82]}
+{"kind":"table","id":"tb/10fa50v6","slide":9,"name":"","rows":5,"cols":2,"preview":"问题 | 回答","bbox":[116,176,1050,310]}
+{"kind":"image","id":"im/wj6p4ve1","slide":9,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/xkfqd0fm","slide":9,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/y5or65w7","slide":9,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/udsvah03","slide":9,"text":"依据：D:\\OCCT7.7.0\\Install\\inc\\BRepMesh_IncrementalMesh.hxx；src 中对 BRepMesh_IncrementalMesh 的全局搜索；de28007 最终说明。"}
+{"kind":"slide","id":"sl/m90b6t0r","slide":10,"title":"08 问题处理与下周计划","textShapes":5}
+{"kind":"shape","id":"sh/kjytkvup","slide":10,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/zelojyl8","slide":10,"name":"文本框 3","text":"08 问题处理与下周计划","textPreview":"08 问题处理与下周计划","textChars":12,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/0nut8rul","slide":10,"name":"section-8.1","text":"8.1 遇到的问题：显示质量、刷新时机和二进制依赖交织在一起","textPreview":"8.1 遇到的问题：显示质量、刷新时机和二进制依赖交织在一起","textChars":30,"textLines":1,"bbox":[136,112,1040,36]}
+{"kind":"textbox","id":"sh/q9srixs3","slide":10,"name":"body","text":"① 点选反馈延迟：选中点后 actor 已创建，但 overlay 相机和屏幕缩放没有立即同步\n② 交界处锯齿：显示边界暴露曲面离散误差，球与圆柱、圆锥组合更明显\n③ 构建依赖：曾出现 Release 程序加载 Debug VTK 的情况，需要保持 TKIVtk 与 VTK 版本一致","textPreview":"① 点选反馈延迟：选中点后 actor 已创建，但 overlay 相机和屏幕缩放没有立即同步 | ② 交界处锯齿：显示边界暴露曲面离散误差，球与圆柱、圆锥组合更明显 | ③ 构建依赖：曾出现 Release 程序加载 Debug VTK 的情况，需要保持 TKIVtk 与...","textChars":142,"textLines":3,"bbox":[150,166,1010,145]}
+{"kind":"textbox","id":"sh/ru18r2to","slide":10,"name":"section-8.2","text":"8.2 下周计划：围绕测试文档继续收敛交互稳定性","textPreview":"8.2 下周计划：围绕测试文档继续收敛交互稳定性","textChars":24,"textLines":1,"bbox":[136,350,1040,36]}
+{"kind":"textbox","id":"sh/cva9k7a9","slide":10,"name":"body","text":"① 回归测试两点矢量、曲线矢量、面法向和轴矢量的反向逻辑\n② 检查预览、确认、撤销恢复、保存读取后的矢量状态是否一致\n③ 继续减少主窗口中的交互细节，让工具层和渲染层边界更清楚","textPreview":"① 回归测试两点矢量、曲线矢量、面法向和轴矢量的反向逻辑 | ② 检查预览、确认、撤销恢复、保存读取后的矢量状态是否一致 | ③ 继续减少主窗口中的交互细节，让工具层和渲染层边界更清楚","textChars":88,"textLines":3,"bbox":[150,405,1010,138]}
+{"kind":"image","id":"im/w76tsvq5","slide":10,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/h8fu1g7q","slide":10,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/q9kbeh8v","slide":10,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/m90b6t0r","slide":10,"text":"依据：C:\\Users\\陈景煌\\Desktop\\9.7-9.13.txt；过往任务记录中关于点选高亮、球/圆柱交界锯齿、TKIVtk 与 VTK 依赖排查的说明。"}
+{"kind":"slide","id":"sl/jetc3ut0","slide":11,"title":"周汇报","textShapes":2}
+{"kind":"textbox","id":"sh/xcryxg7y","slide":11,"name":"标题 1","placeholder":"title","text":"周汇报","textPreview":"周汇报","textChars":3,"textLines":1,"bbox":[217.42,212.63,845.16,111.2]}
+{"kind":"textbox","id":"sh/mdobedg3","slide":11,"name":"标题 1","text":"✪汇报人：陈景煌","textPreview":"✪汇报人：陈景煌","textChars":8,"textLines":1,"bbox":[308.27,359.27,663.46,46.33]}
+{"kind":"image","id":"im/cre5or2h","slide":11,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/3m5orml0","slide":11,"name":"图片 18","bbox":[32.47,381.53,1215.13,253.8]}
+{"kind":"image","id":"im/21cnihkf","slide":11,"name":"图片 8","bbox":[32.07,597.13,1215.87,91.07]}
+{"kind":"notes","id":"nt/jetc3ut0","slide":11,"text":""}

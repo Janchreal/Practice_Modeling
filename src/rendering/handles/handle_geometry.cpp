@@ -1,6 +1,4 @@
-/**
- * handle_geometry.cpp — 控制柄三维几何工厂实现
- */
+/*handle_geometry.cpp — 控制柄三维几何工厂实现*/
 
 #include "handle_geometry.h"
 
@@ -16,8 +14,9 @@
 #include <vtkLineSource.h>
 
 namespace HandleGeom {
-namespace {
-
+    //匿名命名空间，fallbackStyle只在本文件可见
+    namespace {
+        //回退样式fallbackStyle,当找不到具体控制手柄的样式时（找不到ControlSpec），使用这套默认样式
 HandleStateStyle fallbackStyle(ControlState state)
 {
     HandleStateStyle s;
@@ -48,7 +47,7 @@ HandleStateStyle fallbackStyle(ControlState state)
 }
 
 } // namespace
-
+    //创建VTK箭头源，根据ControlShape做特殊处理
 vtkSmartPointer<vtkArrowSource> makeArrowSource(ControlShape shape, const ArrowParams& params)
 {
     auto arrow = vtkSmartPointer<vtkArrowSource>::New();
@@ -75,11 +74,11 @@ vtkSmartPointer<vtkArrowSource> makeArrowSource(ControlShape shape, const ArrowP
 vtkSmartPointer<vtkSphereSource> makeSphereSource(const SphereParams& params)
 {
     auto sphere = vtkSmartPointer<vtkSphereSource>::New();
-    sphere->SetCenter(0.0, 0.0, 0.0);
-    sphere->SetRadius(std::max(1e-6, params.radius));
-    sphere->SetThetaResolution(std::max(4, params.thetaResolution));
-    sphere->SetPhiResolution(std::max(4, params.phiResolution));
-    sphere->LatLongTessellationOff();
+    sphere->SetCenter(0.0, 0.0, 0.0);//中心固定在(0,0,0)
+    sphere->SetRadius(std::max(1e-6, params.radius));//半径最小1e-6
+    sphere->SetThetaResolution(std::max(4, params.thetaResolution));//控制球体的经度方向上的划分数量，数值越大越圆滑
+    sphere->SetPhiResolution(std::max(4, params.phiResolution));//控制球体的纬度方向上的划分数量，数值越大越圆滑
+    sphere->LatLongTessellationOff();//关闭按经纬网格方式细分球面，改用三角形方式生成球体网格，关闭后得到的是纯三角形网格，很多 VTK 过滤器、拾取、布尔、平滑等算法更喜欢三角形，开启时生成四边形，某些算法可能需要先三角化
     return sphere;
 }
 

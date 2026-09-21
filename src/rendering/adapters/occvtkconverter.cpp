@@ -1,5 +1,7 @@
 #include "occvtkconverter.h"
 
+#include "rendering/pipeline/model_shape_pipeline.h"
+
 #include <IVtkOCC_Shape.hxx>
 #include <IVtkTools_ShapeDataSource.hxx>
 
@@ -19,10 +21,10 @@ vtkSmartPointer<vtkPolyData> OccShapeToVtkConverter::convert(const TopoDS_Shape&
         // ShapeDataSource path as the main model presentation.
         Handle(IVtkOCC_Shape) shapeWrapper = new IVtkOCC_Shape(shape);
         vtkSmartPointer<IVtkTools_ShapeDataSource> shapeDataSource =
-            vtkSmartPointer<IVtkTools_ShapeDataSource>::New();
-        shapeDataSource->SetShape(shapeWrapper);
-        shapeDataSource->Modified();
-        shapeDataSource->Update();
+            ModelShapePipeline::createShapeDataSource(shapeWrapper);
+        if (!shapeDataSource) {
+            return nullptr;
+        }
 
         vtkPolyData* output = shapeDataSource->GetOutput();
         if (!output) {

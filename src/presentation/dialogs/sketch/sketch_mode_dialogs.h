@@ -40,12 +40,12 @@ private:
     bool updating_ = false;
 };
 
-/** 圆：圆心+半径（直径由两点确定）/ 三点定圆 */
+/** 圆：圆心+半径 / 圆上两点+半径 */
 class SketchCircleModeDialog : public QDialog
 {
     Q_OBJECT
 public:
-    enum Method { CenterRadius = 0, ThreePoint = 1 };
+    enum Method { CenterRadius = 0, TwoPointRadius = 1 };
 
     explicit SketchCircleModeDialog(QWidget* parent = nullptr);
     Method method() const;
@@ -68,6 +68,37 @@ private:
     QToolButton* btnCenter_ = nullptr;
     QToolButton* btnThree_ = nullptr;
     Method method_ = CenterRadius;
+    bool updating_ = false;
+};
+
+/** 圆弧：三点 / 中心端点 */
+class SketchArcModeDialog : public QDialog
+{
+    Q_OBJECT
+public:
+    enum Method { ThreePoint = 0, CenterEndpoint = 1 };
+
+    explicit SketchArcModeDialog(QWidget* parent = nullptr);
+    Method method() const;
+    void setMethod(Method m);
+
+signals:
+    void methodChanged(SketchArcModeDialog::Method m);
+    void closedByUser();
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
+
+private slots:
+    void onCloseClicked();
+    void onThree(bool checked);
+    void onCenterEndpoint(bool checked);
+
+private:
+    void syncButtons();
+    QToolButton* btnThree_ = nullptr;
+    QToolButton* btnCenterEndpoint_ = nullptr;
+    Method method_ = ThreePoint;
     bool updating_ = false;
 };
 

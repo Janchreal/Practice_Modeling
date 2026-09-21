@@ -1,1112 +1,1235 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
-      <ParseFiles>false</ParseFiles>
+    <Filter Include="3rdparty">
+      <UniqueIdentifier>{F19F15FA-45A4-F1E9-0CD9-7F6179E8F833}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
-      <ParseFiles>false</ParseFiles>
+    <Filter Include="3rdparty\SARibbon">
+      <UniqueIdentifier>{AC801F08-50F4-B655-6882-1910F89CD9B2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    <Filter Include="debug">
+      <UniqueIdentifier>{EE8CC42B-578F-0408-9647-FE30971B8B3F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    <Filter Include="release">
+      <UniqueIdentifier>{C2782AAD-5B35-FB3C-349F-C2F98E87529E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="resource">
+      <UniqueIdentifier>{E4CCBC93-107E-8E40-B996-29A1F9BBD81E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="src">
+      <UniqueIdentifier>{01003EA6-E9CB-EEF5-D9B4-D643198DC720}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
+    <Filter Include="src\app">
+      <UniqueIdentifier>{4814A0AE-68E9-AC95-CEDE-BEB9837ECD40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
+    <Filter Include="src\application">
+      <UniqueIdentifier>{967ADB57-CCD8-6BDD-036B-A72543B16816}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="src\application\command">
+      <UniqueIdentifier>{5DAEF8B6-1E57-AA9F-8178-FBF81836386C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="src\application\commands">
+      <UniqueIdentifier>{EDBA8F86-552A-BCD8-9885-6C552F21096E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Distribution Files">
-      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
-      <Extensions>*</Extensions>
-      <ParseFiles>false</ParseFiles>
+    <Filter Include="src\application\history">
+      <UniqueIdentifier>{E4DD45B3-FB73-4EE6-DB1D-9EB85745C5C2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Distribution Files">
-      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
-      <Extensions>*</Extensions>
-      <ParseFiles>false</ParseFiles>
+    <Filter Include="src\application\ports">
+      <UniqueIdentifier>{0CF27F0C-E7BD-2F1C-355A-4EA8441563EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{78316190-4D31-0C38-3824-21FE6DF48EB5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\domain">
+      <UniqueIdentifier>{DAFFEE9D-04FB-D7E1-2B31-7AADF32CAC0B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\domain\features">
+      <UniqueIdentifier>{EB241023-C7FB-D73F-F59F-09388F93A738}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\domain\sketch">
+      <UniqueIdentifier>{62BABD49-8D53-11A2-E635-3DEB84A325C3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry">
+      <UniqueIdentifier>{F8707B89-DB4D-90F4-B650-4CB4B60F7338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\boolean">
+      <UniqueIdentifier>{B8359409-6DDE-9681-C10B-C0576A515CCD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\extrusion">
+      <UniqueIdentifier>{64920A9D-13B1-0F6C-3DE6-20C6BEC5519A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\intersection">
+      <UniqueIdentifier>{C724AC2C-C06B-5067-CE76-77D5683B4AD9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\math">
+      <UniqueIdentifier>{0E4CEE69-43B4-2F87-B476-432203CE9211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\modification">
+      <UniqueIdentifier>{F9EB7882-B382-C4C7-A81A-A987A9E3515C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\pattern">
+      <UniqueIdentifier>{B32C8435-BB39-E9CB-7C7C-929CD0960A98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\placement">
+      <UniqueIdentifier>{9E564B65-E27D-A6A6-6699-530195A57901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\primitives">
+      <UniqueIdentifier>{42FB5193-8F8C-37A3-5E01-64CA0CDDD3AD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\revolution">
+      <UniqueIdentifier>{6950A2DD-EB58-CFE9-3B85-14732FB03A66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\runtime">
+      <UniqueIdentifier>{4B99763A-D6F0-7C45-42C3-A3092148E6BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\sketch">
+      <UniqueIdentifier>{18D9F337-365A-416E-1F7C-D6B65F4E6AE8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\geometry\topology">
+      <UniqueIdentifier>{BDE41493-FB63-C14B-C62B-581552FCF4B3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\infrastructure">
+      <UniqueIdentifier>{79686546-CFD2-E8AF-A944-A324D953FC33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\infrastructure\serialization">
+      <UniqueIdentifier>{A4CDF714-23DA-915C-3F4F-4509C57BA972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\interaction">
+      <UniqueIdentifier>{6463A00F-A9CA-C764-38DF-8B389E9E8CFD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\interaction\coordinates">
+      <UniqueIdentifier>{932CC58D-ADE0-3220-98A5-EEFEE4B2D975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\interaction\handles">
+      <UniqueIdentifier>{71283494-4FAF-5D54-A04E-B0B5CC3D0853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\interaction\selection">
+      <UniqueIdentifier>{317B1DDD-2964-534F-50AA-34207ECF07CA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\interaction\tools">
+      <UniqueIdentifier>{5A8C521C-223A-3267-B39D-2D5D505B732D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation">
+      <UniqueIdentifier>{672DAA30-8D31-F2BB-C7D6-52C6E4E0BE56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs">
+      <UniqueIdentifier>{BA967068-1A6E-FE70-0FA5-765B6C06D747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\boolean">
+      <UniqueIdentifier>{BF8AB360-ABBD-636E-95C1-57E95D38D94D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\common">
+      <UniqueIdentifier>{6D0EF0D0-FFD8-691B-5F58-62551D0CB0B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\coordinates">
+      <UniqueIdentifier>{CF6E304C-47DB-63EA-7082-DCD54602822F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\extrude_revolve">
+      <UniqueIdentifier>{0916BE10-B5E1-4E25-DC85-10EE11CAA313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\history">
+      <UniqueIdentifier>{5D9335DE-461E-3684-479C-F041C15C15B1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\modification">
+      <UniqueIdentifier>{59C0E5A4-752C-7CCC-EF11-4A6330615E44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\pattern">
+      <UniqueIdentifier>{C1011670-D265-89F9-7AD8-CB2153537F76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\primitives">
+      <UniqueIdentifier>{7873A9B2-0D00-3933-E9F0-3066D39C120A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\sketch">
+      <UniqueIdentifier>{7E941B8B-E3EE-79BD-F17C-89FCACB05836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\dialogs\tools">
+      <UniqueIdentifier>{7DFDF8DF-2867-3E33-4942-1BEAB241CB96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\features">
+      <UniqueIdentifier>{5DFB5F7E-94A8-E476-9BBA-EA2EFD5EF8F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\features\boolean">
+      <UniqueIdentifier>{D4857A8F-12CA-058E-6C33-DE661A27BC60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\features\extrude_revolve">
+      <UniqueIdentifier>{D490BA46-6863-F89E-E73C-C1698E5FBEAE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\features\modification">
+      <UniqueIdentifier>{F478E5DF-40F2-C7EE-4CD1-FD1EE009CBE6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\features\pattern">
+      <UniqueIdentifier>{FB1CF458-1BAA-1C11-C421-1A619FB49322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\features\primitives">
+      <UniqueIdentifier>{C99B4356-CB77-8413-7E6C-1A6690F1EC4A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\presentation\main_window">
+      <UniqueIdentifier>{78410830-6800-2AF2-4556-A8C9E6D7FD4C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\rendering">
+      <UniqueIdentifier>{3A79777B-1B09-B6D5-F894-95705A90852B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\rendering\adapters">
+      <UniqueIdentifier>{E6078F45-C812-F91D-2110-0EDBF800D0A2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\rendering\handles">
+      <UniqueIdentifier>{FB690F63-A4DD-0DD8-AFD6-605E0815E107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\rendering\model">
+      <UniqueIdentifier>{A74E7436-97B4-6754-74B4-9A72D37A1E9F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\rendering\pipeline">
+      <UniqueIdentifier>{C71FDFEF-886F-C228-175E-33496765EFC5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\viewport">
+      <UniqueIdentifier>{B7B3A69F-0F9A-2992-A3FC-C40CDACC529E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\viewport\coordinates">
+      <UniqueIdentifier>{F7F73421-9382-E00E-F53C-67D1E4D75B4E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\viewport\main_view">
+      <UniqueIdentifier>{2A0405F7-B4EA-0F5A-6B4D-E793CE4C7C06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\viewport\mirror">
+      <UniqueIdentifier>{08878716-C40C-F031-BC06-F389B1B966E0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rdparty\SARibbon\SARibbon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application\commands\addmodelcommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\placement\axis_placement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\boolean\bool_operation_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\boolean\boolean_feature_controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\boolean\boolean_ops.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application\commands\booleancommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\modification\chamfer_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application\command\command.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application\history\commandmanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\primitives\cone_params_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application\commands\creategeometrycommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\primitives\cuboid_interaction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\primitives\cuboid_params_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\primitives\cylinder_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\coordinates\datum_axis.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\coordinates\datum_plane_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\interaction\coordinates\datum_tools.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application\commands\deletemodelcommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\common\expression_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\extrude_revolve\extrude_revolve_interaction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\extrude_revolve\extrusion_face_selection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\extrude_revolve\extrusion_feature_controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\extrusion\extrusion_geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\extrusion\extrusion_recipe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application\commands\extrusioncommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\modification\feature_modification_geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\infrastructure\serialization\feature_serializer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\topology\feature_topology.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\modification\fillet_chamfer_controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\modification\fillet_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\handles\handle_geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\interaction\handles\handle_spec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\history\history_list_item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\model\intersection_edge_pipeline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\intersection\intersection_ops.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\model\intersection_render_store.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>3rdparty\SARibbon</Filter>
     </ClCompile>
     <ClCompile Include="src\app\main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\app</Filter>
     </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_menu_builder.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\application\command\command.cpp">
+      <Filter>src\application\command</Filter>
     </ClCompile>
-    <ClCompile Include="src\viewport\main_view\main_viewport.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\application\commands\addmodelcommand.cpp">
+      <Filter>src\application\commands</Filter>
     </ClCompile>
-    <ClCompile Include="src\viewport\main_view\main_viewport_click.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\application\commands\booleancommand.cpp">
+      <Filter>src\application\commands</Filter>
     </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\application\commands\creategeometrycommand.cpp">
+      <Filter>src\application\commands</Filter>
     </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_context.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\application\commands\deletemodelcommand.cpp">
+      <Filter>src\application\commands</Filter>
     </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_coordinates.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_document.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_events.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_feature_regeneration.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_feature_tree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_history_highlight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_history_snapshot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_intersections.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_model_regeneration.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_occ_shape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_ribbon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_runtime_state.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_shape_picker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch_conic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch_creation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch_dialogs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch_edit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch_history.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch_polygon_ellipse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch_preview.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch_tabs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_sketch_tools.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\main_window\main_window_undo_restore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\viewport\mirror\mirror_view_controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\viewport\mirror\mirror_view_state.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\model\model_display_style.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application\history\model_document.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\infrastructure\serialization\model_document_serializer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\runtime\model_geometry_store.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\model\model_render_store.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\pipeline\model_shape_pipeline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\application\history\modeling_history_index_remap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\viewport\main_view\mouse_interactor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\adapters\occvtkconverter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\pattern\pattern_controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\pattern\pattern_feature_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\pattern\pattern_geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\pattern\pattern_interaction.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\application\commands\extrusioncommand.cpp">
+      <Filter>src\application\commands</Filter>
     </ClCompile>
     <ClCompile Include="src\application\commands\patterncommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\primitives\primitive_creation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\primitives\primitive_geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\primitives\primitive_shapes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\interaction\coordinates\reference_csys_tools.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\application\commands</Filter>
     </ClCompile>
     <ClCompile Include="src\application\commands\regeneratemodelcommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\pipeline\render_pipeline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\features\extrude_revolve\revolve_feature_controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\revolution\revolve_geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\interaction\selection\selection_geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\interaction\selection\shape_picker_bindings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rendering\model\shape_presentation_factory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\domain\sketch\sketch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_conic_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_create_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_ellipse_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometry\sketch\sketch_geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_mode_dialogs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_polygon_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\application\commands</Filter>
     </ClCompile>
     <ClCompile Include="src\application\commands\sketcheditcommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\primitives\sphere_params_dialog.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\application\commands</Filter>
     </ClCompile>
     <ClCompile Include="src\application\commands\updatemodelcommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\application\commands</Filter>
     </ClCompile>
-    <ClCompile Include="src\presentation\dialogs\tools\vector_dialog.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\application\history\commandmanager.cpp">
+      <Filter>src\application\history</Filter>
+    </ClCompile>
+    <ClCompile Include="src\application\history\model_document.cpp">
+      <Filter>src\application\history</Filter>
+    </ClCompile>
+    <ClCompile Include="src\application\history\modeling_history_index_remap.cpp">
+      <Filter>src\application\history</Filter>
+    </ClCompile>
+    <ClCompile Include="src\domain\sketch\sketch.cpp">
+      <Filter>src\domain\sketch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\boolean\boolean_ops.cpp">
+      <Filter>src\geometry\boolean</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\extrusion\extrusion_geometry.cpp">
+      <Filter>src\geometry\extrusion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\extrusion\extrusion_recipe.cpp">
+      <Filter>src\geometry\extrusion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\intersection\intersection_ops.cpp">
+      <Filter>src\geometry\intersection</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\modification\feature_modification_geometry.cpp">
+      <Filter>src\geometry\modification</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\pattern\pattern_geometry.cpp">
+      <Filter>src\geometry\pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\placement\axis_placement.cpp">
+      <Filter>src\geometry\placement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\primitives\primitive_geometry.cpp">
+      <Filter>src\geometry\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\primitives\primitive_shapes.cpp">
+      <Filter>src\geometry\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\revolution\revolve_geometry.cpp">
+      <Filter>src\geometry\revolution</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\runtime\model_geometry_store.cpp">
+      <Filter>src\geometry\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\sketch\sketch_geometry.cpp">
+      <Filter>src\geometry\sketch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometry\topology\feature_topology.cpp">
+      <Filter>src\geometry\topology</Filter>
+    </ClCompile>
+    <ClCompile Include="src\infrastructure\serialization\feature_serializer.cpp">
+      <Filter>src\infrastructure\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="src\infrastructure\serialization\model_document_serializer.cpp">
+      <Filter>src\infrastructure\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interaction\coordinates\datum_tools.cpp">
+      <Filter>src\interaction\coordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interaction\coordinates\reference_csys_tools.cpp">
+      <Filter>src\interaction\coordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interaction\handles\handle_spec.cpp">
+      <Filter>src\interaction\handles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interaction\selection\selection_geometry.cpp">
+      <Filter>src\interaction\selection</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interaction\selection\shape_picker_bindings.cpp">
+      <Filter>src\interaction\selection</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interaction\tools\point_candidate_calculator.cpp">
+      <Filter>src\interaction\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interaction\tools\point_picker.cpp">
+      <Filter>src\interaction\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interaction\tools\point_snap_manager.cpp">
+      <Filter>src\interaction\tools</Filter>
     </ClCompile>
     <ClCompile Include="src\interaction\tools\vector_handles.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\interaction\tools</Filter>
     </ClCompile>
     <ClCompile Include="src\interaction\tools\vector_snap.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\interaction\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\boolean\bool_operation_dialog.cpp">
+      <Filter>src\presentation\dialogs\boolean</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\common\expression_dialog.cpp">
+      <Filter>src\presentation\dialogs\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\coordinates\datum_axis.cpp">
+      <Filter>src\presentation\dialogs\coordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\coordinates\datum_plane_dialog.cpp">
+      <Filter>src\presentation\dialogs\coordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.cpp">
+      <Filter>src\presentation\dialogs\extrude_revolve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.cpp">
+      <Filter>src\presentation\dialogs\extrude_revolve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\history\history_list_item.cpp">
+      <Filter>src\presentation\dialogs\history</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\modification\chamfer_dialog.cpp">
+      <Filter>src\presentation\dialogs\modification</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\modification\fillet_dialog.cpp">
+      <Filter>src\presentation\dialogs\modification</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\pattern\pattern_feature_dialog.cpp">
+      <Filter>src\presentation\dialogs\pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\primitives\cone_params_dialog.cpp">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\primitives\cuboid_params_dialog.cpp">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\primitives\cylinder_dialog.cpp">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\primitives\sphere_params_dialog.cpp">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_conic_dialog.cpp">
+      <Filter>src\presentation\dialogs\sketch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_create_dialog.cpp">
+      <Filter>src\presentation\dialogs\sketch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_ellipse_dialog.cpp">
+      <Filter>src\presentation\dialogs\sketch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_mode_dialogs.cpp">
+      <Filter>src\presentation\dialogs\sketch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_polygon_dialog.cpp">
+      <Filter>src\presentation\dialogs\sketch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.cpp">
+      <Filter>src\presentation\dialogs\sketch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\dialogs\tools\vector_dialog.cpp">
+      <Filter>src\presentation\dialogs\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\boolean\boolean_feature_controller.cpp">
+      <Filter>src\presentation\features\boolean</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\extrude_revolve\extrude_revolve_interaction.cpp">
+      <Filter>src\presentation\features\extrude_revolve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\extrude_revolve\extrusion_face_selection.cpp">
+      <Filter>src\presentation\features\extrude_revolve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\extrude_revolve\extrusion_feature_controller.cpp">
+      <Filter>src\presentation\features\extrude_revolve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\extrude_revolve\revolve_feature_controller.cpp">
+      <Filter>src\presentation\features\extrude_revolve</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\modification\fillet_chamfer_controller.cpp">
+      <Filter>src\presentation\features\modification</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\pattern\pattern_controller.cpp">
+      <Filter>src\presentation\features\pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\pattern\pattern_interaction.cpp">
+      <Filter>src\presentation\features\pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\primitives\cuboid_interaction.cpp">
+      <Filter>src\presentation\features\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\features\primitives\primitive_creation.cpp">
+      <Filter>src\presentation\features\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_menu_builder.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_context.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_coordinates.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_document.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_events.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_feature_regeneration.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_feature_tree.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_history_highlight.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_history_snapshot.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_intersections.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_model_regeneration.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_occ_shape.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_ribbon.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_runtime_state.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_shape_picker.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_conic.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_creation.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_dialogs.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_edit.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_history.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_polygon_ellipse.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_preview.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_tabs.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_sketch_tools.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\presentation\main_window\main_window_undo_restore.cpp">
+      <Filter>src\presentation\main_window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\adapters\occvtkconverter.cpp">
+      <Filter>src\rendering\adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\handles\handle_geometry.cpp">
+      <Filter>src\rendering\handles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\model\intersection_edge_pipeline.cpp">
+      <Filter>src\rendering\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\model\intersection_render_store.cpp">
+      <Filter>src\rendering\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\model\model_display_style.cpp">
+      <Filter>src\rendering\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\model\model_render_store.cpp">
+      <Filter>src\rendering\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\model\shape_presentation_factory.cpp">
+      <Filter>src\rendering\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\pipeline\model_shape_pipeline.cpp">
+      <Filter>src\rendering\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rendering\pipeline\render_pipeline.cpp">
+      <Filter>src\rendering\pipeline</Filter>
     </ClCompile>
     <ClCompile Include="src\viewport\coordinates\viewport_coordinates.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src\viewport\coordinates</Filter>
     </ClCompile>
+    <ClCompile Include="src\viewport\main_view\main_viewport.cpp">
+      <Filter>src\viewport\main_view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\viewport\main_view\main_viewport_click.cpp">
+      <Filter>src\viewport\main_view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\viewport\main_view\mouse_interactor.cpp">
+      <Filter>src\viewport\main_view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\viewport\mirror\mirror_view_controller.cpp">
+      <Filter>src\viewport\mirror</Filter>
+    </ClCompile>
+    <ClCompile Include="src\viewport\mirror\mirror_view_state.cpp">
+      <Filter>src\viewport\mirror</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_SARibbon.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_bool_operation_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_chamfer_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_cone_params_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_cuboid_params_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_cylinder_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_datum_axis.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_datum_plane_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_expression_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_extrusion_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_fillet_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_history_list_item.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_main_window.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_pattern_feature_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_revolve_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_conic_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_create_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_ellipse_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_mode_dialogs.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_polygon_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sketch_tool_input_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_sphere_params_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_vector_dialog.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\qrc_resources.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_SARibbon.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_bool_operation_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_chamfer_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_cone_params_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_cuboid_params_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_cylinder_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_datum_axis.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_datum_plane_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_expression_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_extrusion_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_fillet_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_history_list_item.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_main_window.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_pattern_feature_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_revolve_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_conic_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_create_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_ellipse_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_mode_dialogs.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_polygon_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_sketch_tool_input_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_sphere_params_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_vector_dialog.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+    <ClCompile Include="release\qrc_resources.cpp">
+      <Filter>release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\application\command\command.h">
+      <Filter>src\application\command</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\commands\addmodelcommand.h">
+      <Filter>src\application\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\commands\booleancommand.h">
+      <Filter>src\application\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\commands\creategeometrycommand.h">
+      <Filter>src\application\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\commands\deletemodelcommand.h">
+      <Filter>src\application\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\commands\extrusioncommand.h">
+      <Filter>src\application\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\commands\patterncommand.h">
+      <Filter>src\application\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\commands\regeneratemodelcommand.h">
+      <Filter>src\application\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\commands\sketcheditcommand.h">
+      <Filter>src\application\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\commands\updatemodelcommand.h">
+      <Filter>src\application\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\history\commandmanager.h">
+      <Filter>src\application\history</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\history\model_document.h">
+      <Filter>src\application\history</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\history\model_history_snapshot.h">
+      <Filter>src\application\history</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\history\modeling_history_index_remap.h">
+      <Filter>src\application\history</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\history\modeling_history_placement.h">
+      <Filter>src\application\history</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\history\modeling_history_primitives.h">
+      <Filter>src\application\history</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\history\modeling_history_record.h">
+      <Filter>src\application\history</Filter>
+    </ClInclude>
+    <ClInclude Include="src\application\ports\modeling_command_port.h">
+      <Filter>src\application\ports</Filter>
+    </ClInclude>
+    <ClInclude Include="src\common\axisdirection.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\common\modeltype.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\domain\features\featurerecipe.h">
+      <Filter>src\domain\features</Filter>
+    </ClInclude>
+    <ClInclude Include="src\domain\features\patternfeaturetypes.h">
+      <Filter>src\domain\features</Filter>
+    </ClInclude>
+    <ClInclude Include="src\domain\sketch\sketch.h">
+      <Filter>src\domain\sketch</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\boolean\boolean_ops.h">
+      <Filter>src\geometry\boolean</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\extrusion\extrusion_geometry.h">
+      <Filter>src\geometry\extrusion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\extrusion\extrusion_recipe.h">
+      <Filter>src\geometry\extrusion</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\intersection\intersection_ops.h">
+      <Filter>src\geometry\intersection</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\math\platformmath.h">
+      <Filter>src\geometry\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\modification\feature_modification_geometry.h">
+      <Filter>src\geometry\modification</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\pattern\pattern_geometry.h">
+      <Filter>src\geometry\pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\placement\axis_placement.h">
+      <Filter>src\geometry\placement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\primitives\primitive.h">
+      <Filter>src\geometry\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\primitives\primitive_build_request.h">
+      <Filter>src\geometry\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\primitives\primitive_geometry.h">
+      <Filter>src\geometry\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\primitives\primitive_shapes.h">
+      <Filter>src\geometry\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\revolution\revolve_geometry.h">
+      <Filter>src\geometry\revolution</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\runtime\model_geometry_state.h">
+      <Filter>src\geometry\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\runtime\model_geometry_store.h">
+      <Filter>src\geometry\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\sketch\sketch_geometry.h">
+      <Filter>src\geometry\sketch</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\topology\feature_topology.h">
+      <Filter>src\geometry\topology</Filter>
+    </ClInclude>
+    <ClInclude Include="src\geometry\topology\sub_shape_reference.h">
+      <Filter>src\geometry\topology</Filter>
+    </ClInclude>
+    <ClInclude Include="src\infrastructure\serialization\feature_serializer.h">
+      <Filter>src\infrastructure\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\infrastructure\serialization\model_document_serializer.h">
+      <Filter>src\infrastructure\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interaction\handles\handle_spec.h">
+      <Filter>src\interaction\handles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interaction\selection\selection_geometry.h">
+      <Filter>src\interaction\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interaction\selection\selection_window_state.h">
+      <Filter>src\interaction\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interaction\selection\shape_picker_binding_service.h">
+      <Filter>src\interaction\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interaction\tools\point_candidate_calculator.h">
+      <Filter>src\interaction\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interaction\tools\point_picker.h">
+      <Filter>src\interaction\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interaction\tools\point_snap_manager.h">
+      <Filter>src\interaction\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interaction\tools\point_snap_types.h">
+      <Filter>src\interaction\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_bool_operation_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_chamfer_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_cone_params_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_cuboid_params_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_cylinder_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_datum_plane_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_expression_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_extrusion_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_fillet_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_history_list_item.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_main_window.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_revolve_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_sketch_create_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_sketch_tool_input_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_sphere_params_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\dialogs\ui_vector_dialog.h">
+      <Filter>src\presentation\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\coordinate_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\dialog_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\document_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\feature_interaction_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\main_menu_builder.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\model_document_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\pattern_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\primitive_interaction_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\ribbon_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\sketch_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\presentation\main_window\vector_snap_window_state.h">
+      <Filter>src\presentation\main_window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\adapters\occvtkconverter.h">
+      <Filter>src\rendering\adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\handles\handle_geometry.h">
+      <Filter>src\rendering\handles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\model\intersection_edge_pipeline.h">
+      <Filter>src\rendering\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\model\intersection_render_store.h">
+      <Filter>src\rendering\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\model\model_display_style.h">
+      <Filter>src\rendering\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\model\model_render_state.h">
+      <Filter>src\rendering\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\model\model_render_store.h">
+      <Filter>src\rendering\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\model\model_rendering_window_state.h">
+      <Filter>src\rendering\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\model\shape_presentation_factory.h">
+      <Filter>src\rendering\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\pipeline\model_shape_pipeline.h">
+      <Filter>src\rendering\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\pipeline\render_pipeline.h">
+      <Filter>src\rendering\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="src\viewport\main_view\mouse_interaction_context.h">
+      <Filter>src\viewport\main_view</Filter>
+    </ClInclude>
+    <ClInclude Include="src\viewport\main_view\mouse_interactor.h">
+      <Filter>src\viewport\main_view</Filter>
+    </ClInclude>
+    <ClInclude Include="src\viewport\main_view\view_navigation_window_state.h">
+      <Filter>src\viewport\main_view</Filter>
+    </ClInclude>
+    <ClInclude Include="src\viewport\main_view\viewport_window_state.h">
+      <Filter>src\viewport\main_view</Filter>
+    </ClInclude>
+    <ClInclude Include="src\viewport\mirror\mirror_view_state.h">
+      <Filter>src\viewport\mirror</Filter>
+    </ClInclude>
+    <ClInclude Include="src\viewport\mirror\mirror_view_types.h">
+      <Filter>src\viewport\mirror</Filter>
+    </ClInclude>
+    <ClInclude Include="src\viewport\mirror\mirror_view_window.h">
+      <Filter>src\viewport\mirror</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_bool_operation_dialog.h" />
+    <ClInclude Include="ui_chamfer_dialog.h" />
+    <ClInclude Include="ui_cone_params_dialog.h" />
+    <ClInclude Include="ui_cuboid_params_dialog.h" />
+    <ClInclude Include="ui_cylinder_dialog.h" />
+    <ClInclude Include="ui_datum_plane_dialog.h" />
+    <ClInclude Include="ui_expression_dialog.h" />
+    <ClInclude Include="ui_extrusion_dialog.h" />
+    <ClInclude Include="ui_fillet_dialog.h" />
+    <ClInclude Include="ui_history_list_item.h" />
+    <ClInclude Include="ui_main_window.h" />
+    <ClInclude Include="ui_revolve_dialog.h" />
+    <ClInclude Include="ui_sketch_create_dialog.h" />
+    <ClInclude Include="ui_sketch_tool_input_dialog.h" />
+    <ClInclude Include="ui_sphere_params_dialog.h" />
+    <ClInclude Include="ui_vector_dialog.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="3rdparty\SARibbon\SARibbon.h">
-      <Filter>Header Files</Filter>
+      <Filter>3rdparty\SARibbon</Filter>
     </CustomBuild>
-    <ClInclude Include="src\application\commands\addmodelcommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\placement\axis_placement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\axisdirection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <CustomBuild Include="src\presentation\dialogs\boolean\bool_operation_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\boolean</Filter>
     </CustomBuild>
-    <ClInclude Include="src\geometry\boolean\boolean_ops.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\commands\booleancommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\presentation\dialogs\modification\chamfer_dialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\application\command\command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\history\commandmanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\presentation\dialogs\primitives\cone_params_dialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\presentation\main_window\coordinate_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\commands\creategeometrycommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\presentation\dialogs\primitives\cuboid_params_dialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\primitives\cylinder_dialog.h">
-      <Filter>Header Files</Filter>
+    <CustomBuild Include="src\presentation\dialogs\common\expression_dialog.h">
+      <Filter>src\presentation\dialogs\common</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\coordinates\datum_axis.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\coordinates</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\coordinates\datum_plane_dialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\application\commands\deletemodelcommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\main_window\dialog_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\main_window\document_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\presentation\dialogs\common\expression_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\coordinates</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\extrude_revolve</Filter>
     </CustomBuild>
-    <ClInclude Include="src\geometry\extrusion\extrusion_geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\extrusion\extrusion_recipe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\commands\extrusioncommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\main_window\feature_interaction_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\modification\feature_modification_geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\infrastructure\serialization\feature_serializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\topology\feature_topology.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\domain\features\featurerecipe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\presentation\dialogs\modification\fillet_dialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\rendering\handles\handle_geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\interaction\handles\handle_spec.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\presentation\dialogs\history\history_list_item.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\rendering\model\intersection_edge_pipeline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\intersection\intersection_ops.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\model\intersection_render_store.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\main_window\main_menu_builder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\presentation\main_window\main_window.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\viewport\mirror\mirror_view_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\viewport\mirror\mirror_view_types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\viewport\mirror\mirror_view_window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\model\model_display_style.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\history\model_document.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\infrastructure\serialization\model_document_serializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\main_window\model_document_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\runtime\model_geometry_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\runtime\model_geometry_store.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\history\model_history_snapshot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\model\model_render_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\model\model_render_store.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\model\model_rendering_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\pipeline\model_shape_pipeline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\ports\modeling_command_port.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\history\modeling_history_index_remap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\history\modeling_history_placement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\history\modeling_history_primitives.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\history\modeling_history_record.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\modeltype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\viewport\main_view\mouse_interaction_context.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\viewport\main_view\mouse_interactor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\adapters\occvtkconverter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\presentation\dialogs\pattern\pattern_feature_dialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\geometry\pattern\pattern_geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\main_window\pattern_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\commands\patterncommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\domain\features\patternfeaturetypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\math\platformmath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\primitives\primitive.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\primitives\primitive_build_request.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\primitives\primitive_geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\main_window\primitive_interaction_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\geometry\primitives\primitive_shapes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\commands\regeneratemodelcommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\pipeline\render_pipeline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <CustomBuild Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\extrude_revolve</Filter>
     </CustomBuild>
-    <ClInclude Include="src\geometry\revolution\revolve_geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\main_window\ribbon_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\interaction\selection\selection_geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\interaction\selection\selection_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\interaction\selection\shape_picker_binding_service.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rendering\model\shape_presentation_factory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\domain\sketch\sketch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <CustomBuild Include="src\presentation\dialogs\history\history_list_item.h">
+      <Filter>src\presentation\dialogs\history</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\modification\chamfer_dialog.h">
+      <Filter>src\presentation\dialogs\modification</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\modification\fillet_dialog.h">
+      <Filter>src\presentation\dialogs\modification</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\pattern\pattern_feature_dialog.h">
+      <Filter>src\presentation\dialogs\pattern</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cone_params_dialog.h">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cuboid_params_dialog.h">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cylinder_dialog.h">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\sphere_params_dialog.h">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\sketch\sketch_conic_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\sketch</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\sketch\sketch_create_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\sketch</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\sketch\sketch_ellipse_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\sketch</Filter>
     </CustomBuild>
-    <ClInclude Include="src\geometry\sketch\sketch_geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <CustomBuild Include="src\presentation\dialogs\sketch\sketch_mode_dialogs.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\sketch</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\sketch\sketch_polygon_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\sketch</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\sketch</Filter>
     </CustomBuild>
-    <ClInclude Include="src\presentation\main_window\sketch_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\commands\sketcheditcommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <CustomBuild Include="src\presentation\dialogs\primitives\sphere_params_dialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <ClInclude Include="src\geometry\topology\sub_shape_reference.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_bool_operation_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_chamfer_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_cone_params_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_cuboid_params_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_cylinder_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_datum_plane_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_expression_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_extrusion_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_fillet_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_history_list_item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_main_window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_revolve_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_sketch_create_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_sketch_tool_input_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_sphere_params_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\presentation\dialogs\ui_vector_dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\application\commands\updatemodelcommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <CustomBuild Include="src\presentation\dialogs\tools\vector_dialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>src\presentation\dialogs\tools</Filter>
     </CustomBuild>
-    <ClInclude Include="src\presentation\main_window\vector_snap_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\viewport\main_view\view_navigation_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\viewport\main_view\viewport_window_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="debug\moc_SARibbon.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_SARibbon.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_bool_operation_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_bool_operation_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_chamfer_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_chamfer_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_cone_params_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_cone_params_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_cuboid_params_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_cuboid_params_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_cylinder_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_cylinder_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_datum_axis.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_datum_axis.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_datum_plane_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_datum_plane_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_expression_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_expression_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_extrusion_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_extrusion_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_fillet_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_fillet_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_history_list_item.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_history_list_item.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_main_window.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_main_window.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_pattern_feature_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_pattern_feature_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
+    <CustomBuild Include="src\presentation\main_window\main_window.h">
+      <Filter>src\presentation\main_window</Filter>
+    </CustomBuild>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
-      <Filter>Generated Files</Filter>
+      <Filter>debug</Filter>
     </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
-      <Filter>Generated Files</Filter>
+      <Filter>release</Filter>
     </CustomBuild>
-    <ClCompile Include="debug\moc_revolve_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_revolve_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_sketch_conic_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_sketch_conic_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_sketch_create_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_sketch_create_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_sketch_ellipse_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_sketch_ellipse_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_sketch_mode_dialogs.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_sketch_mode_dialogs.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_sketch_polygon_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_sketch_polygon_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_sketch_tool_input_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_sketch_tool_input_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_sphere_params_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_sphere_params_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_vector_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_vector_dialog.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\qrc_resources.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\qrc_resources.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClInclude Include="ui_bool_operation_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_chamfer_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_cone_params_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_cuboid_params_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_cylinder_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_datum_plane_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_expression_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_extrusion_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_fillet_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_history_list_item.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_main_window.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_revolve_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_sketch_create_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_sketch_tool_input_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_sphere_params_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui_vector_dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <CustomBuild Include="src\presentation\dialogs\boolean\bool_operation_dialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\modification\chamfer_dialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\primitives\cone_params_dialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\primitives\cuboid_params_dialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\primitives\cylinder_dialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\coordinates\datum_plane_dialog.ui">
-      <Filter>Form Files</Filter>
+      <Filter>src\presentation\dialogs\boolean</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\common\expression_dialog.ui">
-      <Filter>Form Files</Filter>
+      <Filter>src\presentation\dialogs\common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\coordinates\datum_plane_dialog.ui">
+      <Filter>src\presentation\dialogs\coordinates</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\extrude_revolve\extrusion_dialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\modification\fillet_dialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\history\history_list_item.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\presentation\main_window\main_window.ui">
-      <Filter>Form Files</Filter>
+      <Filter>src\presentation\dialogs\extrude_revolve</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\extrude_revolve\revolve_dialog.ui">
-      <Filter>Form Files</Filter>
+      <Filter>src\presentation\dialogs\extrude_revolve</Filter>
     </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_create_dialog.ui">
-      <Filter>Form Files</Filter>
+    <CustomBuild Include="src\presentation\dialogs\history\history_list_item.ui">
+      <Filter>src\presentation\dialogs\history</Filter>
     </CustomBuild>
-    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.ui">
-      <Filter>Form Files</Filter>
+    <CustomBuild Include="src\presentation\dialogs\modification\chamfer_dialog.ui">
+      <Filter>src\presentation\dialogs\modification</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\modification\fillet_dialog.ui">
+      <Filter>src\presentation\dialogs\modification</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cone_params_dialog.ui">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cuboid_params_dialog.ui">
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\primitives\cylinder_dialog.ui">
+      <Filter>src\presentation\dialogs\primitives</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\primitives\sphere_params_dialog.ui">
-      <Filter>Form Files</Filter>
+      <Filter>src\presentation\dialogs\primitives</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_create_dialog.ui">
+      <Filter>src\presentation\dialogs\sketch</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\dialogs\sketch\sketch_tool_input_dialog.ui">
+      <Filter>src\presentation\dialogs\sketch</Filter>
     </CustomBuild>
     <CustomBuild Include="src\presentation\dialogs\tools\vector_dialog.ui">
-      <Filter>Form Files</Filter>
+      <Filter>src\presentation\dialogs\tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\presentation\main_window\main_window.ui">
+      <Filter>src\presentation\main_window</Filter>
+    </CustomBuild>
+    <CustomBuild Include="resource\resources.qrc">
+      <Filter>resource</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <None Include="resource\Contour.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\NewWindow.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\Open.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\Save.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\Window.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\capture.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\capture_arc_center_point.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\capture_clear.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\capture_closed.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\capture_endpoint.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\capture_intersection_point.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\capture_midpoint.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\capture_quadrant_point.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\cone.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\cone_color.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\control_point.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\cuboid.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\cuboid_color.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\cylinder.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\cylinder_color.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\defined_point.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\exist_point.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\polar_point.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\redo.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
-    <CustomBuild Include="resource\resources.qrc">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
     <None Include="resource\sketch_arc.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sketch_circle.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sketch_cuboid.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sketch_line.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sketch_point.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sphere.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sphere_color.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\undo.png">
-      <Filter>Resource Files</Filter>
+      <Filter>resource</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="resource\Contour.png">
-      <Filter>Distribution Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sketch_arc.png">
-      <Filter>Distribution Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sketch_circle.png">
-      <Filter>Distribution Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sketch_cuboid.png">
-      <Filter>Distribution Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sketch_line.png">
-      <Filter>Distribution Files</Filter>
+      <Filter>resource</Filter>
     </None>
     <None Include="resource\sketch_point.png">
-      <Filter>Distribution Files</Filter>
+      <Filter>resource</Filter>
     </None>
   </ItemGroup>
 </Project>

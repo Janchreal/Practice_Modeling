@@ -280,7 +280,8 @@ void Widget::disableSnapUiAfterVectorTwoPointComplete()
 
 void Widget::updateVectorTwoPointSnapPresentation(int x, int y, int snapKind, bool dragMode)
 {
-    if (snapKind == -1 || snapKind == 1 || snapKind == 2) {
+    if (snapKind == -1 || snapKind == 1 || snapKind == 2 || snapKind == 3
+        || snapKind == 4 || snapKind == 5 || snapKind == 6) {
         updateVectorPointSnapPreview(x, y, snapKind, dragMode);
         return;
     }
@@ -305,11 +306,15 @@ bool Widget::tryPickVectorTwoPointSnapAt(int x, int y)
     const int snapKind = currentSelectionMode == VectorDialogPickStartPoint
         ? vectorTwoPointStartSnapKind_
         : vectorTwoPointEndSnapKind_;
-    if (snapKind == -1 || snapKind == 1 || snapKind == 2) {
+    if (snapKind == -1 || snapKind == 1 || snapKind == 2 || snapKind == 3
+        || snapKind == 4 || snapKind == 5 || snapKind == 6) {
         updateVectorTwoPointSnapPresentation(x, y, snapKind, false);
         if (!hasSnapHoverBestPoint_) return false;
         snapSelectedPoint_ = snapHoverBestPoint_;
         hasSnapSelectedPoint_ = true;
+        if (pointPicker_.confirmPoint()) {
+            snapSelectedResult_ = pointPicker_.currentResult();
+        }
         clearSnapHover();
         return true;
     }
@@ -323,6 +328,9 @@ bool Widget::tryPickVectorTwoPointSnapAt(int x, int y)
     if (hasSnapHoverBestPoint_) {
         snapSelectedPoint_ = snapHoverBestPoint_;
         hasSnapSelectedPoint_ = true;
+        if (pointPicker_.confirmPoint()) {
+            snapSelectedResult_ = pointPicker_.currentResult();
+        }
         clearSnapHover();
         return true;
     }

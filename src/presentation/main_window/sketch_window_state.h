@@ -16,6 +16,7 @@
 
 class QDialog;
 class QPushButton;
+class SketchArcModeDialog;
 class SketchCircleModeDialog;
 class SketchConicDialog;
 class SketchCreateDialog;
@@ -54,6 +55,19 @@ protected:
     vtkSmartPointer<vtkActor> sketchPlaneHoverActor_;
     vtkSmartPointer<vtkActor> sketchSelectedPlaneFillActor_;
     vtkSmartPointer<vtkActor> sketchSelectedPlaneOutlineActor_;
+    vtkSmartPointer<vtkActor> sketchPlaneXAxisActor_;
+    vtkSmartPointer<vtkActor> sketchPlaneYAxisActor_;
+    vtkSmartPointer<vtkActor> sketchPrincipalPlaneXYActor_;
+    vtkSmartPointer<vtkActor> sketchPrincipalPlaneYZActor_;
+    vtkSmartPointer<vtkActor> sketchPrincipalPlaneXZActor_;
+    vtkSmartPointer<vtkActor> sketchPrincipalPlaneXYOutlineActor_;
+    vtkSmartPointer<vtkActor> sketchPrincipalPlaneYZOutlineActor_;
+    vtkSmartPointer<vtkActor> sketchPrincipalPlaneXZOutlineActor_;
+    gp_Pln sketchPlaneAxisPlane_;
+    double sketchPlaneAxisHalfX_ = 1.0;
+    double sketchPlaneAxisHalfY_ = 1.0;
+    bool sketchPlaneAxisDefinitionValid_ = false;
+    bool sketchPlaneAxisVisible_ = false;
     int sketchSelectedPlaneHistoryIndex_ = -1;
 
     vtkSmartPointer<vtkActor> sketchPreviewLineActor_;
@@ -79,6 +93,7 @@ protected:
     SketchToolInputDialog* sketchToolInputDialog_ = nullptr;
     SketchRectangleModeDialog* sketchRectangleModeDialog_ = nullptr;
     SketchCircleModeDialog* sketchCircleModeDialog_ = nullptr;
+    SketchArcModeDialog* sketchArcModeDialog_ = nullptr;
     SketchConicDialog* sketchConicDialog_ = nullptr;
     SketchPolygonDialog* sketchPolygonDialog_ = nullptr;
     SketchPolygonValueDialog* sketchPolygonValueDialog_ = nullptr;

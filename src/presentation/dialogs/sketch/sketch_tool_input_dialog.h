@@ -32,6 +32,8 @@ public:
     void setCoordinateValues(double xc, double yc);
     void setLineParameters(double length, double angleDeg);
     void setArcParameters(double radius, double sweepDeg);
+    void setToolTitle(const QString& title);
+    void setObjectSwitchingVisible(bool visible);
 
     double xcValue() const;
     double ycValue() const;

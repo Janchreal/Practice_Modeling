@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../datum_axis.h"
+#include "../src/presentation/dialogs/coordinates/datum_axis.h"
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>

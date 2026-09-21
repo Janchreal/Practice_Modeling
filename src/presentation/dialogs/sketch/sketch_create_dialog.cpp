@@ -1,7 +1,10 @@
 #include "sketch_create_dialog.h"
 #include "ui_sketch_create_dialog.h"
 
+#include <QCheckBox>
 #include <QToolButton>
+
+#include <gp_Ax3.hxx>
 
 SketchCreateDialog::SketchCreateDialog(QWidget* parent)
     : QDialog(parent)
@@ -12,6 +15,23 @@ SketchCreateDialog::SketchCreateDialog(QWidget* parent)
     if (ui->toolButton_pickPlane) {
         connect(ui->toolButton_pickPlane, &QToolButton::clicked, this, [this]() {
             emit requestPickPlane();
+        });
+    }
+    if (ui->checkBox_showPrincipalPlanes) {
+        ui->checkBox_showPrincipalPlanes->setChecked(true);
+        connect(ui->checkBox_showPrincipalPlanes, &QCheckBox::toggled,
+                this, &SketchCreateDialog::showPrincipalPlanesChanged);
+    }
+    if (ui->toolButton_reverseNormal) {
+        connect(ui->toolButton_reverseNormal, &QToolButton::clicked, this, [this]() {
+            if (!hasPlane_) {
+                return;
+            }
+            const gp_Ax3 ax = plane_.Position();
+            const gp_Dir reversedNormal = ax.Direction().Reversed();
+            plane_ = gp_Pln(gp_Ax3(ax.Location(), reversedNormal, ax.XDirection()));
+            refreshPlaneText();
+            emit planeNormalReversed(plane_);
         });
     }
 
@@ -38,6 +58,13 @@ bool SketchCreateDialog::hasPickedPlane() const
 gp_Pln SketchCreateDialog::pickedPlane() const
 {
     return plane_;
+}
+
+bool SketchCreateDialog::showPrincipalPlanes() const
+{
+    return ui && ui->checkBox_showPrincipalPlanes
+        ? ui->checkBox_showPrincipalPlanes->isChecked()
+        : true;
 }
 
 void SketchCreateDialog::refreshPlaneText()

@@ -1,0 +1,117 @@
+{"kind":"deck","id":"pr/ds27og","name":"Deck"}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster1.xml","name":"","type":"master","placeholders":[{"name":"title","type":"title","textPreview":"单击此处编辑母版标题样式"},{"name":"body","type":"body","textPreview":"单击此处编辑母版文本样式 | 第二级 | 第三级 | 第四级 | 第五级"},{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout1.xml","name":"标题幻灯片","type":"title","placeholders":[{"name":"title","type":"title","textPreview":"单击此处编辑标题"},{"name":"subtitle","type":"subtitle","textPreview":"单击此处编辑副标题"},{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout2.xml","name":"Blank","type":"blank","placeholders":[{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"},{"name":"body","type":"body","textPreview":"单击此处编辑母版文本样式"},{"name":"5","textPreview":"单击此处编辑母版文本样式 | 二级 | 三级 | 四级 | 五级"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout3.xml","name":"标题和内容","type":"obj","placeholders":[{"name":"title","type":"title","textPreview":"单击此处编辑母版标题样式"},{"name":"2","textPreview":"单击此处编辑母版文本样式 | 第二级 | 第三级 | 第四级 | 第五级"},{"name":"dateTime","type":"dateTime"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster2.xml","name":"","type":"master"}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout4.xml","name":"自定义版式"}
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"周汇报","textShapes":2}
+{"kind":"textbox","id":"sh/547294r6","slide":1,"name":"标题 1","placeholder":"title","text":"周汇报","textPreview":"周汇报","textChars":3,"textLines":1,"bbox":[0,205.94,1280,111.2]}
+{"kind":"textbox","id":"sh/ul4vaxgb","slide":1,"name":"标题 1","text":"✪汇报人：陈景煌    ","textPreview":"✪汇报人：陈景煌","textChars":12,"textLines":1,"bbox":[308.3,371.55,663.46,46.33]}
+{"kind":"image","id":"im/kr6xgnu5","slide":1,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/bmxw3ido","slide":1,"name":"图片 18","bbox":[32.47,381.53,1215.13,253.8]}
+{"kind":"image","id":"im/alovadw3","slide":1,"name":"图片 8","bbox":[32.07,597.13,1215.87,91.07]}
+{"kind":"notes","id":"nt/y90nupkv","slide":1,"text":""}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"1","textShapes":10}
+{"kind":"shape","id":"sh/x4r21kru","slide":2,"name":"矩形 5","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/nu58f2hs","slide":2,"name":"MH_Number_1","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[437.23,282.33,39.87,39.87]}
+{"kind":"textbox","id":"sh/wjy9sry9","slide":2,"name":"MH_Entry_1","text":"总体架构","textPreview":"总体架构","textChars":4,"textLines":1,"bbox":[516.1,280,319.33,45.2]}
+{"kind":"textbox","id":"sh/hcvy14ne","slide":2,"name":"MH_Number_2","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[437.23,346.93,39.87,39.87]}
+{"kind":"textbox","id":"sh/u94fqp4n","slide":2,"name":"MH_Entry_2","text":"操作柄类型与四状态视觉规范","textPreview":"操作柄类型与四状态视觉规范","textChars":13,"textLines":1,"bbox":[516.1,349.47,538.07,45.2]}
+{"kind":"textbox","id":"sh/p0vy54na","slide":2,"name":"MH_Number_3","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[437.23,411.53,39.87,39.87]}
+{"kind":"shape","id":"sh/4zmxwzmp","slide":2,"name":"MH_Entry_3","bbox":[516.1,415.73,282.93,45.2]}
+{"kind":"textbox","id":"sh/9o7ulg3y","slide":2,"name":"MH_Others_2","text":"CONTENTS","textPreview":"CONTENTS","textChars":8,"textLines":1,"bbox":[328.77,189.87,622.47,32.27]}
+{"kind":"textbox","id":"sh/onydsbmd","slide":2,"name":"MH_Others_1","text":"目 录","textPreview":"目 录","textChars":3,"textLines":1,"bbox":[502.13,147.87,275.75,116.27]}
+{"kind":"textbox","id":"sh/w3i1sfa9","slide":2,"name":"MH_Entry_1","text":"各特征手柄","textPreview":"各特征手柄","textChars":5,"textLines":1,"bbox":[516.1,415.87,319.33,45.2]}
+{"kind":"textbox","id":"sh/9072xkry","slide":2,"name":"MH_Number_3","text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[437.23,476.13,39.87,39.87]}
+{"kind":"textbox","id":"sh/a10jqpsj","slide":2,"name":"MH_Entry_1","text":"下周计划","textPreview":"下周计划","textChars":4,"textLines":1,"bbox":[516.1,475.87,319.33,45.2]}
+{"kind":"image","id":"im/5sripona","slide":2,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/kry1gjmp","slide":2,"name":"图片 11","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/hwbqtkby","slide":2,"text":""}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"01 总体架构","textShapes":9}
+{"kind":"shape","id":"sh/re9g7yxo","slide":3,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/cza94vmx","slide":3,"name":"文本框 1","text":"01 总体架构","textPreview":"01 总体架构","textChars":7,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/298ryl4v","slide":3,"name":"文本框 3","text":"1.1 主要工作：将操作手柄进行一个整体的规划与调整\n\n1.2 具体细节：\n\n\n","textPreview":"1.1 主要工作：将操作手柄进行一个整体的规划与调整 |  | 1.2 具体细节： |  |  |","textChars":40,"textLines":6,"bbox":[136.93,100.8,1091.73,623]}
+{"kind":"textbox","id":"sh/obq90bml","slide":3,"name":"文本框 5","text":"①划分为三个层次：\nⅠ规则声明\nⅡ三维几何\nⅢ交互实现\n\n②渲染层级：统一放在Layer2参考覆盖层，并严格遵循屏幕恒定尺寸\n\n③表达式联动：拖拽              对话框参数             预览几何\n\n④学习COND/CR/GR所承担的角色\nCOND：决定操作柄在什么条件下显示\nCR：规定控制柄的位置/方向如何计算         GR：规定导引角色的绘制方式\n","textPreview":"①划分为三个层次： | Ⅰ规则声明 | Ⅱ三维几何 | Ⅲ交互实现 |  | ②渲染层级：统一放在Layer2参考覆盖层，并严格遵循屏幕恒定尺寸 |  | ③表达式联动：拖拽              对话框参数             预览几何 |  | ④学习COND/...","textChars":192,"textLines":13,"bbox":[149.73,217.6,1098.2,489.4]}
+{"kind":"textbox","id":"sh/d0jax03i","slide":3,"name":"右箭头 2","text":"\nhandle_spec.h/cpp","textPreview":"| handle_spec.h/cpp","textChars":18,"textLines":2,"bbox":[306.8,297.47,287.73,11.4]}
+{"kind":"textbox","id":"sh/pcjqtg36","slide":3,"name":"文本框 6","text":"定义COND/CR/GR、形状、四状态颜色","textPreview":"定义COND/CR/GR、形状、四状态颜色","textChars":21,"textLines":1,"bbox":[600.27,282.67,544.53,38.67]}
+{"kind":"textbox","id":"sh/m5cra54z","slide":3,"name":"右箭头 7","text":"\nhandle_geometry.h/cpp","textPreview":"| handle_geometry.h/cpp","textChars":22,"textLines":2,"bbox":[306.8,354.87,287.73,11.4]}
+{"kind":"textbox","id":"sh/n6ls3alk","slide":3,"name":"右箭头 8","text":"\ninteractive.cpp","textPreview":"| interactive.cpp","textChars":16,"textLines":2,"bbox":[306.8,412.27,287.73,11.4]}
+{"kind":"textbox","id":"sh/n2l4fq98","slide":3,"name":"文本框 9","text":"生成vtkSphereSource、vtkArrowSource三维几何","textPreview":"生成vtkSphereSource、vtkArrowSource三维几何","textChars":36,"textLines":1,"bbox":[600.27,340.67,544.53,38.67]}
+{"kind":"textbox","id":"sh/v6l4jq94","slide":3,"name":"文本框 13","text":"创建 Actor、处理拖拽、驱动表达式","textPreview":"创建 Actor、处理拖拽、驱动表达式","textChars":19,"textLines":1,"bbox":[600.27,398.67,544.53,38.67]}
+{"kind":"shape","id":"sh/x8nml0ra","slide":3,"name":"左右箭头 15","bbox":[395.67,535.47,57.87,13.87]}
+{"kind":"shape","id":"sh/w7ulsvqp","slide":3,"name":"左右箭头 16","bbox":[604.67,535.47,57.87,13.87]}
+{"kind":"image","id":"im/fytczylk","slide":3,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/ed0vqtkz","slide":3,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/lwvexsju","slide":3,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/ofy9wn61","slide":3,"text":""}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"02 操作柄类型与四状态视觉规范","textShapes":2}
+{"kind":"shape","id":"sh/gv29g7q5","slide":4,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/rm1k7yt4","slide":4,"name":"文本框 3","text":"02 操作柄类型与四状态视觉规范","textPreview":"02 操作柄类型与四状态视觉规范","textChars":16,"textLines":1,"bbox":[95.33,46,845.4,54.8]}
+{"kind":"textbox","id":"sh/ql8jytsj","slide":4,"name":"文本框 4","text":"2.1 操作手柄类型:\n\n\n\n\n\n\n\n2.2 四色状态与缩放：\n","textPreview":"2.1 操作手柄类型: |  |  |  |  |  |  |  | 2.2 四色状态与缩放： |","textChars":32,"textLines":10,"bbox":[136.93,126.87,1056.53,352.07]}
+{"kind":"table","id":"tb/jq1w7ulw","slide":4,"name":"表格 7","rows":5,"cols":4,"preview":"类型 | 形状 | 可拖拽性 | 实例","bbox":[201.73,184.2,965.8,200]}
+{"kind":"table","id":"tb/dk3yxony","slide":4,"name":"表格 9","rows":5,"cols":4,"preview":"状态 | 颜色 | 缩放因子 | 触发条件","bbox":[201.73,448.07,967.47,200]}
+{"kind":"image","id":"im/w7u9kj25","slide":4,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/x83qdojq","slide":4,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/q9876pkv","slide":4,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/jyx0ra1s","slide":4,"text":""}
+{"kind":"slide","id":"sl/i107q5of","slide":5,"title":"03 各特征手柄","textShapes":2}
+{"kind":"shape","id":"sh/4ji5kbid","slide":5,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/z2tcnm5s","slide":5,"name":"文本框 3","text":"03 各特征手柄","textPreview":"03 各特征手柄","textChars":8,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/yhkbe1o7","slide":5,"name":"文本框 4","text":"3.1 长方体\n①组件构成：原点球（点柄）+三轴端箭头（距离柄）+轴线段+标签+预览盒\n②规则声明字段\nⅠCOND：\nA.cuboidInteractiveActive_ == true（对话框打开）\nB.原点球：始终显示（原点已确定或默认为世界原点）\nC.三轴尺寸柄：未处于显示结果状态\nⅡCR：\nA. 原点球                         可拖拽，投影到视图平面更新原点\nB. 长度/宽度/高度轴端     沿各自轴方向屏幕投影拖拽\nⅢGR：\nA.轴线段            从原点沿轴方向画至轴端，颜色随轴端控制柄四状态联动\nB.轴标签            位于轴端附近，屏幕朝向相机\nC.尺寸浮层        拖拽轴时，在轴端屏幕投影处显示可编辑数值框，回车/失焦写回参数\n③表达式联动：length/width/height/origin(x,y,z) ↔ 对话框cuboidparamsdialog\n","textPreview":"3.1 长方体 | ①组件构成：原点球（点柄）+三轴端箭头（距离柄）+轴线段+标签+预览盒 | ②规则声明字段 | ⅠCOND： | A.cuboidInteractiveActive_ == true（对话框打开） | B.原点球：始终显示（原点已确定或默认为世界原点） ...","textChars":418,"textLines":16,"bbox":[136.93,90,1103.4,630]}
+{"kind":"image","id":"im/8j2x8b6t","slide":5,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/9kbyhg7e","slide":5,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/ulkfaloz","slide":5,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"image","id":"im/vmdgjqpk","slide":5,"name":"2026-08-24 20-14-40","bbox":[818.33,216.87,291.13,182]}
+{"kind":"notes","id":"nt/i107q5of","slide":5,"text":""}
+{"kind":"slide","id":"sl/x8f69ofe","slide":6,"title":"03 各特征手柄","textShapes":2}
+{"kind":"shape","id":"sh/lg76d8zy","slide":6,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/87ipkzal","slide":6,"name":"文本框 3","text":"03 各特征手柄","textPreview":"03 各特征手柄","textChars":8,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/98rqt4r6","slide":6,"name":"文本框 4","text":"3.2 拉伸\n①组件构成：起始球（距离柄）+终止箭头（距离柄）+轨迹线（导引角色）\n②规则声明字段\nⅠCOND：\nA.拉伸对话框已打开 (extrusionDialog != nullptr)\nB.已选择对象并能成功拉伸\nC.未处于显示结果锁定\nⅡCR：\nA. 起始球                           截面中心 + 拉伸方向 × startDistance\nB. 终止箭头                       截面中心 + 拉伸方向 × endDistance\nC. 箭头方向                       沿getExtrusionDirection()中获取的方向\nⅢGR：轨迹线连接起始球与终止箭头尖端，线宽/颜色随控制柄四状态联动\n③表达式联动：startDistance/endDistance ↔ ExtrusionDialog","textPreview":"3.2 拉伸 | ①组件构成：起始球（距离柄）+终止箭头（距离柄）+轨迹线（导引角色） | ②规则声明字段 | ⅠCOND： | A.拉伸对话框已打开 (extrusionDialog != nullptr) | B.已选择对象并能成功拉伸 | C.未处于显示结果锁定 | ...","textChars":391,"textLines":13,"bbox":[136.93,100.8,1111.07,533.07]}
+{"kind":"image","id":"im/90zqp0r6","slide":6,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/ofq9wfal","slide":6,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/3id8b69w","slide":6,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"image","id":"im/2h47i1sb","slide":6,"name":"2026-08-24 20-16-42","bbox":[766.93,213.8,330.8,206.8]}
+{"kind":"notes","id":"nt/x8f69ofe","slide":6,"text":""}
+{"kind":"slide","id":"sl/gnmp4jqx","slide":7,"title":"03 各特征手柄","textShapes":2}
+{"kind":"shape","id":"sh/r2dkrq5g","slide":7,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/ydkbm5sv","slide":7,"name":"文本框 3","text":"03 各特征手柄","textPreview":"03 各特征手柄","textChars":8,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/zedcfa9g","slide":7,"name":"文本框 4","text":"3.3 旋转\n①组件构成：起始球（角度柄）+ 终止箭头（角度柄，切向）+旋转弧+径向线+中心球\n②规则声明字段\nⅠCOND：\nA.旋转对话框已打开 (revolveDialog != nullptr)\nB.已选择对象，并能成功旋转得到结果\nC.未处于显示结果锁定\nⅡCR：\nA. 旋转中心     旋转轴在截面上的垂足 foot\nB. 起始球        以垂足为圆心、半径=剖面中心到轴的距离，角度=startAngle\nC. 终止箭头    以垂足为圆心、半径=剖面中心到轴的距离，角度=endAngle箭头方向=轴×径向\nⅢGR：扫掠弧（透明度变化）、两条径向线、橙色中心球\n③表达式联动：startAngle / endAngle ↔ RevolveDialog","textPreview":"3.3 旋转 | ①组件构成：起始球（角度柄）+ 终止箭头（角度柄，切向）+旋转弧+径向线+中心球 | ②规则声明字段 | ⅠCOND： | A.旋转对话框已打开 (revolveDialog != nullptr) | B.已选择对象，并能成功旋转得到结果 | C.未处于...","textChars":336,"textLines":13,"bbox":[136.93,100.8,1143.07,533.07]}
+{"kind":"image","id":"im/3ydory5k","slide":7,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/ix4nytoz","slide":7,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/l4rmh4n6","slide":7,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"image","id":"im/k3i5oz61","slide":7,"name":"2026-08-24 20-20-34","bbox":[741.8,215.53,382.87,239.27]}
+{"kind":"notes","id":"nt/gnmp4jqx","slide":7,"text":""}
+{"kind":"slide","id":"sl/fu1gfa1s","slide":8,"title":"03 各特征手柄","textShapes":2}
+{"kind":"shape","id":"sh/kredcr6t","slide":8,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/ri9g7uhw","slide":8,"name":"文本框 3","text":"03 各特征手柄","textPreview":"03 各特征手柄","textChars":8,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/6h0fypgb","slide":8,"name":"文本框 4","text":"3.4 倒角\n①组件构成：1箭头柄（蓝）+ 2箭头柄（橙）+双侧导引线\n②规则声明字段\nⅠCOND：\nA. 倒角对话框已打开 (chamferDialog != nullptr)\nB. 已选中至少一条边 (chamferSelectedEdges_ 非空)\nC. 目标模型有效\nD. 横截面类型为对称或非对称\nⅡCR：\nA. 锚点                      选中边（第一条）的中点 midPt\nB. 方向 dir1/dir2        边切向 × 各邻接面法向，指向面内\nC. 箭头尖端               midPt + dir × distance\nⅢGR：导引线，从 midPt 连至各箭头尖端；线宽随悬浮/拖拽 2.0→3.3；颜色与控制柄同步\n③表达式联动：distance/distance1/distance2 ↔ chamferdialog","textPreview":"3.4 倒角 | ①组件构成：1箭头柄（蓝）+ 2箭头柄（橙）+双侧导引线 | ②规则声明字段 | ⅠCOND： | A. 倒角对话框已打开 (chamferDialog != nullptr) | B. 已选中至少一条边 (chamferSelectedEdges_ 非空...","textChars":392,"textLines":14,"bbox":[136.93,100.8,1143.07,565.33]}
+{"kind":"image","id":"im/wnq9gnm1","slide":8,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/xoza9s3m","slide":8,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/uhsbqhkf","slide":8,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"image","id":"im/fi1sjmlk","slide":8,"name":"2026-08-24 20-21-20","bbox":[807.33,245.53,332.47,207.8]}
+{"kind":"notes","id":"nt/fu1gfa1s","slide":8,"text":""}
+{"kind":"slide","id":"sl/udsvah03","slide":9,"title":"03 各特征手柄","textShapes":2}
+{"kind":"shape","id":"sh/wba1cjqp","slide":9,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/nex4jq5k","slide":9,"name":"文本框 3","text":"03 各特征手柄","textPreview":"03 各特征手柄","textChars":8,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/mdonql4z","slide":9,"name":"文本框 4","text":"3.5 圆角\n①组件构成：1箭头柄（蓝）+ 2箭头柄（橙）+双侧导引线\n②规则声明字段\nⅠCOND：\nA. 圆角对话框已打开 (filletDialog != nullptr)\nB. 已选中至少一条边\nC. 目标模型有效\nD. 边几何可计算（中点、切向、邻接面）\nⅡCR：\nA. 锚点                      选中边（第一条）的中点 midPt\nB. 方向 dir1/dir2        边切向 × 各邻接面法向，指向面内\nC. 箭头尖端               midPt + dir × radius\nⅢGR：导引线，从 midPt 连至各箭头尖端；线宽随悬浮/拖拽 2.0→3.3；颜色与控制柄同步\n③表达式联动：radius ↔ filletdialog","textPreview":"3.5 圆角 | ①组件构成：1箭头柄（蓝）+ 2箭头柄（橙）+双侧导引线 | ②规则声明字段 | ⅠCOND： | A. 圆角对话框已打开 (filletDialog != nullptr) | B. 已选中至少一条边 | C. 目标模型有效 | D. 边几何可计算（中点...","textChars":344,"textLines":14,"bbox":[136.93,100.8,1143.07,565.33]}
+{"kind":"image","id":"im/wj6p4ve1","slide":9,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/xkfqd0fm","slide":9,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/y5or65w7","slide":9,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"image","id":"im/j6x8faxs","slide":9,"name":"2026-08-24 20-22-13","bbox":[740.2,213.2,331.87,207.4]}
+{"kind":"notes","id":"nt/udsvah03","slide":9,"text":""}
+{"kind":"slide","id":"sl/m90b6t0r","slide":10,"title":"04 下周计划","textShapes":2}
+{"kind":"shape","id":"sh/kjytkvup","slide":10,"name":"矩形 24","bbox":[14.6,671.67,1250,37]}
+{"kind":"textbox","id":"sh/zelojyl8","slide":10,"name":"文本框 3","text":"04 下周计划","textPreview":"04 下周计划","textChars":7,"textLines":1,"bbox":[95.33,46,534,54.8]}
+{"kind":"textbox","id":"sh/ydcnatkn","slide":10,"name":"文本框 4","text":"①完善矢量工具对话框中手柄\nⅠ两点确定矢量：\nA.添加两个球形操作手柄，支持拖拽，结合点捕捉器，使拖拽可吸附到特殊点\nB.添加矢量箭头操作手柄，支持双击，完成反向操作\nⅡ曲线上矢量：\nA.添加一个球形操作手柄，支持拖拽，控制矢量方向沿该点切线方向\nB.添加矢量箭头操作手柄，支持双击，完成反向操作\nⅢ面/平面法向量、轴矢量：添加矢量箭头操作手柄，支持双击完成反向操作\n②对照测试文档进行测试，逐步推进","textPreview":"①完善矢量工具对话框中手柄 | Ⅰ两点确定矢量： | A.添加两个球形操作手柄，支持拖拽，结合点捕捉器，使拖拽可吸附到特殊点 | B.添加矢量箭头操作手柄，支持双击，完成反向操作 | Ⅱ曲线上矢量： | A.添加一个球形操作手柄，支持拖拽，控制矢量方向沿该点切线方向 | B...","textChars":200,"textLines":9,"bbox":[136.93,100.8,1143.07,445.8]}
+{"kind":"image","id":"im/w76tsvq5","slide":10,"name":"图片 32","bbox":[14.67,23.13,1250.67,685.53]}
+{"kind":"image","id":"im/h8fu1g7q","slide":10,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/q9kbeh8v","slide":10,"name":"图片 23","bbox":[659.8,561.2,588.13,122.87]}
+{"kind":"notes","id":"nt/m90b6t0r","slide":10,"text":""}
+{"kind":"slide","id":"sl/jetc3ut0","slide":11,"title":"周汇报","textShapes":2}
+{"kind":"textbox","id":"sh/xcryxg7y","slide":11,"name":"标题 1","placeholder":"title","text":"周汇报","textPreview":"周汇报","textChars":3,"textLines":1,"bbox":[217.42,212.63,845.16,111.2]}
+{"kind":"textbox","id":"sh/mdobedg3","slide":11,"name":"标题 1","text":"✪汇报人：陈景煌","textPreview":"✪汇报人：陈景煌","textChars":8,"textLines":1,"bbox":[308.27,359.27,663.46,46.33]}
+{"kind":"image","id":"im/cre5or2h","slide":11,"name":"图片 14","bbox":[0,0,1280,720]}
+{"kind":"image","id":"im/3m5orml0","slide":11,"name":"图片 18","bbox":[32.47,381.53,1215.13,253.8]}
+{"kind":"image","id":"im/21cnihkf","slide":11,"name":"图片 8","bbox":[32.07,597.13,1215.87,91.07]}
+{"kind":"notes","id":"nt/jetc3ut0","slide":11,"text":""}

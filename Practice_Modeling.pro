@@ -6,6 +6,11 @@ QT       += svg
 
 CONFIG += c++17
 
+# qmake's MSVC mkspec enables CONFIG += flat by default, which makes
+# Visual Studio put every file directly under Source Files/Header Files.
+# Keep generated .vcxproj.filters grouped by the physical directory tree.
+CONFIG -= flat
+
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0

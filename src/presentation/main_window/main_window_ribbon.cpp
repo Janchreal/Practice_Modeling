@@ -15,6 +15,7 @@
 #include <QStatusBar>
 #include <QToolButton>
 
+#include <vtkCamera.h>
 #include <vtkRenderWindow.h>
 
 namespace {
@@ -399,6 +400,13 @@ void Widget::enterSketchEnvironment()
     if (inSketchEnvironment_)
         return;
 
+    if (renderer && renderer->GetActiveCamera()) {
+        captureCameraPose(renderer->GetActiveCamera(), sketchReturnViewPose_);
+        sketchReturnViewPoseValid_ = true;
+    } else {
+        sketchReturnViewPoseValid_ = false;
+    }
+
     if (ui->tabWidget)
         savedNormalTabIndex_ = ui->tabWidget->currentIndex();
     if (toolbarModeStack_)
@@ -432,6 +440,7 @@ void Widget::exitSketchEnvironment()
     closeSketchCircleModeDialog();
     clearSketchEditHover();
     endSketchBrushStroke();
+    clearSketchPlaneAxisActors();
 
     if (toolbarModeStack_)
         toolbarModeStack_->setCurrentIndex(0);
@@ -440,6 +449,15 @@ void Widget::exitSketchEnvironment()
     inSketchEnvironment_ = false;
 
     applySketchRibbonMode(false);
+
+    if (sketchReturnViewPoseValid_ && renderer && renderer->GetActiveCamera()) {
+        stopViewTransitionAnimation();
+        applyCameraPose(renderer->GetActiveCamera(), sketchReturnViewPose_);
+        sketchReturnViewPoseValid_ = false;
+        refreshCameraClippingRange();
+        syncCenterAxisCamera();
+        refreshOverlayScreenScale();
+    }
 
     if (vtkWidget && vtkWidget->renderWindow())
         vtkWidget->renderWindow()->Render();
@@ -450,6 +468,7 @@ void Widget::exitSketchEnvironment()
 void Widget::on_createSketchButton_clicked()
 {
     enterSketchEnvironment();
+    openSketchCreateDialog();
 }
 
 void Widget::on_pushButton_6_clicked()

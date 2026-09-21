@@ -15,7 +15,8 @@
 #include <gp_Vec.hxx>
 #include <vtkRenderWindow.h>
 
-void Widget::openOrRaiseSketchToolInput(SketchToolInputDialog::ObjectKind initialObject)
+void Widget::openOrRaiseSketchToolInput(SketchToolInputDialog::ObjectKind initialObject,
+                                        bool allowObjectSwitching)
 {
     if (!sketchToolInputDialog_) {
         sketchToolInputDialog_ = new SketchToolInputDialog(initialObject, this);
@@ -61,6 +62,11 @@ void Widget::openOrRaiseSketchToolInput(SketchToolInputDialog::ObjectKind initia
     } else {
         sketchToolInputDialog_->setObjectKind(initialObject);
     }
+    sketchToolInputDialog_->setToolTitle(
+        allowObjectSwitching
+            ? tr("轮廓")
+            : (initialObject == SketchToolInputDialog::ObjArc ? tr("圆弧") : tr("直线")));
+    sketchToolInputDialog_->setObjectSwitchingVisible(allowObjectSwitching);
     sketchCommittedPointValid_ = false;
     sketchToolInputDialog_->show();
     sketchToolInputDialog_->raise();
@@ -103,67 +109,7 @@ void Widget::openSketchPlaneDialogFromTool()
         restoreMode = (currentSelectionMode == SketchDrawArc) ? SketchDrawArc : SketchDrawLine;
         restoreObj = (restoreMode == SketchDrawArc) ? SketchToolInputDialog::ObjArc : SketchToolInputDialog::ObjLine;
     }
-
-    auto* dlg = new SketchCreateDialog(dialogParentWidget());
-    dlg->setModal(false);
-    dlg->setAttribute(Qt::WA_DeleteOnClose);
-    activeSketchCreateDialog_ = dlg;
-
-    connect(dlg, &SketchCreateDialog::requestPickPlane, this, [this]() {
-        currentSelectionMode = SketchPlaneSelection;
-        statusBar()->showMessage(tr("草图：请在模型上点击一个平面作为参考平面。"), 4000);
-        if (vtkWidget) vtkWidget->setFocus();
-    });
-
-    connect(dlg, &QDialog::accepted, this, [this, dlg, restoreMode, restoreObj]() {
-        if (!dlg->hasPickedPlane()) {
-            statusBar()->showMessage(tr("草图：未拾取参考平面，保持当前平面不变。"), 3000);
-            return;
-        }
-
-        // 若已有草图几何，为避免跨平面误差，切换平面时清空草图并重新开始
-        if (hasActiveSketch_ && activeSketch_.isValid()) {
-            activeSketch_.clear();
-            clearSketchCommittedOverlay();
-            activeSketchHistoryIndex_ = -1;
-            clearSketchPreviewLine();
-            clearSketchPreviewArc();
-            clearSketchPreviewCircle();
-            clearSketchPreviewConic();
-        }
-
-        activeSketchPlane_ = dlg->pickedPlane();
-        activeSketch_.setPlane(activeSketchPlane_);
-        activeSketch_.setName(tr("草图"));
-        hasActiveSketch_ = true;
-        sketchClickCount_ = 0;
-        sketchCommittedPointValid_ = false;
-
-        ensureSketchHistoryRecord();
-
-        alignViewToSketchPlane(activeSketchPlane_);
-
-        currentSelectionMode = restoreMode;
-        openOrRaiseSketchToolInput(restoreObj);
-        statusBar()->showMessage(tr("草图平面已更新，可继续绘制。"), 2500);
-        if (vtkWidget) vtkWidget->setFocus();
-    });
-
-    connect(dlg, &QDialog::rejected, this, [this, restoreMode]() {
-        // 若用户取消拾取平面，回到原绘制模式
-        if (currentSelectionMode == SketchPlaneSelection) {
-            currentSelectionMode = restoreMode;
-        }
-        activeSketchCreateDialog_ = nullptr;
-    });
-
-    connect(dlg, &QObject::destroyed, this, [this, restoreMode]() {
-        if (activeSketchCreateDialog_) activeSketchCreateDialog_ = nullptr;
-        if (currentSelectionMode == SketchPlaneSelection) currentSelectionMode = restoreMode;
-    });
-
-    dlg->show();
-    dlg->raise();
+    openSketchCreateDialog(restoreMode, restoreObj, true);
 }
 
 void Widget::closeSketchToolInput()
@@ -211,8 +157,11 @@ void Widget::updateSketchToolInputDialogFields(const gp_Pnt& hoverWorld)
                 gp_Pnt pm;
                 double R = 0.0;
                 double sw = 90.0;
+                gp_Dir arcStartTangent = sketchChainTangentDir_;
                 if (sketchContourChaining_ && sketchChainTangentValid_
-                    && sketchArcMidFromTangentAndEnd(pln, sketchP1_, sketchChainTangentDir_, hoverWorld, pm)) {
+                    && sketchContourArcStartTangentForPoint(pln, sketchP1_, sketchChainTangentDir_,
+                                                            hoverWorld, arcStartTangent)
+                    && sketchArcMidFromTangentAndEnd(pln, sketchP1_, arcStartTangent, hoverWorld, pm)) {
                     R = sketchArcRadiusFromThreePoints(sketchP1_, pm, hoverWorld);
                     try {
                         Handle(Geom_TrimmedCurve) ta = GC_MakeArcOfCircle(sketchP1_, pm, hoverWorld);
