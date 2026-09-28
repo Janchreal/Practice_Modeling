@@ -21,6 +21,8 @@
 #include <algorithm>
 #include <cmath>
 
+#include <gp_Ax3.hxx>
+
 #include <Qt>
 
 namespace {
@@ -47,13 +49,18 @@ void Widget::on_pushButton_5_clicked()
 
 gp_Pln Widget::sketchPrincipalPlaneFromId(int planeId) const
 {
+    const gp_Pnt origin(0, 0, 0);
     if (planeId == 1) {
-        return gp_Pln(gp_Pnt(0, 0, 0), gp_Dir(1, 0, 0)); // YC-ZC
+        // YC-ZC：局部 X 轴沿 +YC，局部 Y 轴沿 +ZC。
+        return gp_Pln(gp_Ax3(origin, gp_Dir(1, 0, 0), gp_Dir(0, 1, 0)));
     }
     if (planeId == 2) {
-        return gp_Pln(gp_Pnt(0, 0, 0), gp_Dir(0, 1, 0)); // XC-ZC
+        // XC-ZC：局部 X 轴沿 +XC，局部 Y 轴沿 +ZC。
+        // 因此法向量按右手系取 -YC，保证界面上的 +ZC 朝屏幕上方。
+        return gp_Pln(gp_Ax3(origin, gp_Dir(0, -1, 0), gp_Dir(1, 0, 0)));
     }
-    return gp_Pln(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));     // XC-YC
+    // XC-YC：局部 X 轴沿 +XC，局部 Y 轴沿 +YC。
+    return gp_Pln(gp_Ax3(origin, gp_Dir(0, 0, 1), gp_Dir(1, 0, 0)));
 }
 
 bool Widget::tryPickSketchPrincipalPlane(int x, int y, gp_Pln& outPlane)
@@ -255,20 +262,29 @@ void Widget::applySketchPrincipalPlaneHighlight(int planeId)
     }
 }
 
-bool Widget::pickSketchPrincipalPlaneAt(int x, int y, int& outPlaneId) const
+bool Widget::pickSketchPrincipalPlaneAt(int x, int y, int& outPlaneId)
 {
-    if (!renderer || !sketchPrincipalPlaneXYActor_) return false;
+    syncOverlayCameras();
+
+    // 主平面被放在外观叠加层，拾取时必须使用同一层的相机。
+    vtkRenderer* planeRenderer = appearanceOverlay();
+    if (!planeRenderer || !sketchPrincipalPlaneXYActor_) return false;
     if (sketchPrincipalPlaneXYActor_->GetVisibility() == 0) return false;
 
     vtkSmartPointer<vtkCellPicker> picker = vtkSmartPointer<vtkCellPicker>::New();
-    picker->SetTolerance(0.02);
+    // 0.02 会把平面边界外的一大片空白也当成命中范围。
+    // 主平面是实心面，使用小容差即可保留准确的“点在面内”判断。
+    picker->SetTolerance(0.001);
     picker->PickFromListOn();
-    picker->AddPickList(const_cast<vtkActor*>(sketchPrincipalPlaneXYActor_.GetPointer()));
-    picker->AddPickList(const_cast<vtkActor*>(sketchPrincipalPlaneYZActor_.GetPointer()));
-    picker->AddPickList(const_cast<vtkActor*>(sketchPrincipalPlaneXZActor_.GetPointer()));
-    picker->Pick(x, y, 0, renderer);
+    picker->AddPickList(sketchPrincipalPlaneXYActor_);
+    picker->AddPickList(sketchPrincipalPlaneYZActor_);
+    picker->AddPickList(sketchPrincipalPlaneXZActor_);
+    picker->Pick(x, y, 0, planeRenderer);
 
     vtkActor* picked = picker->GetActor();
+    if (!picked || picker->GetCellId() < 0) {
+        return false;
+    }
     if (picked == sketchPrincipalPlaneXYActor_.GetPointer()) {
         outPlaneId = 0;
         return true;
@@ -313,6 +329,21 @@ void Widget::openSketchCreateDialog(SelectionMode restoreMode,
     });
 
     connect(dlg, &SketchCreateDialog::requestPickPlane, this, [this]() {
+        clearSketchPlaneHover();
+        resetSketchPrincipalPlaneHighlight();
+        // 不使用点击“拾取平面”按钮之前的旧鼠标位置做悬停判断。
+        sketchPlaneHoverArmed_ = false;
+        sketchPlaneHoverActivationX_ = -1;
+        sketchPlaneHoverActivationY_ = -1;
+        if (vtkWidget && vtkWidget->renderWindow()
+            && vtkWidget->renderWindow()->GetInteractor()) {
+            const int* eventPosition =
+                vtkWidget->renderWindow()->GetInteractor()->GetEventPosition();
+            if (eventPosition) {
+                sketchPlaneHoverActivationX_ = eventPosition[0];
+                sketchPlaneHoverActivationY_ = eventPosition[1];
+            }
+        }
         currentSelectionMode = SketchPlaneSelection;
         statusBar()->showMessage(tr("创建草图：请点击模型平面或显示的主平面。"), 4000);
         if (vtkWidget) vtkWidget->setFocus();
@@ -358,6 +389,9 @@ void Widget::openSketchCreateDialog(SelectionMode restoreMode,
     });
 
     connect(dlg, &QDialog::rejected, this, [this, restoreMode, restoreSketchTool]() {
+        sketchPlaneHoverArmed_ = true;
+        sketchPlaneHoverActivationX_ = -1;
+        sketchPlaneHoverActivationY_ = -1;
         if (currentSelectionMode == SketchPlaneSelection) {
             currentSelectionMode = restoreSketchTool ? restoreMode : None;
         }
@@ -370,6 +404,9 @@ void Widget::openSketchCreateDialog(SelectionMode restoreMode,
         if (currentSelectionMode == SketchPlaneSelection) {
             currentSelectionMode = restoreSketchTool ? restoreMode : None;
         }
+        sketchPlaneHoverArmed_ = true;
+        sketchPlaneHoverActivationX_ = -1;
+        sketchPlaneHoverActivationY_ = -1;
         setSketchPrincipalPlanesVisible(false);
     });
 

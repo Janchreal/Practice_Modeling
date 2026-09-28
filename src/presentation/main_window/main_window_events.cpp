@@ -105,6 +105,15 @@ void Widget::handleVtkMouseMove(int x, int y)
 
     if (currentSelectionMode == SketchPlaneSelection) {
         // 草图拾取平面：悬浮高亮
+        if (!sketchPlaneHoverArmed_) {
+            // 模式切换时可能收到一次旧位置/焦点导致的鼠标移动事件。
+            // 只忽略进入模式前记录的那个坐标；坐标一变化就处理第一次真实移动。
+            if (x == sketchPlaneHoverActivationX_ &&
+                y == sketchPlaneHoverActivationY_) {
+                return;
+            }
+            sketchPlaneHoverArmed_ = true;
+        }
         updateSketchPlaneHover(x, y);
         return;
     }
@@ -415,23 +424,25 @@ void Widget::handleVtkMouseMove(int x, int y)
         int hoverModelIndex = -1;
         const IVtk_IdType invalidSubShapeId = static_cast<IVtk_IdType>(-1);
         IVtk_IdType hoverSubShapeId = invalidSubShapeId;
-        if (tryComputeVectorDirUnderCursor(x, y, baseDir, &hoverModelIndex, &hoverSubShapeId)) {
+        bool hoverIsFace = false;
+        if (tryComputeVectorDirUnderCursor(
+                x, y, baseDir, &hoverModelIndex, &hoverSubShapeId, &hoverIsFace)) {
             setCustomVectorDirFromDialog(baseDir);
             if (hasVectorDialogArrowOrigin_) {
                 updateVectorDialogArrow(customVectorDir_, vectorDialogArrowOrigin_);
             }
 
-            // 曲线/轴矢量、面法向相关：悬停对象自动高亮，便于点击确认
-            if (vectorDialogModeIndex_ == 3 || vectorDialogModeIndex_ == 4 ||
+            // 自动判断和显式曲线/面模式都显示当前命中的面或边。
+            if (vectorDialogModeIndex_ == 0 || vectorDialogModeIndex_ == 2 ||
+                vectorDialogModeIndex_ == 3 || vectorDialogModeIndex_ == 4 ||
                 vectorDialogModeIndex_ == 5 || vectorDialogModeIndex_ == 6) {
-                const bool isCurveMode = (vectorDialogModeIndex_ == 3 || vectorDialogModeIndex_ == 4);
                 const long long sid = static_cast<long long>(hoverSubShapeId);
                 const bool hitValidSubShape = (hoverModelIndex >= 0 &&
                                                hoverSubShapeId != invalidSubShapeId &&
                                                sid > 0 &&
                                                sid <= static_cast<long long>(std::numeric_limits<int>::max()));
                 if (hitValidSubShape) {
-                    applyVectorDialogHoverSubShape(hoverModelIndex, hoverSubShapeId, !isCurveMode);
+                    applyVectorDialogHoverSubShape(hoverModelIndex, hoverSubShapeId, hoverIsFace);
                     if (vtkWidget && vtkWidget->renderWindow()) vtkWidget->renderWindow()->Render();
                 } else {
                     clearVectorDialogHoverShape();

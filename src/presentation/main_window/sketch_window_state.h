@@ -51,6 +51,10 @@ protected:
     bool sketchChainTangentValid_ = false;
     gp_Dir sketchChainTangentDir_;
     bool sketchContourChaining_ = false;
+    // 防止刚进入“拾取平面”模式时，沿用进入模式前的鼠标位置触发悬停高亮。
+    bool sketchPlaneHoverArmed_ = true;
+    int sketchPlaneHoverActivationX_ = -1;
+    int sketchPlaneHoverActivationY_ = -1;
 
     vtkSmartPointer<vtkActor> sketchPlaneHoverActor_;
     vtkSmartPointer<vtkActor> sketchSelectedPlaneFillActor_;

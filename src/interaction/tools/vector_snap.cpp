@@ -642,13 +642,15 @@ void Widget::applyTwoPointVectorSnapKind(int snapKind, bool clearExistingPoints)
 }
 
 bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
-                                            int* outHoverModelIndex,
-                                            IVtk_IdType* outHoverSubShapeId)
+                                             int* outHoverModelIndex,
+                                             IVtk_IdType* outHoverSubShapeId,
+                                             bool* outHoverIsFace)
 {
     if (!shapePicker || !renderer) return false;
     const IVtk_IdType invalidSubShapeId = static_cast<IVtk_IdType>(-1);
     if (outHoverModelIndex) *outHoverModelIndex = -1;
     if (outHoverSubShapeId) *outHoverSubShapeId = invalidSubShapeId;
+    if (outHoverIsFace) *outHoverIsFace = false;
 
     // IVtk ShapePicker 命中无 ShapeSource 的 Actor 会崩溃：拾取前关闭手柄/预览拾取
     setFeatureGizmoActorsPickable(false);
@@ -663,6 +665,7 @@ bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
     gp_Dir computedDir(0, 0, 1);
     int hoverModelIndex = -1;
     IVtk_IdType hoverSubShapeId = invalidSubShapeId;
+    bool hoverIsFace = false;
 
     auto pickFaceUnderCursor = [&](vtkActor*& outActor,
                                    Handle(IVtkOCC_Shape)& outWrapper,
@@ -759,6 +762,7 @@ bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
                 hoverPoint = p;
                 hoverSubShapeId = subShapeId;
                 hoverModelIndex = resolveHistoryIndexByActor(selectedActor);
+                hoverIsFace = true;
                 return true;
             }
         } catch (Standard_Failure&) {
@@ -825,6 +829,7 @@ bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
                 hoverPoint = p;
                 hoverSubShapeId = subShapeId;
                 hoverModelIndex = resolveHistoryIndexByActor(selectedActor);
+                hoverIsFace = true;
                 return true;
             }
         } catch (Standard_Failure&) {
@@ -902,6 +907,7 @@ bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
                     hoverPoint = axisPoint;
                     hoverSubShapeId = subShapeId;
                     hoverModelIndex = resolveHistoryIndexByActor(selectedActor);
+                    hoverIsFace = false;
                     return true;
                 }
             }
@@ -944,6 +950,7 @@ bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
             hoverPoint = p;
             hoverSubShapeId = subShapeId;
             hoverModelIndex = resolveHistoryIndexByActor(selectedActor);
+            hoverIsFace = false;
             return true;
         }
         } catch (Standard_Failure&) {
@@ -960,16 +967,13 @@ bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
         ok = computeFaceNormalAtMidParam();
     } else if (modeIndex == 6) {
         ok = computeFaceNormalAtHoverPoint();
-    } else if (modeIndex == 0) {
-        // 自动判断：先面法向，失败则边切向
-        ok = computeFaceNormalAtMidParam();
-        if (!ok) ok = computeEdgeTangent();
+    } else if (modeIndex == 0 || modeIndex == 2) {
+        // 自动判断：先检测边，再检测面。
+        // 这样鼠标悬停在边附近时不会被面拾取抢先匹配。
+        ok = computeEdgeTangent();
+        if (!ok) ok = computeFaceNormalAtMidParam();
     } else if (modeIndex == 3 || modeIndex == 4) {
         ok = computeEdgeTangent();
-    } else if (modeIndex == 2) {
-        // 先按“自动判断”
-        ok = computeFaceNormalAtMidParam();
-        if (!ok) ok = computeEdgeTangent();
     } else {
         // 其它（轴/视图方向）不走拾取
         ok = false;
@@ -981,6 +985,7 @@ bool Widget::tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
     vectorDialogArrowOrigin_ = hoverPoint;
     if (outHoverModelIndex) *outHoverModelIndex = hoverModelIndex;
     if (outHoverSubShapeId) *outHoverSubShapeId = hoverSubShapeId;
+    if (outHoverIsFace) *outHoverIsFace = hoverIsFace;
 
     outDir = computedDir;
     return true;

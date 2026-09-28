@@ -492,7 +492,7 @@ private:
      void clearSketchPrincipalPlaneActors();
      void resetSketchPrincipalPlaneHighlight();
      void applySketchPrincipalPlaneHighlight(int planeId);
-     bool pickSketchPrincipalPlaneAt(int x, int y, int& outPlaneId) const;
+     bool pickSketchPrincipalPlaneAt(int x, int y, int& outPlaneId);
      void openSketchCreateDialog(SelectionMode restoreMode = None,
                                  SketchToolInputDialog::ObjectKind restoreObj = SketchToolInputDialog::ObjLine,
                                  bool restoreSketchTool = false);
@@ -715,8 +715,9 @@ private:
     void updateVectorDialogArrow(const gp_Dir& dir, const gp_Pnt& origin);
     void setCustomVectorDirFromDialog(const gp_Dir& baseDir);
     bool tryComputeVectorDirUnderCursor(int x, int y, gp_Dir& outDir,
-                                        int* outHoverModelIndex = nullptr,
-                                        IVtk_IdType* outHoverSubShapeId = nullptr);
+                                         int* outHoverModelIndex = nullptr,
+                                         IVtk_IdType* outHoverSubShapeId = nullptr,
+                                         bool* outHoverIsFace = nullptr);
     bool tryPickPointOnModelForVector(int x, int y, gp_Pnt& outPoint,
                                       TopoDS_Shape* outSourceShape = nullptr,
                                       PointSnapType* outSnapType = nullptr);

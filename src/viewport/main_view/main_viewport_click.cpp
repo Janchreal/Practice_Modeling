@@ -188,6 +188,9 @@ void Widget::handleVtkMouseClick(int x, int y)
         // 选中后：创建/更新一个半透明基准平面（略大于所拾取平面），并带不透明实线轮廓
         createOrUpdateSketchSelectedDatumPlane(pln, face);
         clearSketchPlaneHover();
+        sketchPlaneHoverArmed_ = true;
+        sketchPlaneHoverActivationX_ = -1;
+        sketchPlaneHoverActivationY_ = -1;
         currentSelectionMode = None;
         statusBar()->showMessage(tr("已拾取参考平面。"), 2000);
         return;
@@ -1000,7 +1003,13 @@ void Widget::handleVtkMouseClick(int x, int y)
                 }
             }
             clearVectorDialogHoverShape();
-            currentSelectionMode = None;
+            // 自动判断是可重复拾取的模式：确认一次后仍保持拾取状态，
+            // 下一次点击其它面/边即可重新确定方向。
+            if (vectorDialogModeIndex_ != 0 && vectorDialogModeIndex_ != 2) {
+                currentSelectionMode = None;
+            } else {
+                currentSelectionMode = VectorDialogPickDirection;
+            }
         }
         return;
     }
